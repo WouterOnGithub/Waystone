@@ -45,7 +45,7 @@ function App()
                 {/* <Route path="/user/Login_Page" element={<Login_Page />} /> */}
                 {/* <Route path="/user/Register_Page" element={<Register_Page />} /> */}
                 
-                <Route path="/user/Main_Page" element={<Main_Page />} />
+                <Route path="/" element={<Main_Page />} />
                 {/* <Route path="/user/Account_Page" element={<Account_Page />} /> */}
                 {/* <Route path="/user/Account_Page_EDIT" element={<Account_Page_EDIT />} /> */}
                 {/* <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} /> */}
