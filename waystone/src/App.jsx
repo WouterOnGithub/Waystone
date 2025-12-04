@@ -1,4 +1,4 @@
-/* Not completed */
+/* Not completed, currently working */
 {/* import Settings_Page from "./pages/Settings_Page" */}
 {/* import Login_Page from "./pages/Login_Page" */}
 {/* import Register_Page from "./pages/Register_Page" */}
@@ -9,7 +9,6 @@ import Main_Page from "./pages/Main_Page";
 {/* import My_Campaigns_Page from "./pages/My_Campaigns_Page" */}
 
 {/* import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN" */}
-{/* import New_Campaign_Page_EVENTS from "./pages/New_Campaign_Page_EVENTS" */}
 {/* import New_Campaign_Page_CHARACTERS from "./pages/New_Campaign_Page_CHARACTERS" */}
 {/* import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER" */}
 {/* import New_Campaign_Page_EXISTING_CAMPAIGN from "./pages/New_Campaign_Page_EXISTING_CAMPAIGN" */}
@@ -49,7 +48,6 @@ function App()
                 {/* <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} /> */}
                 
                 {/* <Route path="/user/New_Campaign_Page_CAMPAIGN" element={<New_Campaign_Page_CAMPAIGN />} /> */}
-                {/* <Route path="/user/New_Campaign_Page_EVENTS" element={<New_Campaign_Page_EVENTS />} /> */}
                 {/* <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} /> */}
                 {/* <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} /> */}
                 {/* <Route path="/user/New_Campaign_Page_EXISTING_CAMPAIGN" element={<New_Campaign_Page_EXISTING_CAMPAIGN />} /> */}
