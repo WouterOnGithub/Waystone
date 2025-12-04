@@ -1,0 +1,86 @@
+* /* Defined sets of colours, font sizes, etc. to use for the whole website */
+{
+    --title-text: 120px;
+    --head-text: 25px;
+    --body-text: 20px;
+    --text-color: #303030;
+    --text-color2: #ffffff;
+    --background-gradient: radial-gradient(circle, rgba(80, 111, 23, 1) 50%, rgba(44, 65, 7, 1) 100%);
+    --background-colour: #ffffff;
+    --background-colour2:#d9d9d9;
+    --background-colour3:#bfbfbf;
+    --projectbox-colour: #D34848;
+    --projectbox-colour2: #447DC9;
+    --projectbox-colour3: #E7D665;
+
+    font-family: Garamond, serif, cursive;
+    color: var(--text-color);
+    margin: 0;
+}
+nav /* Navigation Side-bar */
+{
+    background: var(--background-colour);
+    color: var(--text-color);
+    font-size: var(--head-text);
+    width: 350px;
+    height: 100%;
+    padding-top: 50px;
+    text-align: center;
+    z-index: 1;
+    position: fixed;
+    overflow-x: hidden;
+}
+nav a /* Navigation Side-bar links */
+{
+    /* padding, margin, etc. */
+}
+
+#main /* the whole page minus the navigation */
+{
+    margin-left: 350px; /* = nav width */
+}
+
+#title /* The green_ bar where the page type (welcome, account, new campaign, etc.)  */
+{
+    background: var(--background-gradient);
+    width: 100%;
+    height: 140px;
+    text-align: center;
+}
+#title p /* The text inside the green_ bar */
+{
+    color: var(--text-color2);
+    font-size: var(--title-text);
+}
+
+#content /* Gray section under the green_ bar */
+{
+    background-color: var(--background-colour2);
+    font-size: var(--head-text);
+    margin-top: 100px;
+    padding: 30px;
+}
+
+#box-section /* a card box section (first used for My Campaigns at the Main_Page) */
+{
+
+}
+#box-text, #box-text p /* a card box (part of it) (first used for My Campaigns at the Main_Page) */
+{
+    background-color: var(--projectbox-colour);
+    color: var(--text-color2);
+    font-size: var(--body-text);
+    margin-top: 10px;
+    width: 250px;
+    height: 120px;
+}
+#box /* a card box (part of it) (first used for My Campaigns at the Main_Page) */
+{
+    background-color: var(--background-colour);
+    text-align: right;
+    height: auto;
+    padding: 5px;
+}
+
+/* Try and used existing css if possible */
+/* Add more necessary CSS here */
