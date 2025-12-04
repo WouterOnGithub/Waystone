@@ -35,6 +35,10 @@ import Main_Page from "./pages/Main_Page";
 {/* import Map_Building_Region from "./pages/Map_Building_Region" */}
 {/* import Map_Battle_View from "./pages/Map_Battle_View" */}
 
+
+/* (temporary) TO VISIT A PAGE: http://localhost:5173/user/[PAGE NAME] */
+
+
 function App() 
 {
   return (
