@@ -1,4 +1,4 @@
-/* Not completed, still testing */
+/* Not completed, currently working */
 import React from "react";
 import "./CSS.css";
 
