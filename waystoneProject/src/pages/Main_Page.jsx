@@ -1,6 +1,6 @@
 /* Not completed, currently working */
 import React from "react";
-import "./CSS.css";
+import "./pages-css/CSS.css";
 
 export default function MainPage() 
 {
