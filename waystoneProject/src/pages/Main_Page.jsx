@@ -1,24 +1,31 @@
 /* Not completed, currently working */
 import React from "react";
+import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
+import Waystone_Logo from "../assets/PlaceholderImage.jpg";
+import Settings_Logo from "../assets/PlaceholderImage.jpg";
+import Placeholder from "../assets/PlaceholderImage.jpg";
 
-export default function MainPage() 
+function Main_Page() 
 {
   return (
     <div>
-      {/* Sidebar */}
       <nav>
-        <img src="/" alt="Waystone_Logo" />
-        <a href="/">account</a>
-        <a href="/">My Campaigns</a>
-        <a href="/">New Campaign</a>
-        <a href="/">settings</a>
-        <img src="/" alt="Settings_Logo" />
-        <a href="/">help</a>
+        <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
+        <br />
+        <Link to="/">account</Link>
+        <br />
+        <Link to="/">My Campaigns</Link>
+        <br />
+        <Link to="/">New Campaign</Link>
+        <br />
+        <Link to="/">settings</Link>
+        <img src={Settings_Logo} alt="Settings_Logo" id="Settings_Logo" />
+        <br />
+        <Link to="/">help</Link>
       </nav>
 
-      {/* Main Section */}
-      <div>
+      <div id="main">
         <div id="title">
           <p>Welcome</p>
         </div>
@@ -28,15 +35,66 @@ export default function MainPage()
 
           <div id="box-section">
             <div id="box-text">
-              <p>Project_name</p>
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
               <div id="box"></div>
             </div>
           </div>
 
+          <br />
           <p>News</p>
-          {/* News section can be expanded later */}
+
+          <div id="news-box-section">
+            <div id="news-box">
+              <img src={Placeholder} alt="NewsImages" id="news-box-img" />
+              <div id="news-box-text">
+                <b>News_Title</b>
+                <p>
+                  This is a very long description that explains whatever the
+                  news is about, this will be repeated. This is a very long
+                  description that explains whatever the news is about, this
+                  will be repeated. This is a very long description that
+                  explains whatever the news is about, this will be repeated.
+                  This is a very long description that explains whatever the
+                  news is about, this will be repeated.
+                </p>
+              </div>
+            </div>
+
+            <div id="news-box">
+              <img src={Placeholder} alt="NewsImages" id="news-box-img" />
+              <div id="news-box-text">
+                <b>News_Title</b>
+                <p>
+                  This is a very long description that explains whatever the
+                  news is about, this will be repeated. This is a very long
+                  description that explains whatever the news is about, this
+                  will be repeated. This is a very long description that
+                  explains whatever the news is about, this will be repeated.
+                  This is a very long description that explains whatever the
+                  news is about, this will be repeated.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+export default Main_Page;

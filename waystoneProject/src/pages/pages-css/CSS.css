@@ -6,12 +6,10 @@
     --text-color: #303030;
     --text-color2: #ffffff;
     --background-gradient: radial-gradient(circle, rgba(80, 111, 23, 1) 50%, rgba(44, 65, 7, 1) 100%);
-    --background-colour: #ffffff;
+    --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
-    --projectbox-colour: #D34848;
-    --projectbox-colour2: #447DC9;
-    --projectbox-colour3: #E7D665;
+    --projectbox-colour: #E7D665; /* Other 2 colours are: #D34848 and #447DC9 */
 
     font-family: Garamond, serif, cursive;
     color: var(--text-color);
@@ -33,6 +31,16 @@ nav /* Navigation Side-bar */
 nav a /* Navigation Side-bar links */
 {
     /* padding, margin, etc. */
+}
+#Waystone_Logo
+{
+    /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
+    width: 50%;
+}
+#Settings_Logo
+{
+    /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
+    width: 10%;
 }
 
 #main /* the whole page minus the navigation */
@@ -63,23 +71,51 @@ nav a /* Navigation Side-bar links */
 
 #box-section /* a card box section (first used for My Campaigns at the Main_Page) */
 {
-
+    margin-bottom: 20px;
+    display: flex;
 }
-#box-text, #box-text p /* a card box (part of it) (first used for My Campaigns at the Main_Page) */
+
+#box-text p /* a card box section (first used for My Campaigns at the Main_Page) */
 {
     background-color: var(--projectbox-colour);
     color: var(--text-color2);
     font-size: var(--body-text);
+    text-align: right;
+    margin-left: 30px;
     margin-top: 10px;
     width: 250px;
-    height: 120px;
+    height: 100px;
 }
 #box /* a card box (part of it) (first used for My Campaigns at the Main_Page) */
 {
     background-color: var(--background-colour);
-    text-align: right;
+    margin-left: 30px;
+    height: 40px;
+    width: 250px;
+    height: 40px;
+}
+
+#news-box-section /* a news box section */
+{
+    margin-top: 10px;
+}
+#news-box /* a news box */
+{
+    background-color: var(--background-colour);
+    display: flex;
+    margin-bottom: 20px;
+}
+#news-box-img /* a news box (part of it) */
+{
+    padding: 10px;
+    width: 25%;
     height: auto;
-    padding: 5px;
+}
+#news-box-text /* a news box (part of it) */
+{
+    color: var(--text-color);
+    font-size: var(--body-text);
+    padding: 10px;
 }
 
 /* Try and used existing css if possible */
