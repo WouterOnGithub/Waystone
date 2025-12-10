@@ -9,7 +9,7 @@ function Login_Page() {
 
       {/* Left side: login form */}
       <div id="login-section">
-        <h1 id="login-title">Login</h1>
+        <h1 id="login-title">Register</h1>
 
         <input
           type="text"
@@ -29,8 +29,14 @@ function Login_Page() {
           className="login-input"
         />
 
-        <Link to="/register" id="login-register-link">
-          Don't have an account? Create one here!
+         <input
+          type="confirm password"
+          placeholder="************"
+          className="login-input"
+        />
+
+        <Link to="/login" id="register-login-link">
+        I already have an account
         </Link>
 
         <button id="login-button">Enter</button>
