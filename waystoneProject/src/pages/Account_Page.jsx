@@ -7,7 +7,7 @@ import Waystone_Logo from "../assets/PlaceholderImage.jpg";
 import Edit_Logo from "../assets/PlaceholderImage.jpg";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
-function Main_Page() 
+function Account_Page() 
 {
   return (
     <div>
@@ -85,4 +85,4 @@ function Main_Page()
   );
 }
 
-export default Main_Page;
+export default Account_Page;
