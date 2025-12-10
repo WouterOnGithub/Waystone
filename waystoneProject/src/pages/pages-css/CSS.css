@@ -13,6 +13,7 @@
     --background-color4: #303030;
     --projectbox-colour: #E7D665; /* Other 2 colours are: #D34848 and #447DC9 */
     --border-radius: 10px;
+    --border-radius2: 5px;
 
     font-family: Garamond, serif, cursive;
     overflow-x: hidden;
@@ -20,6 +21,31 @@
     font-size: var(--body-text);
     margin: 0;
 }
+
+/* Scollbar for EVERY PAGE */
+::-webkit-scrollbar 
+{
+  width: 15px;
+}
+::-webkit-scrollbar-track 
+{
+  background: var(--background-colour);
+  box-shadow: inset 0 0 7px var(--background-color4); 
+}
+::-webkit-scrollbar-thumb 
+{
+    border-radius: var(--border-radius);
+    background: rgba(80, 111, 23, 1);
+    box-shadow: inset 0 0 10px rgba(44, 65, 7, 1);
+    height: 20px;
+}
+::-webkit-scrollbar-thumb:hover 
+{
+    background: rgb(118, 160, 39);
+    cursor: grab;
+    transition: 0.3s;
+}
+
 .navigation /* Navigation Side-bar */
 {
     background: var(--background-colour);
@@ -49,6 +75,7 @@ nav a:hover
 {
     /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
     width: 70%;
+    height: 250px;
 }
 #Settings_Logo
 {
@@ -123,7 +150,7 @@ nav a:hover
     width: 250px;
     height: 40px;
 }
-#box button
+#box button /* Archive button */
 {
     background-color: var(--background-color4);
     color: var(--text-color2);
@@ -132,7 +159,7 @@ nav a:hover
     margin: 5px;
     margin-right: 7px;
 }
-#box button:hover
+#box button:hover /* Archive button */
 {
     background-color: var(--background-colour);
     color: var(--text-color);
@@ -140,7 +167,7 @@ nav a:hover
     transition: 0.3s; 
 }
 
-#button-green
+#button-green /* All green_ buttons button */
 {
     border-radius: var(--border-radius);
     background: var(--background-gradient);
@@ -151,7 +178,7 @@ nav a:hover
     padding-right: 25px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-#button-green:hover
+#button-green:hover /* All green_ buttons button */
 {
     color: var(--text-color2);
     transition: 0.5s;
