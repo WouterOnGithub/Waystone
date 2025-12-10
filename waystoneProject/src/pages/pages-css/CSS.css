@@ -12,6 +12,7 @@
     --background-colour3:#bfbfbf;
     --background-color4: #303030;
     --projectbox-colour: #E7D665; /* Other 2 colours are: #D34848 and #447DC9 */
+    --border-radius: 10px;
 
     font-family: Garamond, serif, cursive;
     overflow-x: hidden;
@@ -63,7 +64,7 @@ nav a:hover
 
 #title /* The green_ bar where the page type (welcome, account, new campaign, etc.)  */
 {
-    border-bottom-left-radius: 10px;
+    border-bottom-left-radius: var(--border-radius);
     background: var(--background-gradient);
     width: 100%;
     height: auto;
@@ -78,7 +79,7 @@ nav a:hover
 
 #content /* Gray section under the green_ bar */
 {
-    border-top-left-radius: 10px; 
+    border-top-left-radius: var(--border-radius); 
     background-color: var(--background-colour2);
     margin-top: 100px;
     padding: 30px;
@@ -101,8 +102,8 @@ nav a:hover
 }
 #box-text p /* a card box section (first used for My Campaigns at the Main_Page) */
 {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
     background-color: var(--projectbox-colour);
     color: var(--text-color2);
     text-align: right;
@@ -113,8 +114,8 @@ nav a:hover
 }
 #box /* a card box (part of it) (first used for My Campaigns at the Main_Page) */
 {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
     background-color: var(--background-colour);
     text-align: right;
     margin-left: 30px;
@@ -128,14 +129,31 @@ nav a:hover
     color: var(--text-color2);
     border: none;
     padding: 2px;
-    margin-right: 10px;
+    margin: 5px;
+    margin-right: 7px;
 }
 #box button:hover
 {
     background-color: var(--background-colour);
     color: var(--text-color);
     text-decoration: underline;
-    transform: 0.3s; /* TO BE FIXED */
+    transition: 0.3s; 
+}
+
+#button-green
+{
+    border-radius: var(--border-radius);
+    background: var(--background-gradient);
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+#button-green:hover
+{
+    color: var(--text-color2);
+    transition: 0.5s;
 }
 
 /* Try and used existing css if possible */
