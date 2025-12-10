@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import Settings_Logo from "../assets/PlaceholderImage.jpg";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
 function My_Campaigns_Page() 
@@ -27,7 +26,6 @@ function My_Campaigns_Page()
         <br />
         <br />
         <Link to="/">Settings</Link>
-        <img src={Settings_Logo} alt="Settings_Logo" id="Settings_Logo" />
         <br />
         <br />
         <Link to="/">Help</Link>

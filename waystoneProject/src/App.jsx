@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 {/* import Register_Page from "./pages/Register_Page" */}
 
 import Main_Page from "./pages/Main_Page";
-{/* import Account_Page from "./pages/Account_Page" */}
+import Account_Page from "./pages/Account_Page"
 {/* import Account_Page_EDIT from "./pages/Account_Page_EDIT" */}
 import My_Campaigns_Page from "./pages/My_Campaigns_Page"
 
@@ -50,7 +50,7 @@ function App()
                 {/* <Route path="/user/Register_Page" element={<Register_Page />} /> */}
                 
                 <Route path="/" element={<Main_Page />} /> {/* Opens the site on this page, later the login page ! */}
-                {/* <Route path="/user/Account_Page" element={<Account_Page />} /> */}
+                <Route path="/user/Account_Page" element={<Account_Page />} />
                 {/* <Route path="/user/Account_Page_EDIT" element={<Account_Page_EDIT />} /> */}
                 <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} />
                 

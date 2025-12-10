@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import Settings_Logo from "../assets/PlaceholderImage.jpg";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
 function Main_Page() 

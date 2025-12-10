@@ -16,6 +16,7 @@
     font-family: Garamond, serif, cursive;
     overflow-x: hidden;
     color: var(--text-color);
+    font-size: var(--body-text);
     margin: 0;
 }
 .navigation /* Navigation Side-bar */
@@ -79,9 +80,12 @@ nav a:hover
 {
     border-top-left-radius: 10px; 
     background-color: var(--background-colour2);
-    font-size: var(--head-text);
     margin-top: 100px;
     padding: 30px;
+}
+#content b
+{
+    font-size: var(--head-text);
 }
 
 #box-section /* a card box section (first used for My Campaigns at the Main_Page) */
@@ -101,7 +105,6 @@ nav a:hover
     border-top-right-radius: 10px;
     background-color: var(--projectbox-colour);
     color: var(--text-color2);
-    font-size: var(--body-text);
     text-align: right;
     margin-left: 30px;
     margin-top: 10px;
@@ -123,7 +126,6 @@ nav a:hover
 {
     background-color: var(--background-color4);
     color: var(--text-color2);
-    font-size: var(--body-text);
     border: none;
     padding: 2px;
     margin-right: 10px;
