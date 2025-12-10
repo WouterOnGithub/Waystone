@@ -237,7 +237,7 @@ nav a:hover
   height: 100%;
   min-height: 100vh;
 
-  background-image: url("../assets/login_image.webp"); /* jouw achtergrond hier */
+  background-image: url("../assets/PlaceholderImage.jpg"); /* jouw achtergrond hier */
   background-size: cover;       /* vult de hele rechterkant */
   background-position: center;  /* centreert de foto */
   background-repeat: no-repeat;
