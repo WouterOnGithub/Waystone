@@ -5,6 +5,7 @@
     --body-text: 20px;
     --text-color: #303030;
     --text-color2: #ffffff;
+    --text-color3: rgba(80, 111, 23, 1);
     --background-gradient: radial-gradient(circle, rgba(80, 111, 23, 1) 50%, rgba(44, 65, 7, 1) 100%);
     --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
@@ -35,6 +36,12 @@ nav a /* Navigation Side-bar links */
     font-size: var(--head-text);
     color: var(--text-color);
 }
+nav a:hover
+{
+    color: var(--text-color3);
+    text-decoration: underline;
+    transition: 0.3s;
+}
 #Waystone_Logo
 {
     /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
@@ -49,6 +56,7 @@ nav a /* Navigation Side-bar links */
 #main /* the whole page minus the navigation */
 {
     margin-left: 350px; /* = nav width */
+    background-color: var(--background-colour);
 }
 
 #title /* The green_ bar where the page type (welcome, account, new campaign, etc.)  */

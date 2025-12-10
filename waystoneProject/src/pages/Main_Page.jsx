@@ -27,7 +27,6 @@ function Main_Page()
         <br />
         <br />
         <Link to="/">Settings</Link>
-        <img src={Settings_Logo} alt="Settings_Logo" id="Settings_Logo" />
         <br />
         <br />
         <Link to="/">Help</Link>

@@ -10,6 +10,7 @@ function My_Campaigns_Page()
 {
   return (
     <div>
+      <div className="navigation">
       <nav>
         <br />
         <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
@@ -31,6 +32,7 @@ function My_Campaigns_Page()
         <br />
         <Link to="/">Help</Link>
       </nav>
+      </div>
 
       <div id="main">
         {/* The green bar at the top of the page */}
