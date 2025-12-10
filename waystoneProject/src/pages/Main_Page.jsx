@@ -1,4 +1,4 @@
-/* Not completed, currently working */
+/* Complete */
 import React from "react";
 import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
