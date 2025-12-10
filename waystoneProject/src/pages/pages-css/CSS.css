@@ -88,8 +88,13 @@ nav a:hover
 {
     margin-bottom: 20px;
     display: flex;
+    flex-wrap: wrap;
 }
-
+#box-text
+{
+    margin-left: -10px;
+    margin-bottom: 20px;
+}
 #box-text p /* a card box section (first used for My Campaigns at the Main_Page) */
 {
     border-top-left-radius: 10px;
@@ -129,29 +134,6 @@ nav a:hover
     color: var(--text-color);
     text-decoration: underline;
     transform: 0.3s; /* TO BE FIXED */
-}
-
-#news-box-section /* a news box section */
-{
-    margin-top: 10px;
-}
-#news-box /* a news box */
-{
-    border-radius: 10px;
-    background-color: var(--background-colour);
-    display: flex;
-    margin-bottom: 20px;
-}
-#news-box-img /* a news box (part of it) */
-{
-    padding: 15px;
-    width: auto;
-    height: auto;
-}
-#news-box-text /* a news box (part of it) */
-{
-    font-size: var(--body-text);
-    padding: 10px;
 }
 
 /* Try and used existing css if possible */

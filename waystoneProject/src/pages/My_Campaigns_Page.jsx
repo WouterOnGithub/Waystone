@@ -53,72 +53,52 @@ function My_Campaigns_Page()
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
             </div>
 
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
             </div>
 
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
            </div>
           </div>
 
           {/* The ALL campaigns section */}
           <b>All Campaigns</b>
-          {/* First row */}
           <div id="box-section">
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
             </div>
 
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
             </div>
 
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
             </div>
 
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
            </div>
-          </div>
-          {/* Second row */}
-          <div id="box-section">
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"></div>
-            </div>
 
-            {/* Extra placeholder boxes, later to be removed */}
+           {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"></div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
            </div>
           </div>
 
@@ -126,25 +106,25 @@ function My_Campaigns_Page()
           <div id="box-section">
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
             </div>
 
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
             </div>
 
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
             </div>
 
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
-              <div id="box"></div>
+              <div id="box"> <button>Archive</button> </div>
            </div>
           </div>
         </div>

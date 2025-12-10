@@ -1,0 +1,22 @@
+#news-box-section /* a news box section */
+{
+    margin-top: 10px;
+}
+#news-box /* a news box */
+{
+    border-radius: 10px;
+    background-color: var(--background-colour);
+    display: flex;
+    margin-bottom: 20px;
+}
+#news-box-img /* a news box (part of it) */
+{
+    padding: 15px;
+    width: auto;
+    height: auto;
+}
+#news-box-text /* a news box (part of it) */
+{
+    font-size: var(--body-text);
+    padding: 10px;
+}
