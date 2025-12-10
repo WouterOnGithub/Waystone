@@ -2,6 +2,7 @@
 {
     border-radius: 10px;
     background: var(--background-colour);
+    display: flex;
     padding: 20px;
     margin-bottom: 30px;
 }
@@ -15,13 +16,14 @@
     height: 150px; /* later replaced by: height: 25%; */
     width: 150px; /* later replaced by: width: 25%; */
     padding: 20px;
+    margin-right: 500px;
 }
-
 #Edit_Logo
 {
+    float: right;
     height: 50px; /* later replaced by: height: auto; */
     width: 50px; /* later replaced by: width: auto; */
-    padding: 20px;
+    padding: 0;
 }
 
 #account-notes b

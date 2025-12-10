@@ -45,9 +45,10 @@ function Main_Page()
             <div id="account-box">
                 <div>
                     <img src={Placeholder} alt="Account_Profile" id="Account_Profile" />
-                    <img src={Edit_Logo} alt="Edit_Logo" id="Edit_Logo" />
                 </div>
                 <div>
+                    <img src={Edit_Logo} alt="Edit_Logo" id="Edit_Logo" />
+                    <br />
                     <b>Username_Placeholder</b>
                     <p>
                         This is a very long description that displays whatever text the account user put in, this will be repeated.
