@@ -50,7 +50,7 @@ nav a /* Navigation Side-bar links */
 
 #title /* The green_ bar where the page type (welcome, account, new campaign, etc.)  */
 {
-    border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px; /* Needs to be fixed */
     background: var(--background-gradient);
     width: 100%;
     height: 140px;
@@ -65,7 +65,7 @@ nav a /* Navigation Side-bar links */
 
 #content /* Gray section under the green_ bar */
 {
-    border-top-left-radius: 10px;
+    border-top-left-radius: 10px; /* Needs to be fixed */
     background-color: var(--background-colour2);
     font-size: var(--head-text);
     margin-top: 100px;

@@ -26,10 +26,11 @@ function Main_Page()
       </nav>
 
       <div id="main">
+        {/* The green bar at the top of the page */}
         <div id="title">
           <p>Welcome</p>
         </div>
-
+        {/* The campaigns section */}
         <div id="content">
           <p>Recent Campaigns</p>
 
@@ -44,11 +45,13 @@ function Main_Page()
               <div id="box"></div>
             </div>
 
+            {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
               <div id="box"></div>
             </div>
 
+            {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
               <div id="box"></div>
@@ -75,6 +78,7 @@ function Main_Page()
               </div>
             </div>
 
+            {/* Extra placeholder boxes, later to be removed */}
             <div id="news-box">
               <img src={Placeholder} alt="NewsImages" id="news-box-img" />
               <div id="news-box-text">
