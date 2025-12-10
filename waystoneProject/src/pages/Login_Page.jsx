@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
 import Waystone_Logo from "../assets/Waystone_logo.png";
+import PlaceholderImage from "../assets/PlaceholderImage.jpg";
 
 function Login_Page() {
   return (
@@ -40,9 +41,12 @@ function Login_Page() {
       </div>
 
       {/* Right side: image background + logo */}
-      <div id="login-image-section">
-        <img src={Waystone_Logo} alt="Waystone Logo" id="login-logo" />
-      </div>
+      <div
+                  id="login-image-section"
+                  style={{ backgroundImage: `url(${PlaceholderImage})` }}
+              >
+                  <img src={Waystone_Logo} alt="Waystone Logo" id="login-logo" />
+        </div>
 
     </div>
   );
