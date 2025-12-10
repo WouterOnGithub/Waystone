@@ -11,29 +11,36 @@ function My_Campaigns_Page()
   return (
     <div>
       <nav>
+        <br />
         <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
         <br />
-        <Link to="/">account</Link>
+        <br />
+        <br />
+        <Link to="/">Account</Link>
+        <br />
         <br />
         <Link to="/">My Campaigns</Link>
         <br />
+        <br />
         <Link to="/">New Campaign</Link>
         <br />
-        <Link to="/">settings</Link>
+        <br />
+        <Link to="/">Settings</Link>
         <img src={Settings_Logo} alt="Settings_Logo" id="Settings_Logo" />
         <br />
-        <Link to="/">help</Link>
+        <br />
+        <Link to="/">Help</Link>
       </nav>
 
       <div id="main">
         {/* The green bar at the top of the page */}
         <div id="title">
-          <p>Welcome</p>
+          <p>My Campaigns</p>
         </div>
 
-        {/* The campaigns section */}
+        {/* The RECENT campaigns section */}
         <div id="content">
-          <p>Recent Campaigns</p>
+          <b>Recent Campaigns</b>
 
           <div id="box-section">
             <div id="box-text">
@@ -41,11 +48,6 @@ function My_Campaigns_Page()
               <div id="box"></div>
             </div>
 
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"></div>
-            </div>
-
             {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
@@ -57,10 +59,17 @@ function My_Campaigns_Page()
               <p>Project_name &nbsp;</p>
               <div id="box"></div>
             </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+           </div>
           </div>
-          </div>
+
         </div>
       </div>
+    </div>
   );
 }
 

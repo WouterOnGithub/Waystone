@@ -10,20 +10,29 @@ function Main_Page()
 {
   return (
     <div>
+      <div className="navigation">
       <nav>
+        <br />
         <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
         <br />
-        <Link to="/">account</Link>
+        <br />
+        <br />
+        <Link to="/">Account</Link>
+        <br />
         <br />
         <Link to="/">My Campaigns</Link>
         <br />
+        <br />
         <Link to="/">New Campaign</Link>
         <br />
-        <Link to="/">settings</Link>
+        <br />
+        <Link to="/">Settings</Link>
         <img src={Settings_Logo} alt="Settings_Logo" id="Settings_Logo" />
         <br />
-        <Link to="/">help</Link>
+        <br />
+        <Link to="/">Help</Link>
       </nav>
+      </div>
 
       <div id="main">
         {/* The green bar at the top of the page */}
@@ -32,7 +41,7 @@ function Main_Page()
         </div>
         {/* The campaigns section */}
         <div id="content">
-          <p>Recent Campaigns</p>
+          <b>Recent Campaigns</b>
 
           <div id="box-section">
             <div id="box-text">
@@ -40,6 +49,7 @@ function Main_Page()
               <div id="box"></div>
             </div>
 
+            {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
               <div id="box"></div>
@@ -59,7 +69,7 @@ function Main_Page()
           </div>
 
           <br />
-          <p>News</p>
+          <b>News</b>
 
           <div id="news-box-section">
             <div id="news-box">
