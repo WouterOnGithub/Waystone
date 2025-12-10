@@ -10,6 +10,7 @@
     --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
+    --background-color4: #303030;
     --projectbox-colour: #E7D665; /* Other 2 colours are: #D34848 and #447DC9 */
 
     font-family: Garamond, serif, cursive;
@@ -61,7 +62,7 @@ nav a:hover
 
 #title /* The green_ bar where the page type (welcome, account, new campaign, etc.)  */
 {
-    border-bottom-left-radius: 10px; /* Needs to be fixed */
+    border-bottom-left-radius: 10px;
     background: var(--background-gradient);
     width: 100%;
     height: auto;
@@ -76,7 +77,7 @@ nav a:hover
 
 #content /* Gray section under the green_ bar */
 {
-    border-top-left-radius: 10px; /* Needs to be fixed */
+    border-top-left-radius: 10px; 
     background-color: var(--background-colour2);
     font-size: var(--head-text);
     margin-top: 100px;
@@ -107,10 +108,27 @@ nav a:hover
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: var(--background-colour);
+    text-align: right;
     margin-left: 30px;
     height: 40px;
     width: 250px;
     height: 40px;
+}
+#box button
+{
+    background-color: var(--background-color4);
+    color: var(--text-color2);
+    font-size: var(--body-text);
+    border: none;
+    padding: 2px;
+    margin-right: 10px;
+}
+#box button:hover
+{
+    background-color: var(--background-colour);
+    color: var(--text-color);
+    text-decoration: underline;
+    transform: 0.3s; /* TO BE FIXED */
 }
 
 #news-box-section /* a news box section */

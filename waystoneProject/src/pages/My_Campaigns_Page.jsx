@@ -40,10 +40,63 @@ function My_Campaigns_Page()
           <p>My Campaigns</p>
         </div>
 
-        {/* The RECENT campaigns section */}
         <div id="content">
-          <b>Recent Campaigns</b>
 
+          {/* The RECENT campaigns section */}
+          <b>Recent Campaigns</b>
+          <div id="box-section">
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"> <button>Archive</button> </div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+           </div>
+          </div>
+
+          {/* The ALL campaigns section */}
+          <b>All Campaigns</b>
+          {/* First row */}
+          <div id="box-section">
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+           </div>
+          </div>
+          {/* Second row */}
           <div id="box-section">
             <div id="box-text">
               <p>Project_name &nbsp;</p>
@@ -69,6 +122,31 @@ function My_Campaigns_Page()
            </div>
           </div>
 
+          <b>Free Campaigns</b>
+          <div id="box-section">
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+            </div>
+
+            {/* Extra placeholder boxes, later to be removed */}
+            <div id="box-text">
+              <p>Project_name &nbsp;</p>
+              <div id="box"></div>
+           </div>
+          </div>
         </div>
       </div>
     </div>
