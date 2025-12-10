@@ -70,6 +70,7 @@ function Main_Page()
             <br />
             <br />
             <div id="account-notes">
+                {/* Notes section */}
                 <b>Notes</b>
                 <form>
                     <textarea placeholder="Enter you notes here ..."></textarea>

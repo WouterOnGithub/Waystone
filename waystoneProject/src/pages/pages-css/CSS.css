@@ -149,11 +149,14 @@ nav a:hover
     padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 #button-green:hover
 {
     color: var(--text-color2);
     transition: 0.5s;
+    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
+    transform: translateY(-2px);
 }
 
 /* Try and used existing css if possible */
