@@ -233,14 +233,16 @@ nav a:hover
 
 /* RIGHT PANEL WITH IMAGE */
 #login-image-section {
-  flex: 1;  /* <-- vult ALLE resterende ruimte op, geen gaps meer */
+ flex: 1;
+  height: 100%;
+  min-height: 100vh;
 
-  background-color: white;
-  background-image: url("../assets/login_image.webp");
-  background-size: 120%;   /* <-- zodat de afbeelding mooi centraal blijft */
+  background-image: url("../assets/login_image.webp"); /* jouw achtergrond hier */
+  background-size: cover;       /* vult de hele rechterkant */
+  background-position: center;  /* centreert de foto */
   background-repeat: no-repeat;
-  background-position: center; /* <-- centreert verticaal én horizontaal */
 
+  background-color: white;      /* fallback */
   position: relative;
 }
 

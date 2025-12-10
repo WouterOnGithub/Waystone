@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
-import Waystone_Logo from "../assets/login_image.webp";
+import Waystone_Logo from "../assets/Waystone_logo.png";
 
 function Login_Page() {
   return (
