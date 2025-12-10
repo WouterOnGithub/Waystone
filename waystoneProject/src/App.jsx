@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 /* Not completed */
 {/* import Settings_Page from "./pages/Settings_Page" */}
 import Login_Page from "./pages/Login_Page"; 
-{/* import Register_Page from "./pages/Register_Page" */}
+import Register_Page from "./pages/Register_Page"; 
 
 import Main_Page from "./pages/Main_Page";
 import Account_Page from "./pages/Account_Page";
@@ -47,7 +47,7 @@ function App()
             <Routes>
                 {/* <Route path="/user/Settings_Page" element={<Settings_Page />} /> */}
                 { <Route path="/user/Login_Page" element={<Login_Page />} /> }
-                {/* <Route path="/user/Register_Page" element={<Register_Page />} /> */}
+                { <Route path="/user/Register_Page" element={<Register_Page />} /> }
                 
                 <Route path="/" element={<Main_Page />} /> {/* Opens the site on this page, later the login page ! */}
                 <Route path="/user/Account_Page" element={<Account_Page />} />
