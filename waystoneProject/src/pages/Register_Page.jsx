@@ -35,11 +35,11 @@ function Login_Page() {
           className="login-input"
         />
 
-        <Link to="/login" id="register-login-link">
+        <Link to="/Login_Page" id="login-register-link">
         I already have an account
         </Link>
 
-        <button id="login-button">Enter</button>
+        <Link to="/Main_Page"><button id="login-button">Enter</button></Link>
       </div>
 
       {/* Right side: image background + logo */}
