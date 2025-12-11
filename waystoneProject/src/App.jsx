@@ -2,19 +2,19 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 /* Not completed */
-{/* import Settings_Page from "./pages/Settings_Page" */}
-{/* import Login_Page from "./pages/Login_Page" */}
-{/* import Register_Page from "./pages/Register_Page" */}
+import Settings_Page from "./pages/Settings_Page"
+import Login_Page from "./pages/Login_Page"; 
+import Register_Page from "./pages/Register_Page"; 
 
 import Main_Page from "./pages/Main_Page";
-{/* import Account_Page from "./pages/Account_Page" */}
-{/* import Account_Page_EDIT from "./pages/Account_Page_EDIT" */}
+import Account_Page from "./pages/Account_Page"
+import Account_Page_EDIT from "./pages/Account_Page_EDIT"
 import My_Campaigns_Page from "./pages/My_Campaigns_Page"
 
-{/* import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN" */}
+import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN"
 {/* import New_Campaign_Page_EVENTS from "./pages/New_Campaign_Page_EVENTS" */}
 {/* import New_Campaign_Page_CHARACTERS from "./pages/New_Campaign_Page_CHARACTERS" */}
-{/* import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER" */}
+import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER" 
 
 {/* import Add_Building_Region from "./pages/Add_Building_Region" */}
 {/* import Add_Location from "./pages/Add_Location" */}
@@ -45,19 +45,19 @@ function App()
     <Router>
         <div className="App">
             <Routes>
-                {/* <Route path="/user/Settings_Page" element={<Settings_Page />} /> */}
-                {/* <Route path="/user/Login_Page" element={<Login_Page />} /> */}
-                {/* <Route path="/user/Register_Page" element={<Register_Page />} /> */}
+                <Route path="/user/Settings_Page" element={<Settings_Page />} />
+                { <Route path="/user/Login_Page" element={<Login_Page />} /> }
+                { <Route path="/user/Register_Page" element={<Register_Page />} /> }
                 
                 <Route path="/" element={<Main_Page />} /> {/* Opens the site on this page, later the login page ! */}
-                {/* <Route path="/user/Account_Page" element={<Account_Page />} /> */}
-                {/* <Route path="/user/Account_Page_EDIT" element={<Account_Page_EDIT />} /> */}
+                <Route path="/user/Account_Page" element={<Account_Page />} />
+                <Route path="/user/Account_Page_EDIT" element={<Account_Page_EDIT />} />
                 <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} />
                 
-                {/* <Route path="/user/New_Campaign_Page_CAMPAIGN" element={<New_Campaign_Page_CAMPAIGN />} /> */}
+                <Route path="/user/New_Campaign_Page_CAMPAIGN" element={<New_Campaign_Page_CAMPAIGN />} />
                 {/* <Route path="/user/New_Campaign_Page_EVENTS" element={<New_Campaign_Page_EVENTS />} /> */}
                 {/* <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} /> */}
-                {/* <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} /> */}
+                <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} />
                 
                 {/* <Route path="/user/Add_Building_Region" element={<Add_Building_Region />} /> */}
                 {/* <Route path="/user/Add_Location" element={<Add_Location />} /> */}

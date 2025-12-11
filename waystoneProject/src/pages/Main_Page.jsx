@@ -1,45 +1,20 @@
-/* Not completed, currently working */
+/* Complete */
 import React from "react";
-import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import Settings_Logo from "../assets/PlaceholderImage.jpg";
+import "./pages-css/Main_Page.css";
 import Placeholder from "../assets/PlaceholderImage.jpg";
+import Sidebar from "../components/UI/Sidebar";
+import Header from "../components/UI/Header";
+import Footer from "../components/UI/Footer";
 
-function Main_Page() 
-{
+function Main_Page() {
   return (
-    <div>
-      <div className="navigation">
-      <nav>
-        <br />
-        <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
-        <br />
-        <br />
-        <br />
-        <Link to="/">Account</Link>
-        <br />
-        <br />
-        <Link to="/">My Campaigns</Link>
-        <br />
-        <br />
-        <Link to="/">New Campaign</Link>
-        <br />
-        <br />
-        <Link to="/">Settings</Link>
-        <img src={Settings_Logo} alt="Settings_Logo" id="Settings_Logo" />
-        <br />
-        <br />
-        <Link to="/">Help</Link>
-      </nav>
-      </div>
+    <div className="page-layout">
+      <Sidebar />
 
-      <div id="main">
-        {/* The green bar at the top of the page */}
-        <div id="title">
-          <p>Welcome</p>
-        </div>
-        {/* The campaigns section */}
+      <div className="main-wrapper">
+        <Header title="Welcome" />
+
         <div id="content">
           <b>Recent Campaigns</b>
 
@@ -49,19 +24,16 @@ function Main_Page()
               <div id="box"></div>
             </div>
 
-            {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
               <div id="box"></div>
             </div>
 
-            {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
               <div id="box"></div>
             </div>
 
-            {/* Extra placeholder boxes, later to be removed */}
             <div id="box-text">
               <p>Project_name &nbsp;</p>
               <div id="box"></div>
@@ -88,7 +60,6 @@ function Main_Page()
               </div>
             </div>
 
-            {/* Extra placeholder boxes, later to be removed */}
             <div id="news-box">
               <img src={Placeholder} alt="NewsImages" id="news-box-img" />
               <div id="news-box-text">
@@ -106,6 +77,8 @@ function Main_Page()
             </div>
           </div>
         </div>
+
+        <Footer />
       </div>
     </div>
   );

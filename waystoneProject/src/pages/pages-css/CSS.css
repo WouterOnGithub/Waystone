@@ -5,17 +5,48 @@
     --body-text: 20px;
     --text-color: #303030;
     --text-color2: #ffffff;
+    --text-color3: rgba(80, 111, 23, 1);
     --background-gradient: radial-gradient(circle, rgba(80, 111, 23, 1) 50%, rgba(44, 65, 7, 1) 100%);
     --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
+    --background-color4: #303030;
     --projectbox-colour: #E7D665; /* Other 2 colours are: #D34848 and #447DC9 */
+    --form-box-colour: #E0E0E0;
+    --border-radius: 10px;
+    --border-radius2: 5px;
 
     font-family: Garamond, serif, cursive;
     overflow-x: hidden;
     color: var(--text-color);
+    font-size: var(--body-text);
     margin: 0;
 }
+
+/* Scollbar for EVERY PAGE */
+::-webkit-scrollbar 
+{
+  width: 15px;
+}
+::-webkit-scrollbar-track 
+{
+  background: var(--background-colour);
+  box-shadow: inset 0 0 7px var(--background-color4); 
+}
+::-webkit-scrollbar-thumb 
+{
+    border-radius: var(--border-radius);
+    background: rgba(80, 111, 23, 1);
+    box-shadow: inset 0 0 10px rgba(44, 65, 7, 1);
+    height: 20px;
+}
+::-webkit-scrollbar-thumb:hover 
+{
+    background: rgb(118, 160, 39);
+    cursor: grab;
+    transition: 0.3s;
+}
+
 .navigation /* Navigation Side-bar */
 {
     background: var(--background-colour);
@@ -35,10 +66,17 @@ nav a /* Navigation Side-bar links */
     font-size: var(--head-text);
     color: var(--text-color);
 }
+nav a:hover
+{
+    color: var(--text-color3);
+    text-decoration: underline;
+    transition: 0.3s;
+}
 #Waystone_Logo
 {
     /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
     width: 70%;
+    height: 250px;
 }
 #Settings_Logo
 {
@@ -49,11 +87,12 @@ nav a /* Navigation Side-bar links */
 #main /* the whole page minus the navigation */
 {
     margin-left: 350px; /* = nav width */
+    background-color: var(--background-colour);
 }
 
 #title /* The green_ bar where the page type (welcome, account, new campaign, etc.)  */
 {
-    border-bottom-left-radius: 10px; /* Needs to be fixed */
+    border-bottom-left-radius: var(--border-radius);
     background: var(--background-gradient);
     width: 100%;
     height: auto;
@@ -68,26 +107,35 @@ nav a /* Navigation Side-bar links */
 
 #content /* Gray section under the green_ bar */
 {
-    border-top-left-radius: 10px; /* Needs to be fixed */
+    border-top-left-radius: var(--border-radius); 
     background-color: var(--background-colour2);
-    font-size: var(--head-text);
     margin-top: 100px;
     padding: 30px;
+    margin-right: 500px;
+    width: 5000px;
+}
+#content b
+{
+    font-size: var(--head-text);
 }
 
 #box-section /* a card box section (first used for My Campaigns at the Main_Page) */
 {
     margin-bottom: 20px;
     display: flex;
+    flex-wrap: wrap;
 }
-
+#box-text
+{
+    margin-left: -10px;
+    margin-bottom: 20px;
+}
 #box-text p /* a card box section (first used for My Campaigns at the Main_Page) */
 {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
     background-color: var(--projectbox-colour);
     color: var(--text-color2);
-    font-size: var(--body-text);
     text-align: right;
     margin-left: 30px;
     margin-top: 10px;
@@ -96,37 +144,92 @@ nav a /* Navigation Side-bar links */
 }
 #box /* a card box (part of it) (first used for My Campaigns at the Main_Page) */
 {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
     background-color: var(--background-colour);
+    text-align: right;
     margin-left: 30px;
     height: 40px;
     width: 250px;
     height: 40px;
 }
-
-#news-box-section /* a news box section */
+#box button /* Archive button */
 {
-    margin-top: 10px;
+    background-color: var(--background-color4);
+    color: var(--text-color2);
+    border: none;
+    padding: 2px;
+    margin: 5px;
+    margin-right: 7px;
 }
-#news-box /* a news box */
+#box button:hover /* Archive button */
 {
-    border-radius: 10px;
     background-color: var(--background-colour);
-    display: flex;
-    margin-bottom: 20px;
+    color: var(--text-color);
+    text-decoration: underline;
+    transition: 0.3s; 
 }
-#news-box-img /* a news box (part of it) */
+
+#button-green /* All green_ buttons button */
 {
-    padding: 15px;
-    width: auto;
-    height: auto;
-}
-#news-box-text /* a news box (part of it) */
-{
-    font-size: var(--body-text);
+    border-radius: var(--border-radius);
+    background: var(--background-gradient);
+    font-weight: bold;
+    border: none;
     padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-right: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+#button-green:hover /* All green_ buttons button */
+{
+    color: var(--text-color2);
+    transition: 0.5s;
+    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
+    transform: translateY(-2px);
+}
+
+/* input boxes */
+#UploadIMG_Logo
+{
+    border-radius: 200px;
+    cursor: pointer;
+    height: 250px; /* later replaced by: height: 40%; */
+    width: 250px; /* later replaced by: width: 40%; */
+    margin-right: 5000px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+#UploadIMG_Logo:hover
+{
+    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
+    transform: translateY(-2px);
+}
+#Required_Logo
+{
+    height: 25px; /* later replaced by: height: auto; */
+    width: 25px; /* later replaced by: width: auto; */
+}
+/* Gray input boxes */
+#input-box-gray input, #input-box-gray textarea
+{
+    border-radius: var(--border-radius2);
+    background: var(--form-box-colour);
+    border: none;
+    width: 300px;
+    height: 35px;
+    padding: 5px;
+    padding-left: 10px;
+}
+#input-box-gray textarea
+{
+    width: 600px;
+    height: 200px;
+}
+/* White input boxes */
+
+
 
 /* Try and used existing css if possible */
-/* Add more necessary CSS here */
+/* Add more necessary *shared* CSS here */
+/* Seperate css only need for 1 or 2 pages */
