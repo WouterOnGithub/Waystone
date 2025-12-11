@@ -228,6 +228,20 @@ nav a:hover
 }
 /* White input boxes */
 
+.campaigns-page {
+    display: flex;
+    background: var(--background-colour);
+    min-height: 100vh;
+}
+
+.campaigns-shell {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--background-colour);
+    display: flex;
+    flex-direction: column;
+}
+
 
 
 /* Try and used existing css if possible */
