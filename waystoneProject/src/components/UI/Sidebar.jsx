@@ -32,7 +32,7 @@ function Sidebar() {
         <Link to="/user/New_Campaign_Page_CAMPAIGN">New Campaign</Link>
         <br />
         <br />
-        <Link to="">Settings</Link>
+        <Link to="/user/Settings_Page">Settings</Link>
         <br />
         <br />
         <Link to="/">Help</Link>
