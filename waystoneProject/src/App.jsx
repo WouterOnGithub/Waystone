@@ -16,7 +16,7 @@ import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN"
 {/* import New_Campaign_Page_CHARACTERS from "./pages/New_Campaign_Page_CHARACTERS" */}
 import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER" 
 
-{/* import Add_Building_Region from "./pages/Add_Building_Region" */}
+import Add_Building_Region from "./pages/Add_Building_Region"
 import Add_Location from "./pages/Add_Location"
 {/* import Add_Container from "./pages/Add_Container" */}
 {/* import Add_Item from "./pages/Add_Item" */}
@@ -59,7 +59,7 @@ function App()
                 {/* <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} /> */}
                 <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} />
                 
-                {/* <Route path="/user/Add_Building_Region" element={<Add_Building_Region />} /> */}
+                <Route path="/user/Add_Building_Region" element={<Add_Building_Region />} /> 
                 <Route path="/user/Add_Location" element={<Add_Location />} /> 
                 {/* <Route path="/user/Add_Container" element={<Add_Container />} /> */}
                 {/* <Route path="/user/Add_Item" element={<Add_Item />} /> */}
