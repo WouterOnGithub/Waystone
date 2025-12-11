@@ -203,6 +203,10 @@ nav a:hover
     color: var(--text-color2);
     font-weight: bold;
 }
+#addview-green-bar button /* Delete button inside green_ bars in add & view pages */
+{
+    float: right;
+}
 
 /* input boxes */
 #button-icons
@@ -242,8 +246,6 @@ nav a:hover
 {
     height: 30px; 
     width: 30px; 
-    float: right;
-    margin-left: 210px;
 }
 /* Gray input boxes */
 #input-box-gray input, #input-box-gray textarea
