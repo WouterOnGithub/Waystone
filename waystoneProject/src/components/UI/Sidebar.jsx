@@ -1,12 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Waystone_Logo from "../../assets/Waystone_Logo.png"; // adjust path if needed
 
 function Sidebar() {
+  const navigate = useNavigate();
+
   return (
     <div className="navigation">
       <nav>
         <br />
-        <img src={Waystone_Logo} alt="Waystone Logo" id="Waystone_Logo" />
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => navigate("/")}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") navigate("/");
+          }}
+          style={{ display: "inline-block", cursor: "pointer" }}
+          aria-label="Go to main page"
+        >
+          <img src={Waystone_Logo} alt="Waystone Logo" id="Waystone_Logo" />
+        </div>
         <br />
         <br />
         <br />
