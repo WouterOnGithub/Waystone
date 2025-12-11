@@ -24,15 +24,15 @@ function View_Item()
             <p>
                 Small, not very sturdy
             </p>
-            <br /><br />
+            <br />
 
             {/* Examples of an effect */}
-            <div id="addview-green-bar">
-                <b>Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
+
+            <div id="view-title-box">
+                <b id="view-title">EFFECTS</b>
             </div>
-            <div id="addview-green-bar">
-                <b>Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
-            </div>
+            <p id="view-title">Effect_name</p>
+
             <br /><br />
 
             {/* Examples of a bonus effect */}

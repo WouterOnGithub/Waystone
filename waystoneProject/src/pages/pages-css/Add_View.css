@@ -53,3 +53,15 @@
     width: 350px;
     height: 150px;
 }
+#view-title-box
+{
+    border-radius: var(--border-radius2);
+    background: var(--background-gradient);
+    text-align: center;
+    width: 200px;
+}
+#view-title
+{
+    color: var(--text-color2);
+    padding: 2px; 
+}
