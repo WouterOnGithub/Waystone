@@ -19,7 +19,7 @@ function Sidebar() {
         <Link to="/user/New_Campaign_Page_CAMPAIGN">New Campaign</Link>
         <br />
         <br />
-        <Link to="/user/Account_Page_EDIT">Settings</Link>
+        <Link to="">Settings</Link>
         <br />
         <br />
         <Link to="/">Help</Link>

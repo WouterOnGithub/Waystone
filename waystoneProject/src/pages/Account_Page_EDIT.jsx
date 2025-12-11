@@ -53,7 +53,7 @@ function Account_Page_EDIT()
                     <label htmlFor="name"><b>Name</b></label><br />
                     <input type="text" id="name" defaultValue="John Doe"/>
                     <br /><br />
-                    <label htmlFor="nickname"><b>Nichname</b></label> <img src={Required_Logo} alt="Required_Logo" id="Required_Logo" /><br />
+                    <label htmlFor="nickname"><b>Nickname</b></label> <img src={Required_Logo} alt="Required_Logo" id="Required_Logo" /><br />
                     <input type="text" id="nickname" value="DM_0124" required/>
                     <br /><br />
                     <label htmlFor="introduction"><b>Introduction</b> (max. 150 characters)</label><br />

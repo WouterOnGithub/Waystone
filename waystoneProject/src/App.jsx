@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 /* Not completed */
-{/* import Settings_Page from "./pages/Settings_Page" */}
+import Settings_Page from "./pages/Settings_Page"
 import Login_Page from "./pages/Login_Page"; 
 import Register_Page from "./pages/Register_Page"; 
 
@@ -45,7 +45,7 @@ function App()
     <Router>
         <div className="App">
             <Routes>
-                {/* <Route path="/user/Settings_Page" element={<Settings_Page />} /> */}
+                <Route path="/user/Settings_Page" element={<Settings_Page />} />
                 { <Route path="/user/Login_Page" element={<Login_Page />} /> }
                 { <Route path="/user/Register_Page" element={<Register_Page />} /> }
                 
