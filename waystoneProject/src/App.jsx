@@ -35,6 +35,8 @@ import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER"
 {/* import Map_Building_Region from "./pages/Map_Building_Region" */}
 {/* import Map_Battle_View from "./pages/Map_Battle_View" */}
 
+import BattleMapTest from './pages/battleMapTest';
+
 
 /* (temporary) TO VISIT A PAGE: http://localhost:5173/user/[PAGE NAME] */
 
@@ -77,6 +79,8 @@ function App()
                 {/* <Route path="/user/Map_Location" element={<Map_Location />} /> */}
                 {/* <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} /> */}
                 {/* <Route path="/user/Map_Battle_View" element={<Map_Battle_View />} /> */}
+
+                <Route path="/battleMapTest" element={<BattleMapTest/>} />
             </Routes>
         </div>
     </Router>
