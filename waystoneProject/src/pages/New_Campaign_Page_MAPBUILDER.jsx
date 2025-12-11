@@ -1,109 +1,87 @@
 import React from "react";
-import Sidebar from "../components/UI/Sidebar.jsx";
-import Footer from "../components/UI/Footer.jsx";
 import "./pages-css/CSS.css";
+import "./pages-css/Main_Page.css";
+import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
+import Footer from "../components/UI/Footer";
+import Header from "../components/UI/Header";
+import Sidebar from "../components/UI/Sidebar";
 
-export default function NewCampaign() {
+function New_Campaign_Page_MAPBUILDER() {
   return (
-    <>
+    <div className="campaign-page">
       <Sidebar />
 
-      <div id="main">
+      <div className="campaign-main">
+        <Header title="New Campaign" />
+        <div className="campaign-body">
 
-        {/* GREEN TITLE BAR */}
-        <div id="title">
-          <p>New Campaign</p>
+        <div className="campaign-tabs">
+            <button className="campaign-tab active">Campaign</button>
+            <button className="campaign-tab">Map Builder</button>
+            <button className="campaign-tab">Characters</button>
         </div>
 
-        {/* PAGE CONTENT */}
-        <div id="content">
+          {/* MAIN MAP BUILDER CARD */}
+          <div className="campaign-card">
 
-          {/* TAB BUTTONS */}
-          <div style={{ display: "flex", gap: "15px", marginBottom: "30px" }}>
-            <button id="button-green">Campaign</button>
-            <button id="button-green">Map Builder</button>
-            <button id="button-green">Characters</button>
-          </div>
-
-          {/* TEMPLATES DROPDOWN */}
-          <div style={{ marginBottom: "20px" }}>
-            <label><b>Templates</b></label>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <select style={{ padding: "10px", borderRadius: "5px" }}>
-                <option>Select template…</option>
-              </select>
-              <span style={{ fontSize: "25px" }}>⬇️</span>
-            </div>
-          </div>
-
-          {/* IMPORT MAP */}
-          <div style={{ marginBottom: "20px" }}>
-            <label><b>Import Main Map</b></label>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <input type="file" />
-              <span style={{ fontSize: "25px" }}>⬆️</span>
-            </div>
-          </div>
-
-          {/* MAP PREVIEW */}
-          <div
-            style={{
-              width: "80%",
-              height: "250px",
-              background: "#bfbfbf",
-              border: "3px solid #ffffff",
-              margin: "30px auto",
-              position: "relative"
-            }}
-          >
-            <div
-              style={{
-                fontSize: "40px",
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
-              }}
-            >
-              ⬆️
-            </div>
-          </div>
-
-          {/* LOCATION BUTTONS */}
-          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            <button id="button-green">Add Location</button>
-            <button id="button-green">Show</button>
-          </div>
-
-          {/* MORE BUTTONS */}
-          <div style={{ marginTop: "30px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <button id="button-green">Add Building/Region</button>
-              <button id="button-green">Show</button>
+            {/* Templates Dropdown */}
+            <div className="campaign-field">
+              <label className="campaign-label">Templates</label>
+              <div className="mapbuilder-row">
+                <select className="mapbuilder-select">
+                  <option>Select template...</option>
+                </select>
+                <span className="mapbuilder-icon">⬇️</span>
+              </div>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "15px" }}>
-              <button id="button-green">Add event</button>
-              <button id="button-green">Show</button>
+            {/* Upload Main Map */}
+            <div className="campaign-field">
+              <label className="campaign-label">Import Main Map</label>
+              <div className="mapbuilder-row">
+                <input type="file" className="mapbuilder-file" />
+                <span className="mapbuilder-icon">⬆️</span>
+              </div>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "15px" }}>
-              <button id="button-green">Add Container</button>
-              <button id="button-green">Show</button>
+            {/* Map preview box */}
+            <div className="mapbuilder-preview">
+              <div className="mapbuilder-preview-icon">⬆️</div>
             </div>
-          </div>
 
-          {/* SAVE BUTTON */}
-          <div style={{ marginTop: "40px" }}>
-            <button id="button-green">Save and continue</button>
-          </div>
+            {/* Add buttons */}
+            <div className="mapbuilder-button-row">
+              <button className="campaign-pill">Add Location</button>
+              <button className="campaign-pill">Show</button>
+            </div>
 
+            <div className="mapbuilder-button-row">
+              <button className="campaign-pill">Add Building/Region</button>
+              <button className="campaign-pill">Show</button>
+            </div>
+
+            <div className="mapbuilder-button-row">
+              <button className="campaign-pill">Add Event</button>
+              <button className="campaign-pill">Show</button>
+            </div>
+
+            <div className="mapbuilder-button-row">
+              <button className="campaign-pill">Add Container</button>
+              <button className="campaign-pill">Show</button>
+            </div>
+
+            {/* Save */}
+            <div className="campaign-actions">
+              <button className="campaign-save">Save and continue</button>
+            </div>
+
+          </div>
         </div>
 
-        
         <Footer />
-        
       </div>
-    </>
+    </div>
   );
 }
+
+export default New_Campaign_Page_MAPBUILDER;

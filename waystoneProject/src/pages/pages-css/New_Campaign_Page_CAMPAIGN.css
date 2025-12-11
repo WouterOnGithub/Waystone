@@ -143,3 +143,48 @@
   filter: brightness(1.05);
 }
 
+/*MAPBUILDER*/
+.mapbuilder-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mapbuilder-select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #999;
+}
+
+.mapbuilder-file {
+  padding: 6px;
+}
+
+.mapbuilder-icon {
+  font-size: 26px;
+  user-select: none;
+}
+
+.mapbuilder-preview {
+  width: 80%;
+  height: 260px;
+  margin: 30px auto;
+  border: 3px solid #ffffff;
+  background-color: var(--background-colour3);
+  position: relative;
+  border-radius: 10px;
+}
+
+.mapbuilder-preview-icon {
+  position: absolute;
+  font-size: 42px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mapbuilder-button-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 18px;
+}
