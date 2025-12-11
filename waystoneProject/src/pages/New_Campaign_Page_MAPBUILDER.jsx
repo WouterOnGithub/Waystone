@@ -47,7 +47,6 @@ function New_Campaign_Page_MAPBUILDER() {
               <label className="campaign-label">Import Main Map</label>
               <div className="mapbuilder-row">
                 <input type="file" className="mapbuilder-file" />
-                <span className="mapbuilder-icon">⬆️</span>
               </div>
             </div>
 
