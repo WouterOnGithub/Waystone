@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "../components/UI/Sidebar.jsx";
+import Footer from "../components/UI/Footer.jsx";
 import "./CSS.css";
 
 export default function NewCampaign() {
