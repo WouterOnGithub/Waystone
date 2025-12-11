@@ -20,3 +20,25 @@
     font-size: var(--body-text);
     padding: 10px;
 }
+
+/* Layout helpers to work with shared Header/Sidebar components */
+.page-layout {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    background: var(--background-colour);
+}
+
+.main-wrapper {
+    margin-left: 350px; /* clear the fixed sidebar width */
+    flex: 1;
+    min-width: 0;
+    background: var(--background-colour);
+    padding-bottom: 40px;
+}
+
+/* Prevent double left offset on shared header */
+.main-wrapper #main {
+    margin-left: 0;
+    width: 100%;
+}
