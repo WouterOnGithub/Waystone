@@ -1,7 +1,7 @@
 import React from "react";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
-import "./pages-css/NewCampaignPage.css";
+import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
@@ -55,11 +55,11 @@ function New_Campaign_Page_CAMPAIGN() {
 
             <div className="campaign-pill-row">
               <button className="campaign-pill">Add Items</button>
-              <button className="campaign-pill">Show</button>
+              <button className="campaign-pill">Show Current Items</button>
             </div>
 
             <div className="campaign-actions">
-              <button className="campaign-primary">Save and continue</button>
+              <button className="campaign-save">Save and continue</button>
               <button className="campaign-enter">Enter</button>
             </div>
           </div>
