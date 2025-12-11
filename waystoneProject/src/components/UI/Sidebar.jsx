@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Waystone_Logo from '../../assets/Waystone_Logo.png'; // adjust path if needed
 
-const Sidebar = () => {
+function Sidebar(){
   return (
     <div className="navigation">
       <nav>
