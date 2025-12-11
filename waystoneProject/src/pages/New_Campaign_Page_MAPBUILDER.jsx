@@ -99,6 +99,10 @@ export default function NewCampaign() {
           </div>
 
         </div>
+
+        
+        <Footer />
+        
       </div>
     </>
   );
