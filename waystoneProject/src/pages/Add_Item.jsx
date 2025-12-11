@@ -32,25 +32,25 @@ function Add_Item()
             <br />
 
             {/* A way to add an effect by pressing the ADD icon */}
-            <label htmlFor="effects-item"><b>Effects</b></label> <img src={Add_Logo} alt="Add_Logo" id="Add_Logo"/> <br />
+            <label htmlFor="effects-item"><b>Effects</b></label> <button id="button-icons"><img src={Add_Logo} alt="Add_Logo" id="Add_Logo"/></button> <br />
             <input type="text" id="effects-item" hidden/>
             {/* An example of an effect */}
             <div id="addview-green-bar">
-                <b>Effect_name</b> <img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/>
+                <b>Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
             </div>
             <div id="addview-green-bar">
-                <b>Effect_name</b> <img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/>
+                <b>Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
             </div>
             <br /><br />
 
-            <label htmlFor="effects-bonus-item"><b>Bonus-effects</b> <img src={Add_Logo} alt="Add_Logo" id="Add_Logo"/> </label>
+            <label htmlFor="effects-bonus-item"><b>Bonus-effects</b> <button id="button-icons"><img src={Add_Logo} alt="Add_Logo" id="Add_Logo"/></button> </label>
             <input type="text" id="effects-bonus-item" hidden/><br />
             {/* An example of a bonus effect */}
             <div id="addview-green-bar">
-                <b>Bonus-Effect_name</b> <img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/>
+                <b>Bonus-Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
             </div>
             <div id="addview-green-bar">
-                <b>Bonus-Effect_name</b> <img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/>
+                <b>Bonus-Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
             </div>
 
             <br /><br />

@@ -192,7 +192,7 @@ nav a:hover
     background: var(--background-gradient);
     border: none;
     padding: 10px;
-    padding-left: 25px;
+    padding-left: 35px;
     padding-right: 25px;
     margin-right: 20px;
     margin-top: 10px;
@@ -205,6 +205,20 @@ nav a:hover
 }
 
 /* input boxes */
+#button-icons
+{
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    padding-top: 5px;
+}
+#button-icons:hover
+{
+    border: none;
+    transition: .3s;
+    transform: translateY(-2px);
+}
 #UploadIMG_Logo
 {
     border-radius: var(--border-radius);
@@ -228,7 +242,8 @@ nav a:hover
 {
     height: 30px; 
     width: 30px; 
-    float: right
+    float: right;
+    margin-left: 210px;
 }
 /* Gray input boxes */
 #input-box-gray input, #input-box-gray textarea
