@@ -31,17 +31,18 @@ function View_Item()
             <div id="view-title-box">
                 <b id="view-title">EFFECTS</b>
             </div>
-            <p id="view-title">Effect_name</p>
+            <p id="view-body">Effect_name</p>
+            <p id="view-body">Effect_name</p>
+            <p id="view-body">Effect_name</p>
 
-            <br /><br />
+            <br />
 
-            {/* Examples of a bonus effect */}
-            <div id="addview-green-bar">
-                <b>Bonus-Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
+            <div id="view-title-box">
+                <b id="view-title">BONUS - EFFECTS</b>
             </div>
-            <div id="addview-green-bar">
-                <b>Bonus-Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
-            </div>
+            <p id="view-body">Bonus-Effect_name</p>
+            <p id="view-body">Bonus-Effect_name</p>
+            <p id="view-body">Bonus-Effect_name</p>
 
             <br /><br />
                 <button id="button-green">Back</button>

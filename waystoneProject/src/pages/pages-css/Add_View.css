@@ -58,10 +58,14 @@
     border-radius: var(--border-radius2);
     background: var(--background-gradient);
     text-align: center;
-    width: 200px;
+    width: 220px;
 }
 #view-title
 {
     color: var(--text-color2);
     padding: 2px; 
+}
+#view-body
+{
+    margin-left: 20px;
 }
