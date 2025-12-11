@@ -5,6 +5,7 @@ import "./pages-css/Login_Register_Page.css";
 import Waystone_Logo from "../assets/Waystone_logo.png";
 import PlaceholderImage from "../assets/PlaceholderImage.jpg";
 
+/* Editing this page -Henry */
 function Login_Page() {
   return (
     <div id="login-container">
