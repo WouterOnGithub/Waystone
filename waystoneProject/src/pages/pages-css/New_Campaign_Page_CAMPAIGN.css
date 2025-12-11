@@ -26,8 +26,10 @@
 .campaign-tabs {
   display: flex;
   gap: 16px;
-  margin-top: -70px; /* pull tabs up near the header bar */
+  margin-top: 12px;          /* geen negatieve waarde */
   margin-bottom: 24px;
+  position: relative;
+  z-index: 50;
 }
 
 .campaign-tab {
