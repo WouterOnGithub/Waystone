@@ -4,18 +4,16 @@
     --addview-text: 60px;
 }
 
-#addview-page
+#addview-page 
 {
-    position: fixed;
+    overflow-y: auto;
     display: flex;
     justify-content: center;
-    align-items: center;
-    top: 0; 
-    width: 100vw; /* view-width to center the pop-up */
-    height: 100vh; /* view-width to center the pop-up */
-    padding-top: 40px;
-    padding-bottom: 40px; /* Needs to be FIXED */
-    background: rgba(0, 0, 0, 0.1); /* Should cover info behind it */
+    position: fixed;
+    align-items: flex-start; 
+    inset: 0;
+    padding: 30px; 
+    background: rgba(0, 0, 0, 0.4);
 }
 
 #addview-box
@@ -41,12 +39,11 @@
 
 #addview-content
 {
-    text-align: center;
+    margin-left: 50px;
 }
-
 .addview-uploadimg  
 {
-    margin-left: 25%;
+    margin-left: 20%;
     margin-top: 50px;
     margin-bottom: 50px;
 }
