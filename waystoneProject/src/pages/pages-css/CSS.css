@@ -12,6 +12,7 @@
     --background-colour3:#bfbfbf;
     --background-color4: #303030;
     --projectbox-colour: #E7D665; /* Other 2 colours are: #D34848 and #447DC9 */
+    --form-box-colour: #E0E0E0;
     --border-radius: 10px;
     --border-radius2: 5px;
 
@@ -110,6 +111,8 @@ nav a:hover
     background-color: var(--background-colour2);
     margin-top: 100px;
     padding: 30px;
+    margin-right: 500px;
+    width: 5000px;
 }
 #content b
 {
@@ -176,6 +179,7 @@ nav a:hover
     padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
+    margin-right: 10px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 #button-green:hover /* All green_ buttons button */
@@ -186,101 +190,46 @@ nav a:hover
     transform: translateY(-2px);
 }
 
-/* LOGIN PAGE LAYOUT */
-#login-container {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* voorkomt gap of scrollbars */
-  background: #2d2d2d;
+/* input boxes */
+#UploadIMG_Logo
+{
+    border-radius: 200px;
+    cursor: pointer;
+    height: 250px; /* later replaced by: height: 40%; */
+    width: 250px; /* later replaced by: width: 40%; */
+    margin-right: 5000px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-
-/* LEFT PANEL */
-#login-section {
-  flex: 0 0 30%;
-  background: #ffffff;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  border-right: 2px solid #dcdcdc;
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+#UploadIMG_Logo:hover
+{
+    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
+    transform: translateY(-2px);
 }
-
-/* Login title */
-#login-title {
-  font-size: 42px;
-  margin-bottom: 30px;
-  font-family: Georgia, serif;
-  color: #222;
+#Required_Logo
+{
+    height: 25px; /* later replaced by: height: auto; */
+    width: 25px; /* later replaced by: width: auto; */
 }
-
-/* Inputs */
-.login-input {
-  width: 80%;
-  padding: 14px;
-  margin-top: 15px;
-  border-radius: 6px;
-  border: 1px solid #aaa;
-  background: #f2f2f2;
-  font-size: 16px;
+/* Gray input boxes */
+#input-box-gray input, #input-box-gray textarea
+{
+    border-radius: var(--border-radius2);
+    background: var(--form-box-colour);
+    border: none;
+    width: 300px;
+    height: 35px;
+    padding: 5px;
+    padding-left: 10px;
 }
-
-/* Register link */
-#login-register-link {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #005fcc;
-  text-decoration: none;
+#input-box-gray textarea
+{
+    width: 600px;
+    height: 200px;
 }
+/* White input boxes */
 
-#login-register-link:hover {
-  text-decoration: underline;
-}
-
-/* Enter button */
-#login-button {
-  margin-top: 30px;
-  padding: 12px 35px;
-  font-size: 18px;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  background: #4c6b22;
-  cursor: pointer;
-}
-
-#login-button:hover {
-  background: #3d571a;
-}
-
-/* RIGHT PANEL WITH IMAGE */
-#login-image-section {
- flex: 1;
-  height: 100%;
-  min-height: 100vh;
-
-  background-size: cover;       /* vult de hele rechterkant */
-  background-position: center;  /* centreert de foto */
-  background-repeat: no-repeat;
-
-  background-color: white;      /* fallback */
-  position: relative;
-}
-
-/* Waystone logo */
-#login-logo {
-  width: 240px;
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-}
 
 
 /* Try and used existing css if possible */
-/* Add more necessary CSS here */
+/* Add more necessary *shared* CSS here */
+/* Seperate css only need for 1 or 2 pages */

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
+import "./pages-css/Login_Register_Page.css";
 import Waystone_Logo from "../assets/Waystone_logo.png";
 import PlaceholderImage from "../assets/PlaceholderImage.jpg";
 
