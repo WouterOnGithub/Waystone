@@ -21,8 +21,8 @@ import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER"
 {/* import Add_Container from "./pages/Add_Container" */}
 {/* import Add_Item from "./pages/Add_Item" */}
 import Add_Character from "./pages/Add_Character"
-{/* import Add_NPC from "./pages/Add_NPC" */}
-{/* import Add_Enemy from "./pages/Add_Enemy" */}
+import Add_NPC from "./pages/Add_NPC"
+import Add_Enemy from "./pages/Add_Enemy"
 
 {/* import View_Character from "./pages/View_Character" */}
 {/* import View_Item from "./pages/View_Item" */}
@@ -64,8 +64,8 @@ function App()
                 {/* <Route path="/user/Add_Container" element={<Add_Container />} /> */}
                 {/* <Route path="/user/Add_Item" element={<Add_Item />} /> */}
                 <Route path="/user/Add_Character" element={<Add_Character />} />
-                {/* <Route path="/user/Add_NPC" element={<Add_NPC />} /> */}
-                {/* <Route path="/user/Add_Enemy" element={<Add_Enemy />} /> */}
+                <Route path="/user/Add_NPC" element={<Add_NPC />} /> 
+                <Route path="/user/Add_Enemy" element={<Add_Enemy />} /> 
                 
                 {/* <Route path="/user/View_Character" element={<View_Character />} /> */}
                 {/* <Route path="/user/View_Item" element={<View_Item />} /> */}
