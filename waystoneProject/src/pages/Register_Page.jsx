@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
 import Waystone_Logo from "../assets/Waystone_logo.png";
+import PlaceholderImage from "../assets/PlaceholderImage.jpg";
 
 function Login_Page() {
   return (
@@ -9,7 +10,7 @@ function Login_Page() {
 
       {/* Left side: login form */}
       <div id="login-section">
-        <h1 id="login-title">Login</h1>
+        <h1 id="login-title">Register</h1>
 
         <input
           type="text"
@@ -29,17 +30,26 @@ function Login_Page() {
           className="login-input"
         />
 
-        <Link to="/register" id="login-register-link">
-          Don't have an account? Create one here!
+         <input
+          type="confirm password"
+          placeholder="************"
+          className="login-input"
+        />
+
+        <Link to="/Login_Page" id="login-register-link">
+        I already have an account
         </Link>
 
-        <button id="login-button">Enter</button>
+        <Link to="/Main_Page"><button id="login-button">Enter</button></Link>
       </div>
 
       {/* Right side: image background + logo */}
-      <div id="login-image-section">
-        <img src={Waystone_Logo} alt="Waystone Logo" id="login-logo" />
-      </div>
+        <div
+            id="login-image-section"
+            style={{ backgroundImage: `url(${PlaceholderImage})` }}
+        >
+            <img src={Waystone_Logo} alt="Waystone Logo" id="login-logo" />
+        </div>
 
     </div>
   );
