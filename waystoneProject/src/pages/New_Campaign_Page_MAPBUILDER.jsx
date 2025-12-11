@@ -31,7 +31,6 @@ function New_Campaign_Page_MAPBUILDER() {
                 <select className="mapbuilder-select">
                   <option>Select template...</option>
                 </select>
-                <span className="mapbuilder-icon">⬇️</span>
               </div>
             </div>
 
@@ -46,7 +45,7 @@ function New_Campaign_Page_MAPBUILDER() {
 
             {/* Map preview box */}
             <div className="mapbuilder-preview">
-              <div className="mapbuilder-preview-icon">⬆️</div>
+              <div className="mapbuilder-preview-icon">preview</div>
             </div>
 
             {/* Add buttons */}

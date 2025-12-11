@@ -156,6 +156,7 @@
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #999;
+  color: #ffffff;
 }
 
 .mapbuilder-file {
@@ -163,8 +164,11 @@
 }
 
 .mapbuilder-icon {
-  font-size: 26px;
-  user-select: none;
+  position: absolute;
+  font-size: 25px;
+  left: 40%;
+  top: 60%;
+  transform: translate(-50%, -50%);
 }
 
 .mapbuilder-preview {
