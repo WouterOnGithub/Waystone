@@ -4,85 +4,59 @@ import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Account_Page.css";
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
+import Edit_Logo from "../assets/PlaceholderImage.jpg";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
-function Account_Page() 
-{
+function Account_Page() {
   return (
-    <div>
-      <div className="navigation">
-      <nav>
-        <br />
-        <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
-        <br />
-        <br />
-        <br />
-        <Link to="/">Account</Link>
-        <br />
-        <br />
-        <Link to="/">My Campaigns</Link>
-        <br />
-        <br />
-        <Link to="/">New Campaign</Link>
-        <br />
-        <br />
-        <Link to="/">Settings</Link>
-        <br />
-        <br />
-        <Link to="/">Help</Link>
-      </nav>
-      </div>
+    <div className="account-page">
+      <Sidebar />
+      <div className="account-shell">
+        <Header title="Account" />
 
-      <div id="main">
-        {/* The green bar at the top of the page */}
-        <div id="title">
-            <p>Account</p>
-        </div>
-        {/* The account section */}
-        <div id="content">
-            {/* Main account section */}
-            <div id="account-box">
-                <div>
-                    <img src={Placeholder} alt="Account_Profile" id="Account_Profile" />
-                </div>
-                <div>
-                    <img src={Edit_Logo} alt="Edit_Logo" id="Edit_Logo" />
-                    <br />
-                    <b>Username_Placeholder</b>
-                    <p>
-                        This is a very long description that displays whatever text the account user put in, this will be repeated.
-                        This is a very long description that displays whatever text the account user put in, this will be repeated.
-                        This is a very long description that displays whatever text the account user put in, this will be repeated.
-                    </p>
-                </div>
+        <main className="account-content">
+          <section id="account-box" className="account-card">
+            <div className="account-avatar-wrap">
+              <img src={Placeholder} alt="Account profile" id="Account_Profile" />
             </div>
-
-            {/* Account stats section */}
-            <div id="account-box">
-                <div>
-                    <p><b>Total campaigns: </b> 0 </p> {/* Number later to be replaced */}
-                    <p><b>Last played: </b> Project_name </p> {/* Name later to be replaced */}
-                </div>
+            <div className="account-details">
+              <Link to="/user/Account_Page_EDIT" className="edit-icon" aria-label="Edit profile">
+                ✏️
+              </Link>
+              <b>Username</b>
+              <p>
+                Lorem contrary to popular belief, Lorem Ipsum is not simply random
+                text. It has roots in a piece of classical Latin literature from 45
+                BC, making it over 2000 years old.
+              </p>
             </div>
+          </section>
 
+          <section id="account-box" className="account-stats">
+            <p>
+              <b>Total campaigns:</b> 0
+            </p>
+            <p>
+              <b>Last played:</b> Project__name
+            </p>
+          </section>
+
+          <div className="account-actions">
             <button id="button-green">Archived Campaigns</button>
-            <br />
-            <br />
-            <div id="account-notes">
-                {/* Notes section */}
-                <b>Notes</b>
-                <form>
-                    <textarea placeholder="Enter you notes here ..."></textarea>
-                    <br />
-                    <br />
-                    <button id="button-green">Save</button>
-                </form>
+          </div>
+
+          <section id="account-notes" className="account-notes-block">
+            <b>Notes</b>
+            <textarea
+              defaultValue="Lorem contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words."
+            />
+            <div className="account-actions">
+              <button id="button-green">Save</button>
             </div>
-        </div>
+          </section>
+        </main>
+
+        <Footer />
       </div>
     </div>
   );

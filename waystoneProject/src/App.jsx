@@ -13,7 +13,7 @@ import My_Campaigns_Page from "./pages/My_Campaigns_Page"
 
 import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN"
 {/* import New_Campaign_Page_EVENTS from "./pages/New_Campaign_Page_EVENTS" */}
-{/* import New_Campaign_Page_CHARACTERS from "./pages/New_Campaign_Page_CHARACTERS" */}
+import New_Campaign_Page_CHARACTERS from "./pages/New_Campaign_Page_CHARACTERS"
 import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER" 
 
 import Add_Building_Region from "./pages/Add_Building_Region"
@@ -56,7 +56,7 @@ function App()
                 
                 <Route path="/user/New_Campaign_Page_CAMPAIGN" element={<New_Campaign_Page_CAMPAIGN />} />
                 {/* <Route path="/user/New_Campaign_Page_EVENTS" element={<New_Campaign_Page_EVENTS />} /> */}
-                {/* <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} /> */}
+                <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} />
                 <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} />
                 
                 <Route path="/user/Add_Building_Region" element={<Add_Building_Region />} /> 
