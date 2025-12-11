@@ -1,0 +1,40 @@
+#account-box
+{
+    border-radius: 10px;
+    background: var(--background-colour);
+    display: flex;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+#account-box b
+{
+    font-size: var(--head-text);
+}
+#Account_Profile
+{
+    border-radius: 100px;
+    height: 150px; /* later replaced by: height: 25%; */
+    width: 150px; /* later replaced by: width: 25%; */
+    padding: 20px;
+    margin-right: 500px;
+}
+#Edit_Logo
+{
+    float: right;
+    height: 50px; /* later replaced by: height: auto; */
+    width: 50px; /* later replaced by: width: auto; */
+    padding: 0;
+}
+
+#account-notes b
+{
+    font-size: 50px;
+}
+#account-notes textarea
+{
+    border-radius: var(--border-radius);
+    border: none;
+    width: 90%;
+    height: 300px;
+    padding: 10px;
+}
