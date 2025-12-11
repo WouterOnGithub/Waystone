@@ -78,11 +78,6 @@ nav a:hover
     width: 70%;
     height: 250px;
 }
-#Settings_Logo
-{
-    /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
-    width: 10%;
-}
 
 #main /* the whole page minus the navigation */
 {
@@ -193,7 +188,7 @@ nav a:hover
 /* input boxes */
 #UploadIMG_Logo
 {
-    border-radius: 200px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     height: 250px; /* later replaced by: height: 40%; */
     width: 250px; /* later replaced by: width: 40%; */

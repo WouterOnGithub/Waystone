@@ -1,0 +1,58 @@
+/* This is all the css for the Add/View pop-ups */
+*
+{
+    --addview-text: 60px;
+}
+
+#addview-page
+{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0; 
+    width: 100vw; /* view-width to center the pop-up */
+    height: 100vh; /* view-width to center the pop-up */
+    padding-top: 40px;
+    padding-bottom: 40px; /* Needs to be FIXED */
+    background: rgba(0, 0, 0, 0.1); /* Should cover info behind it */
+}
+
+#addview-box
+{
+    border-radius: var(--border-radius);
+    background-color: var(--background-colour);
+    width: 550px;
+    margin: 40px;
+    box-shadow: 5px 5px 100px 25px rgba(43, 43, 43, 0.3);
+}
+
+#addview-title
+{
+    background: var(--background-gradient);
+    font-size: var(--addview-text);
+    color: var(--text-color2);
+    text-align: center;
+    width: auto;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+#addview-content
+{
+    text-align: center;
+}
+
+.addview-uploadimg  
+{
+    margin-left: 25%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#addview-discription textarea 
+{
+    width: 350px;
+    height: 150px;
+}
