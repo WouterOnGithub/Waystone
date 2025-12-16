@@ -6,7 +6,7 @@ import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
 
-function Campaign_Map() {
+function Map_Main() {
   const [locationsOpen, setLocationsOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -150,4 +150,4 @@ function Campaign_Map() {
   );
 }
 
-export default Campaign_Map;
+export default Map_Main;
