@@ -8,39 +8,33 @@ import { moveToken } from "../../services/mapServices";
 export default function BattleMap({ userId, campaignId, mapId }) {
   const map = useMap(userId, campaignId, mapId);
   const cellsData = useMapCells(userId, campaignId, mapId);
-  const [selectedToken, setSelectedToken] = useState(null);
+  const [draggedToken, setDraggedToken] = useState(null);
 
-  // Wait for map to load before creating grid
   if (!map) return <div>Loading map...</div>;
-    if (!cellsData) return <div>Loading cells…</div>;
 
+  const grid = generateGrid(cellsData, map.width, map.height);
 
-  // generateGrid(cellsData, width, height)
-  const grid = generateGrid(cellsData, map.height, map.width);  
+  const handleDragStart = (tokenId, x, y) => {
+    setDraggedToken({ tokenId, x, y });
 
-  
-
-  const handleCellClick = async (x, y, cell) => {
-    if (selectedToken) {
-      // Move selected token to clicked cell
-      await moveToken(
-        userId,
-        campaignId,
-        mapId,
-        selectedToken.tokenId,
-        selectedToken.x,
-        selectedToken.y,
-        x,
-        y
-      );
-      setSelectedToken(null);
-    } else if (cell?.tokenId) {
-      // Select token in this cell
-      setSelectedToken({ tokenId: cell.tokenId, x, y });
-    }
   };
 
+  const handleDrop = async (x, y) => {
+    if (!draggedToken) return;
 
+    await moveToken(
+      userId,
+      campaignId,
+      mapId,
+      draggedToken.tokenId,
+      draggedToken.x,
+      draggedToken.y,
+      x,
+      y
+    );
+
+    setDraggedToken(null);
+  };
 
   return (
     <div className="grid-container">
@@ -49,7 +43,8 @@ export default function BattleMap({ userId, campaignId, mapId }) {
           {row.map((cell, x) => (
             <div
               key={x}
-              onClick={() => handleCellClick(x, y, cell)}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={() => handleDrop(x, y)}
               className="grid-cell"
               style={{
                 width: 50,
@@ -58,13 +53,18 @@ export default function BattleMap({ userId, campaignId, mapId }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor:
-                  selectedToken && selectedToken.x === x && selectedToken.y === y
-                    ? "#ffd"
-                    : "#eee",
+                backgroundColor: "#eee",
+                pointerEvents: "auto",
               }}
             >
-              {cell?.tokenId && <Token tokenId={cell.tokenId} />}
+              {cell?.tokenId && (
+                <Token
+                  tokenId={cell.tokenId}
+                  x={x}
+                  y={y}
+                  onDragStart={handleDragStart}
+                />
+              )}
             </div>
           ))}
         </div>
