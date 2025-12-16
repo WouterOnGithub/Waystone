@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
@@ -10,7 +10,13 @@ import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
 /* Editing this page -Henry */
-function Login_Page() {
+function Register_Page() {
+  // Prevent the caret from showing on first load by clearing any default focus
+  useEffect(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }, []);
   return (
     <div id="login-container">
 
@@ -19,40 +25,34 @@ function Login_Page() {
         <h1 id="login-title">Register</h1>
 
         <input
-          type="text"
-          placeholder="Example_Username"
-          className="login-input"
-        />
-
-        <input
-          type="email"
-          placeholder="Example_Email"
+          type="Email/Username"
+          placeholder="Enter username or email"
           className="login-input"
         />
 
         <input
           type="password"
-          placeholder="************"
+          placeholder="Enter Password"
           className="login-input"
         />
 
          <input
           type="confirm password"
-          placeholder="************"
+          placeholder="Confirm Password"
           className="login-input"
         />
 
-        <Link to="/Login_Page" id="login-register-link">
+        <Link to="/user/Login_Page" id="login-register-link">
         I already have an account
         </Link>
 
-        <Link to="/Main_Page"><button id="login-button">Enter</button></Link>
+        <Link to="/user/Main_Page"><button id="login-button">Enter</button></Link>
       </div>
 
       {/* Right side: image background + logo */}
         <div
             id="login-image-section"
-            style={{ backgroundImage: `url(${PlaceholderImage})` }}
+            style={{ backgroundImage: `url(${Placeholder})` }}
         >
             <img src={Waystone_Logo} alt="Waystone Logo" id="login-logo" />
         </div>
@@ -61,4 +61,4 @@ function Login_Page() {
   );
 }
 
-export default Login_Page;
+export default Register_Page;
