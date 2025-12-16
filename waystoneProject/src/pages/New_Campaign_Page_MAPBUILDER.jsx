@@ -1,109 +1,163 @@
-import React from "react";
-import Sidebar from "../components/UI/Sidebar.jsx";
-import Footer from "../components/UI/Footer.jsx";
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
+import "./pages-css/Main_Page.css";
+import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
+import Footer from "../components/UI/Footer";
+import Header from "../components/UI/Header";
+import Sidebar from "../components/UI/Sidebar";
+import Waystone_Logo from "../assets/PlaceholderImage.jpg";
+import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
+import Required_Logo from "../assets/Required_Logo.webp";
+import Delete_Logo from "../assets/Delete_Logo.webp";
+import Add_Logo from "../assets/Add_Logo.webp";
+import Placeholder from "../assets/PlaceholderImage.jpg";
 
-export default function NewCampaign() {
+function New_Campaign_Page_MAPBUILDER() {
+  const navigate = useNavigate();
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [previewSize, setPreviewSize] = useState({ width: 0, height: 0 });
+
+  const SIZE_LIMITS = useMemo(
+    () => ({
+      minWidth: 320,
+      minHeight: 220,
+      maxWidth: 900,
+      maxHeight: 650,
+    }),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
+
+  const handleMapUpload = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPreviewUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return url;
+    });
+  };
+
+  const handleImageLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.target;
+    const { minWidth, minHeight, maxWidth, maxHeight } = SIZE_LIMITS;
+
+    // Determine scale needed to satisfy min size (may scale up) and max size (may scale down)
+    const scaleUp = Math.max(minWidth / naturalWidth, minHeight / naturalHeight, 1);
+    const scaleDown = Math.min(maxWidth / naturalWidth, maxHeight / naturalHeight, Number.POSITIVE_INFINITY);
+    const scale = Math.min(scaleDown, Math.max(scaleUp, 1));
+
+    const width = Math.round(naturalWidth * scale);
+    const height = Math.round(naturalHeight * scale);
+
+    setPreviewSize({ width, height });
+  };
+
   return (
-    <>
+    <div className="campaign-page">
       <Sidebar />
 
-      <div id="main">
+      <div className="campaign-main">
+        <Header title="New Campaign" />
+        <div className="campaign-body">
 
-        {/* GREEN TITLE BAR */}
-        <div id="title">
-          <p>New Campaign</p>
-        </div>
-
-        {/* PAGE CONTENT */}
-        <div id="content">
-
-          {/* TAB BUTTONS */}
-          <div style={{ display: "flex", gap: "15px", marginBottom: "30px" }}>
-            <button id="button-green">Campaign</button>
-            <button id="button-green">Map Builder</button>
-            <button id="button-green">Characters</button>
-          </div>
-
-          {/* TEMPLATES DROPDOWN */}
-          <div style={{ marginBottom: "20px" }}>
-            <label><b>Templates</b></label>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <select style={{ padding: "10px", borderRadius: "5px" }}>
-                <option>Select template…</option>
-              </select>
-              <span style={{ fontSize: "25px" }}>⬇️</span>
-            </div>
-          </div>
-
-          {/* IMPORT MAP */}
-          <div style={{ marginBottom: "20px" }}>
-            <label><b>Import Main Map</b></label>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <input type="file" />
-              <span style={{ fontSize: "25px" }}>⬆️</span>
-            </div>
-          </div>
-
-          {/* MAP PREVIEW */}
-          <div
-            style={{
-              width: "80%",
-              height: "250px",
-              background: "#bfbfbf",
-              border: "3px solid #ffffff",
-              margin: "30px auto",
-              position: "relative"
-            }}
-          >
-            <div
-              style={{
-                fontSize: "40px",
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
-              }}
+        <div className="campaign-tabs">
+            <button
+              className="campaign-tab"
+              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN")}
             >
-              ⬆️
-            </div>
-          </div>
-
-          {/* LOCATION BUTTONS */}
-          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            <button id="button-green">Add Location</button>
-            <button id="button-green">Show</button>
-          </div>
-
-          {/* MORE BUTTONS */}
-          <div style={{ marginTop: "30px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <button id="button-green">Add Building/Region</button>
-              <button id="button-green">Show</button>
-            </div>
-
-            <div style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "15px" }}>
-              <button id="button-green">Add event</button>
-              <button id="button-green">Show</button>
-            </div>
-
-            <div style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "15px" }}>
-              <button id="button-green">Add Container</button>
-              <button id="button-green">Show</button>
-            </div>
-          </div>
-
-          {/* SAVE BUTTON */}
-          <div style={{ marginTop: "40px" }}>
-            <button id="button-green">Save and continue</button>
-          </div>
-
+              Campaign
+            </button>
+            <button className="campaign-tab active">Map Builder</button>
+            <button className="campaign-tab">Characters</button>
         </div>
 
-        
+          {/* MAIN MAP BUILDER CARD */}
+          <div className="campaign-card">
+
+            {/* Templates Dropdown */}
+            <div className="campaign-field">
+              <label className="campaign-label">Templates</label>
+              <div className="mapbuilder-row">
+                <select className="mapbuilder-select">
+                  <option>Select template...</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Upload Main Map */}
+            <div className="campaign-field">
+              <label className="campaign-label">Import Main Map</label>
+              <div className="mapbuilder-row">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="mapbuilder-file"
+                  onChange={handleMapUpload}
+                />
+              </div>
+            </div>
+
+            {/* Map preview box */}
+            <div
+              className="mapbuilder-preview"
+              style={
+                previewSize.width && previewSize.height
+                  ? { width: `${previewSize.width}px`, height: `${previewSize.height}px` }
+                  : undefined
+              }
+            >
+              {previewUrl ? (
+                <img
+                  src={previewUrl}
+                  alt="Map preview"
+                  className="mapbuilder-preview-img"
+                  onLoad={handleImageLoad}
+                />
+              ) : (
+                <div className="mapbuilder-preview-icon">preview</div>
+              )}
+            </div>
+
+            {/* Add buttons */}
+            <div className="mapbuilder-button-row">
+              <button className="campaign-pill">Add Location</button>
+              <button className="campaign-pill">Show</button>
+            </div>
+
+            <div className="mapbuilder-button-row">
+              <button className="campaign-pill">Add Building/Region</button>
+              <button className="campaign-pill">Show</button>
+            </div>
+
+            <div className="mapbuilder-button-row">
+              <button className="campaign-pill">Add Event</button>
+              <button className="campaign-pill">Show</button>
+            </div>
+
+            <div className="mapbuilder-button-row">
+              <button className="campaign-pill">Add Container</button>
+              <button className="campaign-pill">Show</button>
+            </div>
+
+            {/* Save */}
+            <div className="campaign-actions">
+              <button className="campaign-save">Save and continue</button>
+            </div>
+
+          </div>
+        </div>
+
         <Footer />
-        
       </div>
-    </>
+    </div>
   );
 }
+
+export default New_Campaign_Page_MAPBUILDER;
