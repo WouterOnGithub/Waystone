@@ -21,7 +21,7 @@ export async function updateAccount(payload) {
     form.append("name", payload.name);
     form.append("nickname", payload.nickname);
     form.append("introduction", payload.introduction);
-    form.append("avatar", payload.avatarFile);
+    //form.append("avatar", payload.avatarFile);
     init = {
       method: "PUT",
       body: form,

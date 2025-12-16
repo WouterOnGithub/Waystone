@@ -22,6 +22,7 @@ const setUser = async (userId ,userData) => {
         const updatedDoc = await getDoc(docRef);
         return updatedDoc.exists() ? updatedDoc.data() : null;
     } catch (error) {console.error("Error setting user:", error) };
+    return null;
 }
 
 export{getUser, setUser}
