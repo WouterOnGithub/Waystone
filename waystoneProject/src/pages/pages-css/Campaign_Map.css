@@ -1,4 +1,305 @@
-/* Campaign Map Styling */
+/* Location View Styling */
+
+.location-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 200px);
+  background: var(--background-colour2);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Top Navigation Bar */
+.location-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(180deg, rgba(139, 115, 85, 0.95) 0%, rgba(101, 84, 63, 0.9) 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  border-bottom: 3px solid #5a4a3a;
+}
+
+/* Settings Button - In Top Bar */
+.location-settings-btn {
+  width: 50px;
+  height: 50px;
+  background: rgba(197, 210, 140, 0.95);
+  border: 2px solid #2e3d08;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.location-settings-btn:hover {
+  background: rgba(197, 210, 140, 1);
+  transform: scale(1.05) rotate(90deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.location-settings-btn svg {
+  color: #2e3d08;
+}
+
+/* Settings Menu Popup */
+.location-settings-menu {
+  position: absolute;
+  top: 80px;
+  left: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  padding: 16px 0;
+  min-width: 220px;
+  z-index: 99;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.location-settings-menu h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2e3d08;
+  padding: 0 16px 12px;
+  margin: 0;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.location-settings-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 0;
+}
+
+.location-settings-menu li {
+  padding: 12px 20px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.location-settings-menu li:hover {
+  background: linear-gradient(90deg, #5b701d 0%, #2e3d08 100%);
+  color: white;
+}
+
+/* Navigation Buttons */
+.location-nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-btn {
+  background: rgba(197, 210, 140, 0.9);
+  color: #2e3d08;
+  border: 2px solid #5a4a3a;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  background: rgba(197, 210, 140, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Location Title */
+.location-title {
+  margin-left: auto;
+  font-size: 32px;
+  font-weight: 700;
+  color: #f4e8d0;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+  font-family: 'Cinzel', serif;
+}
+
+/* Location Display */
+.location-display {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(135deg, #6b5640 0%, #4a3828 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 70px;
+}
+
+.location-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.location-placeholder {
+  text-align: center;
+  color: rgba(244, 232, 208, 0.9);
+  z-index: 1;
+}
+
+.location-placeholder p {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.location-placeholder small {
+  font-size: 16px;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Action Buttons - Left Side */
+.location-action-buttons {
+  position: absolute;
+  left: 20px;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 50;
+}
+
+.action-btn {
+  background: linear-gradient(180deg, rgba(197, 210, 140, 0.95) 0%, rgba(176, 189, 120, 0.95) 100%);
+  color: #2e3d08;
+  border: 2px solid #5a4a3a;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 240px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.action-btn:hover {
+  background: linear-gradient(180deg, rgba(197, 210, 140, 1) 0%, rgba(176, 189, 120, 1) 100%);
+  transform: translateX(8px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.action-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.action-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Different button styles */
+.create-cutscene {
+  border-left: 5px solid #5b701d;
+}
+
+.start-battle {
+  border-left: 5px solid #8b4513;
+}
+
+.quick-battle {
+  border-left: 5px solid #654321;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .location-title {
+    font-size: 24px;
+  }
+
+  .nav-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .location-top-bar {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .location-settings-btn {
+    width: 45px;
+    height: 45px;
+  }
+
+  .location-nav-buttons {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    width: 100%;
+  }
+
+  .location-title {
+    font-size: 22px;
+    margin-left: 0;
+  }
+
+  .location-display {
+    padding-top: 140px;
+  }
+
+  .location-action-buttons {
+    left: 15px;
+    right: 15px;
+    bottom: 20px;
+  }
+
+  .action-btn {
+    min-width: 100%;
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  .location-settings-menu {
+    left: 15px;
+    top: 70px;
+  }
+}
+
+/* Original Map Styling - Keep for backward compatibility */
 
 .map-container {
   position: relative;
@@ -51,17 +352,6 @@
   min-width: 220px;
   z-index: 99;
   animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .map-settings-menu h3 {
@@ -291,42 +581,4 @@
   filter: brightness(1.1);
   transform: translateY(-2px);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .map-settings-btn {
-    width: 50px;
-    height: 50px;
-    top: 15px;
-    left: 15px;
-  }
-
-  .locations-toggle {
-    padding: 10px 16px;
-    font-size: 16px;
-    min-width: 140px;
-  }
-
-  .map-compass {
-    bottom: 20px;
-    right: 20px;
-  }
-
-  .map-compass svg {
-    width: 60px;
-    height: 60px;
-  }
-
-  .location-info-panel {
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    max-width: none;
-  }
-
-  .map-settings-menu {
-    left: 15px;
-    top: 75px;
-  }
 }

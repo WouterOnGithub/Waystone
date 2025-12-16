@@ -54,7 +54,7 @@ function Account_Page() {
           <section id="account-notes" className="account-notes-block">
             <b>Notes</b>
             <textarea
-              defaultValue="Lorem contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words."
+              defaultValue="Lorem contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard Cumhammer, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words."
             />
             <div className="account-actions">
               <button id="button-green">Save</button>
