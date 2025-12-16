@@ -11,9 +11,9 @@ function Sidebar() {
         <div
           role="button"
           tabIndex={0}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/user/Main_Page")}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") navigate("/");
+            if (e.key === "Enter" || e.key === " ") navigate("/user/Main_Page");
           }}
           style={{ display: "inline-block", cursor: "pointer" }}
           aria-label="Go to main page"
@@ -36,6 +36,9 @@ function Sidebar() {
         <br />
         <br />
         <Link to="/">Help</Link>
+        <br />
+        <br />
+        <Link to="/user/Login_Page">Logout</Link>
       </nav>
     </div>
   );

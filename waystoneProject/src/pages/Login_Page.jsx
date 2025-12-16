@@ -36,11 +36,11 @@ function Login_Page() {
           className="login-input"
         />
 
-        <Link to="/Register_Page" id="login-register-link">
+        <Link to="/user/Register_Page" id="login-register-link">
           Don't have an account? Create one here!
         </Link>
 
-        <Link to="/Main_Page" id="mainpage-button">
+        <Link to="/user/Main_Page" id="mainpage-button">
         <button id="login-button">Enter</button>
         </Link>
         
@@ -49,7 +49,7 @@ function Login_Page() {
       {/* Right side: image background + logo */}
       <div
                   id="login-image-section"
-                  style={{ backgroundImage: `url(${PlaceholderImage})` }}
+                  style={{ backgroundImage: `url(${Placeholder})` }}
               >
                   <img src={Waystone_Logo} alt="Waystone Logo" id="login-logo" />
         </div>
