@@ -15,6 +15,7 @@
     --form-box-colour: #E0E0E0;
     --border-radius: 10px;
     --border-radius2: 5px;
+    --border-radius3: 50px;
 
     font-family: Garamond, serif, cursive;
     overflow-x: hidden;
@@ -77,11 +78,6 @@ nav a:hover
     /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
     width: 70%;
     height: 250px;
-}
-#Settings_Logo
-{
-    /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
-    width: 10%;
 }
 
 #main /* the whole page minus the navigation */
@@ -182,7 +178,7 @@ nav a:hover
     margin-right: 10px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-#button-green:hover /* All green_ buttons button */
+#button-green:hover, #addview-green-bar:hover /* All green_ buttons button */ /* Green bars in add & view pages */
 {
     color: var(--text-color2);
     transition: 0.5s;
@@ -190,10 +186,46 @@ nav a:hover
     transform: translateY(-2px);
 }
 
+#addview-green-bar /* Green bars in add & view pages */
+{
+    border-radius: var(--border-radius3);
+    background: var(--background-gradient);
+    border: none;
+    padding: 10px;
+    padding-left: 35px;
+    padding-right: 25px;
+    margin-right: 20px;
+    margin-top: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+#addview-green-bar b /* Text inside green_ bars in add & view pages */
+{
+    color: var(--text-color2);
+    font-weight: bold;
+}
+#addview-green-bar button /* Delete button inside green_ bars in add & view pages */
+{
+    float: right;
+}
+
 /* input boxes */
+#button-icons
+{
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    padding-top: 5px;
+}
+#button-icons:hover
+{
+    border: none;
+    transition: .3s;
+    transform: translateY(-2px);
+}
 #UploadIMG_Logo
 {
-    border-radius: 200px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     height: 250px; /* later replaced by: height: 40%; */
     width: 250px; /* later replaced by: width: 40%; */
@@ -205,10 +237,15 @@ nav a:hover
     box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
     transform: translateY(-2px);
 }
-#Required_Logo
+#Required_Logo, #Add_Logo
 {
-    height: 25px; /* later replaced by: height: auto; */
-    width: 25px; /* later replaced by: width: auto; */
+    height: 20px; 
+    width: 20px;
+}
+#Delete_Logo
+{
+    height: 30px; 
+    width: 30px; 
 }
 /* Gray input boxes */
 #input-box-gray input, #input-box-gray textarea
@@ -227,20 +264,6 @@ nav a:hover
     height: 200px;
 }
 /* White input boxes */
-
-.campaigns-page {
-    display: flex;
-    background: var(--background-colour);
-    min-height: 100vh;
-}
-
-.campaigns-shell {
-    width: 100%;
-    min-height: 100vh;
-    background: var(--background-colour);
-    display: flex;
-    flex-direction: column;
-}
 
 
 
