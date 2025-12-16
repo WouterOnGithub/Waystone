@@ -257,6 +257,15 @@
     gap: 12px;
   }
 
+  .locations-toggle svg {
+  transition: transform 0.3s ease;
+}
+
+.locations-toggle.open svg {
+  transform: rotate(180deg);
+}
+
+
   .location-settings-btn {
     width: 45px;
     height: 45px;
@@ -302,11 +311,10 @@
 /* Original Map Styling - Keep for backward compatibility */
 
 .map-container {
-  position: relative;
+  position: absolute;
   width: 100%;
-  height: calc(100vh - 200px);
+  height: 100%;
   background: var(--background-colour2);
-  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
@@ -452,7 +460,7 @@
   width: 100%;
   height: 100%;
   position: relative;
-  background: linear-gradient(135deg, #7a9b3f 0%, #4a5f28 100%);
+  background: linear-gradient(135deg, #d1b972 30%, #ffebb6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -474,13 +482,14 @@
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 8px;
+  color:rgb(119, 3, 3) ;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .map-placeholder small {
   font-size: 16px;
   opacity: 0.9;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(146, 13, 13, 0.5);
 }
 
 /* Compass */
