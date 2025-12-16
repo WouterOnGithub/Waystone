@@ -30,7 +30,7 @@ import View_Item from "./pages/View_Item"
 {/* import Game_Settings from "./pages/Game_Settings" */}
 {/* import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME" */}
 
-{/* import Map_Main from "./pages/Map_Main" */}
+import Map_Main from "./pages/Map_Main"
 {/* import Map_Location from "./pages/Map_Location" */}
 {/* import Map_Building_Region from "./pages/Map_Building_Region" */}
 {/* import Map_Battle_View from "./pages/Map_Battle_View" */}
@@ -73,7 +73,7 @@ function App()
                 {/* <Route path="/user/Game_Settings" element={<Game_Settings />} /> */}
                 {/* <Route path="/user/Game_Settings_SAVEGAME" element={<Game_Settings_SAVEGAME />} /> */}
                 
-                {/* <Route path="/user/Map_Main" element={<Map_Main />} /> */}
+                <Route path="/user/Map_Main" element={<Map_Main />} />
                 {/* <Route path="/user/Map_Location" element={<Map_Location />} /> */}
                 {/* <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} /> */}
                 {/* <Route path="/user/Map_Battle_View" element={<Map_Battle_View />} /> */}
