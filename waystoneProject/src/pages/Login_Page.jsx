@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
@@ -11,6 +11,7 @@ import Placeholder from "../assets/PlaceholderImage.jpg";
 
 /* Editing this page -Henry */
 function Login_Page() {
+  const navigate = useNavigate();
   return (
     <div id="login-container">
 
@@ -20,19 +21,13 @@ function Login_Page() {
 
         <input
           type="text"
-          placeholder="Example_Username"
-          className="login-input"
-        />
-
-        <input
-          type="email"
-          placeholder="Example_Email"
+          placeholder="Enter username or email"
           className="login-input"
         />
 
         <input
           type="password"
-          placeholder="************"
+          placeholder="Enter Password"
           className="login-input"
         />
 
@@ -40,9 +35,15 @@ function Login_Page() {
           Don't have an account? Create one here!
         </Link>
 
-        <Link to="/user/Main_Page" id="mainpage-button">
-        <button id="login-button">Enter</button>
-        </Link>
+        <div id="mainpage-button">
+          <button
+            id="login-button"
+            type="button"
+            onClick={() => navigate("/user/Main_Page")}
+          >
+            Enter
+          </button>
+        </div>
         
       </div>
 
