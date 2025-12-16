@@ -6,7 +6,7 @@ import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
 
-function Map_() {
+function Map_Building_Region() {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   const toggleSettings = () => {
@@ -102,4 +102,4 @@ function Map_() {
   );
 }
 
-export default Map_;
+export default Map_Building_Region;
