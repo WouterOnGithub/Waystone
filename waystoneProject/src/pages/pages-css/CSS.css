@@ -10,8 +10,10 @@
     --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
-    --background-color4: #303030;
-    --projectbox-colour: #E7D665; /* Other 2 colours are: #D34848 and #447DC9 */
+    --background-colour4: #303030;
+    --projectbox-colour: #E7D665; 
+    --projectbox-colour2: #D34848;
+    --projectbox-colour3: #447DC9;
     --form-box-colour: #E0E0E0;
     --border-radius: 10px;
     --border-radius2: 5px;
@@ -32,7 +34,7 @@
 ::-webkit-scrollbar-track 
 {
   background: var(--background-colour);
-  box-shadow: inset 0 0 7px var(--background-color4); 
+  box-shadow: inset 0 0 7px var(--background-colour4); 
 }
 ::-webkit-scrollbar-thumb 
 {
@@ -151,7 +153,7 @@ nav a:hover
 }
 #box button /* Archive button */
 {
-    background-color: var(--background-color4);
+    background-color: var(--background-colour4);
     color: var(--text-color2);
     border: none;
     padding: 2px;
@@ -265,8 +267,20 @@ nav a:hover
 }
 /* White input boxes */
 
+.campaigns-page {
+    display: flex;
+    background: var(--background-colour);
+    min-height: 100vh;
+}
 
+.campaigns-shell {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--background-colour);
+    display: flex;
+    flex-direction: column;
+}
 
 /* Try and used existing css if possible */
 /* Add more necessary *shared* CSS here */
-/* Seperate css only need for 1 or 2 pages */
+/* Seperate css that is only need for 1 or 2 pages */
