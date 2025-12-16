@@ -8,10 +8,13 @@ import { moveToken } from "../../services/mapServices";
 export default function BattleMap({ userId, campaignId, mapId }) {
   const map = useMap(userId, campaignId, mapId);
   const cellsData = useMapCells(userId, campaignId, mapId);
+  const [selectedToken, setSelectedToken] = useState(null);
 
   // Wait for map to load before creating grid
   if (!map) return <div>Loading map...</div>;
     if (!cellsData) return <div>Loading cells…</div>;
+
+
     console.log("Map:", map);
 console.log("Cells data:", cellsData);
 
@@ -19,7 +22,7 @@ console.log("Cells data:", cellsData);
   const grid = generateGrid(cellsData, map.height, map.width);  
   console.log("Grid:", grid);
 
-  const [selectedToken, setSelectedToken] = useState(null);
+  
 
   const handleCellClick = async (x, y, cell) => {
     if (selectedToken) {
