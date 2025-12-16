@@ -239,7 +239,7 @@ nav a:hover
     box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
     transform: translateY(-2px);
 }
-#Required_Logo, #Add_Logo
+#Required_Logo, #Add_Logo, #Minus_Logo
 {
     height: 20px; 
     width: 20px;

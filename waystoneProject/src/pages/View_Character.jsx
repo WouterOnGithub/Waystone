@@ -7,6 +7,7 @@ import Waystone_Logo from "../assets/PlaceholderImage.jpg";
 import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
 import Required_Logo from "../assets/Required_Logo.webp";
 import Delete_Logo from "../assets/Delete_Logo.webp";
+import Minus_Logo from "../assets/Minus_Logo.png";
 import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
@@ -23,29 +24,42 @@ function View_Character()
         <form id="input-box-gray">
             <div id="addview-stats">
                 <div>
-                    {/* hp, lvl, exp, status */}
-                    <div id="view-stats-main-box">
-                        <div className="view-side-by-side">
+                    <div>
+                        <div id="addview-stats" className="view-stats-main">
                             <div><b id="view-stats-main-title" className="view-stats-main-title-1">HP</b></div>
-                            <div><p id="view--stats-main-body">20 </p> <p>/ 20</p></div> {/* the HP later replaced by real value */}
+                            <div><p className="view-hp">20 <b>/20</b></p></div> {/* the HP later replaced by real value */}
                         </div>
-                        <div className="view-side-by-side">
+                        <div id="addview-stats" className="view-stats-main">
                             <div><b id="view-stats-main-title" className="view-stats-main-title-2">LVL</b></div>
-                            <div><p id="view--stats-main-body">1 </p></div> {/* the LVL later replaced by real value */}
+                            <div><p>1 </p></div> {/* the LVL later replaced by real value */}
                         </div>
-                        <div className="view-side-by-side">
+                        <div id="addview-stats" className="view-stats-main">
                             <div><b id="view-stats-main-title" className="view-stats-main-title-3">EXP</b></div>
-                            <div><p id="view--stats-main-body">0 </p></div> {/* the EXP later replaced by real value */}
+                            <div><p>0 </p></div> {/* the EXP later replaced by real value */}
                         </div>
-                        <div className="view-side-by-side">
-                            <div><b id="view-stats-main-title" className="view-stats-main-title-4">STATUS</b></div>
-                            <div><p id="view--stats-main-body">0 </p></div> {/* the EXP later replaced by real value */}
+                        <div id="addview-stats" className="view-stats-main">
+                            <div>
+                                <b id="view-stats-main-title" className="view-stats-main-title-4">STATUS</b>
+                                <p id="view-status-body">Effect_Name</p> {/* the STATUS later replaced by real value */}
+                                {/* Example of second effect, to be deleted later when functionality is added */}
+                                <p id="view-status-body">Effect_Name </p> {/* the STATUS later replaced by real value */}
+                            </div> 
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    {/* inventory */}
+                <div id="view-paragraph-section" >
+                    {/* Required_Logo is here functioning as an Info_Logo, clicking on it should open the View_Item */}
+                    <b>INVENTORY</b> <button id="button-icons"><img src={Add_Logo} alt="Add_Logo" id="Add_Logo"/></button>
+                    <div id="addview-stats">
+                        <div><p>A small stick</p></div> 
+                        <div><button id="button-icons"><img src={Required_Logo} alt="Required_Logo" id="Required_Logo" className="view-required-logo"/></button> <button id="button-icons"><img src={Minus_Logo} alt="Minus_Logo" id="Minus_Logo"/></button></div>
+                    </div>
+                    {/* Example of second item, to be deleted later when functionality is added */}
+                    <div id="addview-stats">
+                        <div><p>[Item_placeholder]</p></div> 
+                        <div><button id="button-icons"><img src={Required_Logo} alt="Required_Logo" id="Required_Logo" className="view-required-logo"/></button> <button id="button-icons"><img src={Minus_Logo} alt="Minus_Logo" id="Minus_Logo"/></button></div>
+                    </div>
                 </div>
 
             </div>
@@ -87,8 +101,15 @@ function View_Character()
                 </div>
             </div>
 
+            <div id="addview-linebreak"></div>
 
-
+            <div>
+                {/* class, sub-class, race, alignment, background */}
+                <div id="view-title-box" className="">
+                        <b id="view-title">STRENGTH</b>
+                    </div>
+                    <p id="view-body">0</p>
+            </div>
             
             <br /><br />
                 <button id="button-green">Back</button>
