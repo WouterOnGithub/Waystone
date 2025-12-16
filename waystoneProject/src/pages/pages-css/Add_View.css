@@ -4,7 +4,7 @@
     --addview-text: 60px;
 }
 
-#addview-page 
+#addview-page /* The gray_ background for the pop-ups */
 {
     overflow-y: auto;
     display: flex;
@@ -16,7 +16,7 @@
     background: rgba(0, 0, 0, 0.4);
 }
 
-#addview-box
+#addview-box /* The pop-up */
 {
     border-radius: var(--border-radius);
     background-color: var(--background-colour);
@@ -25,7 +25,7 @@
     box-shadow: 5px 5px 100px 25px rgba(43, 43, 43, 0.3);
 }
 
-#addview-title
+#addview-title /* The title inside the green_ bar */
 {
     background: var(--background-gradient);
     font-size: var(--addview-text);
@@ -37,31 +37,76 @@
     padding-bottom: 15px;
 }
 
-#addview-content
+#addview-content /* All the content bellow the green_ bar */
 {
     margin-left: 50px;
 }
-.addview-uploadimg  
+.addview-uploadimg  /* Uploading an image */
 {
     margin-left: 20%;
     margin-top: 50px;
     margin-bottom: 50px;
 }
 
-#addview-discription textarea 
+#addview-discription textarea /* A textarea for a discription */
 {
     width: 350px;
     height: 150px;
 }
-#view-title-box
+
+#view-title-box /* The green_ small titles in the view pages */
 {
     border-radius: var(--border-radius2);
     background: var(--background-gradient);
     text-align: center;
-    width: 200px;
+    width: 210px;
 }
-#view-title
+#view-title /* The HP, LVL, EXP and STATUS */
 {
     color: var(--text-color2);
     padding: 2px; 
+}
+#view-body /* The actual stats */
+{
+    margin-left: 20px;
+}
+
+#addview-linebreak /* The line in-between sections */
+{
+    border-radius: var(--border-radius2);
+    background-color: var(--background-colour4);
+    height: 5px;
+    width: 90%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#view-stats-main-title /* The HP, LVL, EXP, STATUS small titles in the view pages */
+{
+    border-radius: var(--border-radius2);
+    padding: 2px;
+}
+.view-stats-main-title-1 { background-color: var(--projectbox-colour2); }
+.view-stats-main-title-2 { background-color: var(--projectbox-colour3); }
+.view-stats-main-title-3 { background-color: var(--projectbox-colour); }
+.view-stats-main-title-4 { background-color: var(--background-colour2); }
+
+#view-stats-main-body
+{
+
+}
+
+#addview-stats
+{
+    display: flex;
+}
+#addview-stats div
+{
+    margin-right: 15px;
+}
+
+.view-body-tocenter
+{
+    padding-left: 80px;
+    padding-bottom: 10px;
 }

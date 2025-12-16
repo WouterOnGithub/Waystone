@@ -1,7 +1,8 @@
-/* Completed */
 import React from "react";
-import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
+import Header from "../components/UI/Header";
+import Footer from "../components/UI/Footer";
+import Sidebar from "../components/UI/Sidebar";
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
 import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
 import Required_Logo from "../assets/Required_Logo.webp";
@@ -9,128 +10,60 @@ import Delete_Logo from "../assets/Delete_Logo.webp";
 import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
+const campaignSections = [
+  {
+    title: "Recent Campaigns",
+    items: [
+      { name: "Project__Name", color: "#E7D665" },
+      { name: "Project__Name", color: "#447DC9" },
+      { name: "Project__Name", color: "#D34848" },
+    ],
+  },
+  {
+    title: "All Campaigns",
+    items: [
+      { name: "Project__Name", color: "#E7D665" },
+      { name: "Project__Name", color: "#447DC9" },
+      { name: "Project__Name", color: "#D34848" },
+      { name: "Project__Name", color: "#E7D665" },
+      { name: "Project__Name", color: "#447DC9" },
+    ],
+  },
+  {
+    title: "Free Campaigns",
+    items: [
+      { name: "Project__Name", color: "#E7D665" },
+      { name: "Project__Name", color: "#447DC9" },
+    ],
+  },
+];
 
-function My_Campaigns_Page() 
-{
+function My_Campaigns_Page() {
   return (
-    <div>
-      <div className="navigation">
-      <nav>
-        <br />
-        <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
-        <br />
-        <br />
-        <br />
-        <Link to="/">Account</Link>
-        <br />
-        <br />
-        <Link to="/">My Campaigns</Link>
-        <br />
-        <br />
-        <Link to="/">New Campaign</Link>
-        <br />
-        <br />
-        <Link to="/">Settings</Link>
-        <br />
-        <br />
-        <Link to="/">Help</Link>
-      </nav>
-      </div>
+    <div className="campaigns-page">
+      <Sidebar />
+      <div id="main" className="campaigns-shell">
+        <Header title="My Campaigns" />
 
-      <div id="main">
-        {/* The green bar at the top of the page */}
-        <div id="title">
-          <p>My Campaigns</p>
+        <div id="content" className="campaigns-content">
+          {campaignSections.map((section) => (
+            <section key={section.title}>
+              <b>{section.title}</b>
+              <div id="box-section">
+                {section.items.map((item, idx) => (
+                  <div id="box-text" key={`${section.title}-${idx}`}>
+                    <p style={{ backgroundColor: item.color }}>{item.name}</p>
+                    <div id="box">
+                      <button>Archive</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
 
-        <div id="content">
-
-          {/* The RECENT campaigns section */}
-          <b>Recent Campaigns</b>
-          <div id="box-section">
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-           </div>
-          </div>
-
-          {/* The ALL campaigns section */}
-          <b>All Campaigns</b>
-          <div id="box-section">
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-           </div>
-
-           {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-           </div>
-          </div>
-
-          <b>Free Campaigns</b>
-          <div id="box-section">
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-            </div>
-
-            {/* Extra placeholder boxes, later to be removed */}
-            <div id="box-text">
-              <p>Project_name &nbsp;</p>
-              <div id="box"> <button>Archive</button> </div>
-           </div>
-          </div>
-        </div>
+        <Footer />
       </div>
     </div>
   );

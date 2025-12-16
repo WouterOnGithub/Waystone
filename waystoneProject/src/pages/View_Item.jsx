@@ -26,22 +26,23 @@ function View_Item()
             </p>
             <br />
 
-            {/* Examples of an effect */}
-
             <div id="view-title-box">
                 <b id="view-title">EFFECTS</b>
             </div>
-            <p id="view-title">Effect_name</p>
+            {/* Examples of an effect */}
+            <p id="view-body">Effect_name</p>
+            <p id="view-body">Effect_name</p> {/* All except 1 later deleted */}
+            <p id="view-body">Effect_name</p> {/* All except 1 later deleted */}
 
-            <br /><br />
+            <br />
 
+            <div id="view-title-box">
+                <b id="view-title">BONUS - EFFECTS</b>
+            </div>
             {/* Examples of a bonus effect */}
-            <div id="addview-green-bar">
-                <b>Bonus-Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
-            </div>
-            <div id="addview-green-bar">
-                <b>Bonus-Effect_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
-            </div>
+            <p id="view-body">Bonus-Effect_name</p>
+            <p id="view-body">Bonus-Effect_name</p> {/* All except 1 later deleted */}
+            <p id="view-body">Bonus-Effect_name</p> {/* All except 1 later deleted */}
 
             <br /><br />
                 <button id="button-green">Back</button>
