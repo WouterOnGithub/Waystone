@@ -1,11 +1,11 @@
 import { db } from "../firebase/firebase";
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, setDoc, getDoc } from "firebase/firestore";
 
 //get user data
-const getUser = async (UserId) => {
+const getUser = async (userId) => {
     try{
-        const docref = doc(db, "users", UserId);
-        const docSnap = await getDoc(docref);
+        const docRef = doc(db, "users", userId);
+        const docSnap = await getDoc(docRef);
         return docSnap.exists() ? docSnap.data() : null;
     }catch(error){
         console.error("Error getting user:", error);
@@ -14,13 +14,14 @@ const getUser = async (UserId) => {
 }
 
 //set user data
-const setUser = async (UserId ,userData) => {
+const setUser = async (userId ,userData) => {
     try {
-        const docref = doc(db, "users", UserId);
+        const docRef = doc(db, "users", userId);
         //merge true to update existing fields
-        await setDoc(docref, userData, { merge: true }); 
-        console.log("User set successfully");
+        await setDoc(docRef, userData, { merge: true }); 
+        const updatedDoc = await getDoc(docRef);
+        return updatedDoc.exists() ? updatedDoc.data() : null;
     } catch (error) {console.error("Error setting user:", error) };
 }
 
-export{getUser, setUser, getplayerStats}
+export{getUser, setUser}
