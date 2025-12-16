@@ -1,16 +1,34 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, deleteDoc, setDoc, runTransaction } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
+export const moveToken = async (
+  userId,
+  campaignId,
+  mapId,
+  tokenId,
+  oldX,
+  oldY,
+  newX,
+  newY
+) => {
+  const cellsPath = ["Users", userId, "Campaigns", campaignId, "Maps", mapId, "Cells"];
 
+  const oldRef = doc(db, ...cellsPath, `${oldX}_${oldY}`);
+  const newRef = doc(db, ...cellsPath, `${newX}_${newY}`);
 
-export const moveToken = async (userId, campaignId, mapId, tokenId, oldX, oldY, newX, newY) => {
-  const basePath = ["users", userId, "campaigns", campaignId, "maps", mapId, "cells"];
+  
 
-  // Clear old cell
-  const oldDoc = doc(db, ...basePath, `${oldX}_${oldY}`);
-  await setDoc(oldDoc, { tokenId: null }, { merge: true });
+  await runTransaction(db, async (tx) => {
 
-  // Set new cell
-  const newDoc = doc(db, ...basePath, `${newX}_${newY}`);
-  await setDoc(newDoc, { tokenId }, { merge: true });
+    const target = await tx.get(newRef);
+if (target.exists()) throw new Error("Cell occupied");
+
+    tx.delete(oldRef);
+   
+    tx.set(newRef, {
+      tokenId,
+      x: newX,
+      y: newY,
+    });
+  });
 };

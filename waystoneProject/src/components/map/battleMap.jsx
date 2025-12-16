@@ -15,12 +15,8 @@ export default function BattleMap({ userId, campaignId, mapId }) {
     if (!cellsData) return <div>Loading cells…</div>;
 
 
-    console.log("Map:", map);
-console.log("Cells data:", cellsData);
-
   // generateGrid(cellsData, width, height)
   const grid = generateGrid(cellsData, map.height, map.width);  
-  console.log("Grid:", grid);
 
   
 
@@ -45,7 +41,6 @@ console.log("Cells data:", cellsData);
   };
 
 
-console.log("Grid:", grid);
 
   return (
     <div className="grid-container">
