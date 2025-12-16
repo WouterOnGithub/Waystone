@@ -66,18 +66,11 @@ function Account_Page_EDIT() {
             </div>
 
             <form className="account-details" id="input-box-gray" onSubmit={handleSave}>
-              <label htmlFor="name">
-                <b>Name</b>
-              </label>
-              <br />
-              <input type="text" id="name" defaultValue="John Doe" />
-              <br />
-              <br />
-              <label htmlFor="nickname">
-                <b>Nickname</b>
+              <label htmlFor="Username">
+                <b>Username</b>
               </label>{" "}
               <br />
-              <input type="text" id="nickname" defaultValue="DM_0124" required />
+              <input type="text" id="nickname" Placeholder="DM_0124" required />
               <br />
               <br />
               <label htmlFor="introduction">
@@ -87,7 +80,7 @@ function Account_Page_EDIT() {
               <textarea
                 name="introduction"
                 id="introduction"
-                defaultValue="Hello, my name is [Your name] !"
+                placeholder="Hello, my name is [Your name] "
                 maxLength="150"
               />
               <br />
