@@ -47,18 +47,18 @@ function Account_Page_EDIT()
             {/* Main account section */}
             <div id="account-box">
                 <form id="input-box-gray">
-                    <label htmlFor="upload-img">
+                    <label htmlFor="upload-img"> {/*Profile picture*/}
                         <img src={UploadIMG_Logo} alt="UploadIMG_Logo" id="UploadIMG_Logo" />
                     </label>
                     <input type="file" id="upload-img" hidden/>
                     <br />
-                    <label htmlFor="name"><b>Name</b></label><br />
+                    <label htmlFor="name"><b>Name</b></label><br />{/* full name*/ }
                     <input type="text" id="name" defaultValue="John Doe"/>
                     <br /><br />
                     <label htmlFor="nickname"><b>Nickname</b></label> <img src={Required_Logo} alt="Required_Logo" id="Required_Logo" /><br />
                     <input type="text" id="nickname" value="DM_0124" required/>
                     <br /><br />
-                    <label htmlFor="introduction"><b>Introduction</b> (max. 150 characters)</label><br />
+                    <label htmlFor="introduction"><b>Introduction</b> (max. 150 characters)</label><br />{/*Short description*/}
                     <textarea name="introduction" id="introduction" defaultValue="Hello, my name is [Your name] !" maxlength="150"></textarea>
                     <br /><br />
                     <button id="button-green">Save</button>
