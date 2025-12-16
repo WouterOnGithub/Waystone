@@ -10,7 +10,7 @@ import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
 /* Editing this page -Henry */
-function Login_Page() {
+function Register_Page() {
   return (
     <div id="login-container">
 
@@ -42,17 +42,17 @@ function Login_Page() {
           className="login-input"
         />
 
-        <Link to="/Login_Page" id="login-register-link">
+        <Link to="/user/Login_Page" id="login-register-link">
         I already have an account
         </Link>
 
-        <Link to="/Main_Page"><button id="login-button">Enter</button></Link>
+        <Link to="/user/Main_Page"><button id="login-button">Enter</button></Link>
       </div>
 
       {/* Right side: image background + logo */}
         <div
             id="login-image-section"
-            style={{ backgroundImage: `url(${PlaceholderImage})` }}
+            style={{ backgroundImage: `url(${Placeholder})` }}
         >
             <img src={Waystone_Logo} alt="Waystone Logo" id="login-logo" />
         </div>
@@ -61,4 +61,4 @@ function Login_Page() {
   );
 }
 
-export default Login_Page;
+export default Register_Page;

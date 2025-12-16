@@ -75,7 +75,12 @@ function New_Campaign_Page_MAPBUILDER() {
               Campaign
             </button>
             <button className="campaign-tab active">Map Builder</button>
-            <button className="campaign-tab">Characters</button>
+            <button
+              className="campaign-tab"
+              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS")}
+            >
+              Characters
+            </button>
         </div>
 
           {/* MAIN MAP BUILDER CARD */}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -13,6 +14,7 @@ import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
 function New_Campaign_Page_CHARACTERS() {
+  const navigate = useNavigate();
   const [players, setPlayers] = useState([
     { name: "Player_1", level: 3, hp: 19 },
     { name: "Player_2", level: 1, hp: 15 },
@@ -47,8 +49,18 @@ function New_Campaign_Page_CHARACTERS() {
         <Header title="New Campaign" />
         <div className="campaign-body">
           <div className="campaign-tabs">
-            <button className="campaign-tab">Campaign</button>
-            <button className="campaign-tab">Map Builder</button>
+            <button
+              className="campaign-tab"
+              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN")}
+            >
+              Campaign
+            </button>
+            <button
+              className="campaign-tab"
+              onClick={() => navigate("/user/New_Campaign_Page_MAPBUILDER")}
+            >
+              Map Builder
+            </button>
             <button className="campaign-tab active">Characters</button>
           </div>
 
