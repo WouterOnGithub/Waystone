@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Account_Page.css";
+import "./pages-css/Account_Page_EDIT.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
@@ -48,13 +49,13 @@ function Account_Page_EDIT() {
         <main className="account-content">
           <section id="account-box" className="account-card">
             <div className="account-avatar-wrap">
-              <label htmlFor="upload-img">
-                <img
-                  src={avatarPreview || UploadIMG_Logo}
-                  alt="UploadIMG_Logo"
-                  id="UploadIMG_Logo"
-                />
-              </label>
+              <img
+                src={avatarPreview || UploadIMG_Logo}
+                alt="UploadIMG_Logo"
+                id="UploadIMG_Logo"
+                onClick={() => document.getElementById("upload-img").click()} // triggers file input
+                style={{ cursor: "pointer" }}
+              />
               <input
                 type="file"
                 id="upload-img"
