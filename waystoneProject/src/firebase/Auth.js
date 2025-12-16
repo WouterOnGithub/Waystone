@@ -10,6 +10,7 @@ export const signUp = async (email,password, username) =>
     email: email,
     createdAt: serverTimestamp(),
     username: username,
+    desctiption: ""
   });
 return userCredential
 
