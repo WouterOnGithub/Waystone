@@ -31,7 +31,7 @@ import View_Item from "./pages/View_Item"
 {/* import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME" */}
 
 import Map_Main from "./pages/Map_Main"
-{/* import Map_Location from "./pages/Map_Location" */}
+import Map_Location from "./pages/Map_Location"
 import Map_Building_Region from "./pages/Map_Building_Region"
 {/* import Map_Battle_View from "./pages/Map_Battle_View" */}
 
