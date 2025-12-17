@@ -37,6 +37,7 @@ import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME"
 
 import BattleMapTest from './pages/battleMapTest';
 import Add_Character from './pages/Add_Character';
+import Add_NPC from './pages/Add_NPC';
 
 
 /* (temporary) TO VISIT A PAGE: http://localhost:5173/user/[PAGE NAME] */
@@ -87,7 +88,7 @@ function App()
                 <Route path="/user/Add_Container" element={<Add_Container />} />
                 <Route path="/user/Add_Item" element={<Add_Item />} />
 
-                {/*routes voor aanmaken van characters*/}
+                {/*routes voor aanmaken van player characters*/}
                 <Route 
                   path='/user/:campaignId/Add_Character'
                   element={<Add_Character/>}
@@ -97,8 +98,26 @@ function App()
                   element={<Add_Character/>}
                 />
                 
-                {/* <Route path="/user/Add_NPC" element={<Add_NPC />} /> */}
-                {/* <Route path="/user/Add_Enemy" element={<Add_Enemy />} /> */}
+                {/*routes voor aanmaken van npc*/}
+                <Route 
+                  path='/user/:campaignId/Add_NPC'
+                  element={<Add_NPC/>}
+                />
+                <Route
+                  path='/user/:campaignId/Add_NPC/:npcId'
+                  element={<Add_NPC/>}
+                />
+
+                {/*routes voor aanmaken van enemy*/}
+                <Route 
+                  path='/user/:campaignId/Add_Enemy'
+                  element={<Add_Enemy/>}
+                />
+                <Route
+                  path='/user/:campaignId/Add_Enemy/:enemyId'
+                  element={<Add_Enemy/>}
+                />
+                  
                 
                 <Route path="/user/View_Character" element={<View_Character />} /> 
                 <Route path="/user/View_Item" element={<View_Item />} />
