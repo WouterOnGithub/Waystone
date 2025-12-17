@@ -19,16 +19,16 @@ import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER"
 import Add_Building_Region from "./components/popups/Add_Building_Region"
 import Add_Location from "./components/popups/Add_Location"
 import Add_Container from "./components/popups/Add_Container"
-import Add_Item from "./pages/Add_Item" 
+import Add_Item from "./components/popups/Add_Item" 
 {/* import Add_Character from "./pages/Add_Character" */}
 {/* import Add_NPC from "./pages/Add_NPC" */}
 {/* import Add_Enemy from "./pages/Add_Enemy" */}
 
-import View_Character from "./pages/View_Character" 
-import View_Item from "./pages/View_Item"
+import View_Character from "./components/popups/View_Character" 
+import View_Item from "./components/popups/View_Item"
 
-{/* import Game_Settings from "./pages/Game_Settings" */}
-{/* import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME" */}
+import Game_Settings from "./pages/Game_Settings"
+import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME" 
 
 {/* import Map_Main from "./pages/Map_Main" */}
 {/* import Map_Location from "./pages/Map_Location" */}
@@ -92,8 +92,8 @@ function App()
                 <Route path="/user/View_Character" element={<View_Character />} /> 
                 <Route path="/user/View_Item" element={<View_Item />} />
                 
-                {/* <Route path="/user/Game_Settings" element={<Game_Settings />} /> */}
-                {/* <Route path="/user/Game_Settings_SAVEGAME" element={<Game_Settings_SAVEGAME />} /> */}
+                <Route path="/user/Game_Settings" element={<Game_Settings />} /> 
+                <Route path="/user/Game_Settings_SAVEGAME" element={<Game_Settings_SAVEGAME />} />
                 
                 {/* <Route path="/user/Map_Main" element={<Map_Main />} /> */}
                 {/* <Route path="/user/Map_Location" element={<Map_Location />} /> */}
