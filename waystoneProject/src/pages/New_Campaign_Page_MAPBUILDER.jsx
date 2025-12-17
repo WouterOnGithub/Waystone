@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -18,7 +18,14 @@ import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
 function New_Campaign_Page_MAPBUILDER() {
+  const {campaignId} = useParams()
   const navigate = useNavigate();
+
+  const New_Campaign_Page_CAMPAIGN= () => {
+    const isCreateMode = !campaignId;
+    const isEditMode = Boolean(campaignId);
+  };
+
   const [previewUrl, setPreviewUrl] = useState(null);
   const [previewSize, setPreviewSize] = useState({ width: 0, height: 0 });
 
@@ -96,20 +103,28 @@ function New_Campaign_Page_MAPBUILDER() {
         <div className="campaign-body">
 
         <div className="campaign-tabs">
-            <button
+            <button 
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN")}
-            >
-              Campaign
+              disabled={!campaignId}
+              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN/${campaignId}")}
+              >
+                Campaign
             </button>
-            <button className="campaign-tab active">Map Builder</button>
+            <button
+              className="campaign-tab active"
+              disabled={!campaignId}
+              onClick={() => navigate("/user/New_Campaign_Page_MAPBUILDER/${campaignId}")}
+            >
+              Map Builder
+            </button>
             <button
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS")}
+              disabled={!campaignId}
+              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS/${campaignId}")}
             >
               Characters
             </button>
-        </div>
+          </div>
 
           {/* MAIN MAP BUILDER CARD */}
           <div className="campaign-card">

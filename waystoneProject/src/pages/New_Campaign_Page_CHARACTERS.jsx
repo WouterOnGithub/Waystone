@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -14,7 +14,14 @@ import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
 function New_Campaign_Page_CHARACTERS() {
+  const {campaignId} = useParams()
   const navigate = useNavigate();
+
+  const New_Campaign_Page_CHARACTERS= () => {
+    const isCreateMode = !campaignId;
+    const isEditMode = Boolean(campaignId);
+  };
+
   const [players, setPlayers] = useState([
     { name: "Player_1", level: 3, hp: 19 },
     { name: "Player_2", level: 1, hp: 15 },
@@ -49,19 +56,27 @@ function New_Campaign_Page_CHARACTERS() {
         <Header title="New Campaign" />
         <div className="campaign-body">
           <div className="campaign-tabs">
-            <button
+            <button 
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN")}
-            >
-              Campaign
+              disabled={!campaignId}
+              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN/${campaignId}")}
+              >
+                Campaign
             </button>
             <button
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_MAPBUILDER")}
+              disabled={!campaignId}
+              onClick={() => navigate("/user/New_Campaign_Page_MAPBUILDER/${campaignId}")}
             >
               Map Builder
             </button>
-            <button className="campaign-tab active">Characters</button>
+            <button
+              className="campaign-tab active"
+              disabled={!campaignId}
+              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS/${campaignId}")}
+            >
+              Characters
+            </button>
           </div>
 
           <div className="campaign-card">
