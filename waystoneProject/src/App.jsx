@@ -57,7 +57,16 @@ function App()
                 <Route path="/user/Account_Page_EDIT" element={<Account_Page_EDIT />} />
                 <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} />
                 
-                <Route path="/user/New_Campaign_Page_CAMPAIGN" element={<New_Campaign_Page_CAMPAIGN />} />
+                {/*nieuwe campaigne aanmaken*/}
+                <Route 
+                  path="/user/New_Campaign_Page_CAMPAIGN" 
+                  element={<New_Campaign_Page_CAMPAIGN />}
+                />
+                {/*al bestaande campaign*/}
+                <Route
+                  path="/user/New_Campaign_Page_CAMPAIGN/:campaignId"
+                  element={<New_Campaign_Page_CAMPAIGN/>}
+                />
                 {/* <Route path="/user/New_Campaign_Page_EVENTS" element={<New_Campaign_Page_EVENTS />} /> */}
                 <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} />
                 <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} />
