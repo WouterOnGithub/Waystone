@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Raleway:wght@700;800&display=swap');
+
+#title {
+  background: linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2560 100%);
+  padding: 60px 20px;
+  text-align: center;
+  border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 8px 32px rgba(109, 40, 217, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle animated glow background effect */
+#title::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  animation: pulse 6s ease-in-out infinite;
+}
+
+#title p {
+  font-size: 4.5rem;
+  font-weight: 700;
+  font-family: 'Montserrat', 'Raleway', 'Inter', sans-serif;
+  letter-spacing: 0.08em;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+  
+  /* Modern neon effect with softer purple */
+  color: #f8f8ff;
+  background: linear-gradient(180deg, #ffffff 0%, #e9d5ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* Subtle outline and glow */
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6))
+          drop-shadow(0 0 16px rgba(109, 40, 217, 0.4))
+          drop-shadow(0 0 24px rgba(88, 28, 135, 0.3));
+  
+  animation: subtleGlow 4s ease-in-out infinite;
+}
+
+/* Subtle glow animation - more professional */
+@keyframes subtleGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6))
+            drop-shadow(0 0 16px rgba(109, 40, 217, 0.4))
+            drop-shadow(0 0 24px rgba(88, 28, 135, 0.3));
+  }
+  
+  50% {
+    filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.7))
+            drop-shadow(0 0 20px rgba(109, 40, 217, 0.5))
+            drop-shadow(0 0 28px rgba(88, 28, 135, 0.4));
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.05) translate(5px, 5px);
+    opacity: 0.5;
+  }
+}
+
+/* Alternative: For outlined text style (uncomment if preferred) */
+/*
+#title p {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px #a78bfa;
+  text-stroke: 2px #a78bfa;
+  
+  filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.7))
+          drop-shadow(0 0 12px rgba(109, 40, 217, 0.5))
+          drop-shadow(0 0 18px rgba(88, 28, 135, 0.4));
+}
+*/
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  #title p {
+    font-size: 4rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 1024px) {
+  #title p {
+    font-size: 3.5rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+@media (max-width: 768px) {
+  #title {
+    padding: 40px 15px;
+  }
+  
+  #title p {
+    font-size: 2.8rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (max-width: 480px) {
+  #title {
+    padding: 30px 10px;
+  }
+  
+  #title p {
+    font-size: 2rem;
+    letter-spacing: 0.03em;
+  }
+}
