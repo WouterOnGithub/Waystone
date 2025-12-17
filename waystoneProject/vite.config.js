@@ -9,6 +9,78 @@ export default defineConfig({
   plugins: [
     react(),
     {
+      name: 'avatar-upload-middleware',
+      configureServer(server) {
+        server.middlewares.use('/api/upload-avatar', (req, res, next) => {
+          if (req.method !== 'POST') return next();
+
+          const sendJson = (status, body) => {
+            res.statusCode = status;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(body));
+          };
+
+          const busboy = Busboy({
+            headers: req.headers,
+            limits: { files: 1, fileSize: 5 * 1024 * 1024 }, // 5MB limit
+          });
+
+          let userId = '';
+          let fileData = null;
+          let fileInfo = null;
+          let responded = false;
+
+          busboy.on('field', (name, value) => {
+            if (name === 'userId') {
+              userId = value;
+            }
+          });
+
+          busboy.on('file', (name, file, info) => {
+            if (name !== 'avatar') {
+              file.resume();
+              return;
+            }
+            const chunks = [];
+            file.on('data', (chunk) => chunks.push(chunk));
+            file.on('end', () => {
+              fileData = Buffer.concat(chunks);
+              fileInfo = info;
+            });
+          });
+
+          busboy.on('close', () => {
+            if (responded) return;
+            
+            const safeUserId = userId.replace(/[^a-zA-Z0-9_-]/g, '');
+            if (!safeUserId || !fileData) {
+              sendJson(400, { error: 'userId and avatar file are required' });
+              return;
+            }
+
+            const ext = path.extname(fileInfo.filename || '') || '.jpg';
+            const savedFileName = `avatar${ext}`;
+
+            const targetDir = path.join(process.cwd(), 'public', 'avatars', safeUserId);
+            fs.mkdirSync(targetDir, { recursive: true });
+            const targetPath = path.join(targetDir, savedFileName);
+
+            try {
+              fs.writeFileSync(targetPath, fileData);
+              sendJson(200, {
+                fileName: savedFileName,
+                url: `/avatars/${safeUserId}/${savedFileName}`,
+              });
+            } catch (err) {
+              sendJson(500, { error: 'Failed to save file' });
+            }
+          });
+
+          req.pipe(busboy);
+        });
+      },
+    },
+    {
       name: 'map-upload-middleware',
       configureServer(server) {
         server.middlewares.use('/api/upload-map', (req, res, next) => {
