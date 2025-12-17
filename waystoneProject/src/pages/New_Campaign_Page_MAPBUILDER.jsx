@@ -21,6 +21,7 @@ import { useAuth } from "../context/AuthContext";
 function New_Campaign_Page_MAPBUILDER() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const fileInputRef = React.useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [previewSize, setPreviewSize] = useState({ width: 0, height: 0 });
   const [mapFile, setMapFile] = useState(null);
@@ -76,6 +77,10 @@ function New_Campaign_Page_MAPBUILDER() {
       if (prev) URL.revokeObjectURL(prev);
       return url;
     });
+  };
+
+  const handleBrowseClick = () => {
+    fileInputRef.current?.click();
   };
 
   const handleImageLoad = (e) => {
@@ -172,11 +177,24 @@ function New_Campaign_Page_MAPBUILDER() {
               <label className="campaign-label">Import Main Map</label>
               <div className="mapbuilder-row">
                 <input
+                  ref={fileInputRef}
                   type="file"
                   accept="image/*"
                   className="mapbuilder-file"
                   onChange={handleMapUpload}
+                  style={{ display: "none" }}
                 />
+                <button
+                  type="button"
+                  className="mapbuilder-browse"
+                  onClick={handleBrowseClick}
+                  disabled={saving}
+                >
+                  Browse
+                </button>
+                <span className="mapbuilder-file-label">
+                  {mapFile ? mapFile.name : "No file selected"}
+                </span>
               </div>
             </div>
 
