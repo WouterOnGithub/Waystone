@@ -29,6 +29,7 @@ export default defineConfig({
           let safeUserId = '';
           let savedFileName = '';
           let savedFileBytes = 0;
+          let mapId = '';
           let responded = false;
 
           busboy.on('field', (name, value) => {
@@ -55,9 +56,10 @@ export default defineConfig({
             const base = path
               .basename(filename || 'map', ext)
               .replace(/[^a-zA-Z0-9._-]/g, '');
-            savedFileName = `${Date.now()}_${base || 'map'}${ext}`;
+            mapId = `${Date.now()}_${base || 'map'}`;
+            savedFileName = `${mapId}${ext}`;
 
-            const targetDir = path.join(process.cwd(), 'public', 'maps', safeUserId);
+            const targetDir = path.join(process.cwd(), 'public', 'Main-Maps', safeUserId);
             fs.mkdirSync(targetDir, { recursive: true });
             const targetPath = path.join(targetDir, savedFileName);
 
@@ -85,9 +87,10 @@ export default defineConfig({
               return;
             }
             sendJson(200, {
-              url: `/maps/${safeUserId}/${savedFileName}`,
+              url: `/Main-Maps/${safeUserId}/${savedFileName}`,
               name: savedFileName,
               size: savedFileBytes,
+              id: mapId,
             });
           });
 

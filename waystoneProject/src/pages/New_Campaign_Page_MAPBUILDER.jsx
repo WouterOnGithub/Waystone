@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -21,6 +21,9 @@ import { useAuth } from "../context/AuthContext";
 function New_Campaign_Page_MAPBUILDER() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { mapId } = useParams();
+  const isNewMap = !mapId;
+
   const fileInputRef = React.useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [previewSize, setPreviewSize] = useState({ width: 0, height: 0 });
@@ -38,9 +41,36 @@ function New_Campaign_Page_MAPBUILDER() {
     []
   );
 
+  // Load existing map when mapId is present
+  useEffect(() => {
+    if (!mapId || !user) return;
+
+    // Try to load the saved map image from public/maps/{userId}/{mapId}.*
+    // We check common extensions; the first one that exists wins
+    const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const tryLoad = async () => {
+      for (const ext of extensions) {
+        const url = `/Main-Maps/${user.uid}/${mapId}${ext}`;
+        try {
+          const res = await fetch(url, { method: 'HEAD' });
+          if (res.ok) {
+            setPreviewUrl(url);
+            return;
+          }
+        } catch {
+          // continue
+        }
+      }
+    };
+    tryLoad();
+  }, [mapId, user]);
+
   useEffect(() => {
     return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      // Only revoke blob URLs, not static file URLs
+      if (previewUrl && previewUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(previewUrl);
+      }
     };
   }, [previewUrl]);
 
@@ -128,6 +158,11 @@ function New_Campaign_Page_MAPBUILDER() {
 
       const result = await response.json();
       setSaveMessage(`Map saved. URL: ${result.url}`);
+
+      // Navigate to the saved map page (like Campaign does after save)
+      if (isNewMap && result.id) {
+        navigate(`/user/New_Campaign_Page_MAPBUILDER/${result.id}`);
+      }
     } catch (err) {
       setSaveMessage(err?.message || "Failed to save map.");
     } finally {

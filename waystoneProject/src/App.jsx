@@ -69,7 +69,10 @@ function App()
                 />
                 {/* <Route path="/user/New_Campaign_Page_EVENTS" element={<New_Campaign_Page_EVENTS />} /> */}
                 <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} />
+                {/*nieuwe map aanmaken*/}
                 <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} />
+                {/*al bestaande map*/}
+                <Route path="/user/New_Campaign_Page_MAPBUILDER/:mapId" element={<New_Campaign_Page_MAPBUILDER />} />
                 
                 <Route path="/user/Add_Building_Region" element={<Add_Building_Region />} /> 
                 <Route path="/user/Add_Location" element={<Add_Location />} /> 
