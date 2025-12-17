@@ -1,13 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./pages-css/CSS.css";
-import "./pages-css/Add_View.css";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
+import "../../pages/pages-css/CSS.css";
+import "../../pages/pages-css/Add_View.css";
+import UploadIMG_Logo from "../../assets/PlaceholderImage.jpg";
+import Required_Logo from "../../assets/Required_Logo.webp";
 
 function Add_Building_Region() 
 {
@@ -29,14 +24,13 @@ function Add_Building_Region()
             <input type="text" id="name-buildingregion" defaultValue="Building/Region#0452"/>
             <br /><br />
             
-            <div id="addview-discription">
-                <label htmlFor="discription-buildingregion"><b>Discription</b> (max. 120 characters)</label><br />
-                <textarea name="discription-buildingregion" id="discription-buildingregion" maxlength="120"></textarea>
+            <div id="addview-description">
+                <label htmlFor="description-buildingregion"><b>Description</b> (max. 120 characters)</label><br />
+                <textarea name="description-buildingregion" id="description-buildingregion" maxlength="120"></textarea>
             </div>
 
             <br />
             <button id="button-green">Save</button>
-            <button id="button-green">Back</button>
             <br /><br />
         </form>
 

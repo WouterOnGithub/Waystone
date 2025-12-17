@@ -16,9 +16,9 @@ import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN"
 import New_Campaign_Page_CHARACTERS from "./pages/New_Campaign_Page_CHARACTERS"
 import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER" 
 
-import Add_Building_Region from "./pages/Add_Building_Region"
-import Add_Location from "./pages/Add_Location"
-import Add_Container from "./pages/Add_Container"
+import Add_Building_Region from "./components/popups/Add_Building_Region"
+import Add_Location from "./components/popups/Add_Location"
+import Add_Container from "./components/popups/Add_Container"
 import Add_Item from "./pages/Add_Item" 
 {/* import Add_Character from "./pages/Add_Character" */}
 {/* import Add_NPC from "./pages/Add_NPC" */}

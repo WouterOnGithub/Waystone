@@ -1,8 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import Waystone_Logo from "../../assets/Waystone_Logo.png"; // adjust path if needed
+import Waystone_Logo from "../../assets/Waystone_Logo.png";
+import { logout } from "../../firebase/Auth";
 
 function Sidebar() {
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/user/Login_Page");
+  };
+
 
   return (
     <div className="navigation">
@@ -38,7 +45,7 @@ function Sidebar() {
         <Link to="/">Help</Link>
         <br />
         <br />
-        <Link to="/user/Login_Page">Logout</Link>
+        <Link onClick={handleLogout}>Logout</Link>
       </nav>
     </div>
   );

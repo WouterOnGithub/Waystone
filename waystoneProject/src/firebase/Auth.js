@@ -16,10 +16,9 @@ return userCredential
 
    };
 
-export const signIn = (email,password) =>
-{
-    signInWithEmailAndPassword(auth, email, password);
-}
+export const signIn = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
 
 export const logout = () => signOut(auth);
 
