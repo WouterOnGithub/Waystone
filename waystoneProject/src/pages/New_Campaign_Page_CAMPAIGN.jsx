@@ -22,9 +22,10 @@ function New_Campaign_Page_CAMPAIGN() {
   const navigate = useNavigate();
 
   const {user} = useAuth();
-  //console.log("Current user:", user.uid);
-  const userId = "6v5VMJwiBgQjsAMLc42PBe7Krmd2"
-  //const userId = user ? user.uid : null;
+  
+  const userId = user ? user.uid : null;
+
+  
   
 
   const {campaignId} = useParams()

@@ -11,10 +11,13 @@ import Required_Logo from "../assets/Required_Logo.webp";
 import Delete_Logo from "../assets/Delete_Logo.webp";
 import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
-
-
+import { useAuth } from "../context/AuthContext";
 function Main_Page() {
-
+  console.log("Main_Page loaded");
+  const { user } = useAuth();
+  console.log("Context user:", user.uid);
+ 
+  
   return (
     <div className="page-layout">
       <Sidebar />
