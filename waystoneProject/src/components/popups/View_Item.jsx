@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./pages-css/CSS.css";
-import "./pages-css/Add_View.css";
+import "../../pages/pages-css/CSS.css";
+import "../../pages/pages-css/Add_View.css";
 
 function View_Item() 
 {

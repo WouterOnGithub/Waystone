@@ -1,11 +1,11 @@
 /*I am unique*/
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./pages-css/CSS.css";
-import "./pages-css/Add_View.css";
-import Required_Logo from "../assets/Required_Logo.webp"; {/* Als here as the Info_Logo */}
-import Minus_Logo from "../assets/Minus_Logo.png";
-import Add_Logo from "../assets/Add_Logo.webp";
+import "../../pages/pages-css/CSS.css";
+import "../../pages/pages-css/Add_View.css";
+import Required_Logo from "../../assets/Required_Logo.webp"; {/* Als here as the Info_Logo */}
+import Minus_Logo from "../../assets/Minus_Logo.png";
+import Add_Logo from "../../assets/Add_Logo.webp";
 
 function View_Character() 
 {
