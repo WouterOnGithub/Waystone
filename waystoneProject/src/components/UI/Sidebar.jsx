@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import Waystone_Logo from "../../assets/Waystone_Logo.png";
-import { logout } from "../../context/AuthContext";
+import { logout } from "../../firebase/Auth";
 
 function Sidebar() {
   const navigate = useNavigate();
