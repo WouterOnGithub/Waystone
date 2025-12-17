@@ -17,8 +17,6 @@ function New_Campaign_Page_CHARACTERS() {
   const {campaignId} = useParams()
   const navigate = useNavigate();
 
-<<<<<<< Updated upstream
-=======
   const handleAddPlayer = () => {
     navigate(`/user/${campaignId}/Add_Character`);
   };
@@ -39,7 +37,6 @@ function New_Campaign_Page_CHARACTERS() {
   const handleEditEnemy = () => {
     navigate(`/user/${campaignId}/Add_Enemy/${enemyId}`);
   }
->>>>>>> Stashed changes
 
   const [players, setPlayers] = useState([
     { name: "Player_1", level: 3, hp: 19 },
@@ -55,25 +52,6 @@ function New_Campaign_Page_CHARACTERS() {
     { name: "Enemy", cr: 5, hp: 12 },
     { name: "Enemy", cr: 3, hp: 15 },
   ]);
-
-<<<<<<< Updated upstream
-  const addPlayer = () => {
-    setPlayers([...players, { name: `Player_${players.length + 1}`, level: 1, hp: 10 }]);
-  };
-
-  const addNpc = () => {
-    setNpcs([...npcs, { name: `NPC_${npcs.length + 1}`, job: "" }]);
-  };
-
-  const addEnemy = () => {
-    setEnemies([...enemies, { name: "Enemy", cr: 1, hp: 10 }]);
-  };
-=======
-  const [players] = useState([
-    { name: "Player_1", level: 1, hp: 10 },
-    { name: "Player_2", level: 2, hp: 15 },
-  ]);
->>>>>>> Stashed changes
 
   return (
     <div className="campaign-page">
