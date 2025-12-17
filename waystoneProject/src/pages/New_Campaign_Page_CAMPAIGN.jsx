@@ -13,8 +13,34 @@ import Delete_Logo from "../assets/Delete_Logo.webp";
 import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
+import {useCampaign} from "../hooks/useCampaign";
+import { useAuth } from "../context/AuthContext";
+import { updateCampaignInfo } from "../api/firestore";
+
 function New_Campaign_Page_CAMPAIGN() {
   const navigate = useNavigate();
+
+  const {user} = useAuth();
+  
+  const userId = user?.uid;
+  const campaignId = "currentCampaignId"; // bijv. uit route params of state TO DO !!!
+  
+  const { data, loading, error, setData } = useCampaign(userId, campaignId);
+
+  const handleSave = async () => {
+    if(!userId || !campaignId) return;
+    try {
+      await updateCampaignInfo(userId, campaignId, {
+        name: data.name,
+        genre: data.genre,
+        backstory: data.backstory
+      });
+      alert("Campaign info saved successfully!");
+    } catch (err) {
+      console.error("Failed to save campaign info:", err);
+      alert("Failed to save campaign info. Please try again.");
+    }
+  };
 
   return (
     <div className="campaign-page">
@@ -47,6 +73,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-name"
                 className="campaign-input"
                 placeholder="Enter text here..."
+                value={data?.name || ""}
+                onChange={(e) => setData({...data, name: e.target.value})}
               />
             </div>
 
@@ -58,6 +86,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-genre"
                 className="campaign-input"
                 placeholder="Enter text here..."
+                value={data?.genre || ""}
+                onChange={(e) => setData({...data, genre: e.target.value})}
               />
             </div>
 
@@ -69,6 +99,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-story"
                 className="campaign-textarea"
                 placeholder={`Enter text here...`}
+                value={data?.backstory || ""}
+                onChange={(e) => setData({...data, backstory: e.target.value})}
               />
             </div>
 
