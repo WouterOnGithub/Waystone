@@ -12,7 +12,7 @@
     position: fixed;
     align-items: flex-start; 
     inset: 0;
-    padding: 30px; 
+    padding: 12px; 
     background: rgba(0, 0, 0, 0.4);
 }
 
@@ -20,8 +20,8 @@
 {
     border-radius: var(--border-radius);
     background-color: var(--background-colour);
-    width: 550px;
-    margin: 40px;
+    width: min(600px, calc(100vw - 32px));
+    margin: 0 auto 24px auto;
     box-shadow: 5px 5px 100px 25px rgba(43, 43, 43, 0.3);
 }
 
@@ -39,13 +39,17 @@
 
 #addview-content /* All the content bellow the green_ bar */
 {
-    margin-left: 50px;
+    margin-left: 0;
+    padding: 0 24px 32px;
+    width: 100%;
+    box-sizing: border-box;
 }
 .addview-uploadimg  /* Uploading an image */
 {
-    margin-left: 20%;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    display: block;
+    margin-left: 0;
+    margin-top: 30px;
+    margin-bottom: 40px;
 }
 
 #addview-discription textarea /* A textarea for a discription */
@@ -91,11 +95,6 @@
 .view-stats-main-title-3 { background-color: var(--projectbox-colour); }
 .view-stats-main-title-4 { background-color: var(--background-colour2); }
 
-#view-stats-main-body
-{
-
-}
-
 #addview-stats
 {
     display: flex;
@@ -109,4 +108,31 @@
 {
     padding-left: 80px;
     padding-bottom: 10px;
+}
+
+/* Local overrides to keep popup content contained */
+#UploadIMG_Logo
+{
+    width: 100%;
+    max-width: 380px;
+    height: 260px;
+    margin-right: 0;
+    display: block;
+}
+
+#input-box-gray
+{
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+#input-box-gray input, #input-box-gray textarea
+{
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+#input-box-gray textarea
+{
+    height: 180px;
 }

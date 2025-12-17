@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "../../pages/pages-css/CSS.css";
 import "../../pages/pages-css/Add_View.css";
 import UploadIMG_Logo from "../../assets/PlaceholderImage.jpg";
@@ -6,6 +6,12 @@ import Required_Logo from "../../assets/Required_Logo.webp";
 
 function Add_Location() 
 {
+  const fileInputRef = useRef(null);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <div id="addview-page">
     <div id="addview-box">
@@ -15,13 +21,22 @@ function Add_Location()
       <div id="addview-content">
 
         <form id="input-box-gray">
-            <label htmlFor="upload-img">
-                <img src={UploadIMG_Logo} alt="UploadIMG_Logo" id="UploadIMG_Logo" className="addview-uploadimg" />
-            </label>
-            <input type="file" id="upload-img" hidden/>
+            <img
+              src={UploadIMG_Logo}
+              alt="UploadIMG_Logo"
+              id="UploadIMG_Logo"
+              className="addview-uploadimg"
+              onClick={handleUploadClick}
+            />
+            <input
+              type="file"
+              id="upload-img"
+              ref={fileInputRef}
+              hidden
+            />
             <br />
-            <label htmlFor="name-location"><b>Name</b></label> <img src={Required_Logo} alt="Required_Logo" id="Required_Logo" /> <br />
-            <input type="text" id="name-location" defaultValue="Location#0452"/>
+            <label htmlFor="name-location"><b>Name</b></label> <br />
+            <input type="text" id="name-location"/>
             <br /><br />
             
             <div id="addview-description">
