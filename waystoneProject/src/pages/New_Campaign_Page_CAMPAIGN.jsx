@@ -1,5 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -13,8 +14,58 @@ import Delete_Logo from "../assets/Delete_Logo.webp";
 import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
+import { createCampaign } from "../api/userCampaigns";
+import {useCampaign} from "../hooks/useCampaign";
+import { useAuth } from "../context/AuthContext";
+
 function New_Campaign_Page_CAMPAIGN() {
   const navigate = useNavigate();
+
+  const {user} = useAuth();
+  const userId = user ? user.uid : null;
+
+  const {campaignId} = useParams()
+  const isNewCampaign = !campaignId;
+  const { data, loading, error, setData } = useCampaign(
+    isNewCampaign? null : userId, 
+    isNewCampaign? null : campaignId
+  );
+  const [draft, setDraft] = useState({
+    name:"",
+    genre:"",
+    backstory:""
+  });
+  const formData = isNewCampaign ? draft : data;
+  const setFormData = isNewCampaign ? setDraft : setData;
+
+  const handleSave = async () => {
+    
+    if(!userId) return;
+    
+    try {
+      if (isNewCampaign) {
+        const newCampaign = await createCampaign(userId, 
+          {...draft,
+          createdAt: new Date().toISOString(),
+          lastUpdatedAt: new Date().toISOString(),
+          originalCreator: userId
+        });
+        navigate(`/user/New_Campaign_Page_CAMPAIGN/${newCampaign.id}`);
+      }else {
+        await updateCampaignInfo(userId, campaignId, {
+          name: formData.name,
+          genre: formData.genre,
+          backstory: formData.backstory,
+          lastUpdatedAt: new Date().toISOString()
+        });
+        alert("Campaign info saved successfully");
+      }
+        }
+    catch (error) {
+      console.error("Error saving campaign:", error);
+      alert("Failed to save campaign. Please try again.");
+    }
+  };
 
   return (
     <div className="campaign-page">
@@ -30,7 +81,12 @@ function New_Campaign_Page_CAMPAIGN() {
             >
               Map Builder
             </button>
-            <button className="campaign-tab">Characters</button>
+            <button
+              className="campaign-tab"
+              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS")}
+            >
+              Characters
+            </button>
           </div>
 
           <div className="campaign-card">
@@ -42,6 +98,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-name"
                 className="campaign-input"
                 placeholder="Enter text here..."
+                value={formData?.name || ""}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
             </div>
 
@@ -53,6 +111,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-genre"
                 className="campaign-input"
                 placeholder="Enter text here..."
+                value={formData?.genre || ""}
+                onChange={(e) => setFormData({...formData, genre: e.target.value})}
               />
             </div>
 
@@ -64,6 +124,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-story"
                 className="campaign-textarea"
                 placeholder={`Enter text here...`}
+                value={formData?.backstory || ""}
+                onChange={(e) => setFormData({...formData, backstory: e.target.value})}
               />
             </div>
 
@@ -73,7 +135,9 @@ function New_Campaign_Page_CAMPAIGN() {
             </div>
 
             <div className="campaign-actions">
-              <button className="campaign-save">Save and continue</button>
+              <button className="campaign-save" onClick={handleSave} >
+                Save and continue
+              </button>
               <button className="campaign-enter">Enter</button>
             </div>
           </div>

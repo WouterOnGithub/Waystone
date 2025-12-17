@@ -75,8 +75,7 @@ function Settings_Page() {
 
               <br />
               <br />
-              <button id="button-green">Save</button>
-              <button id="button-green">Logout</button>
+              <button id="button-green">Confirm changes</button>
             </form>
           </div>
         </div>

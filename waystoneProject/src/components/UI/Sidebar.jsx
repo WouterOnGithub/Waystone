@@ -1,8 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import Waystone_Logo from "../../assets/Waystone_Logo.png"; // adjust path if needed
+import Waystone_Logo from "../../assets/Waystone_Logo.png";
+import { logout } from "../../firebase/Auth";
 
 function Sidebar() {
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/user/Login_Page");
+  };
+
 
   return (
     <div className="navigation">
@@ -11,9 +18,9 @@ function Sidebar() {
         <div
           role="button"
           tabIndex={0}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/user/Main_Page")}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") navigate("/");
+            if (e.key === "Enter" || e.key === " ") navigate("/user/Main_Page");
           }}
           style={{ display: "inline-block", cursor: "pointer" }}
           aria-label="Go to main page"
@@ -36,6 +43,9 @@ function Sidebar() {
         <br />
         <br />
         <Link to="/">Help</Link>
+        <br />
+        <br />
+        <Link onClick={handleLogout}>Logout</Link>
       </nav>
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { createRoot } from "react-dom/client";
 import { useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
@@ -6,6 +7,9 @@ import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
+import AddLocation from "../components/popups/Add_Location";
+import AddContainer from "../components/popups/Add_Container";
+import AddBuildingRegion from "../components/popups/Add_Building_Region";
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
 import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
 import Required_Logo from "../assets/Required_Logo.webp";
@@ -33,6 +37,30 @@ function New_Campaign_Page_MAPBUILDER() {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, [previewUrl]);
+
+  const openPopup = (Component, title) => {
+    const popup = window.open("", title, "width=600,height=800");
+    if (!popup) return;
+
+    popup.document.title = title;
+
+    // copy existing styles to the popup so it looks consistent
+    const styles = Array.from(
+      document.querySelectorAll('style, link[rel="stylesheet"]')
+    );
+    styles.forEach((node) => {
+      popup.document.head.appendChild(node.cloneNode(true));
+    });
+
+    const container = popup.document.createElement("div");
+    container.id = "popup-root";
+    popup.document.body.appendChild(container);
+
+    const root = createRoot(container);
+    root.render(<Component />);
+
+    popup.addEventListener("beforeunload", () => root.unmount());
+  };
 
   const handleMapUpload = (event) => {
     const file = event.target.files?.[0];
@@ -75,7 +103,12 @@ function New_Campaign_Page_MAPBUILDER() {
               Campaign
             </button>
             <button className="campaign-tab active">Map Builder</button>
-            <button className="campaign-tab">Characters</button>
+            <button
+              className="campaign-tab"
+              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS")}
+            >
+              Characters
+            </button>
         </div>
 
           {/* MAIN MAP BUILDER CARD */}
@@ -127,12 +160,26 @@ function New_Campaign_Page_MAPBUILDER() {
 
             {/* Add buttons */}
             <div className="mapbuilder-button-row">
-              <button className="campaign-pill">Add Location</button>
+              <button
+                className="campaign-pill"
+                onClick={() => openPopup(AddLocation, "Add Location")}
+                type="button"
+              >
+                Add Location
+              </button>
               <button className="campaign-pill">Show</button>
             </div>
 
             <div className="mapbuilder-button-row">
-              <button className="campaign-pill">Add Building/Region</button>
+              <button
+                className="campaign-pill"
+                onClick={() =>
+                  openPopup(AddBuildingRegion, "Add Building or Region")
+                }
+                type="button"
+              >
+                Add Building/Region
+              </button>
               <button className="campaign-pill">Show</button>
             </div>
 
@@ -142,7 +189,13 @@ function New_Campaign_Page_MAPBUILDER() {
             </div>
 
             <div className="mapbuilder-button-row">
-              <button className="campaign-pill">Add Container</button>
+              <button
+                className="campaign-pill"
+                onClick={() => openPopup(AddContainer, "Add Container")}
+                type="button"
+              >
+                Add Container
+              </button>
               <button className="campaign-pill">Show</button>
             </div>
 
