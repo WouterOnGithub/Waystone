@@ -19,13 +19,13 @@ import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER"
 import Add_Building_Region from "./components/popups/Add_Building_Region"
 import Add_Location from "./components/popups/Add_Location"
 import Add_Container from "./components/popups/Add_Container"
-import Add_Item from "./pages/Add_Item" 
+import Add_Item from "./components/popups/Add_Item" 
 {/* import Add_Character from "./pages/Add_Character" */}
 {/* import Add_NPC from "./pages/Add_NPC" */}
 {/* import Add_Enemy from "./pages/Add_Enemy" */}
 
-import View_Character from "./pages/View_Character" 
-import View_Item from "./pages/View_Item"
+import View_Character from "./components/popups/View_Character" 
+import View_Item from "./components/popups/View_Item"
 
 import Game_Settings from "./pages/Game_Settings"
 import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME" 
