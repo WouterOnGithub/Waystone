@@ -24,7 +24,7 @@ import Add_Item from "./pages/Add_Item"
 {/* import Add_NPC from "./pages/Add_NPC" */}
 {/* import Add_Enemy from "./pages/Add_Enemy" */}
 
-{/* import View_Character from "./pages/View_Character" */}
+import View_Character from "./pages/View_Character" 
 import View_Item from "./pages/View_Item"
 
 {/* import Game_Settings from "./pages/Game_Settings" */}
@@ -57,7 +57,16 @@ function App()
                 <Route path="/user/Account_Page_EDIT" element={<Account_Page_EDIT />} />
                 <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} />
                 
-                <Route path="/user/New_Campaign_Page_CAMPAIGN" element={<New_Campaign_Page_CAMPAIGN />} />
+                {/*nieuwe campaigne aanmaken*/}
+                <Route 
+                  path="/user/New_Campaign_Page_CAMPAIGN" 
+                  element={<New_Campaign_Page_CAMPAIGN />}
+                />
+                {/*al bestaande campaign*/}
+                <Route
+                  path="/user/New_Campaign_Page_CAMPAIGN/:campaignId"
+                  element={<New_Campaign_Page_CAMPAIGN/>}
+                />
                 {/* <Route path="/user/New_Campaign_Page_EVENTS" element={<New_Campaign_Page_EVENTS />} /> */}
                 <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} />
                 <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} />
@@ -70,7 +79,7 @@ function App()
                 {/* <Route path="/user/Add_NPC" element={<Add_NPC />} /> */}
                 {/* <Route path="/user/Add_Enemy" element={<Add_Enemy />} /> */}
                 
-                {/* <Route path="/user/View_Character" element={<View_Character />} /> */}
+                <Route path="/user/View_Character" element={<View_Character />} /> 
                 <Route path="/user/View_Item" element={<View_Item />} />
                 
                 {/* <Route path="/user/Game_Settings" element={<Game_Settings />} /> */}
