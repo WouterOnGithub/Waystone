@@ -36,6 +36,7 @@ import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME"
 {/* import Map_Battle_View from "./pages/Map_Battle_View" */}
 
 import BattleMapTest from './pages/battleMapTest';
+import Add_Character from './pages/Add_Character';
 
 
 /* (temporary) TO VISIT A PAGE: http://localhost:5173/user/[PAGE NAME] */
@@ -85,7 +86,17 @@ function App()
                 <Route path="/user/Add_Location" element={<Add_Location />} /> 
                 <Route path="/user/Add_Container" element={<Add_Container />} />
                 <Route path="/user/Add_Item" element={<Add_Item />} />
-                {/* <Route path="/user/Add_Character" element={<Add_Character />} /> */}
+
+                {/*routes voor aanmaken van characters*/}
+                <Route 
+                  path='/user/:campaignId/Add_Character'
+                  element={<Add_Character/>}
+                />
+                <Route 
+                  path='/user/:campaignId/Add_Character/:CharacterId'
+                  element={<Add_Character/>}
+                />
+                
                 {/* <Route path="/user/Add_NPC" element={<Add_NPC />} /> */}
                 {/* <Route path="/user/Add_Enemy" element={<Add_Enemy />} /> */}
                 
