@@ -1,7 +1,99 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import fs from 'node:fs';
+import path from 'node:path';
+import Busboy from 'busboy';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    react(),
+    {
+      name: 'map-upload-middleware',
+      configureServer(server) {
+        server.middlewares.use('/api/upload-map', (req, res, next) => {
+          if (req.method !== 'POST') return next();
+
+          const sendJson = (status, body) => {
+            res.statusCode = status;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(body));
+          };
+
+          const busboy = Busboy({
+            headers: req.headers,
+            limits: { files: 1, fileSize: 10 * 1024 * 1024 }, // 10MB limit
+          });
+
+          let userId = '';
+          let safeUserId = '';
+          let savedFileName = '';
+          let savedFileBytes = 0;
+          let responded = false;
+
+          busboy.on('field', (name, value) => {
+            if (name === 'userId') {
+              userId = value;
+              safeUserId = userId.replace(/[^a-zA-Z0-9_-]/g, '');
+            }
+          });
+
+          busboy.on('file', (name, file, info) => {
+            if (name !== 'map') {
+              file.resume();
+              return;
+            }
+            if (!userId || !safeUserId) {
+              responded = true;
+              file.resume();
+              sendJson(400, { error: 'userId is required' });
+              return;
+            }
+
+            const { filename } = info;
+            const ext = path.extname(filename || '') || '';
+            const base = path
+              .basename(filename || 'map', ext)
+              .replace(/[^a-zA-Z0-9._-]/g, '');
+            savedFileName = `${Date.now()}_${base || 'map'}${ext}`;
+
+            const targetDir = path.join(process.cwd(), 'public', 'maps', safeUserId);
+            fs.mkdirSync(targetDir, { recursive: true });
+            const targetPath = path.join(targetDir, savedFileName);
+
+            const writeStream = fs.createWriteStream(targetPath);
+            file.on('data', (chunk) => {
+              savedFileBytes += chunk.length;
+            });
+            file.pipe(writeStream);
+
+            writeStream.on('error', () => {
+              if (responded) return;
+              responded = true;
+              sendJson(500, { error: 'Failed to save file' });
+            });
+
+            writeStream.on('finish', () => {
+              // nothing; response in close handler
+            });
+          });
+
+          busboy.on('close', () => {
+            if (responded) return;
+            if (!savedFileName || !safeUserId) {
+              sendJson(400, { error: 'No file uploaded' });
+              return;
+            }
+            sendJson(200, {
+              url: `/maps/${safeUserId}/${savedFileName}`,
+              name: savedFileName,
+              size: savedFileBytes,
+            });
+          });
+
+          req.pipe(busboy);
+        });
+      },
+    },
+  ],
+});

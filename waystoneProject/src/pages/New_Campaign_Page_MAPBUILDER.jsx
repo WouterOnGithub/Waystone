@@ -16,11 +16,16 @@ import Required_Logo from "../assets/Required_Logo.webp";
 import Delete_Logo from "../assets/Delete_Logo.webp";
 import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
+import { useAuth } from "../context/AuthContext";
 
 function New_Campaign_Page_MAPBUILDER() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [previewUrl, setPreviewUrl] = useState(null);
   const [previewSize, setPreviewSize] = useState({ width: 0, height: 0 });
+  const [mapFile, setMapFile] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
 
   const SIZE_LIMITS = useMemo(
     () => ({
@@ -65,6 +70,7 @@ function New_Campaign_Page_MAPBUILDER() {
   const handleMapUpload = (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
+    setMapFile(file);
     const url = URL.createObjectURL(file);
     setPreviewUrl((prev) => {
       if (prev) URL.revokeObjectURL(prev);
@@ -85,6 +91,43 @@ function New_Campaign_Page_MAPBUILDER() {
     const height = Math.round(naturalHeight * scale);
 
     setPreviewSize({ width, height });
+  };
+
+  const handleSaveMap = async () => {
+    if (!mapFile) {
+      setSaveMessage("Please upload a map before saving.");
+      return;
+    }
+    if (!user) {
+      setSaveMessage("You must be signed in to save your map.");
+      return;
+    }
+
+    setSaving(true);
+    setSaveMessage("");
+
+    try {
+      const formData = new FormData();
+      formData.append("userId", user.uid);
+      formData.append("map", mapFile);
+
+      const response = await fetch("/api/upload-map", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.error || "Upload failed");
+      }
+
+      const result = await response.json();
+      setSaveMessage(`Map saved. URL: ${result.url}`);
+    } catch (err) {
+      setSaveMessage(err?.message || "Failed to save map.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -201,7 +244,16 @@ function New_Campaign_Page_MAPBUILDER() {
 
             {/* Save */}
             <div className="campaign-actions">
-              <button className="campaign-save">Save and continue</button>
+              <button
+                className="campaign-save"
+                onClick={handleSaveMap}
+                disabled={saving}
+              >
+                {saving ? "Saving..." : "Save and continue"}
+              </button>
+              {saveMessage && (
+                <div className="campaign-save-message">{saveMessage}</div>
+              )}
             </div>
 
           </div>
