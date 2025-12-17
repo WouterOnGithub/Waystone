@@ -11,10 +11,10 @@ import { useAuth } from "../context/AuthContext";
 import { getUser, setUser } from "../api/firestore";
 
 function Account_Page() {
+  
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
   const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -22,7 +22,6 @@ function Account_Page() {
         const data = await getUser(user.uid);
         setUserData(data);
         setNotes(data?.notes || "");
-        setLoading(false);
       }
     };
     fetchUserData();
@@ -41,9 +40,6 @@ function Account_Page() {
     return Placeholder;
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="account-page">
