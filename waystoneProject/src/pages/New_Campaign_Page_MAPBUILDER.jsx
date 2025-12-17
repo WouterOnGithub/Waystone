@@ -101,26 +101,27 @@ function New_Campaign_Page_MAPBUILDER() {
       <div className="campaign-main">
         <Header title="New Campaign" />
         <div className="campaign-body">
-
-        <div className="campaign-tabs">
+          <div className="campaign-tabs">
             <button 
               className="campaign-tab"
               disabled={!campaignId}
-              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN/${campaignId}")}
-              >
-                Campaign
+              onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}
+            >
+              Campaign
             </button>
+
             <button
               className="campaign-tab active"
               disabled={!campaignId}
-              onClick={() => navigate("/user/New_Campaign_Page_MAPBUILDER/${campaignId}")}
+              onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}
             >
               Map Builder
             </button>
+
             <button
               className="campaign-tab"
               disabled={!campaignId}
-              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS/${campaignId}")}
+              onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}
             >
               Characters
             </button>
