@@ -1,5 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -13,32 +14,59 @@ import Delete_Logo from "../assets/Delete_Logo.webp";
 import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
+import { createCampaign } from "../api/userCampaigns";
 import {useCampaign} from "../hooks/useCampaign";
 import { useAuth } from "../context/AuthContext";
-import { updateCampaignInfo } from "../api/firestore";
 
 function New_Campaign_Page_CAMPAIGN() {
   const navigate = useNavigate();
 
   const {user} = useAuth();
+  //console.log("Current user:", user.uid);
+  const userId = "6v5VMJwiBgQjsAMLc42PBe7Krmd2"
+  //const userId = user ? user.uid : null;
   
-  const userId = user?.uid;
-  const campaignId = "currentCampaignId"; // bijv. uit route params of state TO DO !!!
-  
-  const { data, loading, error, setData } = useCampaign(userId, campaignId);
+
+  const {campaignId} = useParams()
+  const isNewCampaign = !campaignId;
+  const { data, loading, error, setData } = useCampaign(
+    isNewCampaign? null : userId, 
+    isNewCampaign? null : campaignId
+  );
+  const [draft, setDraft] = useState({
+    name:"",
+    genre:"",
+    backstory:""
+  });
+  const formData = isNewCampaign ? draft : data;
+  const setFormData = isNewCampaign ? setDraft : setData;
 
   const handleSave = async () => {
-    if(!userId || !campaignId) return;
+    
+    if(!userId) return;
+    
     try {
-      await updateCampaignInfo(userId, campaignId, {
-        name: data.name,
-        genre: data.genre,
-        backstory: data.backstory
-      });
-      alert("Campaign info saved successfully!");
-    } catch (err) {
-      console.error("Failed to save campaign info:", err);
-      alert("Failed to save campaign info. Please try again.");
+      if (isNewCampaign) {
+        const newCampaign = await createCampaign(userId, 
+          {...draft,
+          createdAt: new Date().toISOString(),
+          lastUpdatedAt: new Date().toISOString(),
+          originalCreator: userId
+        });
+        navigate(`/user/New_Campaign_Page_CAMPAIGN/${newCampaign.id}`);
+      }else {
+        await updateCampaignInfo(userId, campaignId, {
+          name: formData.name,
+          genre: formData.genre,
+          backstory: formData.backstory,
+          lastUpdatedAt: new Date().toISOString()
+        });
+        alert("Campaign info saved successfully");
+      }
+        }
+    catch (error) {
+      console.error("Error saving campaign:", error);
+      alert("Failed to save campaign. Please try again.");
     }
   };
 
@@ -73,8 +101,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-name"
                 className="campaign-input"
                 placeholder="Enter text here..."
-                value={data?.name || ""}
-                onChange={(e) => setData({...data, name: e.target.value})}
+                value={formData?.name || ""}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
             </div>
 
@@ -86,8 +114,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-genre"
                 className="campaign-input"
                 placeholder="Enter text here..."
-                value={data?.genre || ""}
-                onChange={(e) => setData({...data, genre: e.target.value})}
+                value={formData?.genre || ""}
+                onChange={(e) => setFormData({...formData, genre: e.target.value})}
               />
             </div>
 
@@ -99,8 +127,8 @@ function New_Campaign_Page_CAMPAIGN() {
                 id="campaign-story"
                 className="campaign-textarea"
                 placeholder={`Enter text here...`}
-                value={data?.backstory || ""}
-                onChange={(e) => setData({...data, backstory: e.target.value})}
+                value={formData?.backstory || ""}
+                onChange={(e) => setFormData({...formData, backstory: e.target.value})}
               />
             </div>
 
@@ -110,7 +138,9 @@ function New_Campaign_Page_CAMPAIGN() {
             </div>
 
             <div className="campaign-actions">
-              <button className="campaign-save">Save and continue</button>
+              <button className="campaign-save" onClick={handleSave} >
+                Save and continue
+              </button>
               <button className="campaign-enter">Enter</button>
             </div>
           </div>
