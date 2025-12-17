@@ -8,17 +8,21 @@
     background-color: var(--background-colour);
     display: flex;
     margin-bottom: 20px;
+    width: 65rem;
 }
+
 #news-box-img /* a news box (part of it) */
 {
     padding: 15px;
-    width: auto;
+    width: 18rem;
     height: auto;
 }
+
 #news-box-text /* a news box (part of it) */
 {
     font-size: var(--body-text);
     padding: 10px;
+    width: 45rem;
 }
 
 /* Layout helpers to work with shared Header/Sidebar components */
