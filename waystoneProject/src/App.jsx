@@ -20,9 +20,9 @@ import Add_Building_Region from "./components/popups/Add_Building_Region"
 import Add_Location from "./components/popups/Add_Location"
 import Add_Container from "./components/popups/Add_Container"
 import Add_Item from "./components/popups/Add_Item" 
-{/* import Add_Character from "./pages/Add_Character" */}
-{/* import Add_NPC from "./pages/Add_NPC" */}
-{/* import Add_Enemy from "./pages/Add_Enemy" */}
+import Add_Character from "./pages/Add_Character" 
+import Add_NPC from "./pages/Add_NPC" 
+import Add_Enemy from "./pages/Add_Enemy"
 
 import View_Character from "./components/popups/View_Character" 
 import View_Item from "./components/popups/View_Item"
@@ -36,8 +36,7 @@ import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME"
 {/* import Map_Battle_View from "./pages/Map_Battle_View" */}
 
 import BattleMapTest from './pages/battleMapTest';
-import Add_Character from './pages/Add_Character';
-import Add_NPC from './pages/Add_NPC';
+
 
 
 /* (temporary) TO VISIT A PAGE: http://localhost:5173/user/[PAGE NAME] */
