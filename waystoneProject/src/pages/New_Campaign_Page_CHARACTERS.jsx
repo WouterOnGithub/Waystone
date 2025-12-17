@@ -17,22 +17,46 @@ function New_Campaign_Page_CHARACTERS() {
   const {campaignId} = useParams()
   const navigate = useNavigate();
 
+<<<<<<< Updated upstream
+=======
+  const handleAddPlayer = () => {
+    navigate(`/user/${campaignId}/Add_Character`);
+  };
+  const handleEditPlayer = (playerId) => {
+    navigate(`/user/${campaignId}/Add_Character/${playerId}`);
+  };
+
+  const handleAddNpc = () => {
+    navigate(`/user/${campaignId}/Add_NPC`);
+  };
+  const handleEditNpc = () => {
+    navigate(`/user/${campaignId}/Add_NPC/${npcId}`);
+  };
+
+  const handleAddEnemy = () => {
+    navigate(`/user/${campaignId}/Add_Enemy`);
+  }
+  const handleEditEnemy = () => {
+    navigate(`/user/${campaignId}/Add_Enemy/${enemyId}`);
+  }
+>>>>>>> Stashed changes
 
   const [players, setPlayers] = useState([
     { name: "Player_1", level: 3, hp: 19 },
     { name: "Player_2", level: 1, hp: 15 },
   ]);
 
-  const [npcs, setNpcs] = useState([
+  const [npcs] = useState([
     { name: "NPC_1", job: "blacksmith" },
     { name: "NPC_2", job: "librarian" },
   ]);
 
-  const [enemies, setEnemies] = useState([
+  const [enemies] = useState([
     { name: "Enemy", cr: 5, hp: 12 },
     { name: "Enemy", cr: 3, hp: 15 },
   ]);
 
+<<<<<<< Updated upstream
   const addPlayer = () => {
     setPlayers([...players, { name: `Player_${players.length + 1}`, level: 1, hp: 10 }]);
   };
@@ -44,6 +68,12 @@ function New_Campaign_Page_CHARACTERS() {
   const addEnemy = () => {
     setEnemies([...enemies, { name: "Enemy", cr: 1, hp: 10 }]);
   };
+=======
+  const [players] = useState([
+    { name: "Player_1", level: 1, hp: 10 },
+    { name: "Player_2", level: 2, hp: 15 },
+  ]);
+>>>>>>> Stashed changes
 
   return (
     <div className="campaign-page">
@@ -96,10 +126,10 @@ function New_Campaign_Page_CHARACTERS() {
               {npcs.map((npc, index) => (
                 <div key={index} className="character-row">
                   <span>{npc.name} | Job: {npc.job}</span>
-                  <button className="edit-button">edit</button>
+                  <button className="edit-button" onClick={handleEditNpc}>edit</button>
                 </div>
               ))}
-              <button className="add-button" onClick={addNpc}>add NPC</button>
+              <button className="add-button" onClick={handleAddNpc}>add NPC</button>
             </div>
 
             <div className="character-section">
@@ -107,10 +137,10 @@ function New_Campaign_Page_CHARACTERS() {
               {enemies.map((enemy, index) => (
                 <div key={index} className="character-row">
                   <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
-                  <button className="edit-button">edit</button>
+                  <button className="edit-button" onClick={handleEditEnemy}>edit</button>
                 </div>
               ))}
-              <button className="add-button" onClick={addEnemy}>add enemy</button>
+              <button className="add-button" onClick={handleAddEnemy}>add enemy</button>
             </div>
 
             <div className="campaign-actions">
