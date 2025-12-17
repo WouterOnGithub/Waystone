@@ -1,19 +1,46 @@
 /* Complete */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Account_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
+import { useAuth } from "../context/AuthContext";
+import { getUser, setUser } from "../api/firestore";
 
 function Account_Page() {
+  
+  const { user } = useAuth();
+  const [userData, setUserData] = useState(null);
+  const [notes, setNotes] = useState("");
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user?.uid) {
+        const data = await getUser(user.uid);
+        setUserData(data);
+        setNotes(data?.notes || "");
+      }
+    };
+    fetchUserData();
+  }, [user]);
+
+  const handleSaveNotes = async () => {
+    if (user?.uid) {
+      await setUser(user.uid, { notes });
+    }
+  };
+
+  const getAvatarUrl = () => {
+    if (userData?.avatarFileName) {
+      return `/avatars/${user.uid}/${userData.avatarFileName}`;
+    }
+    return Placeholder;
+  };
+
+
   return (
     <div className="account-page">
       <Sidebar />
@@ -23,17 +50,15 @@ function Account_Page() {
         <main className="account-content">
           <section id="account-box" className="account-card">
             <div className="account-avatar-wrap">
-              <img src={Placeholder} alt="Account profile" id="Account_Profile" />
+              <img src={getAvatarUrl()} alt="Account profile" id="Account_Profile" />
             </div>
             <div className="account-details">
               <Link to="/user/Account_Page_EDIT" className="edit-icon" aria-label="Edit profile">
                 ✏️
               </Link>
-              <b>Username</b>
+              <b>{userData?.username || "Username"}</b>
               <p>
-                Lorem contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from 45
-                BC, making it over 2000 years old.
+                {userData?.description || "No description yet."}
               </p>
             </div>
           </section>
@@ -54,10 +79,11 @@ function Account_Page() {
           <section id="account-notes" className="account-notes-block">
             <b>Notes</b>
             <textarea
-              defaultValue="Lorem contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
             />
             <div className="account-actions">
-              <button id="button-green">Save</button>
+              <button id="button-green" onClick={handleSaveNotes}>Save</button>
             </div>
           </section>
         </main>
