@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'
 import {doc, setDoc, serverTimestamp} from 'firebase/firestore'
 import {auth,db} from './firebase'
 
