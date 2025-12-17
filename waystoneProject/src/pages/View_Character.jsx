@@ -10,12 +10,12 @@ import Add_Logo from "../assets/Add_Logo.webp";
 function View_Character() 
 {
   {/* For the collapsing sections */}
-  const [isCollapsed1, setIsCollapsed1] = useState(false);
-  const [isCollapsed2, setIsCollapsed2] = useState(false);
-  const [isCollapsed3, setIsCollapsed3] = useState(false);
-  const [isCollapsed4, setIsCollapsed4] = useState(false);
-  const [isCollapsed5, setIsCollapsed5] = useState(false);
-  const [isCollapsed6, setIsCollapsed6] = useState(false);
+  const [isCollapsed1, setIsCollapsed1] = useState(true);
+  const [isCollapsed2, setIsCollapsed2] = useState(true);
+  const [isCollapsed3, setIsCollapsed3] = useState(true);
+  const [isCollapsed4, setIsCollapsed4] = useState(true);
+  const [isCollapsed5, setIsCollapsed5] = useState(true);
+  const [isCollapsed6, setIsCollapsed6] = useState(true);
 
   return (
     <div id="addview-page">

@@ -186,3 +186,22 @@
     padding-left: 5px;
     padding-right: 5px;
 }
+
+/* Game_Settings pages */
+.game-settings-content /* All content underneath the green_ title */
+{
+    text-align: center;
+    margin-left: -50px;
+}
+#game-settings-options button /* the buttons of the options itself */
+{
+    border: var(--text-color2);
+    font-size: var(--adview-text2);
+    font-weight: bold;
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+#game-settings-options button:hover /* the buttons of the options itself */
+{
+    border: var(--text-color2);
+}
