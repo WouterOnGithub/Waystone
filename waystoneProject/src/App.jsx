@@ -24,7 +24,7 @@ import Add_Item from "./pages/Add_Item"
 {/* import Add_NPC from "./pages/Add_NPC" */}
 {/* import Add_Enemy from "./pages/Add_Enemy" */}
 
-{/* import View_Character from "./pages/View_Character" */}
+import View_Character from "./pages/View_Character" 
 import View_Item from "./pages/View_Item"
 
 {/* import Game_Settings from "./pages/Game_Settings" */}
@@ -70,7 +70,7 @@ function App()
                 {/* <Route path="/user/Add_NPC" element={<Add_NPC />} /> */}
                 {/* <Route path="/user/Add_Enemy" element={<Add_Enemy />} /> */}
                 
-                {/* <Route path="/user/View_Character" element={<View_Character />} /> */}
+                <Route path="/user/View_Character" element={<View_Character />} /> 
                 <Route path="/user/View_Item" element={<View_Item />} />
                 
                 {/* <Route path="/user/Game_Settings" element={<Game_Settings />} /> */}
