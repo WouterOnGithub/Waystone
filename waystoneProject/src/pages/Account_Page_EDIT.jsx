@@ -7,17 +7,34 @@ import "./pages-css/Account_Page_EDIT.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
 import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
+import { useAuth } from "../context/AuthContext";
+import { getUser, setUser } from "../api/firestore";
 
 function Account_Page_EDIT() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [avatarFile, setAvatarFile] = useState(null);
+  const [username, setUsername] = useState("");
+  const [introduction, setIntroduction] = useState("");
+  const [currentAvatarFileName, setCurrentAvatarFileName] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user?.uid) {
+        const data = await getUser(user.uid);
+        if (data) {
+          setUsername(data.username || "");
+          setIntroduction(data.description || "");
+          setCurrentAvatarFileName(data.avatarFileName || null);
+        }
+        setLoading(false);
+      }
+    };
+    fetchUserData();
+  }, [user]);
 
   useEffect(() => {
     return () => {
@@ -35,10 +52,54 @@ function Account_Page_EDIT() {
     setAvatarPreview(url);
   };
 
-  const handleSave = (e) => {
+  const getAvatarUrl = () => {
+    if (avatarPreview) return avatarPreview;
+    if (currentAvatarFileName && user?.uid) {
+      return `/avatars/${user.uid}/${currentAvatarFileName}`;
+    }
+    return UploadIMG_Logo;
+  };
+
+  const handleSave = async (e) => {
     e.preventDefault();
+    
+    if (!user?.uid) return;
+
+    let avatarFileName = currentAvatarFileName;
+
+    // Handle avatar upload via API
+    if (avatarFile) {
+      const formData = new FormData();
+      formData.append("avatar", avatarFile);
+      formData.append("userId", user.uid);
+
+      try {
+        const response = await fetch("/api/upload-avatar", {
+          method: "POST",
+          body: formData,
+        });
+        const result = await response.json();
+        if (result.fileName) {
+          avatarFileName = result.fileName;
+        }
+      } catch (error) {
+        console.error("Error uploading avatar:", error);
+      }
+    }
+
+    // Save user data to Firestore
+    await setUser(user.uid, {
+      username,
+      description: introduction,
+      avatarFileName,
+    });
+
     navigate("/user/Account_Page");
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="account-page">
@@ -50,10 +111,10 @@ function Account_Page_EDIT() {
           <section id="account-box" className="account-card">
             <div className="account-avatar-wrap">
               <img
-                src={avatarPreview || UploadIMG_Logo}
+                src={getAvatarUrl()}
                 alt="UploadIMG_Logo"
                 id="UploadIMG_Logo"
-                onClick={() => document.getElementById("upload-img").click()} // triggers file input
+                onClick={() => document.getElementById("upload-img").click()}
                 style={{ cursor: "pointer" }}
               />
               <input
@@ -70,7 +131,14 @@ function Account_Page_EDIT() {
                 <b>Username</b>
               </label>{" "}
               <br />
-              <input type="text" id="nickname" Placeholder="DM_0124" required />
+              <input 
+                type="text" 
+                id="nickname" 
+                placeholder="DM_0124" 
+                required 
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
               <br />
               <br />
               <label htmlFor="introduction">
@@ -82,6 +150,8 @@ function Account_Page_EDIT() {
                 id="introduction"
                 placeholder="Hello, my name is [Your name] "
                 maxLength="150"
+                value={introduction}
+                onChange={(e) => setIntroduction(e.target.value)}
               />
               <br />
               <div className="account-actions">
