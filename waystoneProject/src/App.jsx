@@ -67,9 +67,19 @@ function App()
                   path="/user/New_Campaign_Page_CAMPAIGN/:campaignId"
                   element={<New_Campaign_Page_CAMPAIGN/>}
                 />
+
+                {/*route naar characters adhv campaigID*/}
+                <Route
+                  path="/user/New_Campaign_Page_CHARACTERS/:campaignId"
+                  element={<New_Campaign_Page_CHARACTERS />}
+                />
+                
+                <Route 
+                  path="/user/New_Campaign_Page_MAPBUILDER/:campaignId" 
+                  element={<New_Campaign_Page_MAPBUILDER />} 
+                />
+
                 {/* <Route path="/user/New_Campaign_Page_EVENTS" element={<New_Campaign_Page_EVENTS />} /> */}
-                <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} />
-                <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} />
                 
                 <Route path="/user/Add_Building_Region" element={<Add_Building_Region />} /> 
                 <Route path="/user/Add_Location" element={<Add_Location />} /> 
