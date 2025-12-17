@@ -4,6 +4,7 @@
     --addview-text: 60px;
     --adview-text2: 22px;
     --text-color4: #D34848;
+    --background-gradient2: radial-gradient(circle, rgb(56, 78, 16) 50%, rgb(27, 40, 4) 100%);
 }
 
 #addview-page /* The gray_/black_ background for the pop-ups */
@@ -56,12 +57,19 @@
     height: 150px;
 }
 
-#view-title-box /* The green_ small titles in the view pages */
+#view-title-box /* The green_ small titles in the view pages (vertical) */
 {
     border-radius: var(--border-radius2);
     background: var(--background-gradient);
     text-align: center;
     width: 210px;
+}
+.view-title-box-long /* The green_ small titles in the view pages (the long ones) */
+{
+    border-radius: var(--border-radius2);
+    background: var(--background-gradient);
+    text-align: center;
+    width: 90%;
 }
 #view-title /* The HP, LVL, EXP and STATUS titles */
 {
@@ -71,6 +79,7 @@
 #view-body /* The actual stats */
 {
     margin-left: 20px;
+    padding-right: 30px;
 }
 
 #addview-linebreak /* The line in-between sections */
@@ -118,7 +127,8 @@
 }
 .view-body-tocenter /* The actual stats (Just to center it) */
 {
-    padding-left: 80px;
+    text-align: center;
+    padding-right: 40px;
     padding-bottom: 10px;
 }
 
@@ -151,4 +161,28 @@
 .view-required-logo /* The Required_Logo (here used as the Info_Logo) */
 {
     transform: scaleY(-1);
+}
+
+/* The collapsable parts */
+#view-collapsable-sections-button
+{
+    border-radius: var(--border-radius2);
+    background: var(--background-gradient2);
+    color: var(--text-color2);
+    font-size: var(--adview-text2);
+    border: none;
+    font-weight: bold;
+    text-align: center;
+    width: 90%;
+    margin-bottom: 20px;
+}
+#view-hide-show
+{
+    border-radius: var(--border-radius2);
+    border: 2px var(--text-color2) solid;
+    color: var(--text-color2);
+    float: right;
+    padding: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
