@@ -22,11 +22,7 @@ function New_Campaign_Page_CAMPAIGN() {
   const navigate = useNavigate();
 
   const {user} = useAuth();
-  
   const userId = user ? user.uid : null;
-
-  
-  
 
   const {campaignId} = useParams()
   const isNewCampaign = !campaignId;
