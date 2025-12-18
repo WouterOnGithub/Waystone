@@ -12,7 +12,7 @@ function Footer() {
         <div className="footer-section footer-main">
           <h3 className="footer-heading">Waystone</h3>
           <p className="footer-description">
-            Your ultimate companion for creating and managing epic D&D campaigns.
+            Your ultimate companion for creating and managing epic tabletop campaigns.
           </p>
           <div className="footer-social">
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
@@ -57,7 +57,7 @@ function Footer() {
           &copy; {currentYear} Waystone. All rights reserved.
         </div>
         <div className="footer-badges">
-          <span className="footer-badge">Made with love for D&D</span>
+          <span className="footer-badge">Made with love for tabletop games</span>
         </div>
       </div>
     </footer>
