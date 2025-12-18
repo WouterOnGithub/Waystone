@@ -2,21 +2,28 @@
 {
     --title-text: 120px;
     --head-text: 25px;
-    --body-text: 20px;
+    --body-text: 18px;
     --link-text: 12px;
+
     --text-color: #303030;
     --text-color2: #ffffff;
-    --text-color3: rgba(45, 0, 104, 1);
-    --background-gradient: linear-gradient(90deg,rgba(45, 0, 104, 1) 0%, rgb(109, 50, 142) 50%, rgba(45, 0, 104, 1) 100%);
+    --text-color3: rgba(44, 65, 7, 1);
+
+    --background-gradient: linear-gradient(90deg,rgba(44, 65, 7, 1) 0%, rgba(80, 111, 23, 1) 50%, rgba(44, 65, 7, 1) 100%);
+    --background-gradient2: radial-gradient(circle, rgb(56, 78, 16) 50%, rgb(27, 40, 4) 100%);
     --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
     --background-colour4: #303030;
-    --projectbox-colour: #E7D665; 
-    --projectbox-colour2: #D34848;
-    --projectbox-colour3: #447DC9;
+
+    --projectbox-colour: linear-gradient(90deg,rgb(216, 188, 63) 0%, rgba(231, 214, 101, 1) 50%, rgb(216, 188, 63) 100%);; 
+    --projectbox-colour2: linear-gradient(90deg,rgba(176, 49, 49, 1) 0%, rgba(211, 72, 72, 1) 50%, rgba(176, 49, 49, 1) 100%);;
+    --projectbox-colour3: linear-gradient(90deg,rgba(50, 104, 173, 1) 0%, rgba(68, 125, 201, 1) 50%, rgba(50, 104, 173, 1) 100%);
+    --projectbox-colour4: linear-gradient(90deg,rgba(184, 184, 184, 1) 0%, rgba(217, 217, 217, 1) 50%, rgba(184, 184, 184, 1) 100%);;
+
     --form-box-colour: #E0E0E0;
     --link-colour: #447DC9;
+
     --border-radius: 10px;
     --border-radius2: 5px;
     --border-radius3: 50px;
@@ -41,13 +48,13 @@
 ::-webkit-scrollbar-thumb 
 {
     border-radius: var(--border-radius);
-    background: linear-gradient(135deg, rgba(45, 0, 104, 1) 0%, rgb(109, 50, 142) 100%);
-    box-shadow: inset 0 0 10px rgba(45, 0, 104, 1);
+    background: linear-gradient(135deg, rgba(44, 65, 7, 1) 0%, rgba(80, 111, 23, 1) 100%);
+    box-shadow: inset 0 0 10px rgba(44, 65, 7, 1);
     height: 20px;
 }
 ::-webkit-scrollbar-thumb:hover 
 {
-    background: rgba(45, 0, 104, 1);
+    background: rgba(44, 65, 7, 1);
     cursor: grab;
     transition: 0.3s;
 }
@@ -175,7 +182,7 @@ nav a:hover
 {
     border-radius: var(--border-radius);
     background: var(--background-gradient);
-    color: var(--text-color2);
+    color: var(--text-color);
     font-weight: bold;
     border: none;
     padding: 10px;
@@ -186,6 +193,7 @@ nav a:hover
 }
 #button-green:hover, #addview-green-bar:hover /* All green_ buttons button */ /* Green bars in add & view pages */
 {
+    color: var(--text-color2);
     transition: 0.5s;
     box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
     transform: translateY(-2px);

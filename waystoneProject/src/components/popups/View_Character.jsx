@@ -153,7 +153,7 @@ function View_Character()
                         <br />
                         <div id="addview-stats">
                             <div id="view-title-box"><b id="view-title">Sub-Class</b></div>
-                            <div><p id="view-body">[Sub-Class_Placeholder]</p></div> {/* later replaced by real value */}
+                            <div><p id="view-body">[Sub_Placeholder]</p></div> {/* later replaced by real value */}
                         </div>
                         <br />
                         <div id="addview-stats">
@@ -196,7 +196,7 @@ function View_Character()
 
                         <div id="addview-stats">
                             <div id="view-title-box"><b id="view-title">Armor Class</b></div>
-                            <div><p id="view-body">[Armor_Class_Placeholder]</p></div> {/* later replaced by real value */}
+                            <div><p id="view-body">[Armor_Placeholder]</p></div> {/* later replaced by real value */}
                         </div>
                         <br />
                         <div id="addview-stats">
@@ -353,7 +353,7 @@ function View_Character()
             <div id="view-collapsable-sections-content"
              style={{
                         /* if isCollapsed = true => 0px, otherwise => 200px */
-                        maxHeight: isCollapsed6 ? "0px" : "1000px",
+                        maxHeight: isCollapsed6 ? "0px" : "2000px",
                         overflow: "hidden",
                         transition: "max-height 0.5s ease-in-out",
                     }}>

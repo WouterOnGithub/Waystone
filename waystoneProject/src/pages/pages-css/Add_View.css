@@ -3,8 +3,7 @@
 {
     --addview-text: 60px;
     --adview-text2: 22px;
-    --text-color4: #D34848;
-    --background-gradient2: radial-gradient(circle, rgb(56, 78, 16) 50%, rgb(27, 40, 4) 100%);
+    --hp-text-color: #D34848;
 }
 
 #addview-page /* The gray_/black_ background for the pop-ups */
@@ -66,7 +65,7 @@
     border-radius: var(--border-radius2);
     background: var(--background-gradient);
     text-align: center;
-    width: 210px;
+    width: 200px;
 }
 .view-title-box-long /* The green_ small titles in the view pages (the long ones) */
 {
@@ -111,13 +110,13 @@
 {
     margin-top: 20px;
 }
-.view-stats-main-title-1 { background-color: var(--projectbox-colour2); } /* HP */
-.view-stats-main-title-2 { background-color: var(--projectbox-colour3); } /* LVL */
-.view-stats-main-title-3 { background-color: var(--projectbox-colour); } /* EXP */
-.view-stats-main-title-4 { background-color: var(--background-colour2); } /* STATUS */
+.view-stats-main-title-1 { background: var(--projectbox-colour2); } /* HP */
+.view-stats-main-title-2 { background: var(--projectbox-colour3); } /* LVL */
+.view-stats-main-title-3 { background: var(--projectbox-colour); } /* EXP */
+.view-stats-main-title-4 { background: var(--projectbox-colour4); } /* STATUS */
 .view-hp  /* the HP */
 {
-    color: var(--text-color4);
+    color: var(--hp-text-color);
     font-weight: bold;
 }
 
@@ -141,7 +140,7 @@
     border-radius: var(--border-radius2);
     background-color: var(--background-colour2);
     color: var(--text-color2);
-    width: 250px; 
+    width: 240px; 
     padding-left: 15px;
     margin-top: 20px;
     margin-left: 0px;
@@ -209,7 +208,7 @@
 }
 #input-box-gray input, #input-box-gray textarea
 {
-    width: 100%;
+    width: 70%;
     max-width: 100%;
     box-sizing: border-box;
 }
@@ -225,7 +224,7 @@
 }
 #game-settings-options button /* the buttons of the options itself */
 {
-    border: var(--text-color2);
+    border: var(--text-color);
     font-size: var(--adview-text2);
     font-weight: bold;
     margin-bottom: 25px;
