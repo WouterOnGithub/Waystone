@@ -26,6 +26,8 @@ export default defineConfig({
           });
 
           let userId = '';
+          let safeUserId = '';
+          let previousUrl = '';
           let fileData = null;
           let fileInfo = null;
           let responded = false;
@@ -33,6 +35,10 @@ export default defineConfig({
           busboy.on('field', (name, value) => {
             if (name === 'userId') {
               userId = value;
+              safeUserId = userId.replace(/[^a-zA-Z0-9_-]/g, '');
+            }
+            if (name === 'previousUrl') {
+              previousUrl = value;
             }
           });
 
@@ -52,7 +58,6 @@ export default defineConfig({
           busboy.on('close', () => {
             if (responded) return;
 
-            const safeUserId = (userId || '').replace(/[^a-zA-Z0-9_-]/g, '');
             if (!safeUserId || !fileData) {
               sendJson(400, { error: 'userId and avatar file are required' });
               return;
@@ -69,6 +74,49 @@ export default defineConfig({
 
             try {
               fs.writeFileSync(targetPath, fileData);
+
+              // Attempt to delete the previous avatar file if provided
+              if (previousUrl) {
+                try {
+                  const previousFileName = path.basename(previousUrl);
+                  if (previousFileName) {
+                    const legacyPath = path.join(
+                      process.cwd(),
+                      'public',
+                      'avatars',
+                      safeUserId,
+                      previousFileName,
+                    );
+                    const flatPath = path.join(
+                      process.cwd(),
+                      'public',
+                      'avatars',
+                      previousFileName,
+                    );
+
+                    // Delete legacy nested-path version
+                    if (fs.existsSync(legacyPath)) {
+                      try {
+                        fs.unlinkSync(legacyPath);
+                      } catch {
+                        // ignore individual delete errors
+                      }
+                    }
+
+                    // Delete flat-path version
+                    if (fs.existsSync(flatPath)) {
+                      try {
+                        fs.unlinkSync(flatPath);
+                      } catch {
+                        // ignore individual delete errors
+                      }
+                    }
+                  }
+                } catch {
+                  // ignore delete failures
+                }
+              }
+
               sendJson(200, {
                 fileName: savedFileName,
                 url: `/avatars/${savedFileName}`,
