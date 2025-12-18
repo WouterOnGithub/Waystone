@@ -14,8 +14,8 @@
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1.5fr 1fr 1.2fr;
+  gap: 60px;
   margin-bottom: 40px;
 }
 
@@ -26,8 +26,21 @@
   gap: 16px;
 }
 
-.footer-section:first-child {
-  gap: 20px;
+.footer-main {
+  position: relative;
+  padding-right: 20px;
+}
+
+.footer-main .footer-heading {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+/* Knights Illustration Section - Right Side */
+.footer-illustration-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-heading {
@@ -52,7 +65,7 @@
   border-radius: 2px;
 }
 
-.footer-section:first-child .footer-heading {
+.footer-main .footer-heading {
   font-size: 1.5rem;
   margin-bottom: 12px;
 }
@@ -62,7 +75,7 @@
   line-height: 1.6;
   font-size: 0.95rem;
   margin: 0;
-  max-width: 300px;
+  max-width: 350px;
 }
 
 /* Social Icons */
@@ -70,6 +83,7 @@
   display: flex;
   gap: 16px;
   margin-top: 8px;
+  margin-bottom: 32px;
 }
 
 .footer-social a {
@@ -91,6 +105,23 @@
   color: #ffffff;
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(157, 92, 208, 0.3);
+}
+
+/* Knights Illustration */
+.footer-illustration {
+  margin-top: 0;
+  max-width: 280px;
+  width: 100%;
+  opacity: 70%;
+  transition: transform 0.3s ease;
+}
+
+.footer-illustration img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(2%) contrast(1.1) brightness(0.95);
+  mix-blend-mode: multiply;
 }
 
 /* Footer Lists */
@@ -157,7 +188,7 @@
 }
 
 .footer-badge {
-  background: linear-gradient(135deg, #9d5cd0 0%, #8b45ff 100%);
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
   color: #ffffff;
   padding: 8px 16px;
   border-radius: 20px;
@@ -170,44 +201,30 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
   .footer-content {
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
   }
   
-  .footer-section:last-child {
-    grid-column: 2;
-  }
-}
-
-@media (max-width: 992px) {
-  .footer {
-    padding: 50px 30px 20px;
-  }
-  
-  .footer-content {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 30px;
-  }
-  
-  .footer-section:first-child {
-    grid-column: 1 / -1;
+  .footer-illustration {
+    max-width: 250px;
   }
 }
 
 @media (max-width: 768px) {
   .footer {
-    padding: 40px 20px 20px;
+    padding: 50px 30px 20px;
   }
   
   .footer-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
   
-  .footer-section:first-child {
-    grid-column: 1 / -1;
+  .footer-main {
     text-align: center;
+    padding-right: 0;
   }
   
   .footer-description {
@@ -218,29 +235,37 @@
     justify-content: center;
   }
   
+  .footer-illustration-section {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+  }
+  
+  .footer-illustration {
+    margin: 0 auto;
+    max-width: 280px;
+  }
+  
   .footer-heading::after {
     left: 50%;
     transform: translateX(-50%);
-  }
-}
-
-@media (max-width: 480px) {
-  .footer-content {
-    grid-template-columns: 1fr;
-    gap: 30px;
   }
   
   .footer-section {
     text-align: center;
   }
   
-  .footer-heading::after {
-    left: 50%;
-    transform: translateX(-50%);
+  .footer-list li a {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 40px 20px 20px;
   }
   
-  .footer-list li a {
-    display: block;
+  .footer-illustration {
+    max-width: 220px;
   }
   
   .footer-bottom {

@@ -1,6 +1,6 @@
-
 import { Link } from 'react-router-dom';
 import './UI css/Footer.css';
+import KnightsImage from '../../assets/ridders.png'; // Pas het pad aan naar waar je de afbeelding opslaat
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -8,8 +8,8 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
-        {/* Company Info Section */}
-        <div className="footer-section">
+        {/* Company Info */}
+        <div className="footer-section footer-main">
           <h3 className="footer-heading">Waystone</h3>
           <p className="footer-description">
             Your ultimate companion for creating and managing epic D&D campaigns.
@@ -33,48 +33,21 @@ function Footer() {
           </div>
         </div>
 
-        {/* Quick Links */}
-        <div className="footer-section">
-          <h4 className="footer-heading">Product</h4>
-          <ul className="footer-list">
-            <li><Link to="/user/My_Campaigns_Page">My Campaigns</Link></li>
-            <li><Link to="/user/New_Campaign_Page_CAMPAIGN">Create Campaign</Link></li>
-            <li><Link to="/features">Features</Link></li>
-            <li><Link to="/pricing">Pricing</Link></li>
-          </ul>
-        </div>
-
-        {/* Resources */}
-        <div className="footer-section">
-          <h4 className="footer-heading">Resources</h4>
-          <ul className="footer-list">
-            <li><Link to="/documentation">Documentation</Link></li>
-            <li><Link to="/tutorials">Tutorials</Link></li>
-            <li><Link to="/community">Community</Link></li>
-            <li><Link to="/blog">Blog</Link></li>
-          </ul>
-        </div>
-
-        {/* Company */}
+        {/* Company Links */}
         <div className="footer-section">
           <h4 className="footer-heading">Company</h4>
           <ul className="footer-list">
-            <li><Link to="/about">About Us</Link></li>
             <li><Link to="/contact">Contact</Link></li>
-            <li><Link to="/careers">Careers</Link></li>
-            <li><Link to="/press">Press Kit</Link></li>
+            <li><Link to="/privacy">Privacy Policy</Link></li>
+            <li><Link to="/terms">Help</Link></li>
           </ul>
         </div>
 
-        {/* Legal */}
-        <div className="footer-section">
-          <h4 className="footer-heading">Legal</h4>
-          <ul className="footer-list">
-            <li><Link to="/privacy">Privacy Policy</Link></li>
-            <li><Link to="/terms">Terms of Service</Link></li>
-            <li><Link to="/cookies">Cookie Policy</Link></li>
-            <li><Link to="/licenses">Licenses</Link></li>
-          </ul>
+        {/* Knights Illustration - Right Side */}
+        <div className="footer-section footer-illustration-section">
+          <div className="footer-illustration">
+            <img src={KnightsImage} alt="Medieval Knights" />
+          </div>
         </div>
       </div>
 
@@ -84,7 +57,7 @@ function Footer() {
           &copy; {currentYear} Waystone. All rights reserved.
         </div>
         <div className="footer-badges">
-          <span className="footer-badge">Made with 💜 for D&D</span>
+          <span className="footer-badge">Made with love for D&D</span>
         </div>
       </div>
     </footer>
