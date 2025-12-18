@@ -57,7 +57,7 @@ const handleLogin = async () =>
         </div>
 
         <br /><br />
-        <button id="button-green" type="button" onClick={handleLogin}>Enter</button>
+        <div id="login-register-button"><button id="button-green" type="button" onClick={handleLogin}>Enter</button></div>
 
         {/* An error message in case an error occures */}
         {error && <p style={{ color: "#D34848" }}>{error}</p>}
