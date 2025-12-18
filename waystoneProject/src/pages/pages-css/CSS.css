@@ -3,6 +3,7 @@
     --title-text: 120px;
     --head-text: 25px;
     --body-text: 20px;
+    --link-text: 12px;
     --text-color: #303030;
     --text-color2: #ffffff;
     --text-color3: rgba(80, 111, 23, 1);
@@ -15,6 +16,7 @@
     --projectbox-colour2: #D34848;
     --projectbox-colour3: #447DC9;
     --form-box-colour: #E0E0E0;
+    --link-colour: #447DC9;
     --border-radius: 10px;
     --border-radius2: 5px;
     --border-radius3: 50px;
@@ -77,9 +79,10 @@ nav a:hover
 }
 #Waystone_Logo
 {
-    /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
-    width: 70%;
-    height: 250px;
+    display: block;
+    margin: auto;
+    width: 35%;
+    margin-top: 25px;
 }
 
 #main /* the whole page minus the navigation */
@@ -210,7 +213,8 @@ nav a:hover
     float: right;
 }
 
-/* input boxes */
+/* Input boxes */
+/* All buttons and buttons disguised as images */
 #button-icons
 {
     background: none;
@@ -226,6 +230,7 @@ nav a:hover
     transition: .3s;
     transform: translateY(-2px);
 }
+
 #UploadIMG_Logo
 {
     border-radius: var(--border-radius);
@@ -268,6 +273,8 @@ nav a:hover
 }
 /* White input boxes */
 
+
+/* HAS TO BE MOVED */
 .campaigns-page {
     display: flex;
     background: var(--background-colour);
@@ -282,6 +289,8 @@ nav a:hover
     flex-direction: column;
 }
 
+/* !!! */
 /* Try and used existing css if possible */
 /* Add more necessary *shared* CSS here */
 /* Seperate css that is only need for 1 or 2 pages */
+/* !!! */
