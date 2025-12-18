@@ -5,6 +5,7 @@ import { generateGrid } from "../../utils/generateGrid";
 import Token from "../character/token";
 import { moveToken } from "../../services/mapServices";
 import TokenMenu from "../character/tokenMenu";
+import "./battleMap.css"
 
 export default function BattleMap({ userId, campaignId, mapId }) {
   const map = useMap(userId, campaignId, mapId);
@@ -64,16 +65,6 @@ const handleTokenClick = (tokenId, player, x, y) => {
               onDragOver={(e) => e.preventDefault()}
               onDrop={() => handleDrop(x, y)}
               className="grid-cell"
-              style={{
-                width: 50,
-                height: 50,
-                border: "1px solid #555",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#eee",
-                pointerEvents: "auto",
-              }}
             >
               {cell?.tokenId && (
                 <Token
@@ -93,9 +84,11 @@ const handleTokenClick = (tokenId, player, x, y) => {
 
       {selectedToken && (
   <TokenMenu
-    player={selectedToken.player}
-    position={selectedToken.position}
-    onClose={() => setSelectedToken(null)}
+  userId={userId}
+     playerId={selectedToken.tokenId}
+  campaignId={campaignId}
+  position={selectedToken.position}
+  onClose={() => setSelectedToken(null)}
   />
 )}
     </div>
