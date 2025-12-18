@@ -3,12 +3,10 @@ import { Link } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 
 /* Editing this page -Henry */
 function Register_Page() {
@@ -18,20 +16,24 @@ const { signUp } = useAuth();
   const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-    try {
-      await signUp(email, password, username);
-      // Optionally redirect to dashboard or show success message
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  e.preventDefault();
+  setError("");
+
+  if (password !== confirmPassword) {
+    setError("Passwords do not match");
+    return;
+  }
+
+  try {
+    await signUp(email, password, username);
+    navigate("/user/Login_Page"); // ✅ redirect after success
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
   // Prevent the caret from showing on first load by clearing any default focus
   useEffect(() => {
@@ -48,7 +50,7 @@ const { signUp } = useAuth();
 
         <form onSubmit={handleSubmit}>
         <input
-          type="Username"
+          type="text"
           placeholder="Enter username"
           className="login-input"
           value={username}
@@ -57,7 +59,7 @@ const { signUp } = useAuth();
         />
 
         <input
-          type="Email"
+          type="text"
           placeholder="Enter email"
           className="login-input"
           value={email}
@@ -87,7 +89,9 @@ const { signUp } = useAuth();
         I already have an account
         </Link>
 
-        <Link to="/user/Login_Page"><button id="login-button" type = "submit">Submit</button></Link>
+        <button id="login-button" type="submit">
+        Submit
+        </button>
 
         </form>
       </div>
