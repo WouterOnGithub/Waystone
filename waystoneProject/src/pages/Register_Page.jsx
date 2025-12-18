@@ -6,6 +6,7 @@ import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
 import Waystone_Background from "../assets/Waystone_Logo.png";
+
 function Register_Page() 
 {
   const { signUp } = useAuth();
@@ -14,6 +15,7 @@ function Register_Page()
   const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => 
@@ -79,6 +81,7 @@ function Register_Page()
         <div id="login-register-link">
           <Link to="/user/Login_Page" id="login-register-link">I already have an account !</Link>
         </div>
+
         <br /><br />
         <div id="login-register-button"><button id="button-green" type="submit">Enter</button></div>
 
@@ -86,6 +89,7 @@ function Register_Page()
         {error && <p style={{ color: "#D34848" }}>{error}</p>}
 
         </form>
+        </div>
       
       {/* Background and Waystone_Logo */}
       <div id="login-image-section" 
@@ -93,8 +97,6 @@ function Register_Page()
               
         {/* The Waystone_Logo above the Waystone_Background image */}
         <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
-      </div>
-      
       </div>
 
     </div>
