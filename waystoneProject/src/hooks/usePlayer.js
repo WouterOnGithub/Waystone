@@ -4,9 +4,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 
 export function usePlayer(campaignId, playerId) {
     const { user } = useAuth();
-    const userId = user?.uid;
-
-    console.log({ userId, campaignId, playerId }); // <-- voeg dit toe
+    const userId = user?.uid;       
 
     const isEditMode = Boolean(playerId);
 

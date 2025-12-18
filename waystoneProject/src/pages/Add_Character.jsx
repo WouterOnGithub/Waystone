@@ -112,7 +112,6 @@
 
     useEffect(() => {
       if (player) {
-        console.log(player); 
         setCharacterData(player);
       }
     }, [player]);
