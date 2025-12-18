@@ -10,18 +10,19 @@ import Sidebar from "../components/UI/Sidebar";
 import AddLocation from "../components/popups/Add_Location";
 import AddContainer from "../components/popups/Add_Container";
 import AddBuildingRegion from "../components/popups/Add_Building_Region";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
 import { useAuth } from "../context/AuthContext";
+import {
+  getLocations,
+  deleteLocation,
+  getCampaign,
+  updateCampaignInfo,
+} from "../api/userCampaigns";
 
 function New_Campaign_Page_MAPBUILDER() {
   const { campaignId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const userId = user?.uid || null;
 
   const fileInputRef = React.useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -29,6 +30,8 @@ function New_Campaign_Page_MAPBUILDER() {
   const [mapFile, setMapFile] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [locations, setLocations] = useState([]);
+  const [showLocations, setShowLocations] = useState(false);
 
   const SIZE_LIMITS = useMemo(
     () => ({
@@ -42,12 +45,32 @@ function New_Campaign_Page_MAPBUILDER() {
 
   // Load existing map when a campaignId is present
   useEffect(() => {
-    if (!campaignId) return;
+    if (!campaignId || !userId) return;
 
     const loadExisting = async () => {
       const cacheBust = Date.now();
 
-      // 1) Prefer an explicit URL we stored after a successful upload
+      // 1) Prefer the URL stored on the campaign document in Firestore
+      try {
+        const campaign = await getCampaign(userId, campaignId);
+        const storedUrl = campaign?.mainMapUrl || null;
+        if (storedUrl) {
+          const url = `${storedUrl}?v=${cacheBust}`;
+          try {
+            const res = await fetch(url, { method: "HEAD" });
+            if (res.ok) {
+              setPreviewUrl(url);
+              return;
+            }
+          } catch {
+            // fall through to other strategies
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load campaign main map from Firestore:", err);
+      }
+
+      // 2) Fallback: explicit URL stored in localStorage from older versions
       const storageKey = `campaign-main-map-${campaignId}`;
       try {
         const storedUrl = window.localStorage.getItem(storageKey);
@@ -67,7 +90,7 @@ function New_Campaign_Page_MAPBUILDER() {
         // localStorage not available, continue with probing
       }
 
-      // 2) Fallback: probe common extensions for legacy campaigns
+      // 3) Fallback for legacy campaigns that stored maps in per-campaign subfolders
       const extensions = [
         ".jpg",
         ".jpeg",
@@ -95,7 +118,7 @@ function New_Campaign_Page_MAPBUILDER() {
     };
 
     loadExisting();
-  }, [campaignId]);
+  }, [campaignId, userId]);
 
   useEffect(() => {
     return () => {
@@ -106,7 +129,7 @@ function New_Campaign_Page_MAPBUILDER() {
     };
   }, [previewUrl]);
 
-  const openPopup = (Component, title) => {
+  const openPopup = (Component, title, componentProps = {}) => {
     const popup = window.open("", title, "width=600,height=800");
     if (!popup) return;
 
@@ -125,7 +148,12 @@ function New_Campaign_Page_MAPBUILDER() {
     popup.document.body.appendChild(container);
 
     const root = createRoot(container);
-    root.render(<Component />);
+    root.render(
+      <Component
+        {...componentProps}
+        baseUrl={window.location.origin}
+      />
+    );
 
     popup.addEventListener("beforeunload", () => root.unmount());
   };
@@ -140,6 +168,30 @@ function New_Campaign_Page_MAPBUILDER() {
       return url;
     });
   };
+
+  // Load locations for this campaign (initially and whenever window regains focus)
+  useEffect(() => {
+    const loadLocations = async () => {
+      if (!userId || !campaignId) return;
+      try {
+        const list = await getLocations(userId, campaignId);
+        setLocations(list || []);
+      } catch (err) {
+        console.error("Failed to load locations:", err);
+      }
+    };
+
+    // Initial load
+    loadLocations();
+
+    // Reload when the window gets focus again (e.g. after closing popup)
+    const handleFocus = () => {
+      loadLocations();
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [userId, campaignId]);
 
   const handleBrowseClick = () => {
     fileInputRef.current?.click();
@@ -165,7 +217,7 @@ function New_Campaign_Page_MAPBUILDER() {
       setSaveMessage("Please upload a map before saving.");
       return;
     }
-    if (!user) {
+    if (!userId) {
       setSaveMessage("You must be signed in to save your map.");
       return;
     }
@@ -180,7 +232,8 @@ function New_Campaign_Page_MAPBUILDER() {
         setSaving(false);
         return;
       }
-      formData.append("userId", campaignId);
+      // Use campaignId so the backend can tag files per campaign when needed.
+      formData.append("campaignId", campaignId);
       formData.append("map", mapFile);
 
       const response = await fetch("/api/upload-map", {
@@ -194,17 +247,28 @@ function New_Campaign_Page_MAPBUILDER() {
       }
 
       const result = await response.json();
-      setSaveMessage(`Map saved. URL: ${result.url}`);
-      // Remember the exact URL (including extension) for this campaign so we don't
-      // have to guess the extension when reloading (important for PNGs).
-      if (campaignId && result?.url) {
+      setSaveMessage(`Map saved.`);
+
+      // Persist the main map URL on the campaign document in Firestore so it
+      // can be reliably loaded later, instead of reconstructing a file path.
+      if (campaignId && userId && result?.url) {
         try {
-          window.localStorage.setItem(
-            `campaign-main-map-${campaignId}`,
-            result.url
-          );
-        } catch {
-          // ignore localStorage failures
+          await updateCampaignInfo(userId, campaignId, {
+            mainMapUrl: result.url,
+            lastUpdatedAt: new Date().toISOString(),
+          });
+
+          // Also keep a localStorage copy as a secondary fallback for older flows.
+          try {
+            window.localStorage.setItem(
+              `campaign-main-map-${campaignId}`,
+              result.url
+            );
+          } catch {
+            // ignore localStorage failures
+          }
+        } catch (err) {
+          console.error("Failed to save main map URL to campaign:", err);
         }
       }
       // Important: keep using the local blob preview right after save.
@@ -314,13 +378,93 @@ function New_Campaign_Page_MAPBUILDER() {
             <div className="mapbuilder-button-row">
               <button
                 className="campaign-pill"
-                onClick={() => openPopup(AddLocation, "Add Location")}
+                onClick={() =>
+                  openPopup(AddLocation, "Add Location", {
+                    campaignId,
+                    userId,
+                  })
+                }
                 type="button"
               >
                 Add Location
               </button>
-              <button className="campaign-pill">Edit</button>
+              <button
+                className="campaign-pill"
+                type="button"
+                onClick={async () => {
+                  const next = !showLocations;
+                  setShowLocations(next);
+                  if (next && userId && campaignId) {
+                    try {
+                      const list = await getLocations(userId, campaignId);
+                      setLocations(list || []);
+                    } catch (err) {
+                      console.error("Failed to load locations:", err);
+                    }
+                  }
+                }}
+                disabled={!campaignId || !userId}
+              >
+                {showLocations ? "Hide locations" : "Show all locations"}
+              </button>
             </div>
+
+            {showLocations && locations.length > 0 && (
+              <div
+                className="mapbuilder-button-row"
+                style={{
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                }}
+              >
+                {locations.map((loc) => (
+                  <div
+                    key={loc.id}
+                    style={{ display: "flex", gap: "8px", width: "100%" }}
+                  >
+                    <button
+                      className="campaign-pill"
+                      type="button"
+                      onClick={() =>
+                        openPopup(AddLocation, "Edit Location", {
+                          campaignId,
+                          userId,
+                          location: loc,
+                        })
+                      }
+                    >
+                      {`Edit ${loc.name || "location"}`}
+                    </button>
+                    <button
+                      type="button"
+                      className="campaign-pill"
+                      onClick={async () => {
+                        if (
+                          !window.confirm(
+                            `Delete location "${loc.name || "Unnamed location"}"?`
+                          )
+                        ) {
+                          return;
+                        }
+                        if (!userId || !campaignId) return;
+                        const ok = await deleteLocation(
+                          userId,
+                          campaignId,
+                          loc.id
+                        );
+                        if (ok) {
+                          const list = await getLocations(userId, campaignId);
+                          setLocations(list || []);
+                        }
+                      }}
+                    >
+                      {`Delete ${loc.name || "location"}`}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className="mapbuilder-button-row">
               <button
@@ -332,12 +476,12 @@ function New_Campaign_Page_MAPBUILDER() {
               >
                 Add Building/Region
               </button>
-              <button className="campaign-pill">Edit</button>
+              <button className="campaign-pill">Show all building/regions</button>
             </div>
 
             <div className="mapbuilder-button-row">
               <button className="campaign-pill">Add Event</button>
-              <button className="campaign-pill">Edit</button>
+              <button className="campaign-pill">Show all events</button>
             </div>
 
             <div className="mapbuilder-button-row">
@@ -348,7 +492,7 @@ function New_Campaign_Page_MAPBUILDER() {
               >
                 Add Container
               </button>
-              <button className="campaign-pill">Edit</button>
+              <button className="campaign-pill">Show all containers</button>
             </div>
 
             {/* Save */}
