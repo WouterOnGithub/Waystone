@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./pages-css/CSS.css";
-import "./pages-css/Add_View.css";
+import "../../pages/pages-css/CSS.css";
+import "../../pages/pages-css/Add_View.css";
 import Required_Logo from "../assets/Required_Logo.webp";
 
 function Game_Settings_SAVEGAME() 

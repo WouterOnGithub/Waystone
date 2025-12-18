@@ -27,8 +27,8 @@ import Add_Item from "./components/popups/Add_Item"
 import View_Character from "./components/popups/View_Character" 
 import View_Item from "./components/popups/View_Item"
 
-import Game_Settings from "./pages/Game_Settings"
-import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME" 
+import Game_Settings from "./components/popups/Game_Settings"
+import Game_Settings_SAVEGAME from "./components/popups/Game_Settings_SAVEGAME" 
 
 {/* import Map_Main from "./pages/Map_Main" */}
 {/* import Map_Location from "./pages/Map_Location" */}
