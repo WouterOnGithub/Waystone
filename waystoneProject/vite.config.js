@@ -205,6 +205,128 @@ export default defineConfig({
       },
     },
     {
+      name: 'building-upload-middleware',
+      configureServer(server) {
+        server.middlewares.use('/api/upload-building', (req, res, next) => {
+          if (req.method !== 'POST') return next();
+
+          const sendJson = (status, body) => {
+            res.statusCode = status;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(body));
+          };
+
+          const busboy = Busboy({
+            headers: req.headers,
+            limits: { files: 1, fileSize: 5 * 1024 * 1024 }, // 5MB limit
+          });
+
+          let campaignId = '';
+          let safeCampaignId = '';
+          let previousUrl = '';
+          let fileData = null;
+          let fileInfo = null;
+          let responded = false;
+
+          busboy.on('field', (name, value) => {
+            if (name === 'campaignId') {
+              campaignId = value;
+              safeCampaignId = campaignId.replace(/[^a-zA-Z0-9_-]/g, '');
+            }
+            if (name === 'previousUrl') {
+              previousUrl = value;
+            }
+          });
+
+          busboy.on('file', (name, file, info) => {
+            if (name !== 'image') {
+              file.resume();
+              return;
+            }
+            const chunks = [];
+            file.on('data', (chunk) => chunks.push(chunk));
+            file.on('end', () => {
+              fileData = Buffer.concat(chunks);
+              fileInfo = info;
+            });
+          });
+
+          busboy.on('close', () => {
+            if (responded) return;
+
+            if (!safeCampaignId || !fileData) {
+              sendJson(400, { error: 'campaignId and image file are required' });
+              return;
+            }
+
+            const ext = path.extname(fileInfo?.filename || '') || '.jpg';
+            const timestamp = Date.now();
+            // Flat folder: store all building images directly under /public/building
+            const savedFileName = `building-${safeCampaignId}-${timestamp}${ext}`;
+
+            const targetDir = path.join(process.cwd(), 'public', 'building');
+            fs.mkdirSync(targetDir, { recursive: true });
+            const targetPath = path.join(targetDir, savedFileName);
+
+            try {
+              fs.writeFileSync(targetPath, fileData);
+
+              // Attempt to delete the previous image file if provided
+              if (previousUrl) {
+                try {
+                  const previousFileName = path.basename(previousUrl);
+                  if (previousFileName) {
+                    const legacyPath = path.join(
+                      process.cwd(),
+                      'public',
+                      'building',
+                      safeCampaignId,
+                      previousFileName,
+                    );
+                    const flatPath = path.join(
+                      process.cwd(),
+                      'public',
+                      'building',
+                      previousFileName,
+                    );
+
+                    // Delete legacy nested-path version
+                    if (fs.existsSync(legacyPath)) {
+                      try {
+                        fs.unlinkSync(legacyPath);
+                      } catch {
+                        // ignore individual delete errors
+                      }
+                    }
+
+                    // Delete flat-path version
+                    if (fs.existsSync(flatPath)) {
+                      try {
+                        fs.unlinkSync(flatPath);
+                      } catch {
+                        // ignore individual delete errors
+                      }
+                    }
+                  }
+                } catch {
+                  // ignore delete failures
+                }
+              }
+
+              sendJson(200, {
+                fileName: savedFileName,
+                url: `/building/${savedFileName}`,
+              });
+            } catch (err) {
+              sendJson(500, { error: 'Failed to save file' });
+            }
+          });
+
+          req.pipe(busboy);
+        });
+      },
+    },
+    {
       name: 'map-upload-middleware',
       configureServer(server) {
         server.middlewares.use('/api/upload-map', (req, res, next) => {

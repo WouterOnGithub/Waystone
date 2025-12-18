@@ -16,6 +16,8 @@ import {
   deleteLocation,
   getCampaign,
   updateCampaignInfo,
+  getBuildingsRegions,
+  deleteBuildingRegion,
 } from "../api/userCampaigns";
 
 function New_Campaign_Page_MAPBUILDER() {
@@ -32,6 +34,8 @@ function New_Campaign_Page_MAPBUILDER() {
   const [saveMessage, setSaveMessage] = useState("");
   const [locations, setLocations] = useState([]);
   const [showLocations, setShowLocations] = useState(false);
+  const [buildings, setBuildings] = useState([]);
+  const [showBuildings, setShowBuildings] = useState(false);
 
   const SIZE_LIMITS = useMemo(
     () => ({
@@ -187,6 +191,28 @@ function New_Campaign_Page_MAPBUILDER() {
     // Reload when the window gets focus again (e.g. after closing popup)
     const handleFocus = () => {
       loadLocations();
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [userId, campaignId]);
+
+  // Load buildings/regions for this campaign
+  useEffect(() => {
+    const loadBuildings = async () => {
+      if (!userId || !campaignId) return;
+      try {
+        const list = await getBuildingsRegions(userId, campaignId);
+        setBuildings(list || []);
+      } catch (err) {
+        console.error("Failed to load buildings/regions:", err);
+      }
+    };
+
+    loadBuildings();
+
+    const handleFocus = () => {
+      loadBuildings();
     };
 
     window.addEventListener("focus", handleFocus);
@@ -466,18 +492,100 @@ function New_Campaign_Page_MAPBUILDER() {
               </div>
             )}
 
+            {/* Buildings / Regions */}
             <div className="mapbuilder-button-row">
               <button
                 className="campaign-pill"
                 onClick={() =>
-                  openPopup(AddBuildingRegion, "Add Building or Region")
+                  openPopup(AddBuildingRegion, "Add Building or Region", {
+                    campaignId,
+                    userId,
+                  })
                 }
                 type="button"
               >
                 Add Building/Region
               </button>
-              <button className="campaign-pill">Show all building/regions</button>
+              <button
+                className="campaign-pill"
+                type="button"
+                onClick={async () => {
+                  const next = !showBuildings;
+                  setShowBuildings(next);
+                  if (next && userId && campaignId) {
+                    try {
+                      const list = await getBuildingsRegions(userId, campaignId);
+                      setBuildings(list || []);
+                    } catch (err) {
+                      console.error("Failed to load buildings/regions:", err);
+                    }
+                  }
+                }}
+                disabled={!campaignId || !userId}
+              >
+                {showBuildings ? "Hide buildings/regions" : "Show all buildings/regions"}
+              </button>
             </div>
+
+            {showBuildings && buildings.length > 0 && (
+              <div
+                className="mapbuilder-button-row"
+                style={{
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                }}
+              >
+                {buildings.map((bld) => (
+                  <div
+                    key={bld.id}
+                    style={{ display: "flex", gap: "8px", width: "100%" }}
+                  >
+                    <button
+                      className="campaign-pill"
+                      type="button"
+                      onClick={() =>
+                        openPopup(AddBuildingRegion, "Edit Building/Region", {
+                          campaignId,
+                          userId,
+                          building: bld,
+                        })
+                      }
+                    >
+                      {`Edit ${bld.name || "building/region"}`}
+                    </button>
+                    <button
+                      type="button"
+                      className="campaign-pill"
+                      onClick={async () => {
+                        if (
+                          !window.confirm(
+                            `Delete building/region "${bld.name || "Unnamed"}"?`
+                          )
+                        ) {
+                          return;
+                        }
+                        if (!userId || !campaignId) return;
+                        const ok = await deleteBuildingRegion(
+                          userId,
+                          campaignId,
+                          bld.id
+                        );
+                        if (ok) {
+                          const list = await getBuildingsRegions(
+                            userId,
+                            campaignId
+                          );
+                          setBuildings(list || []);
+                        }
+                      }}
+                    >
+                      {`Delete ${bld.name || "building/region"}`}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className="mapbuilder-button-row">
               <button className="campaign-pill">Add Event</button>

@@ -170,3 +170,95 @@ export const deleteLocation = async (userId, campaignId, locationId) => {
     return false;
   }
 };
+
+// BUILDING / REGION HELPERS (Map Builder)
+
+export const createBuildingRegion = async (
+  userId,
+  campaignId,
+  buildingData
+) => {
+  try {
+    const collectionRef = collection(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Buildings"
+    );
+    const docRef = await addDoc(collectionRef, buildingData);
+    const newDoc = await getDoc(docRef);
+    return newDoc.exists() ? { id: newDoc.id, ...newDoc.data() } : null;
+  } catch (error) {
+    console.error("Error creating building/region:", error);
+    return null;
+  }
+};
+
+export const updateBuildingRegion = async (
+  userId,
+  campaignId,
+  buildingId,
+  buildingData
+) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Buildings",
+      buildingId
+    );
+    await setDoc(docRef, buildingData, { merge: true });
+    const updatedDoc = await getDoc(docRef);
+    return updatedDoc.exists()
+      ? { id: updatedDoc.id, ...updatedDoc.data() }
+      : null;
+  } catch (error) {
+    console.error("Error updating building/region:", error);
+    return null;
+  }
+};
+
+export const getBuildingsRegions = async (userId, campaignId) => {
+  try {
+    const collectionRef = collection(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Buildings"
+    );
+    const querySnapshot = await getDocs(collectionRef);
+    return querySnapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    }));
+  } catch (error) {
+    console.error("Error getting buildings/regions:", error);
+    return [];
+  }
+};
+
+export const deleteBuildingRegion = async (userId, campaignId, buildingId) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Buildings",
+      buildingId
+    );
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error("Error deleting building/region:", error);
+    return false;
+  }
+};
