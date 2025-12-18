@@ -44,15 +44,46 @@ function New_Campaign_Page_MAPBUILDER() {
   useEffect(() => {
     if (!campaignId) return;
 
-    // Try to load the saved map image from public/Main-Maps/{campaignId}/main.*
-    // We check common extensions; the first one that exists wins
-    const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-    const tryLoad = async () => {
+    const loadExisting = async () => {
       const cacheBust = Date.now();
+
+      // 1) Prefer an explicit URL we stored after a successful upload
+      const storageKey = `campaign-main-map-${campaignId}`;
+      try {
+        const storedUrl = window.localStorage.getItem(storageKey);
+        if (storedUrl) {
+          const url = `${storedUrl}?v=${cacheBust}`;
+          try {
+            const res = await fetch(url, { method: "HEAD" });
+            if (res.ok) {
+              setPreviewUrl(url);
+              return;
+            }
+          } catch {
+            // fall through to extension probing
+          }
+        }
+      } catch {
+        // localStorage not available, continue with probing
+      }
+
+      // 2) Fallback: probe common extensions for legacy campaigns
+      const extensions = [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".gif",
+        ".webp",
+        ".JPG",
+        ".JPEG",
+        ".PNG",
+        ".GIF",
+        ".WEBP",
+      ];
       for (const ext of extensions) {
         const url = `/Main-Maps/${campaignId}/main${ext}?v=${cacheBust}`;
         try {
-          const res = await fetch(url, { method: 'HEAD' });
+          const res = await fetch(url, { method: "HEAD" });
           if (res.ok) {
             setPreviewUrl(url);
             return;
@@ -62,7 +93,8 @@ function New_Campaign_Page_MAPBUILDER() {
         }
       }
     };
-    tryLoad();
+
+    loadExisting();
   }, [campaignId]);
 
   useEffect(() => {
@@ -163,6 +195,21 @@ function New_Campaign_Page_MAPBUILDER() {
 
       const result = await response.json();
       setSaveMessage(`Map saved. URL: ${result.url}`);
+      // Remember the exact URL (including extension) for this campaign so we don't
+      // have to guess the extension when reloading (important for PNGs).
+      if (campaignId && result?.url) {
+        try {
+          window.localStorage.setItem(
+            `campaign-main-map-${campaignId}`,
+            result.url
+          );
+        } catch {
+          // ignore localStorage failures
+        }
+      }
+      // Important: keep using the local blob preview right after save.
+      // The file write on disk may not be immediately visible to the dev server,
+      // so switching to the saved URL here can momentarily 404 and "lose" the image.
     } catch (err) {
       setSaveMessage(err?.message || "Failed to save map.");
     } finally {
@@ -272,7 +319,7 @@ function New_Campaign_Page_MAPBUILDER() {
               >
                 Add Location
               </button>
-              <button className="campaign-pill">Show</button>
+              <button className="campaign-pill">Edit</button>
             </div>
 
             <div className="mapbuilder-button-row">
@@ -285,12 +332,12 @@ function New_Campaign_Page_MAPBUILDER() {
               >
                 Add Building/Region
               </button>
-              <button className="campaign-pill">Show</button>
+              <button className="campaign-pill">Edit</button>
             </div>
 
             <div className="mapbuilder-button-row">
               <button className="campaign-pill">Add Event</button>
-              <button className="campaign-pill">Show</button>
+              <button className="campaign-pill">Edit</button>
             </div>
 
             <div className="mapbuilder-button-row">
@@ -301,7 +348,7 @@ function New_Campaign_Page_MAPBUILDER() {
               >
                 Add Container
               </button>
-              <button className="campaign-pill">Show</button>
+              <button className="campaign-pill">Edit</button>
             </div>
 
             {/* Save */}
