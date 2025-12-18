@@ -1,4 +1,4 @@
-import{db} from "../firebase";
+import{db} from "../firebase/firebase";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, setDoc, getDoc } from "firebase/firestore";
 
 
@@ -6,6 +6,16 @@ export const getPlayers = async (userId, campaignId) => {
     const snapshot = await getDocs(collection(db, "Users", userId, "Campaigns", campaignId, "Players"));
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
+
+export const getPlayerById = async (userId, campaignId, playerId) => {
+    const playerRef = doc (db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
+    const snapshot = await getDoc (playerRef);
+    if (!snapshot.exists()) {
+        throw new Error("Player not found");
+    }
+    return { id: snapshot.id, ...snapshot.data() };
+};
+
 
 export const addPlayer = async (userId, campaignId, playerData) => {
     const playersCollection = collection(db, "Users", userId, "Campaigns", campaignId, "Players");
