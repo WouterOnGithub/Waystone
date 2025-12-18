@@ -34,7 +34,12 @@ function Account_Page() {
   };
 
   const getAvatarUrl = () => {
-    if (userData?.avatarFileName) {
+    // Prefer the new avatarUrl field stored in Firestore
+    if (userData?.avatarUrl) {
+      return userData.avatarUrl;
+    }
+    // Backwards compatibility with legacy avatarFileName + per-user folders
+    if (userData?.avatarFileName && user?.uid) {
       return `/avatars/${user.uid}/${userData.avatarFileName}`;
     }
     return Placeholder;

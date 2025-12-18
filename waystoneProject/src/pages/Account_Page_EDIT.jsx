@@ -19,6 +19,7 @@ function Account_Page_EDIT() {
   const [username, setUsername] = useState("");
   const [introduction, setIntroduction] = useState("");
   const [currentAvatarFileName, setCurrentAvatarFileName] = useState(null);
+  const [currentAvatarUrl, setCurrentAvatarUrl] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +29,13 @@ function Account_Page_EDIT() {
         if (data) {
           setUsername(data.username || "");
           setIntroduction(data.description || "");
-          setCurrentAvatarFileName(data.avatarFileName || null);
+          // Prefer a full avatar URL saved in Firestore; fall back to the legacy fileName-based path.
+          if (data.avatarUrl) {
+            setCurrentAvatarUrl(data.avatarUrl);
+          } else if (data.avatarFileName) {
+            setCurrentAvatarFileName(data.avatarFileName || null);
+            setCurrentAvatarUrl(`/avatars/${user.uid}/${data.avatarFileName}`);
+          }
         }
         setLoading(false);
       }
@@ -54,9 +61,7 @@ function Account_Page_EDIT() {
 
   const getAvatarUrl = () => {
     if (avatarPreview) return avatarPreview;
-    if (currentAvatarFileName && user?.uid) {
-      return `/avatars/${user.uid}/${currentAvatarFileName}`;
-    }
+    if (currentAvatarUrl) return currentAvatarUrl;
     return UploadIMG_Logo;
   };
 
@@ -65,6 +70,7 @@ function Account_Page_EDIT() {
     
     if (!user?.uid) return;
 
+    let avatarUrlToSave = currentAvatarUrl || null;
     let avatarFileName = currentAvatarFileName;
 
     // Handle avatar upload via API
@@ -82,6 +88,10 @@ function Account_Page_EDIT() {
         if (result.fileName) {
           avatarFileName = result.fileName;
         }
+        if (result.url) {
+          avatarUrlToSave = result.url;
+          setCurrentAvatarUrl(result.url);
+        }
       } catch (error) {
         console.error("Error uploading avatar:", error);
       }
@@ -91,7 +101,9 @@ function Account_Page_EDIT() {
     await setUser(user.uid, {
       username,
       description: introduction,
+      // Keep both for backward compatibility, but prefer avatarUrl going forward.
       avatarFileName,
+      avatarUrl: avatarUrlToSave || "",
     });
 
     navigate("/user/Account_Page");
