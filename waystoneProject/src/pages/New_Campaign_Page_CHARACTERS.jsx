@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -14,11 +14,18 @@ import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
 function New_Campaign_Page_CHARACTERS() {
+  const {campaignId} = useParams()
   const navigate = useNavigate();
-  const [players, setPlayers] = useState([
-    { name: "Player_1", level: 3, hp: 19 },
-    { name: "Player_2", level: 1, hp: 15 },
-  ]);
+
+  const handleAddPlayer = () => {
+    navigate(`/user/${campaignId}/Add_Character`);
+  };
+
+  const handleEditPlayer = (playerId) => {
+    navigate(`/user/${campaignId}/Add_Character/${playerId}`);
+  };
+
+
 
   const [npcs, setNpcs] = useState([
     { name: "NPC_1", job: "blacksmith" },
@@ -42,6 +49,11 @@ function New_Campaign_Page_CHARACTERS() {
     setEnemies([...enemies, { name: "Enemy", cr: 1, hp: 10 }]);
   };
 
+  const [players, setPlayers] = useState([
+    { name: "Player_1", level: 1, hp: 10 },
+    { name: "Player_2", level: 2, hp: 15 },
+  ]);
+
   return (
     <div className="campaign-page">
       <Sidebar />
@@ -49,19 +61,29 @@ function New_Campaign_Page_CHARACTERS() {
         <Header title="New Campaign" />
         <div className="campaign-body">
           <div className="campaign-tabs">
-            <button
+            <button 
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN")}
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}
             >
               Campaign
             </button>
+
             <button
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_MAPBUILDER")}
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}
             >
               Map Builder
             </button>
-            <button className="campaign-tab active">Characters</button>
+
+            <button
+              className="campaign-tab active"
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}
+            >
+              Characters
+            </button>
           </div>
 
           <div className="campaign-card">
@@ -72,10 +94,10 @@ function New_Campaign_Page_CHARACTERS() {
               {players.map((player, index) => (
                 <div key={index} className="character-row">
                   <span>{player.name} | lvl {player.level} | HP {player.hp}</span>
-                  <button className="edit-button">edit</button>
+                  <button className="edit-button" onClick={handleEditPlayer}>edit</button>
                 </div>
               ))}
-              <button className="add-button" onClick={addPlayer}>add Player</button>
+              <button className="add-button" onClick={handleAddPlayer}>add Player</button>
             </div>
 
             <div className="character-section">

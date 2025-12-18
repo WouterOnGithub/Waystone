@@ -19,12 +19,18 @@ import {useCampaign} from "../hooks/useCampaign";
 import { useAuth } from "../context/AuthContext";
 
 function New_Campaign_Page_CAMPAIGN() {
+  const {campaignId} = useParams()
   const navigate = useNavigate();
+
+  const New_Campaign_Page_CAMPAIGN= () => {
+    const isCreateMode = !campaignId;
+    const isEditMode = Boolean(campaignId);
+  };
+  
 
   const {user} = useAuth();
   const userId = user ? user.uid : null;
-
-  const {campaignId} = useParams()
+  
   const isNewCampaign = !campaignId;
   const { data, loading, error, setData } = useCampaign(
     isNewCampaign? null : userId, 
@@ -74,16 +80,26 @@ function New_Campaign_Page_CAMPAIGN() {
         <Header title="New Campaign" />
         <div className="campaign-body">
           <div className="campaign-tabs">
-            <button className="campaign-tab active">Campaign</button>
+            <button 
+              className="campaign-tab active"
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}
+            >
+              Campaign
+            </button>
+
             <button
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_MAPBUILDER")}
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}
             >
               Map Builder
             </button>
+
             <button
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS")}
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}
             >
               Characters
             </button>

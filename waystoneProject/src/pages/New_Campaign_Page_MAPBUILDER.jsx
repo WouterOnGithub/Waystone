@@ -19,6 +19,7 @@ import Placeholder from "../assets/PlaceholderImage.jpg";
 import { useAuth } from "../context/AuthContext";
 
 function New_Campaign_Page_MAPBUILDER() {
+  const {campaignId} = useParams()
   const navigate = useNavigate();
   const { user } = useAuth();
   const { mapId } = useParams();
@@ -177,22 +178,31 @@ function New_Campaign_Page_MAPBUILDER() {
       <div className="campaign-main">
         <Header title="New Campaign" />
         <div className="campaign-body">
-
-        <div className="campaign-tabs">
-            <button
+          <div className="campaign-tabs">
+            <button 
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_CAMPAIGN")}
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}
             >
               Campaign
             </button>
-            <button className="campaign-tab active">Map Builder</button>
+
+            <button
+              className="campaign-tab active"
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}
+            >
+              Map Builder
+            </button>
+
             <button
               className="campaign-tab"
-              onClick={() => navigate("/user/New_Campaign_Page_CHARACTERS")}
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}
             >
               Characters
             </button>
-        </div>
+          </div>
 
           {/* MAIN MAP BUILDER CARD */}
           <div className="campaign-card">
