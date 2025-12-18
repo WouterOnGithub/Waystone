@@ -59,7 +59,9 @@ export default function BattleMap({ userId, campaignId, mapId }) {
             >
               {cell?.tokenId && (
                 <Token
+                userId= {userId}
                   tokenId={cell.tokenId}
+                  campaignId={campaignId} 
                   x={x}
                   y={y}
                   onDragStart={handleDragStart}
