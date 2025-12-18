@@ -4,11 +4,13 @@ import {useMap} from "../../hooks/subcribeToCell";       // adjust if named expo
 import { generateGrid } from "../../utils/generateGrid";
 import Token from "../character/token";
 import { moveToken } from "../../services/mapServices";
+import TokenMenu from "../character/tokenMenu";
 
 export default function BattleMap({ userId, campaignId, mapId }) {
   const map = useMap(userId, campaignId, mapId);
   const cellsData = useMapCells(userId, campaignId, mapId);
   const [draggedToken, setDraggedToken] = useState(null);
+  const [selectedToken, setSelectedToken] = useState(null);
 
   if (!map) return <div>Loading map...</div>;
 
@@ -35,6 +37,22 @@ export default function BattleMap({ userId, campaignId, mapId }) {
 
     setDraggedToken(null);
   };
+
+
+const handleTokenClick = (tokenId, player, x, y) => {
+  // Toggle selection
+  if (selectedToken?.tokenId === tokenId) {
+    setSelectedToken(null);
+  } else {
+    // Calculate pixel position for menu
+    const cellSize = 50; // adjust to your grid cell size
+    setSelectedToken({
+      tokenId,
+      player,
+      position: { x: x * cellSize, y: y * cellSize },
+    });
+  }
+};
 
   return (
     <div className="grid-container">
@@ -65,12 +83,21 @@ export default function BattleMap({ userId, campaignId, mapId }) {
                   x={x}
                   y={y}
                   onDragStart={handleDragStart}
+                  onClick={(tokenId, player) => handleTokenClick(tokenId, player, x, y)}
                 />
               )}
             </div>
           ))}
         </div>
       ))}
+
+      {selectedToken && (
+  <TokenMenu
+    player={selectedToken.player}
+    position={selectedToken.position}
+    onClose={() => setSelectedToken(null)}
+  />
+)}
     </div>
   );
 }
