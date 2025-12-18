@@ -6,8 +6,8 @@
     --link-text: 12px;
     --text-color: #303030;
     --text-color2: #ffffff;
-    --text-color3: rgb(45, 0, 104);
-    --background-gradient: linear-gradient(135deg, #421c5f 50%, #4403ab 100%);
+    --text-color3: rgba(45, 0, 104, 1);
+    --background-gradient: linear-gradient(90deg,rgba(45, 0, 104, 1) 0%, rgb(109, 50, 142) 50%, rgba(45, 0, 104, 1) 100%);
     --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
@@ -41,13 +41,13 @@
 ::-webkit-scrollbar-thumb 
 {
     border-radius: var(--border-radius);
-    background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
-    box-shadow: inset 0 0 10px rgb(69, 24, 185);
+    background: linear-gradient(135deg, rgba(45, 0, 104, 1) 0%, rgb(109, 50, 142) 100%);
+    box-shadow: inset 0 0 10px rgba(45, 0, 104, 1);
     height: 20px;
 }
 ::-webkit-scrollbar-thumb:hover 
 {
-    background: rgb(20, 10, 131);
+    background: rgba(45, 0, 104, 1);
     cursor: grab;
     transition: 0.3s;
 }
