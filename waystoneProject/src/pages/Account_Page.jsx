@@ -15,7 +15,6 @@ function Account_Page() {
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
   const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -32,8 +31,6 @@ function Account_Page() {
         }
       } catch (err) {
         console.error("Failed to load account user data:", err);
-      } finally {
-        setLoading(false);
       }
     };
     fetchUserData();
@@ -66,21 +63,6 @@ function Account_Page() {
       e.currentTarget.src = Placeholder;
     }
   };
-
-  if (loading) {
-    return (
-      <div className="account-page">
-        <Sidebar />
-        <div className="account-shell">
-          <Header title="Account" />
-          <main className="account-content">
-            <p>Loading account...</p>
-          </main>
-          <Footer />
-        </div>
-      </div>
-    );
-  }
 
 
   return (

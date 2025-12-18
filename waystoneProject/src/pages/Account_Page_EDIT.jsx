@@ -20,7 +20,6 @@ function Account_Page_EDIT() {
   const [introduction, setIntroduction] = useState("");
   const [currentAvatarFileName, setCurrentAvatarFileName] = useState(null);
   const [currentAvatarUrl, setCurrentAvatarUrl] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -37,7 +36,6 @@ function Account_Page_EDIT() {
             setCurrentAvatarUrl(`/avatars/${user.uid}/${data.avatarFileName}`);
           }
         }
-        setLoading(false);
       }
     };
     fetchUserData();
@@ -112,10 +110,6 @@ function Account_Page_EDIT() {
 
     navigate("/user/Account_Page");
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="account-page">
