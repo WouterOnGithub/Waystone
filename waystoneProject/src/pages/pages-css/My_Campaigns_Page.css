@@ -1,8 +1,9 @@
 .campaigns-content#content {
   /* Override global #content sizing only on My Campaigns page */
   margin-right: 0;
-  width: auto;
-  max-width: 100%;
+  width: 100%;      /* always span the available main area */
+  max-width: none;  /* don't let content get narrower than the main area */
+  min-width: calc(100vw - 350px); /* fill viewport width minus sidebar */
   box-sizing: border-box;
 }
 
