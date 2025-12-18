@@ -3,8 +3,8 @@
 {
     --addview-text: 60px;
     --adview-text2: 22px;
-    --text-color4: #D34848;
-    --background-gradient2: radial-gradient(circle, rgb(56, 78, 16) 50%, rgb(27, 40, 4) 100%);
+    --text-color4: #df4a00;
+    --background-gradient2: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);;
 }
 
 #addview-page /* The gray_/black_ background for the pop-ups */
