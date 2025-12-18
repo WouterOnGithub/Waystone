@@ -6,18 +6,18 @@
   import Footer from "../components/UI/Footer";
   import Header from "../components/UI/Header";
   import Sidebar from "../components/UI/Sidebar";
-  import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-  import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-  import Required_Logo from "../assets/Required_Logo.webp";
-  import Delete_Logo from "../assets/Delete_Logo.webp";
-  import Add_Logo from "../assets/Add_Logo.webp";
+
 
   import { useAuth } from "../context/AuthContext.jsx";
   import {usePlayer} from "../hooks/usePlayer.js";
 
   function Add_Character() {
-    const { campaignId, playerId } = useParams();
+    const { campaignId, CharacterId } = useParams();
+    const playerId = CharacterId;
+    const { user } = useAuth();
+    const userId = user ? user.uid : null;
     const navigate = useNavigate();
+    
 
     const {player, loading, error, savePlayer, isEditMode} = usePlayer(campaignId, playerId);
 
@@ -43,8 +43,8 @@
       initiative: 0,
       speed: 30,
       hitDice: "1d8",
-      currentHP: 10,
-      maxHP: 10,
+      HpCurrent: 10,
+      HpMax: 10,
       savingThrows: {
         strength: false,
         dexterity: false,
@@ -112,6 +112,7 @@
 
     useEffect(() => {
       if (player) {
+        console.log(player); 
         setCharacterData(player);
       }
     }, [player]);
@@ -352,16 +353,16 @@
                     <label>Current HP</label>
                     <input 
                       type="number" 
-                      value={characterData.currentHP}
-                      onChange={(e) => handleInputChange('currentHP', e.target.value)}
+                      value={characterData.HpCurrent}
+                      onChange={(e) => handleInputChange('HpCurrent', e.target.value)}
                     />
                   </div>
                   <div className="combat-stat">
                     <label>Max HP</label>
                     <input 
                       type="number" 
-                      value={characterData.maxHP}
-                      onChange={(e) => handleInputChange('maxHP', e.target.value)}
+                      value={characterData.HpMax}
+                      onChange={(e) => handleInputChange('HpMax', e.target.value)}
                     />
                   </div>
                 </div>

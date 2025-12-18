@@ -2,10 +2,21 @@ import{db} from "../firebase/firebase";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, setDoc, getDoc } from "firebase/firestore";
 
 
-export const getPlayers = async (userId, campaignId) => {
-    const snapshot = await getDocs(collection(db, "Users", userId, "Campaigns", campaignId, "Players"));
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-};
+export const getPlayersByCampaign = async (userId, campaignId) => {
+    if (!userId || !campaignId) return [];
+
+    try {
+        const snapshot = await getDocs(
+            collection(db, "Users", userId, "Campaigns", campaignId, "Players")
+        );
+        return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) );
+    } catch (error) {
+        console.error("Error fetching players: ", error);
+        return [];
+    }
+};    
+
+
 
 export const getPlayerById = async (userId, campaignId, playerId) => {
     const playerRef = doc (db, "Users", userId, "Campaigns", campaignId, "Players", playerId);

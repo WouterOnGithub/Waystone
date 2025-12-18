@@ -6,6 +6,8 @@ export function usePlayer(campaignId, playerId) {
     const { user } = useAuth();
     const userId = user?.uid;
 
+    console.log({ userId, campaignId, playerId }); // <-- voeg dit toe
+
     const isEditMode = Boolean(playerId);
 
     const [player, setPlayer] = useState(null);
@@ -26,6 +28,7 @@ export function usePlayer(campaignId, playerId) {
                 setLoading(false);
             }
         };
+        
         fetchPlayer();
     }, [isEditMode, userId, campaignId, playerId]);
 
