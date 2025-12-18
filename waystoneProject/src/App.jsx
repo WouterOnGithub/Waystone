@@ -27,8 +27,8 @@ import Add_Enemy from "./pages/Add_Enemy"
 import View_Character from "./components/popups/View_Character" 
 import View_Item from "./components/popups/View_Item"
 
-import Game_Settings from "./pages/Game_Settings"
-import Game_Settings_SAVEGAME from "./pages/Game_Settings_SAVEGAME" 
+import Game_Settings from "./components/popups/Game_Settings"
+import Game_Settings_SAVEGAME from "./components/popups/Game_Settings_SAVEGAME" 
 
 {/* import Map_Main from "./pages/Map_Main" */}
 {/* import Map_Location from "./pages/Map_Location" */}
@@ -81,6 +81,11 @@ function App()
                 />
 
                 {/* <Route path="/user/New_Campaign_Page_EVENTS" element={<New_Campaign_Page_EVENTS />} /> */}
+                <Route path="/user/New_Campaign_Page_CHARACTERS" element={<New_Campaign_Page_CHARACTERS />} />
+                {/*nieuwe map aanmaken*/}
+                <Route path="/user/New_Campaign_Page_MAPBUILDER" element={<New_Campaign_Page_MAPBUILDER />} />
+                {/*al bestaande map*/}
+                <Route path="/user/New_Campaign_Page_MAPBUILDER/:mapId" element={<New_Campaign_Page_MAPBUILDER />} />
                 
                 <Route path="/user/Add_Building_Region" element={<Add_Building_Region />} /> 
                 <Route path="/user/Add_Location" element={<Add_Location />} /> 

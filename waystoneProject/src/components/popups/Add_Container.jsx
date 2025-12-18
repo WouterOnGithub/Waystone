@@ -17,8 +17,8 @@ function Add_Container()
 
         <form id="input-box-gray">
             <br />
-            <label htmlFor="name-buildingregion"><b>Name</b></label> <img src={Required_Logo} alt="Required_Logo" id="Required_Logo" /> <br />
-            <input type="text" id="name-buildingregion" defaultValue="Container#0528"/> 
+            <label htmlFor="name-buildingregion"><b>Name</b></label> <br />
+            <input type="text" id="name-buildingregion"/> 
             <br /><br />
 
             {/* A way to add an item by pressing the ADD icon */}

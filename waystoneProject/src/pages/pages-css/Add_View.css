@@ -3,8 +3,8 @@
 {
     --addview-text: 60px;
     --adview-text2: 22px;
-    --text-color4: #D34848;
-    --background-gradient2: radial-gradient(circle, rgb(56, 78, 16) 50%, rgb(27, 40, 4) 100%);
+    --text-color4: #df4a00;
+    --background-gradient2: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);;
 }
 
 #addview-page /* The gray_/black_ background for the pop-ups */
@@ -15,7 +15,7 @@
     position: fixed;
     align-items: flex-start; 
     inset: 0;
-    padding: 30px; 
+    padding: 12px; 
     background: rgba(0, 0, 0, 0.4);
 }
 
@@ -23,8 +23,8 @@
 {
     border-radius: var(--border-radius);
     background-color: var(--background-colour);
-    width: 550px;
-    margin: 40px;
+    width: 35%;
+    margin-top: 5%;
     box-shadow: 5px 5px 100px 25px rgba(43, 43, 43, 0.3);
 }
 
@@ -42,13 +42,17 @@
 
 #addview-content /* All the content bellow the green_ bar */
 {
-    margin-left: 50px;
+    margin-left: 0;
+    padding: 0 24px 32px;
+    width: 100%;
+    box-sizing: border-box;
 }
 .addview-uploadimg  /* Uploading an image */
 {
-    margin-left: 20%;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    display: block;
+    margin-left: 0;
+    margin-top: 30px;
+    margin-bottom: 40px;
 }
 
 #addview-discription textarea /* A textarea for a discription */
@@ -97,10 +101,10 @@
     border-radius: var(--border-radius2);
     color: var(--text-color2);
     font-size: var(--adview-text2);
+    text-align: center;
     padding: 4px;
     padding-left: 10px;
     padding-right: 10px;
-    text-align: center;
 
 }
 .view-stats-main /* The HP, LVL, EXP, STATUS sections */
@@ -187,11 +191,37 @@
     padding-right: 5px;
 }
 
+/* Local overrides to keep popup content contained */
+#UploadIMG_Logo
+{
+    width: 100%;
+    max-width: 380px;
+    height: 260px;
+    margin-right: 0;
+    display: block;
+}
+
+#input-box-gray
+{
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+#input-box-gray input, #input-box-gray textarea
+{
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+#input-box-gray textarea
+{
+    height: 180px;
+}
+
 /* Game_Settings pages */
 .game-settings-content /* All content underneath the green_ title */
 {
     text-align: center;
-    margin-left: -50px;
 }
 #game-settings-options button /* the buttons of the options itself */
 {
