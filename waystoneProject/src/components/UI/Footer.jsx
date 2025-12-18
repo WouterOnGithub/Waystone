@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import './UI css/Footer.css';
 import KnightsImage from '../../assets/ridders.png'; // Pas het pad aan naar waar je de afbeelding opslaat
 
-function Footer() {
+function Footer() 
+{
   const currentYear = new Date().getFullYear();
 
   return (
@@ -46,6 +47,7 @@ function Footer() {
         {/* Knights Illustration - Right Side */}
         <div className="footer-section footer-illustration-section">
           <div className="footer-illustration">
+            {/* Artpiece: Tafel 071 - 1882 Freydal */}
             <img src={KnightsImage} alt="Medieval Knights" />
           </div>
         </div>
@@ -57,7 +59,7 @@ function Footer() {
           &copy; {currentYear} Waystone. All rights reserved.
         </div>
         <div className="footer-badges">
-          <span className="footer-badge">Made with love for tabletop games</span>
+          <span className="footer-badge">Made with ChatGPT for tabletop games</span>
         </div>
       </div>
     </footer>
