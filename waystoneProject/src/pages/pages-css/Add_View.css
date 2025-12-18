@@ -23,8 +23,8 @@
 {
     border-radius: var(--border-radius);
     background-color: var(--background-colour);
-    width: min(600px, calc(100vw - 32px));
-    margin: 0 auto 24px auto;
+    width: 35%;
+    margin-top: 5%;
     box-shadow: 5px 5px 100px 25px rgba(43, 43, 43, 0.3);
 }
 
@@ -101,10 +101,10 @@
     border-radius: var(--border-radius2);
     color: var(--text-color2);
     font-size: var(--adview-text2);
+    text-align: center;
     padding: 4px;
     padding-left: 10px;
     padding-right: 10px;
-    text-align: center;
 
 }
 .view-stats-main /* The HP, LVL, EXP, STATUS sections */
