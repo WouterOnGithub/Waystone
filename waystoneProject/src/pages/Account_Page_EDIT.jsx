@@ -78,6 +78,10 @@ function Account_Page_EDIT() {
       const formData = new FormData();
       formData.append("avatar", avatarFile);
       formData.append("userId", user.uid);
+      // Let the server know which previous avatar URL to delete (if any)
+      if (currentAvatarUrl) {
+        formData.append("previousUrl", currentAvatarUrl);
+      }
 
       try {
         const response = await fetch("/api/upload-avatar", {
