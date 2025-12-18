@@ -222,7 +222,6 @@
 .game-settings-content /* All content underneath the green_ title */
 {
     text-align: center;
-    margin-left: -50px;
 }
 #game-settings-options button /* the buttons of the options itself */
 {
