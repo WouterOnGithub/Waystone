@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 import { useAuth } from "../context/AuthContext";
@@ -14,6 +15,11 @@ import Waystone_Logo from "../assets/Waystone_Logo.png";
 import Waystone_Background from "../assets/PlaceholderImage.jpg";
 >>>>>>> Stashed changes
 
+=======
+import Waystone_Logo from "../assets/Waystone_Logo.png";
+import Waystone_Background from "../assets/PlaceholderImage.jpg";
+
+>>>>>>> Stashed changes
 function Register_Page() 
 {
   const { signUp } = useAuth();
@@ -24,6 +30,7 @@ function Register_Page()
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -42,6 +49,8 @@ function Register_Page()
   }
 };
 =======
+=======
+>>>>>>> Stashed changes
   const handleSubmit = async (e) => 
   {
     e.preventDefault();
@@ -76,6 +85,7 @@ function Register_Page()
 
         {/* The form */}
         <form onSubmit={handleSubmit}>
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         <input
           type="text"
@@ -122,6 +132,44 @@ function Register_Page()
         </button>
 
         </form>
+=======
+        <div id="input-box-gray">
+          <input type="Username" placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <br /><br />
+          <input type="email" placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <br /><br />
+          <input type="password" placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <br /><br />
+          <input type="password" placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* A link to Register_Page */}
+        <div id="login-register-link">
+          <Link to="/user/Login_Page" id="login-register-link">I already have an account !</Link>
+        </div>
+        <br /><br />
+        <div id="login-register-button"><button id="button-green" type="submit">Enter</button></div>
+
+        {/* An error message in case an error occures */}
+        {error && <p style={{ color: "#D34848" }}>{error}</p>}
+      </form>
+>>>>>>> Stashed changes
 =======
         <div id="input-box-gray">
           <input type="Username" placeholder="Enter username"
