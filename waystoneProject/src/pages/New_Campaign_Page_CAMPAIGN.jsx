@@ -7,15 +7,10 @@ import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
 
-import { createCampaign } from "../api/userCampaigns";
-import {useCampaign} from "../hooks/useCampaign";
+
+import { createCampaign, updateCampaignInfo } from "../api/userCampaigns";
+import { useCampaign } from "../hooks/useCampaign";
 import { useAuth } from "../context/AuthContext";
 
 function New_Campaign_Page_CAMPAIGN() {
@@ -45,9 +40,13 @@ function New_Campaign_Page_CAMPAIGN() {
   const setFormData = isNewCampaign ? setDraft : setData;
 
   const handleSave = async () => {
-    
     if(!userId) return;
     
+    if (!formData.name) {
+    alert("Campaign name is required");
+    return;
+  }
+
     try {
       if (isNewCampaign) {
         const newCampaign = await createCampaign(userId, 
