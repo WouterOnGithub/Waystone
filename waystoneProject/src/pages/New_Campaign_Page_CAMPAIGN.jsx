@@ -82,7 +82,7 @@ function New_Campaign_Page_CAMPAIGN() {
             isNewCampaign
               ? "New Campaign"
               : formData?.name
-              ? `Campaign: ${formData.name}`
+              ? `${formData.name}`
               : "Campaign"
           }
         />
