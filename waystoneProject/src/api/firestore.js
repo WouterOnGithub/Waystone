@@ -4,7 +4,7 @@ import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, setDoc, getDoc 
 //get user data
 const getUser = async (userId) => {
     try{
-        const docRef = doc(db, "users", userId);
+        const docRef = doc(db, "Users", userId);
         const docSnap = await getDoc(docRef);
         return docSnap.exists() ? docSnap.data() : null;
     }catch(error){
@@ -16,7 +16,7 @@ const getUser = async (userId) => {
 //set user data
 const setUser = async (userId ,userData) => {
     try {
-        const docRef = doc(db, "users", userId);
+        const docRef = doc(db, "Users", userId);
         //merge true to update existing fields
         await setDoc(docRef, userData, { merge: true }); 
         const updatedDoc = await getDoc(docRef);
@@ -26,3 +26,4 @@ const setUser = async (userId ,userData) => {
 }
 
 export{getUser, setUser}
+
