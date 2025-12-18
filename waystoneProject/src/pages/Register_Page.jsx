@@ -1,25 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import Placeholder from "../assets/PlaceholderImage.jpg";
-import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-
-=======
-import Waystone_Logo from "../assets/Waystone_Logo.png";
-import Waystone_Background from "../assets/PlaceholderImage.jpg";
->>>>>>> Stashed changes
-
-=======
-import Waystone_Logo from "../assets/Waystone_Logo.png";
-import Waystone_Background from "../assets/PlaceholderImage.jpg";
-
->>>>>>> Stashed changes
+import Waystone_Background from "../assets/Waystone_Logo.png";
 function Register_Page() 
 {
   const { signUp } = useAuth();
@@ -30,27 +16,6 @@ function Register_Page()
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-
-  if (password !== confirmPassword) {
-    setError("Passwords do not match");
-    return;
-  }
-
-  try {
-    await signUp(email, password, username);
-    navigate("/user/Login_Page"); // ✅ redirect after success
-  } catch (err) {
-    setError(err.message);
-  }
-};
-=======
-=======
->>>>>>> Stashed changes
   const handleSubmit = async (e) => 
   {
     e.preventDefault();
@@ -65,7 +30,6 @@ function Register_Page()
       setError(err.message); // Display error if NOT successful register
     }
   };
->>>>>>> Stashed changes
 
   // Prevents the caret from showing on first load by clearing any default focus
   useEffect(() => 
@@ -85,137 +49,52 @@ function Register_Page()
 
         {/* The form */}
         <form onSubmit={handleSubmit}>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        <input
-          type="text"
-          placeholder="Enter username"
-          className="login-input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
+        <div id="input-box-gray">
+          <input type="Username" placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <br /><br />
+          <input type="email" placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <br /><br />
+          <input type="password" placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <br /><br />
+          <input type="password" placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
 
-        <input
-          type="text"
-          placeholder="Enter email"
-          className="login-input"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        {/* A link to Register_Page */}
+        <div id="login-register-link">
+          <Link to="/user/Login_Page" id="login-register-link">I already have an account !</Link>
+        </div>
+        <br /><br />
+        <div id="login-register-button"><button id="button-green" type="submit">Enter</button></div>
 
-        <input
-          type="password"
-          placeholder="Enter password"
-          className="login-input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <input
-          type="password"
-          placeholder="Confirm password"
-          className="login-input"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-
-        <Link to="/user/Login_Page" id="login-register-link">
-        I already have an account
-        </Link>
-
-        <button id="login-button" type="submit">
-        Submit
-        </button>
+        {/* An error message in case an error occures */}
+        {error && <p style={{ color: "#D34848" }}>{error}</p>}
 
         </form>
-=======
-        <div id="input-box-gray">
-          <input type="Username" placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <br /><br />
-          <input type="email" placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <br /><br />
-          <input type="password" placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <br /><br />
-          <input type="password" placeholder="Confirm password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        {/* A link to Register_Page */}
-        <div id="login-register-link">
-          <Link to="/user/Login_Page" id="login-register-link">I already have an account !</Link>
-        </div>
-        <br /><br />
-        <div id="login-register-button"><button id="button-green" type="submit">Enter</button></div>
-
-        {/* An error message in case an error occures */}
-        {error && <p style={{ color: "#D34848" }}>{error}</p>}
-      </form>
->>>>>>> Stashed changes
-=======
-        <div id="input-box-gray">
-          <input type="Username" placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <br /><br />
-          <input type="email" placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <br /><br />
-          <input type="password" placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <br /><br />
-          <input type="password" placeholder="Confirm password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        {/* A link to Register_Page */}
-        <div id="login-register-link">
-          <Link to="/user/Login_Page" id="login-register-link">I already have an account !</Link>
-        </div>
-        <br /><br />
-        <div id="login-register-button"><button id="button-green" type="submit">Enter</button></div>
-
-        {/* An error message in case an error occures */}
-        {error && <p style={{ color: "#D34848" }}>{error}</p>}
-      </form>
->>>>>>> Stashed changes
-      </div>
-
+      
       {/* Background and Waystone_Logo */}
       <div id="login-image-section" 
            style={{ backgroundImage: `url(${Waystone_Background})` }}>
               
         {/* The Waystone_Logo above the Waystone_Background image */}
         <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
+      </div>
+      
       </div>
 
     </div>
