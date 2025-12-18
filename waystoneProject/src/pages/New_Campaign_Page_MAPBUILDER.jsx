@@ -19,11 +19,9 @@ import Placeholder from "../assets/PlaceholderImage.jpg";
 import { useAuth } from "../context/AuthContext";
 
 function New_Campaign_Page_MAPBUILDER() {
-  const {campaignId} = useParams()
+  const { campaignId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { mapId } = useParams();
-  const isNewMap = !mapId;
 
   const fileInputRef = React.useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -42,16 +40,17 @@ function New_Campaign_Page_MAPBUILDER() {
     []
   );
 
-  // Load existing map when mapId is present
+  // Load existing map when a campaignId is present
   useEffect(() => {
-    if (!mapId || !user) return;
+    if (!campaignId) return;
 
-    // Try to load the saved map image from public/maps/{userId}/{mapId}.*
+    // Try to load the saved map image from public/Main-Maps/{campaignId}/main.*
     // We check common extensions; the first one that exists wins
     const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
     const tryLoad = async () => {
+      const cacheBust = Date.now();
       for (const ext of extensions) {
-        const url = `/Main-Maps/${user.uid}/${mapId}${ext}`;
+        const url = `/Main-Maps/${campaignId}/main${ext}?v=${cacheBust}`;
         try {
           const res = await fetch(url, { method: 'HEAD' });
           if (res.ok) {
@@ -64,7 +63,7 @@ function New_Campaign_Page_MAPBUILDER() {
       }
     };
     tryLoad();
-  }, [mapId, user]);
+  }, [campaignId]);
 
   useEffect(() => {
     return () => {
@@ -144,7 +143,12 @@ function New_Campaign_Page_MAPBUILDER() {
 
     try {
       const formData = new FormData();
-      formData.append("userId", user.uid);
+      if (!campaignId) {
+        setSaveMessage("No campaign selected.");
+        setSaving(false);
+        return;
+      }
+      formData.append("userId", campaignId);
       formData.append("map", mapFile);
 
       const response = await fetch("/api/upload-map", {
@@ -159,11 +163,6 @@ function New_Campaign_Page_MAPBUILDER() {
 
       const result = await response.json();
       setSaveMessage(`Map saved. URL: ${result.url}`);
-
-      // Navigate to the saved map page (like Campaign does after save)
-      if (isNewMap && result.id) {
-        navigate(`/user/New_Campaign_Page_MAPBUILDER/${result.id}`);
-      }
     } catch (err) {
       setSaveMessage(err?.message || "Failed to save map.");
     } finally {

@@ -128,11 +128,28 @@ export default defineConfig({
             const base = path
               .basename(filename || 'map', ext)
               .replace(/[^a-zA-Z0-9._-]/g, '');
-            mapId = `${Date.now()}_${base || 'map'}`;
-            savedFileName = `${mapId}${ext}`;
+            // Use the (sanitized) userId as the campaignId so maps are stored per campaign
+            // and use a fixed filename "main" so each campaign has a single main map.
+            mapId = safeUserId || `${Date.now()}_${base || 'map'}`;
+            savedFileName = `main${ext}`;
 
             const targetDir = path.join(process.cwd(), 'public', 'Main-Maps', safeUserId);
             fs.mkdirSync(targetDir, { recursive: true });
+
+            // Delete any existing files for this campaign so the new main map replaces the old one
+            try {
+              const existingFiles = fs.readdirSync(targetDir);
+              for (const fileName of existingFiles) {
+                try {
+                  fs.unlinkSync(path.join(targetDir, fileName));
+                } catch {
+                  // ignore deletion errors for individual files
+                }
+              }
+            } catch {
+              // ignore errors reading the directory
+            }
+
             const targetPath = path.join(targetDir, savedFileName);
 
             const writeStream = fs.createWriteStream(targetPath);
