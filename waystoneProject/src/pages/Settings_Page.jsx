@@ -27,26 +27,25 @@ function Settings_Page() {
               <b>Change Password</b>
               <br />
               <div id="settings-password">
+
                 <div id="settings-passwords">
-                  <label htmlFor="password">
-                    <b>Password</b>
-                  </label>
+                  <label htmlFor="password"><b>Password</b></label>
                   <br />
                   <input type="password" id="password" />
                 </div>
+
                 <div id="settings-passwords">
-                  <label htmlFor="password-confirm">
-                    <b>Confirm Password</b>
-                  </label>
+                  <label htmlFor="password-confirm"><b>Confirm Password</b></label>
                   <br />
                   <input type="password" id="password-confirm" />
                 </div>
+                
               </div>
 
               <br />
               <b>Language</b>
               <br />
-              {/* A way to make the selected btn based on the language display throughout the site */}
+              {/* Needs a way to make the selected btn based on the language display throughout the site */}
               <div id="settings-language-radiobtn">
                 <input
                   type="radio"
@@ -55,6 +54,7 @@ function Settings_Page() {
                   value="English"
                 />
                 <label htmlFor="english">English</label>
+
                 <br />
                 <input
                   type="radio"
@@ -63,6 +63,7 @@ function Settings_Page() {
                   value="Nederlands"
                 />
                 <label htmlFor="nederlands">Nederlands</label>
+
                 <br />
                 <input
                   type="radio"
@@ -75,7 +76,7 @@ function Settings_Page() {
 
               <br />
               <br />
-              <button id="button-green">Confirm changes</button>
+              <button id="button-green">Save</button>
             </form>
           </div>
         </div>

@@ -1,0 +1,20 @@
+#main /* the whole page minus the navigation */
+{
+    margin-left: 350px; /* = nav width */
+    background-color: var(--background-colour);
+}
+
+#title /* The green_ bar where the page type (welcome, account, new campaign, etc.)  */
+{
+    border-bottom-left-radius: var(--border-radius);
+    background: var(--background-gradient);
+    width: 100%;
+    height: auto;
+    padding-bottom: 5px;
+    text-align: center;
+}
+#title p /* The text inside the green_ bar */
+{
+    color: var(--text-color2);
+    font-size: var(--title-text);
+}

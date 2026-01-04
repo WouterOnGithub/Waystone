@@ -46,7 +46,8 @@ function Add_Location()
 
             <br />
             <button id="button-green">Save</button>
-            <br /><br />
+            <button id="button-green">Back</button>
+            
         </form>
 
       </div>

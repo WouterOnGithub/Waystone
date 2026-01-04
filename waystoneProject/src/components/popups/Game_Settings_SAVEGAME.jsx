@@ -27,11 +27,10 @@ function Game_Settings_SAVEGAME()
                 <textarea name="discription-savegame" id="discription-savegame" maxlength="150"></textarea>
             </div>
 
-            <br /><br />
+            <br />
                 <button id="button-green">Save</button>
                 <button id="button-green">Back</button>
-            <br /><br />
-            <br /><br />
+
         </form>
 
       </div>

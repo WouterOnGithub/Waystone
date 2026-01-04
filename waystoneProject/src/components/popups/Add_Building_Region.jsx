@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import "../../pages/pages-css/CSS.css";
 import "../../pages/pages-css/Add_View.css";
 import UploadIMG_Logo from "../../assets/PlaceholderImage.jpg";
-import Required_Logo from "../../assets/Required_Logo.webp";
 
 function Add_Building_Region() 
 {
@@ -45,7 +44,8 @@ function Add_Building_Region()
 
             <br />
             <button id="button-green">Save</button>
-            <br /><br />
+            <button id="button-green">Back</button>
+            
         </form>
 
       </div>

@@ -8,9 +8,12 @@
     --text-color: #303030;
     --text-color2: #ffffff;
     --text-color3: rgba(80, 111, 23, 1);
+    --text-color4: rgba(44, 65, 7, 1);
 
     --background-gradient: linear-gradient(90deg,rgba(44, 65, 7, 1) 0%, rgba(80, 111, 23, 1) 50%, rgba(44, 65, 7, 1) 100%);
     --background-gradient2: radial-gradient(circle, rgb(56, 78, 16) 50%, rgb(27, 40, 4) 100%);
+    --background-gradient3: linear-gradient(90deg,#1e1e1e 0%, #303030 50%, #1e1e1e 100%);
+
     --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
@@ -22,6 +25,7 @@
     --projectbox-colour4: linear-gradient(90deg,rgba(184, 184, 184, 1) 0%, rgba(217, 217, 217, 1) 50%, rgba(184, 184, 184, 1) 100%);;
 
     --form-box-colour: #E0E0E0;
+    --form-box-colour2: #ffffff;
     --link-colour: #447DC9;
 
     --border-radius: 10px;
@@ -59,33 +63,6 @@
     transition: 0.3s;
 }
 
-/* The Navigation Side-Bar */
-.navigation /* Navigation Side-bar */
-{
-    background: var(--background-colour);
-    width: 350px;
-    height: 100%;
-    padding-top: 50px;
-    z-index: 1;
-    position: fixed;
-    overflow-x: hidden;
-}
-.navigation nav /* Navigation Side-bar */
-{
-    margin-left: 25%;
-}
-nav a /* Navigation Side-bar links */
-{
-    font-size: var(--head-text);
-    color: var(--text-color);
-}
-nav a:hover /* Navigation Side-bar links */
-{
-    color: var(--text-color3);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    transition: 0.5s;
-}
 #Waystone_Logo /* Waystone_Logo */
 {
     display: block;
@@ -93,115 +70,21 @@ nav a:hover /* Navigation Side-bar links */
     width: 40%;
     margin-top: 15px;
 }
-#Waystone_Logo-sidebar
-{
-    width: 70%;
-}
-
-#main /* the whole page minus the navigation */
-{
-    margin-left: 350px; /* = nav width */
-    background-color: var(--background-colour);
-}
-
-#title /* The green_ bar where the page type (welcome, account, new campaign, etc.)  */
-{
-    border-bottom-left-radius: var(--border-radius);
-    background: var(--background-gradient);
-    width: 100%;
-    height: auto;
-    padding-bottom: 5px;
-    text-align: center;
-}
-#title p /* The text inside the green_ bar */
-{
-    color: var(--text-color2);
-    font-size: var(--title-text);
-}
 
 #content /* Gray section under the green_ bar */
 {
-    border-top-left-radius: var(--border-radius); 
+    border-radius: var(--border-radius); 
     background-color: var(--background-colour2);
     margin-top: 100px;
     padding: 30px;
-    margin-right: 500px;
-    width: 5000px;
+    width: 100vw;
 }
 #content b
 {
     font-size: var(--head-text);
 }
 
-#box-section /* a card box section (first used for My Campaigns at the Main_Page) */
-{
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-}
-#box-text
-{
-    margin-left: -10px;
-    margin-bottom: 20px;
-}
-#box-text p /* a card box section (first used for My Campaigns at the Main_Page) */
-{
-    border-top-left-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
-    background-color: var(--projectbox-colour);
-    color: var(--text-color2);
-    text-align: right;
-    margin-left: 30px;
-    margin-top: 10px;
-    width: 250px;
-    height: 100px;
-}
-#box /* a card box (part of it) (first used for My Campaigns at the Main_Page) */
-{
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-    background-color: var(--background-colour);
-    text-align: right;
-    margin-left: 30px;
-    height: 40px;
-    width: 250px;
-    height: 40px;
-}
-#box button /* Archive button */
-{
-    background-color: var(--background-colour4);
-    color: var(--text-color2);
-    border: none;
-    padding: 2px;
-    margin: 5px;
-    margin-right: 7px;
-}
-#box button:hover /* Archive button */
-{
-    background-color: var(--background-colour);
-    color: var(--text-color);
-    text-decoration: underline;
-    transition: 0.3s; 
-}
-
-#button-green-sidebar /* The Exit button in the sidebar */
-{   
-    background: var(--background-colour);
-    border-radius: var(--border-radius);
-    border: 1px var(--text-color) solid;
-    font-weight: bold;
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 70px;
-}
-#button-green-sidebar:hover
-{
-    background: var(--background-colour4);
-    color: var(--text-color2);
-    transition: 0.5s;
-}
-#button-green /* All green_ buttons button */
+#button-green, #button-gray /* All green_ & gray_ buttons button */
 {
     border-radius: var(--border-radius);
     background: var(--background-gradient);
@@ -211,14 +94,21 @@ nav a:hover /* Navigation Side-bar links */
     padding-left: 25px;
     padding-right: 25px;
     margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-#button-green:hover, #addview-green-bar:hover /* All green_ buttons button */ /* Green bars in add & view pages */
+#button-green:hover, #button-gray:hover, #addview-green-bar:hover /* All green_ & gray_ buttons button */ /* Green bars in add & view pages */
 {
     color: var(--text-color2);
     transition: 0.5s;
-    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
+    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
     transform: translateY(-2px);
+}
+#button-gray
+{
+    background: var(--background-gradient3);
+    color: var(--text-color2);
 }
 
 #addview-green-bar /* Green bars in add & view pages */
@@ -285,41 +175,89 @@ nav a:hover /* Navigation Side-bar links */
     height: 30px; 
     width: 30px; 
 }
+
 /* Gray input boxes */
-#input-box-gray input, #input-box-gray textarea
+/* White input boxes */
+#input-box-gray input, #input-box-white input
+{
+    width: 300px;
+    height: 35px; 
+}
+#input-box-gray input, #input-box-gray textarea, #input-box-white input, #input-box-white textarea
 {
     border-radius: var(--border-radius2);
     background: var(--form-box-colour);
     border: none;
-    width: 300px;
-    height: 35px;
-    padding: 5px;
+    padding: 10px;
 }
-#input-box-gray textarea
+#input-box-gray textarea, #input-box-white textarea
 {
     width: 600px;
     height: 200px;
 }
-/* White input boxes */
-
-
-/* HAS TO BE MOVED */
-.campaigns-page {
-    display: flex;
-    background: var(--background-colour);
-    min-height: 100vh;
+#input-box-white input
+{
+    height: 20px; 
+}
+#input-box-white input, #input-box-white textarea
+{
+    background: var(--form-box-colour2);
 }
 
-.campaigns-shell {
-    width: 100%;
-    min-height: 100vh;
-    background: var(--background-colour);
-    display: flex;
-    flex-direction: column;
+/* The bars throughout all the pages (example: the characters page, add and view pages */
+.character-section /* The individual type of character sections */
+{
+  padding-top: 40px;
+  padding-bottom: 20px;
+  padding-right: 40px;
+  width: 72%;
+  border-top: 2px solid var(--background-colour3);
 }
+.character-section.addview
+{
+  width: 95%;
+}
+
+.character-row  /* A row of a player, npc or custom enemy */
+{
+  background: var(--background-colour3);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--text-color3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: auto;
+  padding-left: 20px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.character-row.addview
+{
+  background: var(--background-colour2);
+}
+.character-row:hover /* A row of a player, npc or custom enemy while hovering */
+{
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
+  border-left: 4px solid var(--text-color4);
+  transform: translateX(4px);
+  transition: 0.3s;
+}
+.character-row span /* The base info of a row of a player, npc or custom enemy */
+{
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.character-section:has(.character-row:first-of-type) /* Empty state styling (What does this mean?) */
+{
+  min-height: auto;
+}
+
 
 /* !!! */
 /* Try and used existing css if possible */
 /* Add more necessary *shared* CSS here */
-/* Seperate css that is only need for 1 or 2 pages */
+/* Seperate CSS into different CSS document that is only need for 1 or 2 pages */
 /* !!! */

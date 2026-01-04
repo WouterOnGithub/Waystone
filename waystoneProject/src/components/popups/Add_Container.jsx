@@ -25,28 +25,39 @@ function Add_Container()
             <label htmlFor="name-item"><b>Items</b></label> <button id="button-icons"><img src={Add_Logo} alt="Add_Logo" id="Add_Logo"/></button> <br />
             <input type="text" id="name-item" hidden/>
             {/* Examples of an item */}
-            <div id="addview-green-bar">
-                <b>Item_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
+            <div className="character-section addview">
+
+              <div className="character-row addview">
+                  <b>Item_name</b> <button id="button-gray">delete</button>
+              </div>
+
+              {/* Example to later be deleted */}
+              <div className="character-row addview">
+                  <b>Item_name</b> <button id="button-gray">delete</button>
+              </div>
+
             </div>
-            <div id="addview-green-bar">
-                <b>Item_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
-            </div>
-            <br /><br />
 
             {/* A way to add a location by pressing the ADD icon */}
             <label htmlFor="name-location"><b>Locations</b> <button id="button-icons"><img src={Add_Logo} alt="Add_Logo" id="Add_Logo"/></button> </label>
             <input type="text" id="name-location" hidden/><br />
             {/* Examples of a location */}
-            <div id="addview-green-bar">
-                <b>Location_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
-            </div>
-            <div id="addview-green-bar">
-                <b>Location_name</b> <button id="button-icons"><img src={Delete_Logo} alt="Delete_Logo" id="Delete_Logo"/></button>
+            <div className="character-section addview">
+
+              <div className="character-row addview">
+                  <b>Location_name</b> <button id="button-gray">delete</button>
+              </div>
+
+              {/* Example to later be deleted */}
+              <div className="character-row addview">
+                  <b>Location_name</b> <button id="button-gray">delete</button>
+              </div>
+
             </div>
 
-            <br /><br />
-                <button id="button-green">Save</button>
-            <br /><br />
+              <button id="button-green">Save</button>
+              <button id="button-green">Back</button>
+
         </form>
 
       </div>

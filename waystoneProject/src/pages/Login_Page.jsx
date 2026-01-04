@@ -16,16 +16,16 @@ function Login_Page()
 
   const navigate = useNavigate();
 
-const handleLogin = async () => 
-{
-  setError("");
-  try {
-    await signIn(email, password);
-    navigate("/user/Main_Page"); // Redirect if successful login
-  } catch (err) {
-    setError(err.message); // Display error if NOT successful login
-  }
-};
+  const handleLogin = async () => 
+  {
+    setError("");
+    try {
+      await signIn(email, password);
+      navigate("/user/Main_Page"); // Redirect if successful login
+    } catch (err) {
+      setError(err.message); // Display error if NOT successful login
+    }
+  };
 
   return (
     <div id="login-register-page"> {/* The whole page */}
@@ -37,13 +37,16 @@ const handleLogin = async () =>
 
       {/* The form */}
       <form>
+
       <div id="input-box-gray">
         <input type="email" placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
         <br /><br />
+
         <input type="password" placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -60,7 +63,8 @@ const handleLogin = async () =>
         <div id="login-register-button"><button id="button-green" type="button" onClick={handleLogin}>Enter</button></div>
 
         {/* An error message in case an error occures */}
-        {error && <p style={{ color: "#D34848" }}>{error}</p>}
+        {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
+        
       </form>
       </div>
 

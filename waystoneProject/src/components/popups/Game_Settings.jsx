@@ -25,10 +25,8 @@ function Game_Settings()
                 <br /><button id="button-icons">Help & Tutorial</button>
             </div>
 
-            <br /><br />
+            <br />
                 <button id="button-green">Return to Main Menu</button>
-            <br /><br />
-            <br /><br />
         </form>
 
       </div>

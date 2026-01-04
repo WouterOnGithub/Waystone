@@ -1,69 +1,91 @@
 import React from "react";
 import "./pages-css/CSS.css";
+import "./pages-css/My_Campaigns_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
 
 const campaignSections = [
   {
+    /* A way to only show the 3 most recent campaigns */
+    /* The name and color are dummy date / placeholders (?) */
     title: "Recent Campaigns",
     items: [
-      { name: "Project__Name", color: "#E7D665" },
-      { name: "Project__Name", color: "#447DC9" },
-      { name: "Project__Name", color: "#D34848" },
+      { name: "Project__Name", color: "#303030" },
+      { name: "Project__Name", color: "#303030" },
+      { name: "Project__Name", color: "#303030" },
+      { name: "Project__Name", color: "#303030" },
     ],
   },
+
   {
     title: "All Campaigns",
     items: [
-      { name: "Project__Name", color: "#E7D665" },
-      { name: "Project__Name", color: "#447DC9" },
-      { name: "Project__Name", color: "#D34848" },
-      { name: "Project__Name", color: "#E7D665" },
-      { name: "Project__Name", color: "#447DC9" },
+      { name: "Project__Name", color: '#303030' },
+      { name: "Project__Name", color: "#303030" },
+      { name: "Project__Name", color: "#303030" },
+      { name: "Project__Name", color: "#303030" },
+      { name: "Project__Name", color: "#303030" },
+      { name: "Project__Name", color: "#303030" },
     ],
   },
+
   {
     title: "Free Campaigns",
     items: [
       { name: "Project__Name", color: "#E7D665" },
       { name: "Project__Name", color: "#447DC9" },
+      { name: "Project__Name", color: "#D34848" },
+      { name: "Project__Name", color: "#E7D665" },
+      { name: "Project__Name", color: "#447DC9" },
+      { name: "Project__Name", color: "#D34848" },
     ],
   },
 ];
 
-function My_Campaigns_Page() {
+function My_Campaigns_Page() 
+{
   return (
-    <div className="campaigns-page">
+    <div>
+      
       <Sidebar />
-      <div id="main" className="campaigns-shell">
-        <Header title="My Campaigns" />
 
-        <div id="content" className="campaigns-content">
+      <div id="main">
+      
+      <Header title="My Campaigns" />
+
+        <div id="content">
           {campaignSections.map((section) => (
+
             <section key={section.title}>
+
+              {/* The title per section of campaigns */}
               <b>{section.title}</b>
+
+              {/* The area that holds the campaign boxes */}
               <div id="box-section">
                 {section.items.map((item, idx) => (
+                  /* A campaigns box */
                   <div id="box-text" key={`${section.title}-${idx}`}>
-                    <p style={{ backgroundColor: item.color }}>{item.name}</p>
+                    
+                    {/* The campaigns project name */}
+                    <p>{item.name}&#10240;</p>
+                    
+                    {/* The bottom part of the box (the white) which contains the archive button */}
                     <div id="box">
                       <button>Archive</button>
                     </div>
+
                   </div>
                 ))}
               </div>
+
             </section>
           ))}
         </div>
 
         <Footer />
+
       </div>
     </div>
   );

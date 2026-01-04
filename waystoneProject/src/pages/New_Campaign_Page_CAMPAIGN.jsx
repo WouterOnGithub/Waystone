@@ -2,23 +2,17 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import "./pages-css/CSS.css";
-import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
 
 import { createCampaign } from "../api/userCampaigns";
 import {useCampaign} from "../hooks/useCampaign";
 import { useAuth } from "../context/AuthContext";
 
-function New_Campaign_Page_CAMPAIGN() {
+function New_Campaign_Page_CAMPAIGN() 
+{
   const {campaignId} = useParams()
   const navigate = useNavigate();
 
@@ -27,7 +21,6 @@ function New_Campaign_Page_CAMPAIGN() {
     const isEditMode = Boolean(campaignId);
   };
   
-
   const {user} = useAuth();
   const userId = user ? user.uid : null;
   
@@ -74,92 +67,95 @@ function New_Campaign_Page_CAMPAIGN() {
   };
 
   return (
-    <div className="campaign-page">
+    <div>
+
       <Sidebar />
-      <div className="campaign-main">
+
+      <div id="main">
+
         <Header title="New Campaign" />
-        <div className="campaign-body">
-          <div className="campaign-tabs">
-            <button 
-              className="campaign-tab active"
-              disabled={!campaignId}
-              onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}
-            >
+
+        <div>
+
+          {/* The buttons (campaign, mapbuilder, character)*/}
+          <div id="campaign-tabs">
+
+            {/* The campaign button */}
+            <button id="campaign-tab-active" disabled={!campaignId}
+                    onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}>
               Campaign
             </button>
 
-            <button
-              className="campaign-tab"
-              disabled={!campaignId}
-              onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}
-            >
+            {/* The map builder button */}
+            <button id="campaign-tab" disabled={!campaignId}
+                    onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}>
               Map Builder
             </button>
 
-            <button
-              className="campaign-tab"
-              disabled={!campaignId}
-              onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}
-            >
+            {/* The characters button */}
+            <button id="campaign-tab" disabled={!campaignId}
+                    onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}>
               Characters
             </button>
+            
           </div>
 
-          <div className="campaign-card">
-            <div className="campaign-field">
-              <label className="campaign-label" htmlFor="campaign-name">
-                Campaign name
-              </label>
-              <input
-                id="campaign-name"
-                className="campaign-input"
-                placeholder="Enter text here..."
-                value={formData?.name || ""}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
+          {/* The campaign textboxes*/}
+          <div id="content">
+
+            {/* The campaign name */}
+            <div id="input-box-white">
+              <label htmlFor="campaign-name"><b>Campaign Name</b></label><br />
+              <input id="campaign-name" placeholder="Enter text here..."
+                     value={formData?.name || ""}
+                     onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
             </div>
 
-            <div className="campaign-field">
-              <label className="campaign-label" htmlFor="campaign-genre">
-                Genre/Style 
-              </label>
-              <input
-                id="campaign-genre"
-                className="campaign-input"
-                placeholder="Enter text here..."
-                value={formData?.genre || ""}
-                onChange={(e) => setFormData({...formData, genre: e.target.value})}
+            <br />
+
+            {/* The campaign genre / style */}
+            <div id="input-box-white">
+              <label htmlFor="campaign-genre"><b>Genre / Style</b></label><br />
+              <input id="campaign-genre" placeholder="Enter text here..."
+                     value={formData?.genre || ""}
+                     onChange={(e) => setFormData({...formData, genre: e.target.value})}
               />
             </div>
 
-            <div className="campaign-field">
-              <label className="campaign-label" htmlFor="campaign-story">
-                Backstory
-              </label>
-              <textarea
-                id="campaign-story"
-                className="campaign-textarea"
-                placeholder={`Enter text here...`}
-                value={formData?.backstory || ""}
-                onChange={(e) => setFormData({...formData, backstory: e.target.value})}
+            <br />
+
+            {/* The campaign backstory */}
+            <div id="input-box-white">
+              <label htmlFor="campaign-story"><b>Backstory</b></label><br />
+              <textarea id="campaign-story" placeholder={`Enter text here...`}
+                        value={formData?.backstory || ""}
+                        onChange={(e) => setFormData({...formData, backstory: e.target.value})}
               />
             </div>
 
-            <div className="campaign-pill-row">
-              <button className="campaign-pill">Add Items</button>
-              <button className="campaign-pill">Show Current Items</button>
+            <br />
+
+            {/* The add and show item buttons */}
+            <div>
+              <button id="button-green">Add Item</button>
+              <button id="button-green">Show Current Item(s)</button>
             </div>
 
+            {/* The Save and continue, and enter button */}
             <div className="campaign-actions">
-              <button className="campaign-save" onClick={handleSave} >
-                Save and continue
-              </button>
-              <button className="campaign-enter">Enter</button>
+              <button id="button-green" onClick={handleSave} >Save and Continue</button>
+              <button id="button-green">Enter</button>
             </div>
+
           </div>
+
         </div>
+
         <Footer />
+
       </div>
+
     </div>
   );
 }

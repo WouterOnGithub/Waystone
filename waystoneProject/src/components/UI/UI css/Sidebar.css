@@ -1,0 +1,51 @@
+.navigation /* Navigation Side-bar */
+{
+    background: var(--background-colour);
+    width: 350px;
+    height: 100%;
+    padding-top: 50px;
+    z-index: 1;
+    position: fixed;
+    overflow-x: hidden;
+}
+
+.navigation nav /* Navigation Side-bar */
+{
+    margin-left: 25%;
+}
+
+nav a /* Navigation Side-bar links */
+{
+    font-size: var(--head-text);
+    color: var(--text-color);
+}
+nav a:hover /* Navigation Side-bar links */
+{
+    color: var(--text-color3);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    transition: 0.5s;
+}
+
+#Waystone_Logo-sidebar
+{
+    width: 70%;
+}
+
+#button-green-sidebar /* The Exit button in the sidebar */
+{   
+    background: var(--background-colour);
+    border-radius: var(--border-radius);
+    border: 1px var(--text-color) solid;
+    font-weight: bold;
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 70px;
+}
+#button-green-sidebar:hover
+{
+    background: var(--background-colour4);
+    color: var(--text-color2);
+    transition: 0.5s;
+}

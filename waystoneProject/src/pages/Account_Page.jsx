@@ -1,16 +1,16 @@
-/* Complete */
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { getUser, setUser } from "../api/firestore";
 import "./pages-css/CSS.css";
 import "./pages-css/Account_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
-import Placeholder from "../assets/PlaceholderImage.jpg";
-import { useAuth } from "../context/AuthContext";
-import { getUser, setUser } from "../api/firestore";
+import Placeholder from "../assets/PlaceholderImage.jpg"; /* Has to later be replaced by a standard stand-in */
 
-function Account_Page() {
+function Account_Page() 
+{
   
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
@@ -42,53 +42,54 @@ function Account_Page() {
 
 
   return (
-    <div className="account-page">
+    <div>
+      
       <Sidebar />
-      <div className="account-shell">
+      
+      <div id="main">
+
         <Header title="Account" />
 
-        <main className="account-content">
-          <section id="account-box" className="account-card">
-            <div className="account-avatar-wrap">
-              <img src={getAvatarUrl()} alt="Account profile" id="Account_Profile" />
-            </div>
+        <div id="content">
+
+          <section id="account-box" className="account-profile">
+            {/* The profile image */}
+            <div><img src={getAvatarUrl()} alt="Account profile" id="account-profile-image"/></div>
+
+            {/* The profile details*/}
             <div className="account-details">
-              <Link to="/user/Account_Page_EDIT" className="edit-icon" aria-label="Edit profile">
-                ✏️
-              </Link>
-              <b>{userData?.username || "Username"}</b>
-              <p>
-                {userData?.description || "No description yet."}
-              </p>
+               {/* The profile details (the edit icon) */}
+              {/* aria-label="Edit profile" => For accessibility */}
+              <Link to="/user/Account_Page_EDIT" className="account-edit-icon" aria-label="Edit profile">&#9998;</Link>
+              
+               {/* The profile details (username, description) */}
+              <b>{userData?.username || "User_1"}</b>
+              <p>{userData?.description || "Nothing here yet.."}</p>
             </div>
           </section>
 
-          <section id="account-box" className="account-stats">
-            <p>
-              <b>Total campaigns:</b> 0
-            </p>
-            <p>
-              <b>Last played:</b> Project__name
-            </p>
+          {/* The campaigns section (total created, last played) */}
+          <section id="account-box" className="account-campaigns">
+            <p> <b>Total campaigns:</b> <i>0</i> </p>
+            
+            <p> <b>Last played:</b> <i>Project__name</i> </p>
           </section>
 
-          <div className="account-actions">
+          <section id="account-archived">
+            {/* The archive button to see archived campaigns */}
             <button id="button-green">Archived Campaigns</button>
-          </div>
-
-          <section id="account-notes" className="account-notes-block">
-            <b>Notes</b>
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-            />
-            <div className="account-actions">
-              <button id="button-green" onClick={handleSaveNotes}>Save</button>
-            </div>
           </section>
-        </main>
+
+          {/* The notes section */}
+          <section id="account-box" className="account-notes">
+            <b>Notes</b>
+            <textarea value={notes} onChange={(e) => setNotes(e.target.value)}/>
+            <button id="button-green" onClick={handleSaveNotes}>Save</button>
+          </section>
+        </div>
 
         <Footer />
+
       </div>
     </div>
   );
