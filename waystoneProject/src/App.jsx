@@ -13,7 +13,7 @@ import My_Campaigns_Page from "./pages/My_Campaigns_Page"
 import HelpPage from "./pages/HelpPage"
 
 import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN"
-// import New_Campaign_Page_EVENTS from "./pages/New_Campaign_Page_EVENTS"
+//import New_Campaign_Page_EVENTS from "./pages/New_Campaign_Page_EVENTS"
 import New_Campaign_Page_CHARACTERS from "./pages/New_Campaign_Page_CHARACTERS"
 import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER" 
 
@@ -31,9 +31,9 @@ import View_Item from "./components/popups/View_Item"
 import Game_Settings from "./components/popups/Game_Settings"
 import Game_Settings_SAVEGAME from "./components/popups/Game_Settings_SAVEGAME" 
 
-// import Map_Main from "./pages/Map_Main"
-// import Map_Location from "./pages/Map_Location"
-// import Map_Building_Region from "./pages/Map_Building_Region"
+import Map_Main from "./pages/Map_Main"
+import Map_Location from "./pages/Map_Location"
+import Map_Building_Region from "./pages/Map_Building_Region"
 // import Map_Battle_View from "./pages/Map_Battle_View"
 
 import BattleMapTest from './pages/battleMapTest';
@@ -131,9 +131,14 @@ function App()
                 <Route path="/user/Game_Settings" element={<Game_Settings />} /> 
                 <Route path="/user/Game_Settings_SAVEGAME" element={<Game_Settings_SAVEGAME />} />
                 
-                {/* <Route path="/user/Map_Main" element={<Map_Main />} /> */}
-                {/* <Route path="/user/Map_Location" element={<Map_Location />} /> */}
-                {/* <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} /> */}
+                <Route path="/user/Map_Main" element={<Map_Main />} />
+                <Route path="/user/Map_Main/:campaignId" element={<Map_Main />} />
+                <Route path="/user/Map_Location" element={<Map_Location />} />
+                <Route path="/user/Map_Location/:campaignId" element={<Map_Location />} />
+                <Route path="/user/Map_Location/:campaignId/:locationId" element={<Map_Location />} />
+                <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} />
+                <Route path="/user/Map_Building_Region/:campaignId" element={<Map_Building_Region />} />
+                <Route path="/user/Map_Building_Region/:campaignId/:buildingId" element={<Map_Building_Region />} /> 
                 {/* <Route path="/user/Map_Battle_View" element={<Map_Battle_View />} /> */}
 
                 <Route path="/battleMapTest" element={<BattleMapTest/>} />
