@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import "./pages-css/Add_characters.css";
@@ -6,12 +7,38 @@ import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
 
+import { addNPC } from "../api/npcs";
+import { useAuth } from "../context/AuthContext";
+
 function Add_NPC() {
+  const { user } = useAuth();
+  const userId = user ? user.uid : null;
+  const { campaignId } = useParams();
+  const navigate = useNavigate();
+
+  const handleSaveCharacter = async ()=>{
+  if (!userId || !campaignId) return
+
+    try {
+      const newNPC = await addNPC(userId, campaignId, characterData);
+      console.log("npc saved", newNPC);
+
+      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+    }catch{
+      console.error("Error sasving NPC", error);
+    }
+  };
+
+  const handleCancel = () =>{
+    if(!campaignId) return;
+    navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+  };
+
   const [characterData, setCharacterData] = useState({
     name: "",
     race: "",
-    class: "",
-    subclass: "",
+    klassen: "",
+    subKlassen: "",
     background: "",
     alignment: "",
     level: 1,
@@ -25,7 +52,7 @@ function Add_NPC() {
     charisma: 10,
     
     // Combat Statistics
-    armorClass: 10,
+    armorKlassen: 10,
     initiative: 0,
     speed: 30,
     hitDice: "1d8",
@@ -181,11 +208,11 @@ function Add_NPC() {
                   />
                 </div>
                 <div className="char-field">
-                  <label>Character Subclass</label>
+                  <label>Character SubClass</label>
                   <input 
                     type="text" 
-                    value={characterData.subclass}
-                    onChange={(e) => handleInputChange('subclass', e.target.value)}
+                    value={characterData.subKlassen}
+                    onChange={(e) => handleInputChange('subKlasse', e.target.value)}
                   />
                 </div>
               </div>
@@ -195,8 +222,8 @@ function Add_NPC() {
                   <label>Character Class</label>
                   <input 
                     type="text" 
-                    value={characterData.class}
-                    onChange={(e) => handleInputChange('class', e.target.value)}
+                    value={characterData.klassen}
+                    onChange={(e) => handleInputChange('klassen', e.target.value)}
                   />
                 </div>
                 <div className="char-field">
@@ -268,8 +295,8 @@ function Add_NPC() {
                   <label>Armor Class</label>
                   <input 
                     type="number" 
-                    value={characterData.armorClass}
-                    onChange={(e) => handleInputChange('armorClass', e.target.value)}
+                    value={characterData.armorKlassen}
+                    onChange={(e) => handleInputChange('armorKlassen', e.target.value)}
                   />
                 </div>
                 <div className="combat-stat">
@@ -301,7 +328,7 @@ function Add_NPC() {
                   <label>Current HP</label>
                   <input 
                     type="number" 
-                    value={characterData.currentHP}
+                    value={characterData.HpCurrent}
                     onChange={(e) => handleInputChange('HpCurrent', e.target.value)}
                   />
                 </div>
@@ -309,7 +336,7 @@ function Add_NPC() {
                   <label>Max HP</label>
                   <input 
                     type="number" 
-                    value={characterData.maxHP}
+                    value={characterData.HpMax}
                     onChange={(e) => handleInputChange('HpMax', e.target.value)}
                   />
                 </div>
@@ -449,8 +476,8 @@ function Add_NPC() {
 
             {/* Action Buttons */}
             <div className="char-actions">
-              <button className="char-save-btn">Save Character</button>
-              <button className="char-cancel-btn">Cancel</button>
+              <button className="char-save-btn" onClick={handleSaveCharacter}>Save Character</button>
+              <button className="char-cancel-btn" onClick={handleCancel}>Cancel</button>
             </div>
           </div>
         </div>
