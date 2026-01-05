@@ -76,7 +76,15 @@ function New_Campaign_Page_CAMPAIGN() {
     <div className="campaign-page">
       <Sidebar />
       <div className="campaign-main">
-        <Header title="New Campaign" />
+        <Header
+          title={
+            isNewCampaign
+              ? "New Campaign"
+              : formData?.name
+              ? `${formData.name}`
+              : "Campaign"
+          }
+        />
         <div className="campaign-body">
           <div className="campaign-tabs">
             <button 
