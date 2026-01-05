@@ -12,8 +12,8 @@ import Sidebar from "../components/UI/Sidebar";
 const freeCampaignSection = {
   title: "Free Campaigns",
   items: [
-    { name: "Project__Name", color: "#303030" },
-    { name: "Project__Name", color: "#303030" },
+    { name: "Project__Name", color: "#E7D665" },
+    { name: "Project__Name", color: "#447DC9" },
   ],
 };
 
@@ -32,7 +32,8 @@ const getCampaignSortDate = (campaign) => {
   return Number.isNaN(time) ? 0 : time;
 };
 
-function My_Campaigns_Page() {
+function My_Campaigns_Page() 
+{
   const { user } = useAuth();
   const navigate = useNavigate();
   const [allCampaigns, setAllCampaigns] = useState([]);

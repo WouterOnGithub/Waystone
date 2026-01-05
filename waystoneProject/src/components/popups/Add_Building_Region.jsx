@@ -5,10 +5,10 @@ import UploadIMG_Logo from "../../assets/PlaceholderImage.jpg";
 import {
   createBuildingRegion,
   updateBuildingRegion,
+  getLocations,
 } from "../../api/userCampaigns";
 
-function resolveImageUrl(imageUrl, baseUrl) 
-{
+function resolveImageUrl(imageUrl, baseUrl) {
   if (!imageUrl) return null;
   if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
     return imageUrl;
@@ -23,7 +23,7 @@ function resolveImageUrl(imageUrl, baseUrl)
   return `${origin}/${imageUrl}`;
 }
 
-function Add_Building_Region({ campaignId, building, userId, baseUrl }) 
+function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId }) 
 {
   const fileInputRef = useRef(null);
   const [name, setName] = useState(building?.name || "");
@@ -108,6 +108,7 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl })
         name: name.trim(),
         description: description.trim(),
         imageUrl: imageUrl || "",
+        locationId: locationId || "",
         updatedAt: new Date().toISOString(),
       };
 
@@ -131,7 +132,7 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl })
         try {
           window.close();
         } catch {
-          // Ignore close errors
+          // ignore close errors
         }
       }
     } catch (err) {
@@ -173,7 +174,7 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl })
             />
             <br />
             <br />
-            <div id="addview-description">
+            <div className="addview-description">
                 <label htmlFor="description-buildingregion"><b>Description</b> (max. 120 characters)</label><br />
                 <textarea
                   name="description-buildingregion"
@@ -194,7 +195,6 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl })
                 <p>{message}</p>
               </>
             )}
-            
         </form>
 
       </div>

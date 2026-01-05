@@ -10,9 +10,10 @@ import Main_Page from "./pages/Main_Page";
 import Account_Page from "./pages/Account_Page"
 import Account_Page_EDIT from "./pages/Account_Page_EDIT"
 import My_Campaigns_Page from "./pages/My_Campaigns_Page"
+import HelpPage from "./pages/HelpPage"
 
 import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN"
-{/* import New_Campaign_Page_EVENTS from "./pages/New_Campaign_Page_EVENTS" */}
+//import New_Campaign_Page_EVENTS from "./pages/New_Campaign_Page_EVENTS"
 import New_Campaign_Page_CHARACTERS from "./pages/New_Campaign_Page_CHARACTERS"
 import New_Campaign_Page_MAPBUILDER from "./pages/New_Campaign_Page_MAPBUILDER" 
 
@@ -20,9 +21,9 @@ import Add_Building_Region from "./components/popups/Add_Building_Region"
 import Add_Location from "./components/popups/Add_Location"
 import Add_Container from "./components/popups/Add_Container"
 import Add_Item from "./components/popups/Add_Item" 
-{/* import Add_Character from "./pages/Add_Character" */}
-{/* import Add_NPC from "./pages/Add_NPC" */}
-{/* import Add_Enemy from "./pages/Add_Enemy" */}
+import Add_Character from "./pages/Add_Character" 
+import Add_NPC from "./pages/Add_NPC" 
+import Add_Enemy from "./pages/Add_Enemy"
 
 import View_Character from "./components/popups/View_Character" 
 import View_Item from "./components/popups/View_Item"
@@ -30,17 +31,16 @@ import View_Item from "./components/popups/View_Item"
 import Game_Settings from "./components/popups/Game_Settings"
 import Game_Settings_SAVEGAME from "./components/popups/Game_Settings_SAVEGAME" 
 
-{/* import Map_Main from "./pages/Map_Main" */}
-{/* import Map_Location from "./pages/Map_Location" */}
-{/* import Map_Building_Region from "./pages/Map_Building_Region" */}
-{/* import Map_Battle_View from "./pages/Map_Battle_View" */}
+import Map_Main from "./pages/Map_Main"
+import Map_Location from "./pages/Map_Location"
+import Map_Building_Region from "./pages/Map_Building_Region"
+// import Map_Battle_View from "./pages/Map_Battle_View"
 
 import BattleMapTest from './pages/battleMapTest';
-import Add_Character from './pages/Add_Character';
 
 /* (temporary, to be removed later) 
     TO VISIT A PAGE: http://localhost:5173/user/[PAGE NAME] */
-
+  
 function App() 
 {
   return (
@@ -65,6 +65,7 @@ function App()
 
                 {/* All the campaigns */}
                 <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} />
+                <Route path ="/user/HelpPage" element={<HelpPage/>}/>
                 
                 {/* CAMPAIGNS */}
                 {/* Making a new campaign */}
@@ -95,8 +96,14 @@ function App()
                 <Route path='/user/:campaignId/Add_Character' element={<Add_Character/>} />
                 <Route path='/user/:campaignId/Add_Character/:CharacterId' element={<Add_Character/>} />
                 
-                {/* <Route path="/user/Add_NPC" element={<Add_NPC />} /> */}
-                {/* <Route path="/user/Add_Enemy" element={<Add_Enemy />} /> */}
+                {/* Routes to create npc's */}
+                <Route path='/user/:campaignId/Add_NPC' element={<Add_NPC/>} />
+                <Route path='/user/:campaignId/Add_NPC/:npcId' element={<Add_NPC/>} />
+
+                {/* Routes to create enemies */}
+                <Route path='/user/:campaignId/Add_Enemy' element={<Add_Enemy/>} />
+                <Route path='/user/:campaignId/Add_Enemy/:enemyId' element={<Add_Enemy/>} />
+                  
                 
                 {/* View pop-ups */}
                 <Route path="/user/View_Character" element={<View_Character />} /> 
@@ -110,6 +117,14 @@ function App()
                 {/* <Route path="/user/Map_Main" element={<Map_Main />} /> */}
                 {/* <Route path="/user/Map_Location" element={<Map_Location />} /> */}
                 {/* <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} /> */}
+                <Route path="/user/Map_Main" element={<Map_Main />} />
+                <Route path="/user/Map_Main/:campaignId" element={<Map_Main />} />
+                <Route path="/user/Map_Location" element={<Map_Location />} />
+                <Route path="/user/Map_Location/:campaignId" element={<Map_Location />} />
+                <Route path="/user/Map_Location/:campaignId/:locationId" element={<Map_Location />} />
+                <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} />
+                <Route path="/user/Map_Building_Region/:campaignId" element={<Map_Building_Region />} />
+                <Route path="/user/Map_Building_Region/:campaignId/:buildingId" element={<Map_Building_Region />} /> 
                 {/* <Route path="/user/Map_Battle_View" element={<Map_Battle_View />} /> */}
 
                 {/* TEST - To be removed later */}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { getPlayersByCampaign } from "../api/players";
+import { useCampaign } from "../hooks/useCampaign";
+import { getCampaign } from "../api/userCampaigns";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
@@ -14,6 +16,12 @@ function New_Campaign_Page_CHARACTERS()
   const navigate = useNavigate();
   const {user} = useAuth();
   const userId = user ? user.uid : null;
+  
+  const isNewCampaign = !campaignId;
+  const { data, loading, error, setData } = useCampaign(
+    isNewCampaign? null : userId, 
+    isNewCampaign? null : campaignId
+  );
 
   const handleAddPlayer = () => {
     navigate(`/user/${campaignId}/Add_Character`);
@@ -149,6 +157,13 @@ function New_Campaign_Page_CHARACTERS()
 
             <div className="campaign-actions">
               <button id="button-green">Save and Continue</button>
+              <button 
+                id="button-gray"
+                onClick={() => navigate(`/user/Map_Main/${campaignId}`)}
+                disabled={!campaignId}
+              >
+                Enter
+              </button>
             </div>
           </div>
 

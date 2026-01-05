@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { createLocation, updateLocation } from "../../api/userCampaigns";
 import "../../pages/pages-css/CSS.css";
 import "../../pages/pages-css/Add_View.css";
 import UploadIMG_Logo from "../../assets/PlaceholderImage.jpg";
+import { createLocation, updateLocation } from "../../api/userCampaigns";
 
-function resolveImageUrl(imageUrl, baseUrl) 
-{
+function resolveImageUrl(imageUrl, baseUrl) {
   if (!imageUrl) return null;
   if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
     return imageUrl;
@@ -143,13 +142,13 @@ function Add_Location({ campaignId, location, userId, baseUrl }) {
 
   return (
     <div id="addview-page">
-      <div id="addview-box">
+    <div id="addview-box">
 
-        <p id="addview-title">Add Location</p>
+      <p id="addview-title">Add Location</p>
 
-        <div id="addview-content">
+      <div id="addview-content">
 
-          <form id="input-box-gray" onSubmit={handleSave}>
+        <form id="input-box-gray" onSubmit={handleSave}>
             <img
               src={imagePreview || UploadIMG_Logo}
               alt="UploadIMG_Logo"
@@ -196,18 +195,17 @@ function Add_Location({ campaignId, location, userId, baseUrl }) {
             <button id="button-green" type="submit" disabled={saving}>
               {saving ? "Saving..." : "Save"}
             </button>
-            <button id="button-green">Back</button>
             {message && (
               <>
                 <br />
                 <p>{message}</p>
               </>
             )}
+            
+        </form>
 
-          </form>
-          
-        </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,30 +1,31 @@
 /* This is all the css for the Add/View pop-ups */
-*
+:root
 {
     --addview-text: 60px;
     --adview-text2: 22px;
     --hp-text-color: #D34848;
 }
 
-#addview-page /* The gray_/black_ background for the pop-ups */
+#addview-page
 {
-    overflow-y: auto;
     display: flex;
     justify-content: center;
-    position: fixed;
-    align-items: flex-start; 
-    inset: 0;
-    padding: 12px; 
-    background: rgba(0, 0, 0, 0.4);
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: var(--background-colour);
 }
 
 #addview-box /* The pop-up */
 {
     border-radius: var(--border-radius);
     background-color: var(--background-colour);
-    width: 35%;
-    margin-top: 5%;
-    box-shadow: 5px 5px 100px 25px rgba(43, 43, 43, 0.3);
+    width: 98%;
+    max-width: none;
+    margin: 5px auto;
+    box-shadow: none;
+    min-height: 90vh;
 }
 
 #addview-title /* The title inside the green_ bar */
@@ -39,13 +40,13 @@
     padding-bottom: 15px;
 }
 
-#addview-content /* All the content bellow the green_ bar */
+#addview-content
 {
-    margin-left: 0;
-    padding: 0 24px 32px;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 15px;
+    height: calc(100% - 80px);
+    overflow-y: auto;
 }
+
 .addview-uploadimg  /* Uploading an image */
 {
     display: block;
@@ -56,8 +57,9 @@
 
 #addview-discription textarea /* A textarea for a discription */
 {
-    width: 350px;
+    width: 100%;
     height: 150px;
+    box-sizing: border-box;
 }
 
 #view-title-box /* The green_ small titles in the view pages (vertical) */
@@ -67,6 +69,7 @@
     text-align: center;
     width: 200px;
 }
+
 .view-title-box-long /* The green_ small titles in the view pages (the long ones) */
 {
     border-radius: var(--border-radius2);
@@ -79,6 +82,7 @@
     color: var(--text-color2);
     padding: 2px; 
 }
+
 #view-body /* The actual stats */
 {
     margin-left: 20px;
@@ -211,6 +215,8 @@
     width: 70%;
     max-width: 100%;
     box-sizing: border-box;
+    padding: 8px;
+    margin: 5px 0;
 }
 #input-box-gray textarea
 {

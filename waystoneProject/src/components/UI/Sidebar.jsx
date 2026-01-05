@@ -14,6 +14,7 @@ function Sidebar()
     { to: "/user/My_Campaigns_Page", label: "My Campaigns" },
     { to: "/user/New_Campaign_Page_CAMPAIGN", label: "New Campaign" },
     { to: "/user/Settings_Page", label: "Settings" },
+    { to: "/user/HelpPage", label: "Help" },
   ];
 
   /* The log-out process when you click on the Exit button */
