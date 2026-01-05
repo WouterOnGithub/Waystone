@@ -33,42 +33,39 @@ function New_Campaign_Page_CHARACTERS()
   const handleAddNpc = () => {
     navigate(`/user/${campaignId}/Add_NPC`);
   };
-  const handleEditNpc = () => {
+  const handleEditNpc = (npcId) => {
     navigate(`/user/${campaignId}/Add_NPC/${npcId}`);
   };
 
   const handleAddEnemy = () => {
     navigate(`/user/${campaignId}/Add_Enemy`);
   }
-  const handleEditEnemy = () => {
+  const handleEditEnemy = (enemyId) => {
     navigate(`/user/${campaignId}/Add_Enemy/${enemyId}`);
   }
 
   useEffect(() => {
     if (!userId || !campaignId) return;
-    const fetchPlayers = async () => {
+    const fetchData = async () => {
       try {
-        const playerData = await   getPlayersByCampaign(userId, campaignId);
+        //playerss
+        const playerData = await getPlayersByCampaign(userId, campaignId);
+        const npcData =await getEntitiesByType(userId, campaignId,"npc");
+        const enemyData = await getEntitiesByType(userId, campaignId, "enemy");
+
         setPlayers(playerData);
+        setNPCs(npcData);
+        setEnemies(enemyData);
       } catch (error) {
-        console.error("Error loading players: ", error);
+        console.error("Error loading characters: ", error);
       }
-  };
-    fetchPlayers();
+    };
+    fetchData();
   }, [userId, campaignId]);
 
-
   const [players, setPlayers] = useState([]);
-
-  const [npcs] = useState([
-    { name: "NPC_1", job: "blacksmith" },
-    { name: "NPC_2", job: "librarian" },
-  ]);
-
-  const [enemies] = useState([
-    { name: "Enemy", cr: 5, hp: 12 },
-    { name: "Enemy", cr: 3, hp: 15 },
-  ]);
+  const [npcs, setNPCs] = useState([]);
+  const [enemies, setEnemies] = useState([]);
 
   return (
     <div>
@@ -114,8 +111,8 @@ function New_Campaign_Page_CHARACTERS()
                 
                 /* The player bar */
                 <div key={index} className="character-row">
-                  <span>{player.name} | lvl {player.level} | HP {player.HpCurrent}/{player.HpMax}</span>
-                  <button id="button-gray" onClick={() => handleEditPlayer(player.id)}>edit</button>
+                  <span>{player.name} | lvl {player.level} | race: {player.race} |Hp  {player.HpCurrent}/{player.HpMax}</span>
+                  <button className="edit-button" onClick={() => handleEditPlayer(player.id)}>edit</button>
                 </div>
 
               ))}
