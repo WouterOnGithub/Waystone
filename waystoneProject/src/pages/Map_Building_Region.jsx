@@ -73,14 +73,29 @@ function Map_Building_Region() {
 
           <div className="map-container">
 
-            {/* Settings Button */}
-            <button className="map-settings-btn" onClick={toggleSettings}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="3" />
-                <path d="M12 1v6m0 6v6m0-6h6m-6 0H6" />
-                <path d="M19.07 4.93l-4.24 4.24m0 5.66l4.24 4.24m-14.14 0l4.24-4.24m0-5.66L4.93 4.93" />
-              </svg>
-            </button>
+            {/* Top Controls */}
+            <div className="map-top-controls">
+              {/* Back Button */}
+              <button 
+                className="map-back-btn" 
+                onClick={() => navigate(-1)}
+                title="Go back to previous page"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Back
+              </button>
+
+              {/* Settings Button */}
+              <button className="map-settings-btn" onClick={toggleSettings}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 1v6m0 6v6m0-6h6m-6 0H6" />
+                  <path d="M19.07 4.93l-4.24 4.24m0 5.66l4.24 4.24m-14.14 0l4.24-4.24m0-5.66L4.93 4.93" />
+                </svg>
+              </button>
+            </div>
 
             {/* Settings Menu */}
             {settingsOpen && (
@@ -96,37 +111,11 @@ function Map_Building_Region() {
               </div>
             )}
 
-            {/* Regions Dropdown */}
+            {/* Start Battle Button */}
             <div className="map-locations-dropdown">
-              <button
-                className={`locations-toggle ${regionsOpen ? "open" : ""}`}
-                onClick={toggleRegions}
-              >
-                Regions
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
+              <button className="start-battle-btn">
+                Start Battle
               </button>
-
-              {regionsOpen && (
-                <div className="locations-buttons-container">
-                  {campaignRegions.length > 0 ? (
-                    campaignRegions.map((region) => (
-                      <button
-                        key={region.id}
-                        className="location-button"
-                        onClick={() => navigate(`/user/Map_Building_Region/${campaignId}/${region.id}`)}
-                      >
-                        {region.name || 'Unnamed Region'}
-                      </button>
-                    ))
-                  ) : (
-                    <div className="no-locations-message">
-                      No regions added yet
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
 
             {/* Map Display */}

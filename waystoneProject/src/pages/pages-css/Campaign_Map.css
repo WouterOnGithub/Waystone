@@ -158,7 +158,7 @@
 .location-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
 }
 
 .location-placeholder {
@@ -319,11 +319,46 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Settings Button - Top Left */
-.map-settings-btn {
+/* Top Controls Container */
+.map-top-controls {
   position: absolute;
   top: 20px;
   left: 20px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  z-index: 100;
+}
+
+/* Back Button */
+.map-back-btn {
+  background: rgba(197, 210, 140, 0.95);
+  color: #2e3d08;
+  border: 2px solid #2e3d08;
+  border-radius: 8px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.map-back-btn:hover {
+  background: rgba(197, 210, 140, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.map-back-btn svg {
+  color: #2e3d08;
+}
+
+/* Settings Button - Top Left */
+.map-settings-btn {
   width: 60px;
   height: 60px;
   background: rgba(197, 210, 140, 0.95);
@@ -389,6 +424,31 @@
 .map-settings-menu li:hover {
   background: linear-gradient(90deg, #5b701d 0%, #2e3d08 100%);
   color: white;
+}
+
+/* Start Battle Button */
+.start-battle-btn {
+  background: linear-gradient(180deg, rgba(139, 69, 19, 0.95) 0%, rgba(101, 50, 14, 0.95) 100%);
+  color: #f4e8d0;
+  border: 2px solid #8b4513;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.start-battle-btn:hover {
+  background: linear-gradient(180deg, rgba(139, 69, 19, 1) 0%, rgba(101, 50, 14, 1) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
 }
 
 /* Locations Dropdown - Top Right */
@@ -518,7 +578,7 @@
 .map-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
 }
 
 .map-placeholder {
