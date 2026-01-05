@@ -101,7 +101,7 @@ function New_Campaign_Page_CHARACTERS()
 
             {/* The characters */}
             <div className="character-section">
-              <b>Players</b>
+              <b>Players</b><br />
               {players.map((player, index) => (
                 
                 /* The player bar */

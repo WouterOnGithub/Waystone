@@ -2,8 +2,6 @@
 {
     background: var(--background-colour);
     width: 350px;
-    height: 100%;
-    padding-top: 50px;
     z-index: 1;
     position: fixed;
     overflow-x: hidden;
@@ -11,7 +9,7 @@
 
 .navigation nav /* Navigation Side-bar */
 {
-    margin-left: 25%;
+    margin-left: 15%;
 }
 
 nav a /* Navigation Side-bar links */
@@ -29,7 +27,9 @@ nav a:hover /* Navigation Side-bar links */
 
 #Waystone_Logo-sidebar
 {
-    width: 70%;
+    width: 80%;
+    margin-top: 60px;
+    margin-bottom: 50px;
 }
 
 #button-green-sidebar /* The Exit button in the sidebar */

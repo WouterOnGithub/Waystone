@@ -404,6 +404,7 @@
                 </div>
               </div>
 
+              {/* NEEDS TO STILL BE FIXED, I'LL DO IT SOON ! -H */}
               <div id="input-box-white">
                 <b>Saving Throw Proficiencies</b><br />
                 {['strength','dexterity','constitution','intelligence','wisdom','charisma'].map((ability) => (
