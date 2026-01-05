@@ -3,8 +3,8 @@
 {
     --addview-text: 60px;
     --adview-text2: 22px;
-    --text-color4: #D34848;
-    --background-gradient2: radial-gradient(circle, rgb(56, 78, 16) 50%, rgb(27, 40, 4) 100%);
+    --text-color4: #df4a00;
+    --background-gradient2: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);;
 }
 
 #addview-page /* The gray_/black_ background for the pop-ups */
@@ -23,8 +23,8 @@
 {
     border-radius: var(--border-radius);
     background-color: var(--background-colour);
-    width: min(600px, calc(100vw - 32px));
-    margin: 0 auto 24px auto;
+    width: 35%;
+    margin-top: 5%;
     box-shadow: 5px 5px 100px 25px rgba(43, 43, 43, 0.3);
 }
 
@@ -101,10 +101,10 @@
     border-radius: var(--border-radius2);
     color: var(--text-color2);
     font-size: var(--adview-text2);
+    text-align: center;
     padding: 4px;
     padding-left: 10px;
     padding-right: 10px;
-    text-align: center;
 
 }
 .view-stats-main /* The HP, LVL, EXP, STATUS sections */
@@ -222,7 +222,6 @@
 .game-settings-content /* All content underneath the green_ title */
 {
     text-align: center;
-    margin-left: -50px;
 }
 #game-settings-options button /* the buttons of the options itself */
 {

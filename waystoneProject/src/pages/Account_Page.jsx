@@ -18,10 +18,19 @@ function Account_Page() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (user?.uid) {
-        const data = await getUser(user.uid);
-        setUserData(data);
-        setNotes(data?.notes || "");
+      try {
+        if (user?.uid) {
+          const data = await getUser(user.uid);
+          console.debug("Loaded account user data:", data);
+          setUserData(data);
+          setNotes(data?.notes || "");
+        } else {
+          console.debug("No authenticated user in Account_Page");
+          setUserData(null);
+          setNotes("");
+        }
+      } catch (err) {
+        console.error("Failed to load account user data:", err);
       }
     };
     fetchUserData();
@@ -34,10 +43,25 @@ function Account_Page() {
   };
 
   const getAvatarUrl = () => {
-    if (userData?.avatarFileName) {
+    // Prefer the new avatarUrl field stored in Firestore
+    if (userData?.avatarUrl) {
+      return userData.avatarUrl;
+    }
+    // Backwards compatibility with legacy avatarFileName + per-user folders
+    if (userData?.avatarFileName && user?.uid) {
       return `/avatars/${user.uid}/${userData.avatarFileName}`;
     }
     return Placeholder;
+  };
+
+  const handleAvatarError = (e) => {
+    console.warn("Avatar image failed to load, falling back to placeholder.", {
+      src: e.currentTarget?.src,
+      userData,
+    });
+    if (e.currentTarget) {
+      e.currentTarget.src = Placeholder;
+    }
   };
 
 
@@ -50,7 +74,12 @@ function Account_Page() {
         <main className="account-content">
           <section id="account-box" className="account-card">
             <div className="account-avatar-wrap">
-              <img src={getAvatarUrl()} alt="Account profile" id="Account_Profile" />
+              <img
+                src={getAvatarUrl()}
+                alt="Account profile"
+                id="Account_Profile"
+                onError={handleAvatarError}
+              />
             </div>
             <div className="account-details">
               <Link to="/user/Account_Page_EDIT" className="edit-icon" aria-label="Edit profile">
