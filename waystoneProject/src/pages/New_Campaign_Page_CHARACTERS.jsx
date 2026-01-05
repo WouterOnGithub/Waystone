@@ -22,6 +22,7 @@ function New_Campaign_Page_CHARACTERS() {
   const navigate = useNavigate();
   const {user} = useAuth();
   const userId = user ? user.uid : null;
+  
 
   const handleAddPlayer = () => {
     navigate(`/user/${campaignId}/Add_Character`);
@@ -50,14 +51,11 @@ function New_Campaign_Page_CHARACTERS() {
       try {
         //playerss
         const playerData = await getPlayersByCampaign(userId, campaignId);
-        setPlayers(playerData);
-        
-        //npc
         const npcData =await getEntitiesByType(userId, campaignId,"npc");
-        setNPCs(npcData);
-        
-        //enemies
         const enemyData = await getEntitiesByType(userId, campaignId, "enemy");
+
+        setPlayers(playerData);
+        setNPCs(npcData);
         setEnemies(enemyData);
       } catch (error) {
         console.error("Error loading characters: ", error);
