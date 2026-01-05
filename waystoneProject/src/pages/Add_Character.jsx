@@ -141,23 +141,11 @@
     const calculateModifier = (score) => {
       return Math.floor((score - 10) / 2);
     };
-    const calculateModifier = (score) => {
-      return Math.floor((score - 10) / 2);
-    };
 
     const handleInputChange = (field, value) => {
       setCharacterData({ ...characterData, [field]: value });
     };
-    const handleInputChange = (field, value) => {
-      setCharacterData({ ...characterData, [field]: value });
-    };
 
-    const handleSkillChange = (skill, value) => {
-      setCharacterData({
-        ...characterData,
-        skills: { ...characterData.skills, [skill]: parseInt(value) || 0 }
-      });
-    };
     const handleSkillChange = (skill, value) => {
       setCharacterData({
         ...characterData,
@@ -171,12 +159,6 @@
         [listName]: [...characterData[listName], { name: "Feature", bonus: "+0", description: "" }]
       });
     };
-    const addFeature = (listName) => {
-      setCharacterData({
-        ...characterData,
-        [listName]: [...characterData[listName], { name: "Feature", bonus: "+0", description: "" }]
-      });
-    };
 
     const addSpell = () => {
       setCharacterData({
@@ -184,19 +166,7 @@
         knownSpells: [...characterData.knownSpells, { name: "Spell", level: "1st", concentration: false }]
       });
     };
-    const addSpell = () => {
-      setCharacterData({
-        ...characterData,
-        knownSpells: [...characterData.knownSpells, { name: "Spell", level: "1st", concentration: false }]
-      });
-    };
 
-    const addTrait = () => {
-      setCharacterData({
-        ...characterData,
-        personalTraits: [...characterData.personalTraits, { name: "Trait", bonus: "+0" }]
-      });
-    };
     const addTrait = () => {
       setCharacterData({
         ...characterData,
