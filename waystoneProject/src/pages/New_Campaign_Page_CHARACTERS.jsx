@@ -144,7 +144,7 @@ function New_Campaign_Page_CHARACTERS() {
               <h4>Custom Enemies</h4>
               {enemies.map((enemy) => (
                 <div key={enemy.id} className="character-row">
-                  <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
+                  <span>{enemy.name} | CR {enemy.level} | HP {enemy.hp}</span>
                   <button className="edit-button" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
                 </div>
               ))}

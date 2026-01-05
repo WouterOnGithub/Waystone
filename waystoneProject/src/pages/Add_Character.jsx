@@ -277,7 +277,7 @@
                     </select>
                   </div>
                   <div className="char-field">
-                    <label>Level</label>
+                    <label>Level / <abbr title="Challenge Rating">CR</abbr> </label>
                     <input 
                       type="number" 
                       value={characterData.level}
