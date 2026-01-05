@@ -15,6 +15,7 @@ import Placeholder from "../assets/PlaceholderImage.jpg";
 
 import { useAuth } from "../context/AuthContext";
 import { getPlayersByCampaign } from "../api/players";
+import { getEntitiesByType } from "../api/npcs";
 
 function New_Campaign_Page_CHARACTERS() {
   const {campaignId} = useParams()
@@ -32,42 +33,42 @@ function New_Campaign_Page_CHARACTERS() {
   const handleAddNpc = () => {
     navigate(`/user/${campaignId}/Add_NPC`);
   };
-  const handleEditNpc = () => {
+  const handleEditNpc = (npcId) => {
     navigate(`/user/${campaignId}/Add_NPC/${npcId}`);
   };
 
   const handleAddEnemy = () => {
     navigate(`/user/${campaignId}/Add_Enemy`);
   }
-  const handleEditEnemy = () => {
+  const handleEditEnemy = (enemyId) => {
     navigate(`/user/${campaignId}/Add_Enemy/${enemyId}`);
   }
 
   useEffect(() => {
     if (!userId || !campaignId) return;
-    const fetchPlayers = async () => {
+    const fetchData = async () => {
       try {
-        const playerData = await   getPlayersByCampaign(userId, campaignId);
+        //playerss
+        const playerData = await getPlayersByCampaign(userId, campaignId);
         setPlayers(playerData);
+        
+        //npc
+        const npcData =await getEntitiesByType(userId, campaignId,"npc");
+        setNPCs(npcData);
+        
+        //enemies
+        const enemyData = await getEntitiesByType(userId, campaignId, "enemy");
+        setEnemies(enemyData);
       } catch (error) {
-        console.error("Error loading players: ", error);
+        console.error("Error loading characters: ", error);
       }
-  };
-    fetchPlayers();
+    };
+    fetchData();
   }, [userId, campaignId]);
 
-
   const [players, setPlayers] = useState([]);
-
-  const [npcs] = useState([
-    { name: "NPC_1", job: "blacksmith" },
-    { name: "NPC_2", job: "librarian" },
-  ]);
-
-  const [enemies] = useState([
-    { name: "Enemy", cr: 5, hp: 12 },
-    { name: "Enemy", cr: 3, hp: 15 },
-  ]);
+  const [npcs, setNPCs] = useState([]);
+  const [enemies, setEnemies] = useState([]);
 
   return (
     <div className="campaign-page">
@@ -117,10 +118,10 @@ function New_Campaign_Page_CHARACTERS() {
 
             <div className="character-section">
               <h4>NPCs</h4>
-              {npcs.map((npc, index) => (
-                <div key={index} className="character-row">
+              {npcs.map((npc) => (
+                <div key={npc.id} className="character-row">
                   <span>{npc.name} | Job: {npc.job}</span>
-                  <button className="edit-button" onClick={() => handleEditNpc()}>edit</button>
+                  <button className="edit-button" onClick={() => handleEditNpc(npc.id)}>edit</button>
                 </div>
               ))}
               <button className="add-button" onClick={handleAddNpc}>add NPC</button>
@@ -128,10 +129,10 @@ function New_Campaign_Page_CHARACTERS() {
 
             <div className="character-section">
               <h4>Custom Enemies</h4>
-              {enemies.map((enemy, index) => (
-                <div key={index} className="character-row">
+              {enemies.map((enemy) => (
+                <div key={enemy.id} className="character-row">
                   <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
-                  <button className="edit-button" onClick={() => handleEditEnemy()}>edit</button>
+                  <button className="edit-button" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
                 </div>
               ))}
               <button className="add-button" onClick={handleAddEnemy}>add enemy</button>
