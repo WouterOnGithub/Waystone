@@ -161,7 +161,7 @@ function New_Campaign_Page_CAMPAIGN() {
               <button className="campaign-save" onClick={handleSave} >
                 Save and continue
               </button>
-              <button className="campaign-enter">Enter</button>
+              <button className="campaign-enter" onClick={() => navigate(`/user/Map_Main/${campaignId}`)}>Enter</button>
             </div>
           </div>
         </div>

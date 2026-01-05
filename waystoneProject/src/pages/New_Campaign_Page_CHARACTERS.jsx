@@ -15,12 +15,20 @@ import Placeholder from "../assets/PlaceholderImage.jpg";
 
 import { useAuth } from "../context/AuthContext";
 import { getPlayersByCampaign } from "../api/players";
+import { useCampaign } from "../hooks/useCampaign";
+import { getCampaign } from "../api/userCampaigns";
 
 function New_Campaign_Page_CHARACTERS() {
   const {campaignId} = useParams()
   const navigate = useNavigate();
   const {user} = useAuth();
   const userId = user ? user.uid : null;
+  
+  const isNewCampaign = !campaignId;
+  const { data, loading, error, setData } = useCampaign(
+    isNewCampaign? null : userId, 
+    isNewCampaign? null : campaignId
+  );
 
   const handleAddPlayer = () => {
     navigate(`/user/${campaignId}/Add_Character`);
@@ -73,7 +81,15 @@ function New_Campaign_Page_CHARACTERS() {
     <div className="campaign-page">
       <Sidebar />
       <div className="campaign-main">
-        <Header title="New Campaign" />
+        <Header
+          title={
+            isNewCampaign
+              ? "New Campaign"
+              : data?.name
+              ? `${data.name}`
+              : "Campaign"
+          }
+        />
         <div className="campaign-body">
           <div className="campaign-tabs">
             <button 
@@ -139,6 +155,13 @@ function New_Campaign_Page_CHARACTERS() {
 
             <div className="campaign-actions">
               <button className="campaign-save">Save and Continue</button>
+              <button 
+                className="campaign-enter"
+                onClick={() => navigate(`/user/Map_Main/${campaignId}`)}
+                disabled={!campaignId}
+              >
+                Enter
+              </button>
             </div>
           </div>
         </div>
