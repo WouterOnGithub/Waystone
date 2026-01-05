@@ -19,12 +19,19 @@ import {
   getBuildingsRegions,
   deleteBuildingRegion,
 } from "../api/userCampaigns";
+import { useCampaign } from "../hooks/useCampaign";
 
 function New_Campaign_Page_MAPBUILDER() {
   const { campaignId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
   const userId = user?.uid || null;
+  
+  const isNewCampaign = !campaignId;
+  const { data, loading, error, setData } = useCampaign(
+    isNewCampaign? null : userId, 
+    isNewCampaign? null : campaignId
+  );
 
   const fileInputRef = React.useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -312,7 +319,15 @@ function New_Campaign_Page_MAPBUILDER() {
       <Sidebar />
 
       <div className="campaign-main">
-        <Header title="New Campaign" />
+        <Header
+          title={
+            isNewCampaign
+              ? "New Campaign"
+              : data?.name
+              ? `${data.name}`
+              : "Campaign"
+          }
+        />
         <div className="campaign-body">
           <div className="campaign-tabs">
             <button 
@@ -611,6 +626,13 @@ function New_Campaign_Page_MAPBUILDER() {
                 disabled={saving}
               >
                 {saving ? "Saving..." : "Save and continue"}
+              </button>
+              <button 
+                className="campaign-enter"
+                onClick={() => navigate(`/user/Map_Main/${campaignId}`)}
+                disabled={!campaignId}
+              >
+                Enter
               </button>
               {saveMessage && (
                 <div className="campaign-save-message">{saveMessage}</div>

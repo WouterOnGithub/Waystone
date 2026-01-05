@@ -130,6 +130,7 @@ function App()
                 <Route path="/user/Game_Settings_SAVEGAME" element={<Game_Settings_SAVEGAME />} />
                 
                 <Route path="/user/Map_Main" element={<Map_Main />} />
+                <Route path="/user/Map_Main/:campaignId" element={<Map_Main />} />
                 <Route path="/user/Map_Location" element={<Map_Location />} />
                 <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} /> 
                 {/* <Route path="/user/Map_Battle_View" element={<Map_Battle_View />} /> */}

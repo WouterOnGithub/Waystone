@@ -1,18 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
+import { useAuth } from "../context/AuthContext";
+import { getCampaign, getLocations } from "../api/userCampaigns";
 
 function Map_Main() {
+  const { campaignId } = useParams();
+  const { user } = useAuth();
+  const userId = user?.uid || null;
+  
   const [locationsOpen, setLocationsOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [campaign, setCampaign] = useState(null);
+  const [campaignLocations, setCampaignLocations] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const locations = [
-    { id: 1, name: "Eldor's Keep", description: "Ancient fortress in the heart of the realm" },
-    { id: 2, name: "Darkfall", description: "Mysterious village shrouded in shadow" },
-    { id: 3, name: "Ithilien", description: "Enchanted forest region" },
-    { id: 4, name: "Lormdell", description: "Peaceful riverside town" },
-    { id: 5, name: "Darkwood", description: "Dense and dangerous forest" }
-  ];
+  // Load campaign data and main map when component mounts or campaignId changes
+  useEffect(() => {
+    const loadCampaign = async () => {
+      if (!campaignId || !userId) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const campaignData = await getCampaign(userId, campaignId);
+        setCampaign(campaignData);
+        
+        // Load locations for this campaign
+        const locationsList = await getLocations(userId, campaignId);
+        setCampaignLocations(locationsList || []);
+      } catch (error) {
+        console.error("Failed to load campaign:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCampaign();
+  }, [campaignId, userId]);
 
   const toggleLocations = () => {
     setLocationsOpen(!locationsOpen);
@@ -71,27 +98,43 @@ function Map_Main() {
               </button>
 
               {locationsOpen && (
-                <div className="locations-menu">
-                  {locations.map((location) => (
-                    <div
-                      key={location.id}
-                      className="location-item"
-                      onClick={() => selectLocation(location)}
-                    >
-                      {location.name}
+                <div className="locations-buttons-container">
+                  {campaignLocations.length > 0 ? (
+                    campaignLocations.map((location) => (
+                      <button
+                        key={location.id}
+                        className="location-button"
+                      >
+                        {location.name || 'Unnamed Location'}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="no-locations-message">
+                      No locations added yet
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
             </div>
 
             {/* Map Display */}
             <div className="map-display">
-              <img
-                src="/path-to-your-map-image.jpg"
-                alt="Campaign Map"
-                className="map-image"
-              />
+              {loading ? (
+                <div className="map-placeholder">
+                  <p>Loading map...</p>
+                </div>
+              ) : campaign?.mainMapUrl ? (
+                <img
+                  src={campaign.mainMapUrl}
+                  alt="Campaign Map"
+                  className="map-image"
+                />
+              ) : (
+                <div className="map-placeholder">
+                  <p>No map uploaded yet</p>
+                  <small>Upload a map in the Map Builder to see it here</small>
+                </div>
+              )}
 
               <div className="map-compass">
                 <svg width="80" height="80" viewBox="0 0 100 100">
@@ -104,31 +147,7 @@ function Map_Main() {
                   <text x="12" y="54" textAnchor="middle">W</text>
                 </svg>
               </div>
-
-              <div className="map-placeholder">
-                <p>Map will be displayed here</p>
-                <small>Click settings to upload a background image</small>
-              </div>
             </div>
-
-            {/* Location Info */}
-            {selectedLocation && (
-              <div className="location-info-panel">
-                <button
-                  className="location-info-close"
-                  onClick={() => setSelectedLocation(null)}
-                >
-                  ×
-                </button>
-                <h3>{selectedLocation.name}</h3>
-                <p>{selectedLocation.description}</p>
-
-                <div className="location-actions">
-                  <button className="location-btn">View Details</button>
-                  <button className="location-btn">Add Notes</button>
-                </div>
-              </div>
-            )}
 
           </div>
         </div>
