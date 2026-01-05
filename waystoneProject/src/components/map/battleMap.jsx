@@ -4,11 +4,15 @@ import {useMap} from "../../hooks/subcribeToCell";       // adjust if named expo
 import { generateGrid } from "../../utils/generateGrid";
 import Token from "../character/token";
 import { moveToken } from "../../services/mapServices";
+import TokenMenu from "../character/tokenMenu";
+import "./battleMap.css"
 
-export default function BattleMap({ userId, campaignId, mapId }) {
+export default function BattleMap({ userId, campaignId, mapId}) {
   const map = useMap(userId, campaignId, mapId);
   const cellsData = useMapCells(userId, campaignId, mapId);
   const [draggedToken, setDraggedToken] = useState(null);
+  const [selectedToken, setSelectedToken] = useState(null);
+   const cellSize = 80;
 
   if (!map) return <div>Loading map...</div>;
 
@@ -36,33 +40,57 @@ export default function BattleMap({ userId, campaignId, mapId }) {
     setDraggedToken(null);
   };
 
-  return (
+
+const handleTokenClick = (tokenId, player, x, y) => {
+  if (selectedToken?.tokenId === tokenId) {
+    setSelectedToken(null);
+  } else {
+    setSelectedToken({
+      tokenId,
+      player,
+      position: { x: x * cellSize, y: y * cellSize },
+    });
+  }
+};
+
+ return (
+  <div
+    className="battlemap-wrapper"
+    style={{
+      width: map.width * cellSize,
+      height: map.height * cellSize,
+    }}
+  >
+    {/* Map background image */}
+    <img
+      src={map.imageUrl}
+      alt="Battle Map"
+      className="battlemap-image"
+      draggable={false}
+    />
+
+    {/* Grid overlay */}
     <div className="grid-container">
       {grid.map((row, y) => (
-        <div key={y} className="grid-row" style={{ display: "flex" }}>
+        <div key={y} className="grid-row">
           {row.map((cell, x) => (
             <div
               key={x}
+              className="grid-cell"
               onDragOver={(e) => e.preventDefault()}
               onDrop={() => handleDrop(x, y)}
-              className="grid-cell"
-              style={{
-                width: 50,
-                height: 50,
-                border: "1px solid #555",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#eee",
-                pointerEvents: "auto",
-              }}
             >
               {cell?.tokenId && (
                 <Token
+                  userId={userId}
                   tokenId={cell.tokenId}
+                  campaignId={campaignId}
                   x={x}
                   y={y}
                   onDragStart={handleDragStart}
+                  onClick={(tokenId, player) =>
+                    handleTokenClick(tokenId, player, x, y)
+                  }
                 />
               )}
             </div>
@@ -70,5 +98,17 @@ export default function BattleMap({ userId, campaignId, mapId }) {
         </div>
       ))}
     </div>
-  );
+
+    {selectedToken && (
+      <TokenMenu
+        userId={userId}
+        playerId={selectedToken.tokenId}
+        campaignId={campaignId}
+        position={selectedToken.position}
+        onClose={() => setSelectedToken(null)}
+      />
+    )}
+  </div>
+);
+
 }
