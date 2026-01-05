@@ -52,7 +52,7 @@ function Sidebar()
         </div>
 
         {/* Exit button (to log-out) */}
-        <button id="button-green-sidebar" onClick={handleLogout}>Exit</button>
+        <button id="button-green-sidebar" onClick={handleLogout}>Log out</button>
 
       </nav>
     </div>

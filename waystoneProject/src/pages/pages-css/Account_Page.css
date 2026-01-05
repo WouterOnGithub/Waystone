@@ -5,6 +5,7 @@
     display: flex;
     padding: 20px;
     margin-bottom: 50px;
+    max-width: 72%;
 }
 
 .account-profile /* The profile section (the profile image, username, description) */
