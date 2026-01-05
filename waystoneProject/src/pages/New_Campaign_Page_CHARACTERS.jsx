@@ -122,7 +122,7 @@ function New_Campaign_Page_CHARACTERS() {
               <h4>Players</h4>
               {players.map((player, index) => (
                 <div key={index} className="character-row">
-                  <span>{player.name} | lvl {player.level} | Hp  {player.HpCurrent}/{player.HpMax}</span>
+                  <span>{player.name} | lvl {player.level} | race: {player.race} |Hp  {player.HpCurrent}/{player.HpMax}</span>
                   <button className="edit-button" onClick={() => handleEditPlayer(player.id)}>edit</button>
                 </div>
               ))}
@@ -133,7 +133,7 @@ function New_Campaign_Page_CHARACTERS() {
               <h4>NPCs</h4>
               {npcs.map((npc) => (
                 <div key={npc.id} className="character-row">
-                  <span>{npc.name} | Job: {npc.job}</span>
+                  <span>{npc.name} | class: {npc.klassen} | race: {npc.race}</span>
                   <button className="edit-button" onClick={() => handleEditNpc(npc.id)}>edit</button>
                 </div>
               ))}
