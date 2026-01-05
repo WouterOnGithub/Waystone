@@ -1,25 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&display=swap');
 
-.page-container {
-  display: flex;
-  min-height: 100vh;
-  background: #f8f9fa;
-}
-
-.main-content {
-  flex: 1;
-  margin-left: 260px;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
+/* Help Page Layout */
 .help-page {
   flex: 1;
-  padding: 40px;
-  max-width: 1400px;
+  padding: 20px;
+  max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Intro Section */
@@ -93,9 +81,11 @@
 /* Content Wrapper */
 .help-content-wrapper {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 40px;
-  margin-bottom: 50px;
+  grid-template-columns: 250px 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 /* Sidebar Navigation */
@@ -422,6 +412,7 @@
 @media (max-width: 1024px) {
   .help-content-wrapper {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
   
   .help-sidebar {
@@ -432,19 +423,19 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  .help-page {
+    padding: 15px;
+  }
 }
 
 @media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-  }
-  
   .help-page {
-    padding: 20px;
+    padding: 10px;
   }
   
   .help-intro h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   .search-box {
@@ -455,16 +446,17 @@
     grid-template-columns: 1fr;
   }
   
-  .help-articles {
-    padding: 24px;
-  }
-  
+  .help-articles,
   .faq-section,
   .tutorials-section {
-    padding: 24px;
+    padding: 20px;
   }
   
   .tutorial-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .help-content-wrapper {
+    gap: 15px;
   }
 }

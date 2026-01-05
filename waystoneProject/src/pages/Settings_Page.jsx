@@ -2,6 +2,7 @@
 import React from "react";
 import "./pages-css/CSS.css";
 import "./pages-css/Settings_Page.css";
+import "./pages-css/Main_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
@@ -9,11 +10,11 @@ import Sidebar from "../components/UI/Sidebar";
 function Settings_Page() 
 {
   return (
-    <div className="settings-page">
+    <div className="page-layout">
       <Sidebar />
-
-      <div id="main" className="settings-shell">
-        <Header title="Settings" />
+      <div className="main-wrapper">
+        <div id="main">
+          <Header title="Settings" />
 
         {/* The settings section */}
         <div id="content" className="settings-content">
@@ -77,6 +78,7 @@ function Settings_Page()
         </div>
 
         <Footer />
+        </div>
       </div>
     </div>
   );

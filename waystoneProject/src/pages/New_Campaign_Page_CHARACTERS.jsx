@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { getPlayersByCampaign } from "../api/players";
+import { getEntitiesByType } from "../api/npcs";
 import { useCampaign } from "../hooks/useCampaign";
 import { getCampaign } from "../api/userCampaigns";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
+import "./pages-css/Main_Page.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
@@ -68,11 +70,10 @@ function New_Campaign_Page_CHARACTERS()
   const [enemies, setEnemies] = useState([]);
 
   return (
-    <div>
-
+    <div className="page-layout">
       <Sidebar />
-
-      <div id="main">
+      <div className="main-wrapper">
+        <div id="main">
 
         <Header title="New Campaign" />
 
@@ -128,7 +129,7 @@ function New_Campaign_Page_CHARACTERS()
                 /* The npc bar */
                 <div key={index} className="character-row">
                   <span>{npc.name} | Job: {npc.job}</span>
-                  <button id="button-gray" onClick={() => handleEditNpc()}>edit</button>
+                  <button id="button-gray" onClick={() => handleEditNpc(npc.id)}>edit</button>
                 </div>
 
               ))}
@@ -144,7 +145,7 @@ function New_Campaign_Page_CHARACTERS()
                 /* The npc bar */
                 <div key={index} className="character-row">
                   <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
-                  <button id="button-gray" onClick={() => handleEditEnemy()}>edit</button>
+                  <button id="button-gray" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
                 </div>
 
               ))}
@@ -167,7 +168,7 @@ function New_Campaign_Page_CHARACTERS()
         </div>
 
         <Footer />
-
+        </div>
       </div>
     </div>
   );

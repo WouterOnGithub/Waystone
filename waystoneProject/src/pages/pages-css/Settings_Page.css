@@ -1,11 +1,22 @@
+/* Settings Page Layout */
+.settings-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 #settings-password
 {
     display: flex;
+    gap: 20px;
 }
+
 #settings-passwords
 {
-    padding: 20px;
-    width: 350px;
+    padding: 15px;
+    width: 300px;
+    box-sizing: border-box;
 }
 
 #settings-language-radiobtn input[type="radio"] 
@@ -16,20 +27,50 @@
     height: 20px;
     margin-left: 20px;
 }
+
 #settings-language-radiobtn label 
 {
     cursor: pointer;
-    margin-left: 20px;
+    margin-left: 10px;
+    margin-right: 20px;
 }
 
 #settings-box
 {
     border-radius: 10px;
     background: var(--background-colour);
-    padding: 20px;
+    padding: 30px;
     margin-bottom: 30px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
+
 #settings-box b
 {
     font-size: var(--head-text);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-content {
+    padding: 15px;
+  }
+  
+  #settings-password {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  #settings-passwords {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  #settings-box {
+    padding: 20px;
+  }
+  
+  #settings-language-radiobtn label {
+    margin-right: 10px;
+  }
 }
