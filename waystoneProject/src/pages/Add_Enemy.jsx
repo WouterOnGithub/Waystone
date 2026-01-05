@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import "./pages-css/Add_characters.css";
@@ -6,7 +7,15 @@ import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
 
+import { useAuth } from "../context/AuthContext";
+import { addEnemy,getEntityById, updateEntity } from "../api/npcs";
+
 function Add_Enemy() {
+  const { user } = useAuth();
+  const userId = user ? user.uid : null;
+  const { campaignId, enemyId } = useParams(); // enemyId check
+  const navigate = useNavigate();
+
   const [characterData, setCharacterData] = useState({
     name: "",
     race: "",
@@ -64,7 +73,7 @@ function Add_Enemy() {
       { name: "Feature", bonus: "+2", description: "" },
       { name: "Feature", bonus: "+2", description: "Long description" }
     ],
-    racialTraits: "Darkvision, Ability Boost, Attack Bonus",
+    racialTraits: "",
     racialSpeed: "+4",
     
     // Spells
@@ -88,6 +97,38 @@ function Add_Enemy() {
       { name: "Item", bonus: "+3" }
     ]
   });
+
+  useEffect(() => {
+    if (enemyId) {
+      const fetchEnemy = async () => {
+        try {
+          const existingEnemy = await getEntityById(userId, campaignId, enemyId);
+          setCharacterData(prev => ({ ...prev, ...existingEnemy }));
+        } catch (err) {
+          console.error("Error fetching enemy", err);
+        }
+      };
+      fetchEnemy();
+    }
+  }, [enemyId, campaignId]);
+
+  const handleSaveCharacter = async () => {
+    if (!userId || !campaignId) return;
+
+    try {
+      if (enemyId) {
+        await updateEntity(userId, campaignId, enemyId, characterData);
+        console.log("Enemy updated successfully");
+      } else {
+        const newEnemy = await addEnemy(userId, campaignId, characterData);
+        console.log("Enemy added successfully");
+      }
+
+      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+    } catch (error) {
+      console.error("Error saving enemy", error);
+    }
+  };
 
   const calculateModifier = (score) => {
     return Math.floor((score - 10) / 2);
@@ -449,7 +490,7 @@ function Add_Enemy() {
 
             {/* Action Buttons */}
             <div className="char-actions">
-              <button className="char-save-btn">Save Character</button>
+              <button className="char-save-btn" onClick={handleSaveCharacter}>Save Character</button>
               <button className="char-cancel-btn">Cancel</button>
             </div>
           </div>
