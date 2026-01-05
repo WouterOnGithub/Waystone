@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
 import { getCampaign, getLocations } from "../api/userCampaigns";
 
 function Map_Main() {
   const { campaignId } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const userId = user?.uid || null;
   
@@ -104,6 +105,7 @@ function Map_Main() {
                       <button
                         key={location.id}
                         className="location-button"
+                        onClick={() => navigate(`/user/Map_Location/${campaignId}`)}
                       >
                         {location.name || 'Unnamed Location'}
                       </button>
