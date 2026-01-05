@@ -11,7 +11,7 @@ function Sidebar() {
     { to: "/user/My_Campaigns_Page", label: "My Campaigns" },
     { to: "/user/New_Campaign_Page_CAMPAIGN", label: "New Campaign" },
     { to: "/user/Settings_Page", label: "Settings" },
-    { to: "/", label: "Help" },
+    { to: "/user/HelpPage", label: "Help" },
   ];
 
   const handleLogout = async () => {
