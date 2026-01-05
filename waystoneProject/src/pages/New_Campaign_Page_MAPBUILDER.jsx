@@ -141,32 +141,69 @@ function New_Campaign_Page_MAPBUILDER() {
   }, [previewUrl]);
 
   const openPopup = (Component, title, componentProps = {}) => {
-    const popup = window.open("", title, "width=600,height=800");
-    if (!popup) return;
+    // Generate unique window name to avoid conflicts
+    const windowName = `${title.replace(/\s+/g, '_')}_${Date.now()}`;
+    const popup = window.open("", windowName, "width=900,height=1000,scrollbars=yes,resizable=yes");
+    if (!popup) {
+        console.error("Popup blocked or failed to open");
+        alert("Please allow popups for this site to open the form");
+        return;
+    }
+    console.log("Popup opened successfully:", windowName);
 
-    popup.document.title = title;
-
-    // copy existing styles to the popup so it looks consistent
-    const styles = Array.from(
-      document.querySelectorAll('style, link[rel="stylesheet"]')
-    );
+    // Copy styles from the main document
+    const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'));
+    let styleContent = '';
     styles.forEach((node) => {
-      popup.document.head.appendChild(node.cloneNode(true));
+      if (node.tagName === 'STYLE') {
+        styleContent += node.textContent;
+      } else if (node.tagName === 'LINK' && node.href) {
+        styleContent += `@import url('${node.href}');\n`;
+      }
     });
 
-    const container = popup.document.createElement("div");
-    container.id = "popup-root";
-    popup.document.body.appendChild(container);
+    // Write the HTML structure directly with embedded styles
+    popup.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${title}</title>
+          <meta charset="utf-8">
+          <style>
+            ${styleContent}
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            html, body { width: 100%; height: 100%; overflow: auto; }
+            body { font-family: Arial, sans-serif; }
+          </style>
+        </head>
+        <body>
+          <div id="popup-root" style="width: 100%; height: 100%;"></div>
+        </body>
+      </html>
+    `);
+    popup.document.close();
 
-    const root = createRoot(container);
-    root.render(
-      <Component
-        {...componentProps}
-        baseUrl={window.location.origin}
-      />
-    );
-
-    popup.addEventListener("beforeunload", () => root.unmount());
+    // Wait a moment for the document to be ready
+    setTimeout(() => {
+      try {
+        const container = popup.document.getElementById("popup-root");
+        if (container) {
+          console.log("Container found, rendering React component");
+          const root = createRoot(container);
+          root.render(
+            <Component
+              {...componentProps}
+              baseUrl={window.location.origin}
+            />
+          );
+          console.log("React component rendered successfully");
+        } else {
+          console.error("Container not found in popup");
+        }
+      } catch (error) {
+        console.error("Error rendering React component in popup:", error);
+      }
+    }, 100);
   };
 
   const handleMapUpload = (event) => {
