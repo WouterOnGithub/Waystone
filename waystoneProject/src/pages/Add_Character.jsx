@@ -1,155 +1,204 @@
-import React, { useState } from "react";
-import "./pages-css/CSS.css";
-import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
-import Footer from "../components/UI/Footer";
-import Header from "../components/UI/Header";
-import Sidebar from "../components/UI/Sidebar";
+  import React, { useState, useEffect } from "react";
+  import { useParams, useNavigate } from "react-router-dom";
+  import { useAuth } from "../context/AuthContext.jsx";
+  import {usePlayer} from "../hooks/usePlayer.js";
+  import "./pages-css/CSS.css";
+  import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
+  import "./pages-css/Add_characters.css";
+  import Footer from "../components/UI/Footer";
+  import Header from "../components/UI/Header";
+  import Sidebar from "../components/UI/Sidebar";
 
-function Add_Character() 
-{
-  const [characterData, setCharacterData] = useState({
-    name: "",
-    race: "",
-    class: "",
-    subclass: "",
-    background: "",
-    alignment: "",
-    level: 1,
-    
-    // Ability Scores
-    strength: 10,
-    dexterity: 10,
-    constitution: 10,
-    intelligence: 10,
-    wisdom: 10,
-    charisma: 10,
-    
-    // Combat Statistics
-    armorClass: 10,
-    initiative: 0,
-    speed: 30,
-    hitDice: "1d8",
-    currentHP: 10,
-    maxHP: 10,
-    savingThrows: "",
-    
-    // Skills
-    skills: 
-    {
-      acrobatics: 0,
-      animalHandling: 0,
-      arcana: 0,
-      athletics: 0,
-      deception: 0,
-      history: 0,
-      insight: 0,
-      intimidation: 0,
-      investigation: 0,
-      medicine: 0,
-      nature: 0,
-      perception: 0,
-      performance: 0,
-      persuasion: 0,
-      religion: 0,
-      sleightOfHand: 0,
-      stealth: 0,
-      survival: 0
-    },
-    
-    // Features
-    classFeatures: [
-      { name: "Feature", bonus: "+3", description: "" },
-      { name: "Feature", bonus: "+2", description: "Long description" }
-    ],
-    backgroundFeatures: [
-      { name: "Feature", bonus: "+2", description: "" },
-      { name: "Feature", bonus: "+2", description: "Long description" }
-    ],
-    racialTraits: "Darkvision, Ability Boost, Attack Bonus",
-    racialSpeed: "+4",
-    
-    // Spells
-    knownSpells: [
-      { name: "Spell", level: "1st", concentration: true },
-      { name: "Spell", level: "2nd", concentration: true }
-    ],
-    
-    // Personality & Story
-    ideals: "",
-    bonds: "",
-    backstory: "",
-    notes: "",
-    
-    // Personal Traits
-    personalTraits: [
-      { name: "Trait", bonus: "+1" },
-      { name: "Trait", bonus: "+2" },
-      { name: "Trait", bonus: "+4" },
-      { name: "Trait", bonus: "+4" },
-      { name: "Item", bonus: "+3" }
-    ]
-  });
-
-  const calculateModifier = (score) => {
-    return Math.floor((score - 10) / 2);
-  };
-
-  const handleInputChange = (field, value) => {
-    setCharacterData({ ...characterData, [field]: value });
-  };
-
-  const handleSkillChange = (skill, value) => {
-    setCharacterData({
-      ...characterData,
-      skills: { ...characterData.skills, [skill]: parseInt(value) || 0 }
-    });
-  };
-
-  const addFeature = (listName) => {
-    setCharacterData({
-      ...characterData,
-      [listName]: [...characterData[listName], { name: "Feature", bonus: "+0", description: "" }]
-    });
-  };
-
-  const addSpell = () => {
-    setCharacterData({
-      ...characterData,
-      knownSpells: [...characterData.knownSpells, { name: "Spell", level: "1st", concentration: false }]
-    });
-  };
-
-  const addTrait = () => {
-    setCharacterData({
-      ...characterData,
-      personalTraits: [...characterData.personalTraits, { name: "Trait", bonus: "+0" }]
-    });
-  };
-
-  const skillNames = 
+  function Add_Character() 
   {
-    acrobatics: "Acrobatics",
-    animalHandling: "Animal Handling",
-    arcana: "Arcana",
-    athletics: "Athletics",
-    deception: "Deception",
-    history: "History",
-    insight: "Insight",
-    intimidation: "Intimidation",
-    investigation: "Investigation",
-    medicine: "Medicine",
-    nature: "Nature",
-    perception: "Perception",
-    performance: "Performance",
-    persuasion: "Persuasion",
-    religion: "Religion",
-    sleightOfHand: "Sleight of Hand",
-    stealth: "Stealth",
-    survival: "Survival"
-  };
+    const { campaignId, CharacterId } = useParams();
+    const playerId = CharacterId;
+    const { user } = useAuth();
+    const userId = user ? user.uid : null;
+    const navigate = useNavigate();
+    
+    const {player, loading, error, savePlayer, isEditMode} = usePlayer(campaignId, playerId);
 
-  return (
-    <div>
+    const [characterData, setCharacterData] = useState({
+      name: "",
+      race: "",
+      class: "",
+      subclass: "",
+      background: "",
+      alignment: "",
+      level: 1,
+      
+      // Ability Scores
+      strength: 10,
+      dexterity: 10,
+      constitution: 10,
+      intelligence: 10,
+      wisdom: 10,
+      charisma: 10,
+      
+      // Combat Statistics
+      armorClass: 10,
+      initiative: 0,
+      speed: 30,
+      hitDice: "1d8",
+      HpCurrent: 10,
+      HpMax: 10,
+      savingThrows: {
+        strength: false,
+        dexterity: false,
+        constitution: false,
+        intelligence: false,
+        wisdom: false,
+        charisma: false
+      },
+      
+      // Skills
+      skills: 
+      {
+        acrobatics: 0,
+        animalHandling: 0,
+        arcana: 0,
+        athletics: 0,
+        deception: 0,
+        history: 0,
+        insight: 0,
+        intimidation: 0,
+        investigation: 0,
+        medicine: 0,
+        nature: 0,
+        perception: 0,
+        performance: 0,
+        persuasion: 0,
+        religion: 0,
+        sleightOfHand: 0,
+        stealth: 0,
+        survival: 0
+      },
+      
+      // Features
+      classFeatures: [
+        { name: "Feature", bonus: "+3", description: "" },
+        { name: "Feature", bonus: "+2", description: "Long description" }
+      ],
+      backgroundFeatures: [
+        { name: "Feature", bonus: "+2", description: "" },
+        { name: "Feature", bonus: "+2", description: "Long description" }
+      ],
+      racialTraits: "Darkvision, Ability Boost, Attack Bonus",
+      
+      
+      // Spells
+      knownSpells: [
+        { name: "Spell", level: "1st", concentration: true },
+        { name: "Spell", level: "2nd", concentration: true }
+      ],
+      
+      // Personality & Story
+      ideals: "",
+      bonds: "",
+      backstory: "",
+      notes: "",
+      
+      // Personal Traits
+      personalTraits: [
+        { name: "Trait", bonus: "+1" },
+        { name: "Trait", bonus: "+2" },
+        { name: "Trait", bonus: "+4" },
+        { name: "Trait", bonus: "+4" },
+        { name: "Item", bonus: "+3" }
+      ]
+    });
+
+    useEffect(() => {
+      if (player) {
+        setCharacterData(player);
+      }
+    }, [player]);
+
+    const handleSave = async () => {
+      try {
+        await savePlayer(characterData);
+        navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+      } catch (err) {
+        console.error("Error saving character:", err);
+        alert("Failed to save character. Please try again.");
+      }
+    };
+
+    const handleCancel = () => {
+      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+    };
+
+    const handleSavingThrowChange = (ability) => {
+      setCharacterData({
+        ...characterData,
+        savingThrows: {
+          ...characterData.savingThrows,
+          [ability]: !characterData.savingThrows[ability]
+        }
+      });
+    }
+
+    const calculateModifier = (score) => {
+      return Math.floor((score - 10) / 2);
+    };
+
+    const handleInputChange = (field, value) => {
+      setCharacterData({ ...characterData, [field]: value });
+    };
+
+    const handleSkillChange = (skill, value) => {
+      setCharacterData({
+        ...characterData,
+        skills: { ...characterData.skills, [skill]: parseInt(value) || 0 }
+      });
+    };
+
+    const addFeature = (listName) => {
+      setCharacterData({
+        ...characterData,
+        [listName]: [...characterData[listName], { name: "Feature", bonus: "+0", description: "" }]
+      });
+    };
+
+    const addSpell = () => {
+      setCharacterData({
+        ...characterData,
+        knownSpells: [...characterData.knownSpells, { name: "Spell", level: "1st", concentration: false }]
+      });
+    };
+
+    const addTrait = () => {
+      setCharacterData({
+        ...characterData,
+        personalTraits: [...characterData.personalTraits, { name: "Trait", bonus: "+0" }]
+      });
+    };
+
+    const skillNames = 
+    {
+      acrobatics: "Acrobatics",
+      animalHandling: "Animal Handling",
+      arcana: "Arcana",
+      athletics: "Athletics",
+      deception: "Deception",
+      history: "History",
+      insight: "Insight",
+      intimidation: "Intimidation",
+      investigation: "Investigation",
+      medicine: "Medicine",
+      nature: "Nature",
+      perception: "Perception",
+      performance: "Performance",
+      persuasion: "Persuasion",
+      religion: "Religion",
+      sleightOfHand: "Sleight of Hand",
+      stealth: "Stealth",
+      survival: "Survival"
+    };
+
+    return (
+      <div>
 
       <Sidebar />
 
@@ -358,11 +407,16 @@ function Add_Character()
 
               <div id="input-box-white">
                 <b>Saving Throw Proficiencies</b><br />
-                <input type="text" 
-                       value={characterData.savingThrows}
-                       onChange={(e) => handleInputChange('savingThrows', e.target.value)}
-                       placeholder="e.g., Strength, Constitution, ..." 
-                />
+                {['strength','dexterity','constitution','intelligence','wisdom','charisma'].map((ability) => (
+                      <label key={ability}>
+                        <input
+                          type="checkbox"
+                          checked={characterData.savingThrows[ability]}
+                          onChange={() => handleSavingThrowChange(ability)}
+                        />
+                        {ability.charAt(0).toUpperCase() + ability.slice(1)}
+                      </label>
+                    ))}
               </div>
 
             </div>
@@ -534,8 +588,8 @@ function Add_Character()
             </div>
 
             <div className="campaign-actions">
-              <button id="button-green">Save</button>
-              <button id="button-gray">Cancel</button>
+              <button id="button-green" onClick={handleSave}>Save</button>
+              <button id="button-gray" onClick={handleCancel}>Cancel</button>
             </div>
 
           </div>
@@ -546,7 +600,7 @@ function Add_Character()
 
       </div>
     </div>
-  );
-}
+    );
+  }
 
-export default Add_Character;
+  export default Add_Character;

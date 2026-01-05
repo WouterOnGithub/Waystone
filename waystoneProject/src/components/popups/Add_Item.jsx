@@ -29,7 +29,7 @@ function Add_Item()
             {/* A way to add an effect by pressing the ADD icon */}
             <label htmlFor="effects-item"><b>Effects</b></label> <button id="button-icons"><img src={Add_Logo} alt="Add_Logo" id="Add_Logo"/></button> <br />
             <input type="text" id="effects-item" hidden/>
-
+            
             {/* Examples of an effect */}
             <div className="character-section addview">
 
@@ -64,7 +64,7 @@ function Add_Item()
 
               <button id="button-green">Save</button>
               <button id="button-green">Back</button>
-
+              
         </form>
 
       </div>

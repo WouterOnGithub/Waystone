@@ -54,7 +54,7 @@ function Account_Page()
 
           <section id="account-box" className="account-profile">
             {/* The profile image */}
-            <div><img src={getAvatarUrl()} alt="Account profile" id="account-profile-image"/></div>
+            <div><img src={getAvatarUrl()} alt="Account profile" id="account-profile-image" onError={handleAvatarError}/></div>
 
             {/* The profile details*/}
             <div className="account-details">

@@ -1,15 +1,14 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { createCampaign, updateCampaignInfo } from "../api/userCampaigns";
+import { useCampaign } from "../hooks/useCampaign";
+import { useAuth } from "../context/AuthContext";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
-
-import { createCampaign } from "../api/userCampaigns";
-import {useCampaign} from "../hooks/useCampaign";
-import { useAuth } from "../context/AuthContext";
 
 function New_Campaign_Page_CAMPAIGN() 
 {
@@ -21,6 +20,7 @@ function New_Campaign_Page_CAMPAIGN()
     const isEditMode = Boolean(campaignId);
   };
   
+
   const {user} = useAuth();
   const userId = user ? user.uid : null;
   
@@ -38,9 +38,13 @@ function New_Campaign_Page_CAMPAIGN()
   const setFormData = isNewCampaign ? setDraft : setData;
 
   const handleSave = async () => {
-    
     if(!userId) return;
     
+    if (!formData.name) {
+    alert("Campaign name is required");
+    return;
+  }
+
     try {
       if (isNewCampaign) {
         const newCampaign = await createCampaign(userId, 

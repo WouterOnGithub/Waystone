@@ -16,16 +16,16 @@ function Login_Page()
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => 
-  {
-    setError("");
-    try {
-      await signIn(email, password);
-      navigate("/user/Main_Page"); // Redirect if successful login
-    } catch (err) {
-      setError(err.message); // Display error if NOT successful login
-    }
-  };
+const handleLogin = async () => 
+{
+  setError("");
+  try {
+    await signIn(email, password);
+    navigate("/user/Main_Page"); // Redirect if successful login
+  } catch (err) {
+    setError(err.message); // Display error if NOT successful login
+  }
+};
 
   return (
     <div id="login-register-page"> {/* The whole page */}

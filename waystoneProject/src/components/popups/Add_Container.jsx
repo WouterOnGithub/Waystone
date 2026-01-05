@@ -1,8 +1,6 @@
 import React from "react";
 import "../../pages/pages-css/CSS.css";
 import "../../pages/pages-css/Add_View.css";
-import Required_Logo from "../../assets/Required_Logo.webp";
-import Delete_Logo from "../../assets/Delete_Logo.webp";
 import Add_Logo from "../../assets/Add_Logo.webp";
 
 function Add_Container() 
@@ -56,7 +54,7 @@ function Add_Container()
             </div>
 
               <button id="button-green">Save</button>
-              <button id="button-green">Back</button>
+              <button id="button-green">Back</button> 
 
         </form>
 

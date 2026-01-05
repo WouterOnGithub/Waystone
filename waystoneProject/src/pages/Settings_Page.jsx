@@ -5,14 +5,9 @@ import "./pages-css/Settings_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
 
-function Settings_Page() {
+function Settings_Page() 
+{
   return (
     <div className="settings-page">
       <Sidebar />
