@@ -806,7 +806,7 @@ function New_Campaign_Page_MAPBUILDER()
                 {saving ? "Saving..." : "Save and Continue"}
               </button>
               <button 
-                className="button-gray"
+                id="button-gray"
                 onClick={() => navigate(`/user/Map_Main/${campaignId}`)}
                 disabled={!campaignId}
               >

@@ -27,9 +27,11 @@ nav a:hover /* Navigation Side-bar links */
 
 #Waystone_Logo-sidebar
 {
-    width: 80%;
-    margin-top: 60px;
-    margin-bottom: 50px;
+    width: 75%;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--background-colour3);
 }
 
 #button-green-sidebar /* The Exit button in the sidebar */
@@ -41,7 +43,7 @@ nav a:hover /* Navigation Side-bar links */
     padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
-    margin-top: 70px;
+    margin-top: 30px;
 }
 #button-green-sidebar:hover
 {
