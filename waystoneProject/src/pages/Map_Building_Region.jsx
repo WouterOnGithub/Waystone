@@ -37,11 +37,9 @@ function Map_Building_Region() {
         // Load specific building/region if buildingId is provided
         if (buildingId) {
           const foundBuilding = regionsList.find(building => building.id === buildingId);
-          console.log("Found building:", foundBuilding); // Debug log
-          console.log("Building imageUrl:", foundBuilding?.imageUrl); // Debug log
           setBuilding(foundBuilding || null);
         }
-        console.log("All regions:", regionsList); // Debug log
+
       } catch (error) {
         console.error("Failed to load data:", error);
       } finally {
