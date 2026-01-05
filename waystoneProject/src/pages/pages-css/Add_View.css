@@ -1,16 +1,4 @@
 /* This is all the css for the Add/View pop-ups */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-}
-
 :root
 {
     --addview-text: 60px;

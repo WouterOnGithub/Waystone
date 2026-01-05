@@ -170,10 +170,13 @@ function New_Campaign_Page_MAPBUILDER() {
           <title>${title}</title>
           <meta charset="utf-8">
           <style>
-            ${styleContent}
+            /* CSS reset for popup only */
             * { margin: 0; padding: 0; box-sizing: border-box; }
             html, body { width: 100%; height: 100%; overflow: auto; }
             body { font-family: Arial, sans-serif; }
+            
+            /* Main application styles */
+            ${styleContent}
           </style>
         </head>
         <body>
