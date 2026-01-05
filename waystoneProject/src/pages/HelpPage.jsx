@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Sidebar from '../components/Sidebar';
-import './HelpPage.css';
+import Header from '../components/UI/Header';
+import Footer from '../components/UI/Footer';
+import Sidebar from '../components/UI/Sidebar';
+import './pages-css/HelpPage.css';
 
 function HelpPage() {
   const [activeCategory, setActiveCategory] = useState('getting-started');
