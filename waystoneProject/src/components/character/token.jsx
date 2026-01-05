@@ -8,7 +8,6 @@ export default function Token({ userId,tokenId, x, y, onDragStart, onClick, camp
   
 
   if (!player) return null;
-  console.log("Token image:", player.imageUrl);
 
   return (
     

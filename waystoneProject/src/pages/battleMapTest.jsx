@@ -1,7 +1,8 @@
 import BattleMap from "../components/map/battleMap";
+import BattleMapWithSidebar from "../components/map/battleMapWithSidebar";
 
 function BattleMapTest() {
-  return <BattleMap userId="UID" campaignId="Campaign_ID" mapId="mapsId" />;
+  return <BattleMapWithSidebar userId="UID" campaignId="Campaign_ID" mapId="mapsId" />;
 }
 
-export default BattleMapTest;
+export default BattleMapTest; 
