@@ -133,7 +133,10 @@ function App()
                 <Route path="/user/Map_Main/:campaignId" element={<Map_Main />} />
                 <Route path="/user/Map_Location" element={<Map_Location />} />
                 <Route path="/user/Map_Location/:campaignId" element={<Map_Location />} />
-                <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} /> 
+                <Route path="/user/Map_Location/:campaignId/:locationId" element={<Map_Location />} />
+                <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} />
+                <Route path="/user/Map_Building_Region/:campaignId" element={<Map_Building_Region />} />
+                <Route path="/user/Map_Building_Region/:campaignId/:buildingId" element={<Map_Building_Region />} /> 
                 {/* <Route path="/user/Map_Battle_View" element={<Map_Battle_View />} /> */}
 
                 <Route path="/battleMapTest" element={<BattleMapTest/>} />

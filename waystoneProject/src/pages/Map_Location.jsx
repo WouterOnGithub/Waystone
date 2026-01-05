@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions } from "../api/userCampaigns";
+import { getCampaign, getBuildingsRegions, getLocations } from "../api/userCampaigns";
 
 function Map_Location() {
-  const { campaignId } = useParams();
+  const { campaignId, locationId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
   const userId = user?.uid || null;
@@ -15,11 +15,12 @@ function Map_Location() {
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [campaign, setCampaign] = useState(null);
   const [campaignRegions, setCampaignRegions] = useState([]);
+  const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load campaign data and main map when component mounts or campaignId changes
+  // Load campaign data and location when component mounts or campaignId/locationId changes
   useEffect(() => {
-    const loadCampaign = async () => {
+    const loadData = async () => {
       if (!campaignId || !userId) {
         setLoading(false);
         return;
@@ -32,15 +33,22 @@ function Map_Location() {
         // Load regions/buildings for this campaign
         const regionsList = await getBuildingsRegions(userId, campaignId);
         setCampaignRegions(regionsList || []);
+        
+        // Load specific location if locationId is provided
+        if (locationId) {
+          const locationsList = await getLocations(userId, campaignId);
+          const foundLocation = locationsList.find(loc => loc.id === locationId);
+          setLocation(foundLocation || null);
+        }
       } catch (error) {
-        console.error("Failed to load campaign:", error);
+        console.error("Failed to load data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    loadCampaign();
-  }, [campaignId, userId]);
+    loadData();
+  }, [campaignId, locationId, userId]);
 
   const toggleRegions = () => {
     setRegionsOpen(!regionsOpen);
@@ -100,18 +108,19 @@ function Map_Location() {
 
               {regionsOpen && (
                 <div className="locations-buttons-container">
-                  {campaignRegions.length > 0 ? (
-                    campaignRegions.map((region) => (
+                  {campaignRegions.filter(region => region.locationId === locationId).length > 0 ? (
+                    campaignRegions.filter(region => region.locationId === locationId).map((region) => (
                       <button
                         key={region.id}
                         className="location-button"
+                        onClick={() => navigate(`/user/Map_Building_Region/${campaignId}/${region.id}`)}
                       >
                         {region.name || 'Unnamed Region'}
                       </button>
                     ))
                   ) : (
                     <div className="no-locations-message">
-                      No regions added yet
+                      No regions added to this location yet
                     </div>
                   )}
                 </div>
@@ -123,6 +132,17 @@ function Map_Location() {
               {loading ? (
                 <div className="map-placeholder">
                   <p>Loading map...</p>
+                </div>
+              ) : location?.imageUrl ? (
+                <img
+                  src={location.imageUrl}
+                  alt={`Location: ${location.name || 'Unnamed Location'}`}
+                  className="map-image"
+                />
+              ) : locationId ? (
+                <div className="map-placeholder">
+                  <p>No image uploaded for this location</p>
+                  <small>Add an image in the Map Builder to see it here</small>
                 </div>
               ) : campaign?.mainMapUrl ? (
                 <img

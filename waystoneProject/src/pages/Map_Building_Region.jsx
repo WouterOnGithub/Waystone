@@ -1,32 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
+import { useAuth } from "../context/AuthContext";
+import { getCampaign, getBuildingsRegions } from "../api/userCampaigns";
 
-function Map_Main() {
-  const [locationsOpen, setLocationsOpen] = useState(false);
+function Map_Building_Region() {
+  const { campaignId, buildingId } = useParams();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const userId = user?.uid || null;
+  
+  const [regionsOpen, setRegionsOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [campaign, setCampaign] = useState(null);
+  const [campaignRegions, setCampaignRegions] = useState([]);
+  const [building, setBuilding] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const locations = [
-    { id: 1, name: "Eldor's Keep", description: "Ancient fortress in the heart of the realm" },
-    { id: 2, name: "Darkfall", description: "Mysterious village shrouded in shadow" },
-    { id: 3, name: "Ithilien", description: "Enchanted forest region" },
-    { id: 4, name: "Lormdell", description: "Peaceful riverside town" },
-    { id: 5, name: "Darkwood", description: "Dense and dangerous forest" }
-  ];
+  // Load campaign data and building/region when component mounts or campaignId/buildingId changes
+  useEffect(() => {
+    const loadData = async () => {
+      if (!campaignId || !userId) {
+        setLoading(false);
+        return;
+      }
 
-  const toggleLocations = () => {
-    setLocationsOpen(!locationsOpen);
+      try {
+        const campaignData = await getCampaign(userId, campaignId);
+        setCampaign(campaignData);
+        
+        // Load regions/buildings for this campaign
+        const regionsList = await getBuildingsRegions(userId, campaignId);
+        setCampaignRegions(regionsList || []);
+        
+        // Load specific building/region if buildingId is provided
+        if (buildingId) {
+          const foundBuilding = regionsList.find(building => building.id === buildingId);
+          console.log("Found building:", foundBuilding); // Debug log
+          console.log("Building imageUrl:", foundBuilding?.imageUrl); // Debug log
+          setBuilding(foundBuilding || null);
+        }
+        console.log("All regions:", regionsList); // Debug log
+      } catch (error) {
+        console.error("Failed to load data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, [campaignId, buildingId, userId]);
+
+  const toggleRegions = () => {
+    setRegionsOpen(!regionsOpen);
     if (settingsOpen) setSettingsOpen(false);
   };
 
   const toggleSettings = () => {
     setSettingsOpen(!settingsOpen);
-    if (locationsOpen) setLocationsOpen(false);
+    if (regionsOpen) setRegionsOpen(false);
   };
 
-  const selectLocation = (location) => {
-    setSelectedLocation(location);
-    setLocationsOpen(false);
+  const selectRegion = (region) => {
+    setSelectedRegion(region);
+    setRegionsOpen(false);
   };
 
   return (
@@ -58,40 +96,68 @@ function Map_Main() {
               </div>
             )}
 
-            {/* Locations Dropdown */}
+            {/* Regions Dropdown */}
             <div className="map-locations-dropdown">
               <button
-                className={`locations-toggle ${locationsOpen ? "open" : ""}`}
-                onClick={toggleLocations}
+                className={`locations-toggle ${regionsOpen ? "open" : ""}`}
+                onClick={toggleRegions}
               >
-                Locations
+                Regions
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </button>
 
-              {locationsOpen && (
-                <div className="locations-menu">
-                  {locations.map((location) => (
-                    <div
-                      key={location.id}
-                      className="location-item"
-                      onClick={() => selectLocation(location)}
-                    >
-                      {location.name}
+              {regionsOpen && (
+                <div className="locations-buttons-container">
+                  {campaignRegions.length > 0 ? (
+                    campaignRegions.map((region) => (
+                      <button
+                        key={region.id}
+                        className="location-button"
+                        onClick={() => navigate(`/user/Map_Building_Region/${campaignId}/${region.id}`)}
+                      >
+                        {region.name || 'Unnamed Region'}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="no-locations-message">
+                      No regions added yet
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
             </div>
 
             {/* Map Display */}
             <div className="map-display">
-              <img
-                src="/path-to-your-map-image.jpg"
-                alt="Campaign Map"
-                className="map-image"
-              />
+              {loading ? (
+                <div className="map-placeholder">
+                  <p>Loading map...</p>
+                </div>
+              ) : building?.imageUrl ? (
+                <img
+                  src={`${building.imageUrl}?v=${Date.now()}`}
+                  alt={`Building/Region: ${building.name || 'Unnamed Building/Region'}`}
+                  className="map-image"
+                />
+              ) : buildingId ? (
+                <div className="map-placeholder">
+                  <p>No image uploaded for this building/region</p>
+                  <small>Add an image in the Map Builder to see it here</small>
+                </div>
+              ) : campaign?.mainMapUrl ? (
+                <img
+                  src={`${campaign.mainMapUrl}?v=${Date.now()}`}
+                  alt="Campaign Map"
+                  className="map-image"
+                />
+              ) : (
+                <div className="map-placeholder">
+                  <p>No map uploaded yet</p>
+                  <small>Upload a map in the Map Builder to see it here</small>
+                </div>
+              )}
 
               <div className="map-compass">
                 <svg width="80" height="80" viewBox="0 0 100 100">
@@ -104,35 +170,10 @@ function Map_Main() {
                   <text x="12" y="54" textAnchor="middle">W</text>
                 </svg>
               </div>
-
-              <div className="map-placeholder">
-                <p>Map will be displayed here</p>
-                <small>Click settings to upload a background image</small>
-              </div>
             </div>
-
-            {/* Location Info */}
-            {selectedLocation && (
-              <div className="location-info-panel">
-                <button
-                  className="location-info-close"
-                  onClick={() => setSelectedLocation(null)}
-                >
-                  ×
-                </button>
-                <h3>{selectedLocation.name}</h3>
-                <p>{selectedLocation.description}</p>
-
-                <div className="location-actions">
-                  <button className="location-btn">View Details</button>
-                  <button className="location-btn">Add Notes</button>
-                </div>
-              </div>
-            )}
-
           </div>
         </div>
   );
 }
 
-export default Map_Main;
+export default Map_Building_Region;

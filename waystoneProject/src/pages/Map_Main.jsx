@@ -105,7 +105,7 @@ function Map_Main() {
                       <button
                         key={location.id}
                         className="location-button"
-                        onClick={() => navigate(`/user/Map_Location/${campaignId}`)}
+                        onClick={() => navigate(`/user/Map_Location/${campaignId}/${location.id}`)}
                       >
                         {location.name || 'Unnamed Location'}
                       </button>
