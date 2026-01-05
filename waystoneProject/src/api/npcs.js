@@ -1,78 +1,50 @@
 import { db } from "../firebase/firebase";
-import {collection, getDocs, addDoc, updateDoc, doc, getDoc, setDoc,serverTimestamp} from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  doc
+} from "firebase/firestore";
 
-
-export const getNPCsByCampaign = async (userId, campaignId) => {
-  if (!userId || !campaignId) return [];
-
-  const snapshot = await getDocs(
-    collection(db, "Users", userId, "Campaigns", campaignId, "NPCs")
-  );
-
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-};
-
-export const getNPCById = async (userId, campaignId, npcId) => {
-  const npcRef = doc(
-    db,
-    "Users",
-    userId,
-    "Campaigns",
-    campaignId,
-    "NPCs",
-    npcId
-  );
-
-  const snapshot = await getDoc(npcRef);
-  if (!snapshot.exists()) {
-    throw new Error("NPC not found");
-  }
-
-  return { id: snapshot.id, ...snapshot.data() };
-};
+import { createBaseCharacter } from "./entityCore";
 
 export const addNPC = async (userId, campaignId, npcData) => {
-  const npcCollection = collection(db, "Users", userId, "Campaigns", campaignId, "NPCs" );
-  const docRef = await addDoc(npcCollection, {
-    ...npcData,
-    createdAt: serverTimestamp(),
-    lastUpdated: serverTimestamp()
-  });
-
-  const maxSlots = 20;
-  const inventoryRef = doc(db, "Users", userId, "Campaigns", campaignId, "NPCs", docRef.id, "Inventory", inventoryId);
-      
-  const slots = {};
-  for (let i = 1; i <= maxSlots; i++) {
-    slots[`Slot${i}`] = {
-      Amount: 0,
-      ItemID: "",
-      lastUpdated: serverTimestamp()
-    };
-  }
-
-  await setDoc(inventoryRef, {
-    capacity: maxSlots,
-    ...slots
-  });
-
-  return { id: docRef.id, ...npcData };
+  return createBaseCharacter(
+    ["Users", userId, "Campaigns", campaignId, "Entities"],
+    { ...npcData, type: "npc" }
+  );
 };
 
-// 🔹 NPC updaten
-export const updateNPC = async (userId, campaignId, npcId, npcData) => {
-  const npcRef = doc(
-    db,
-    "Users",
-    userId,
-    "Campaigns",
-    campaignId,
-    "NPCs",
-    npcId
+export const addEnemy = async (userId, campaignId, enemyData) => {
+  return createBaseCharacter(
+    ["Users", userId, "Campaigns", campaignId, "Entities"],
+    { ...enemyData, type: "enemy" }
   );
+};
 
-  await updateDoc(npcRef, {
-    ...npcData,
-    lastUpdated: serverTimestamp()
-  });
+export const getEntitiesByType= async (userId, campaignId, type) => {
+  if(!userId || !campaignId) return[];
+
+  try{
+    const snapshot = await getDocs(
+      collection(db, "Users", userId , "Campaigns", campaignId, "Entities")
+    )
+      return snapshot.docs
+        .map(doc => ({id: doc.id, ...doc.data() }))
+        .filter(entity => entity.type === type);
+  }catch(error){
+    console.error(`Error fetching ${type}s`, error);
+    return [];
+  }
+}
+
+export const getEntityById = async(userId, campaignId, entityId) => {
+  const entityRef = doc(db, "Users", userId, "Campaigns", campaignId, "Entities", entityId);
+  const snapshot = await getDoc(entityRef)
+  
+  if(!snapshot.exists()){
+    throw new Error('Entity not found')
+  }
+
+  return{id: snapshot.id, ...snapshot.data()};
 };
