@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -7,25 +7,31 @@ import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
 
-import { addNPC } from "../api/npcs";
+import { addNPC, getEntityById, updateEntity } from "../api/npcs";
 import { useAuth } from "../context/AuthContext";
+import { setDoc } from "firebase/firestore";
 
 function Add_NPC() {
   const { user } = useAuth();
   const userId = user ? user.uid : null;
-  const { campaignId } = useParams();
+  const { campaignId, npcId } = useParams();
   const navigate = useNavigate();
 
   const handleSaveCharacter = async ()=>{
   if (!userId || !campaignId) return
 
     try {
-      const newNPC = await addNPC(userId, campaignId, characterData);
-      console.log("npc saved", newNPC);
-
+      if(npcId){
+        await updateEntity(userId, campaignId, npcId, characterData)
+        console.log("Npc uppdated succesfully");
+      }else{
+        const newNPC = await addNPC(userId, campaignId, characterData);
+        console.log("npc saved", newNPC);
+      }
+    
       navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
-    }catch{
-      console.error("Error sasving NPC", error);
+    }catch(error){
+      console.error("Error saving NPC", error);
     }
   };
 
@@ -56,8 +62,8 @@ function Add_NPC() {
     initiative: 0,
     speed: 30,
     hitDice: "1d8",
-    currentHP: 10,
-    maxHP: 10,
+    HpCurrent: 10,
+    HpMax: 10,
     savingThrows: "",
     
     // Skills
@@ -115,13 +121,36 @@ function Add_NPC() {
       { name: "Item", bonus: "+3" }
     ]
   });
+  
+  useEffect(()=>{
+    if(npcId){
+      const fetchNPC = async() => {
+        try{
+          const existingNPC = await getEntityById(userId,campaignId, npcId);
+          setCharacterData(prev => ({...prev, ...existingNPC}));
+        }catch(err){
+          console.log('Error fetching npc')
+        } 
+      };
+      fetchNPC();
+    }
+  }, [npcId, campaignId]);
 
   const calculateModifier = (score) => {
     return Math.floor((score - 10) / 2);
   };
+  
+  const handleInputChange = (field, value)=>{
+    setCharacterData(prev => ({ ...prev, [field]: value }));
+  }
 
-  const handleInputChange = (field, value) => {
-    setCharacterData({ ...characterData, [field]: value });
+  const handleNumberInputChange = (field, value) => {
+    const number = parseInt(value);
+    if(isNaN(number)){
+      alert(`${field} moet een geldig getal zijn`);
+      return;
+    }
+    setCharacterData(prev => ({ ...prev, [field]: number }));
   };
 
   const handleSkillChange = (skill, value) => {
@@ -212,7 +241,7 @@ function Add_NPC() {
                   <input 
                     type="text" 
                     value={characterData.subKlassen}
-                    onChange={(e) => handleInputChange('subKlasse', e.target.value)}
+                    onChange={(e) => handleInputChange('subKlassen', e.target.value)}
                   />
                 </div>
               </div>
@@ -257,7 +286,7 @@ function Add_NPC() {
                   <input 
                     type="number" 
                     value={characterData.level}
-                    onChange={(e) => handleInputChange('level', e.target.value)}
+                    onChange={(e) => handleNumberInputChange('level', e.target.value)}
                   />
                 </div>
               </div>
@@ -274,7 +303,7 @@ function Add_NPC() {
                       <input 
                         type="number" 
                         value={characterData[ability]}
-                        onChange={(e) => handleInputChange(ability, parseInt(e.target.value) || 10)}
+                        onChange={(e) => handleNumberInputChange(ability, e.target.value) || 10 }
                         className="ability-score"
                       />
                       <div className="ability-modifier">
@@ -296,7 +325,7 @@ function Add_NPC() {
                   <input 
                     type="number" 
                     value={characterData.armorKlassen}
-                    onChange={(e) => handleInputChange('armorKlassen', e.target.value)}
+                    onChange={(e) => handleNumberInputChange('armorKlassen', e.target.value)}
                   />
                 </div>
                 <div className="combat-stat">
@@ -304,7 +333,7 @@ function Add_NPC() {
                   <input 
                     type="number" 
                     value={characterData.initiative}
-                    onChange={(e) => handleInputChange('initiative', e.target.value)}
+                    onChange={(e) => handleNumberInputChange('initiative', e.target.value)}
                   />
                 </div>
                 <div className="combat-stat">
@@ -312,7 +341,7 @@ function Add_NPC() {
                   <input 
                     type="number" 
                     value={characterData.speed}
-                    onChange={(e) => handleInputChange('speed', e.target.value)}
+                    onChange={(e) => handleNumberInputChange('speed', e.target.value)}
                   />
                 </div>
                 <div className="combat-stat">
@@ -329,7 +358,7 @@ function Add_NPC() {
                   <input 
                     type="number" 
                     value={characterData.HpCurrent}
-                    onChange={(e) => handleInputChange('HpCurrent', e.target.value)}
+                    onChange={(e) => handleNumberInputChange('HpCurrent',e.target.value)}
                   />
                 </div>
                 <div className="combat-stat">
@@ -337,7 +366,7 @@ function Add_NPC() {
                   <input 
                     type="number" 
                     value={characterData.HpMax}
-                    onChange={(e) => handleInputChange('HpMax', e.target.value)}
+                    onChange={(e) => handleNumberInputChange('HpMax', e.target.value)}
                   />
                 </div>
               </div>

@@ -3,7 +3,8 @@ import {
   collection,
   getDocs,
   getDoc,
-  doc
+  doc,
+  setDoc
 } from "firebase/firestore";
 
 import { createBaseCharacter } from "./entityCore";
@@ -21,6 +22,21 @@ export const addEnemy = async (userId, campaignId, enemyData) => {
     { ...enemyData, type: "enemy" }
   );
 };
+
+export const updateEntity =async(userId, campaignId, entityId, updateData)=>{
+  if (!userId || !campaignId || !entityId) {
+    throw new Error("Missing required parameters for updating entity");
+  }
+
+  const entityRef = doc(db, "Users", userId, "Campaigns", campaignId, "Entities", entityId);
+  try {
+    await setDoc(entityRef, updateData, { merge: true });
+    console.log(`Entity ${entityId} updated successfully`);
+  } catch (error) {
+    console.error("Error updating entity:", error);
+    throw error;
+  }
+}
 
 export const getEntitiesByType= async (userId, campaignId, type) => {
   if(!userId || !campaignId) return[];
@@ -41,7 +57,6 @@ export const getEntitiesByType= async (userId, campaignId, type) => {
 export const getEntityById = async(userId, campaignId, entityId) => {
   const entityRef = doc(db, "Users", userId, "Campaigns", campaignId, "Entities", entityId);
   const snapshot = await getDoc(entityRef)
-  
   if(!snapshot.exists()){
     throw new Error('Entity not found')
   }
