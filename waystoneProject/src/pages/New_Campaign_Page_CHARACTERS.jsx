@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -12,33 +13,61 @@ import Delete_Logo from "../assets/Delete_Logo.webp";
 import Add_Logo from "../assets/Add_Logo.webp";
 import Placeholder from "../assets/PlaceholderImage.jpg";
 
-function New_Campaign_Page_CHARACTERS() {
-  const [players, setPlayers] = useState([
-    { name: "Player_1", level: 3, hp: 19 },
-    { name: "Player_2", level: 1, hp: 15 },
-  ]);
+import { useAuth } from "../context/AuthContext";
+import { getPlayersByCampaign } from "../api/players";
 
-  const [npcs, setNpcs] = useState([
+function New_Campaign_Page_CHARACTERS() {
+  const {campaignId} = useParams()
+  const navigate = useNavigate();
+  const {user} = useAuth();
+  const userId = user ? user.uid : null;
+
+  const handleAddPlayer = () => {
+    navigate(`/user/${campaignId}/Add_Character`);
+  };
+  const handleEditPlayer = (playerId) => {
+    navigate(`/user/${campaignId}/Add_Character/${playerId}`);
+  };
+
+  const handleAddNpc = () => {
+    navigate(`/user/${campaignId}/Add_NPC`);
+  };
+  const handleEditNpc = () => {
+    navigate(`/user/${campaignId}/Add_NPC/${npcId}`);
+  };
+
+  const handleAddEnemy = () => {
+    navigate(`/user/${campaignId}/Add_Enemy`);
+  }
+  const handleEditEnemy = () => {
+    navigate(`/user/${campaignId}/Add_Enemy/${enemyId}`);
+  }
+
+  useEffect(() => {
+    if (!userId || !campaignId) return;
+    const fetchPlayers = async () => {
+      try {
+        const playerData = await   getPlayersByCampaign(userId, campaignId);
+        setPlayers(playerData);
+      } catch (error) {
+        console.error("Error loading players: ", error);
+      }
+  };
+    fetchPlayers();
+  }, [userId, campaignId]);
+
+
+  const [players, setPlayers] = useState([]);
+
+  const [npcs] = useState([
     { name: "NPC_1", job: "blacksmith" },
     { name: "NPC_2", job: "librarian" },
   ]);
 
-  const [enemies, setEnemies] = useState([
+  const [enemies] = useState([
     { name: "Enemy", cr: 5, hp: 12 },
     { name: "Enemy", cr: 3, hp: 15 },
   ]);
-
-  const addPlayer = () => {
-    setPlayers([...players, { name: `Player_${players.length + 1}`, level: 1, hp: 10 }]);
-  };
-
-  const addNpc = () => {
-    setNpcs([...npcs, { name: `NPC_${npcs.length + 1}`, job: "" }]);
-  };
-
-  const addEnemy = () => {
-    setEnemies([...enemies, { name: "Enemy", cr: 1, hp: 10 }]);
-  };
 
   return (
     <div className="campaign-page">
@@ -47,9 +76,29 @@ function New_Campaign_Page_CHARACTERS() {
         <Header title="New Campaign" />
         <div className="campaign-body">
           <div className="campaign-tabs">
-            <button className="campaign-tab">Campaign</button>
-            <button className="campaign-tab">Map Builder</button>
-            <button className="campaign-tab active">Characters</button>
+            <button 
+              className="campaign-tab"
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}
+            >
+              Campaign
+            </button>
+
+            <button
+              className="campaign-tab"
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}
+            >
+              Map Builder
+            </button>
+
+            <button
+              className="campaign-tab active"
+              disabled={!campaignId}
+              onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}
+            >
+              Characters
+            </button>
           </div>
 
           <div className="campaign-card">
@@ -59,11 +108,11 @@ function New_Campaign_Page_CHARACTERS() {
               <h4>Players</h4>
               {players.map((player, index) => (
                 <div key={index} className="character-row">
-                  <span>{player.name} | lvl {player.level} | HP {player.hp}</span>
-                  <button className="edit-button">edit</button>
+                  <span>{player.name} | lvl {player.level} | Hp  {player.HpCurrent}/{player.HpMax}</span>
+                  <button className="edit-button" onClick={() => handleEditPlayer(player.id)}>edit</button>
                 </div>
               ))}
-              <button className="add-button" onClick={addPlayer}>add Player</button>
+              <button className="add-button" onClick={handleAddPlayer}>add Player</button>
             </div>
 
             <div className="character-section">
@@ -71,10 +120,10 @@ function New_Campaign_Page_CHARACTERS() {
               {npcs.map((npc, index) => (
                 <div key={index} className="character-row">
                   <span>{npc.name} | Job: {npc.job}</span>
-                  <button className="edit-button">edit</button>
+                  <button className="edit-button" onClick={() => handleEditNpc()}>edit</button>
                 </div>
               ))}
-              <button className="add-button" onClick={addNpc}>add NPC</button>
+              <button className="add-button" onClick={handleAddNpc}>add NPC</button>
             </div>
 
             <div className="character-section">
@@ -82,10 +131,10 @@ function New_Campaign_Page_CHARACTERS() {
               {enemies.map((enemy, index) => (
                 <div key={index} className="character-row">
                   <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
-                  <button className="edit-button">edit</button>
+                  <button className="edit-button" onClick={() => handleEditEnemy()}>edit</button>
                 </div>
               ))}
-              <button className="add-button" onClick={addEnemy}>add enemy</button>
+              <button className="add-button" onClick={handleAddEnemy}>add enemy</button>
             </div>
 
             <div className="campaign-actions">

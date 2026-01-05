@@ -302,7 +302,7 @@ function Add_NPC() {
                   <input 
                     type="number" 
                     value={characterData.currentHP}
-                    onChange={(e) => handleInputChange('currentHP', e.target.value)}
+                    onChange={(e) => handleInputChange('HpCurrent', e.target.value)}
                   />
                 </div>
                 <div className="combat-stat">
@@ -310,7 +310,7 @@ function Add_NPC() {
                   <input 
                     type="number" 
                     value={characterData.maxHP}
-                    onChange={(e) => handleInputChange('maxHP', e.target.value)}
+                    onChange={(e) => handleInputChange('HpMax', e.target.value)}
                   />
                 </div>
               </div>

@@ -1,0 +1,26 @@
+.campaigns-content#content {
+  /* Override global #content sizing only on My Campaigns page */
+  margin-right: 0;
+  width: 100%;      /* always span the available main area */
+  max-width: none;  /* don't let content get narrower than the main area */
+  min-width: calc(100vw - 350px); /* fill viewport width minus sidebar */
+  box-sizing: border-box;
+}
+
+/* Make individual campaign cards slightly smaller so ~5 fit in a row,
+   but keep the same general look as the global styles */
+.campaigns-content #box-section {
+  gap: 12px;
+}
+
+.campaigns-content #box-text p {
+  width: 225px;   /* slightly smaller than the global 250px */
+  height: 100px;  /* keep original height so the coloured area looks the same */
+  margin-left: 25px; /* keep spacing similar to global but a bit tighter */
+}
+
+.campaigns-content #box {
+  width: 225px;   /* match the title width so the white area lines up */
+  height: 40px;   /* keep original height so the archive bar looks the same */
+  margin-left: 25px;
+}

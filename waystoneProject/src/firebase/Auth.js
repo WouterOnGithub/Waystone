@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'
 import {doc, setDoc, serverTimestamp} from 'firebase/firestore'
 import {auth,db} from './firebase'
 
@@ -10,15 +10,15 @@ export const signUp = async (email,password, username) =>
     email: email,
     createdAt: serverTimestamp(),
     username: username,
+    desctiption: ""
   });
 return userCredential
 
    };
 
-export const signIn = (email,password) =>
-{
-    signInWithEmailAndPassword(auth, email, password);
-}
+export const signIn = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
 
 export const logout = () => signOut(auth);
 

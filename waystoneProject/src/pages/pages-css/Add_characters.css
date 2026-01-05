@@ -55,8 +55,8 @@
 .char-field select:focus,
 .char-field textarea:focus {
   outline: none;
-  border-color: #5b701d;
-  box-shadow: 0 0 0 3px rgba(91, 112, 29, 0.1);
+  border-color: #17007e;
+  box-shadow: 0 0 0 3px rgba(57, 29, 112, 0.1);
 }
 
 .char-field textarea {
@@ -87,7 +87,7 @@
 }
 
 .ability-box {
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
   border-radius: 8px;
   padding: 16px 12px;
   text-align: center;
@@ -114,18 +114,18 @@
   width: 55px;
   padding: 8px;
   text-align: center;
-  border: 2px solid #c5d28c;
+  border: 2px solid #9b8cd2;
   border-radius: 6px;
   background: white;
-  color: #2e3d08;
+  color: #11083d;
   font-weight: 700;
   font-size: 18px;
 }
 
 .ability-score:focus {
   outline: none;
-  border-color: #c5d28c;
-  box-shadow: 0 0 0 3px rgba(197, 210, 140, 0.3);
+  border-color: #988cd2;
+  box-shadow: 0 0 0 3px rgba(141, 140, 210, 0.3);
 }
 
 .ability-modifier {
@@ -135,7 +135,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.15);
-  border: 2px solid #c5d28c;
+  border: 2px solid #918cd2;
   border-radius: 50%;
   font-size: 18px;
   font-weight: 700;
@@ -178,8 +178,8 @@
 
 .combat-stat input:focus {
   outline: none;
-  border-color: #5b701d;
-  box-shadow: 0 0 0 3px rgba(91, 112, 29, 0.1);
+  border-color: #281d70;
+  box-shadow: 0 0 0 3px rgba(37, 29, 112, 0.1);
 }
 
 /* Skills */
@@ -201,18 +201,18 @@
 }
 
 .skill-row:hover {
-  background: rgba(91, 112, 29, 0.05);
+  background: rgba(30, 29, 112, 0.05);
 }
 
 .skill-row:first-child {
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  background: linear-gradient(180deg, #211d70 0%, #0c083d 100%);
   color: white;
   font-weight: 700;
   font-size: 14px;
 }
 
 .skill-row:first-child:hover {
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
 }
 
 .skill-label {
@@ -221,7 +221,7 @@
 }
 
 .skill-bonus {
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
   color: white;
   padding: 8px 14px;
   border-radius: 5px;
@@ -243,8 +243,8 @@
 
 .skill-select:focus {
   outline: none;
-  border-color: #5b701d;
-  box-shadow: 0 0 0 3px rgba(91, 112, 29, 0.1);
+  border-color: #251d70;
+  box-shadow: 0 0 0 3px rgba(29, 30, 112, 0.1);
 }
 
 /* Features & Traits */
@@ -260,7 +260,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
   color: white;
   border-radius: 6px;
   font-size: 15px;
@@ -288,8 +288,8 @@
 .add-feature-btn {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
-  color: #c5d28c;
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
+  color: #978cd2;
   border: none;
   border-radius: 6px;
   font-weight: 700;
@@ -315,7 +315,7 @@
 
 .spell-item {
   padding: 12px 16px;
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
   color: white;
   border-radius: 6px;
   font-size: 15px;
@@ -333,7 +333,7 @@
 
 .trait-box {
   padding: 12px 16px;
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
   color: white;
   border-radius: 6px;
   text-align: center;
@@ -364,8 +364,8 @@
 }
 
 .char-save-btn {
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
-  color: #c5d28c;
+  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
+  color: #928cd2;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 

@@ -3,18 +3,20 @@
     --title-text: 120px;
     --head-text: 25px;
     --body-text: 20px;
-    --text-color: #303030;
+    --link-text: 12px;
+    --text-color: #0b0037;
     --text-color2: #ffffff;
-    --text-color3: rgba(80, 111, 23, 1);
-    --background-gradient: radial-gradient(circle, rgba(80, 111, 23, 1) 50%, rgba(44, 65, 7, 1) 100%);
+    --text-color3: rgba(45, 0, 104, 1);
+    --background-gradient: linear-gradient(90deg,rgba(45, 0, 104, 1) 0%, rgb(109, 50, 142) 50%, rgba(45, 0, 104, 1) 100%);
     --background-colour:#ffffff;
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
-    --background-colour4: #303030;
+    --background-colour4: #120075;
     --projectbox-colour: #E7D665; 
     --projectbox-colour2: #D34848;
     --projectbox-colour3: #447DC9;
     --form-box-colour: #E0E0E0;
+    --link-colour: #1b49d6;
     --border-radius: 10px;
     --border-radius2: 5px;
     --border-radius3: 50px;
@@ -39,13 +41,13 @@
 ::-webkit-scrollbar-thumb 
 {
     border-radius: var(--border-radius);
-    background: rgba(80, 111, 23, 1);
-    box-shadow: inset 0 0 10px rgba(44, 65, 7, 1);
+    background: linear-gradient(135deg, rgba(45, 0, 104, 1) 0%, rgb(109, 50, 142) 100%);
+    box-shadow: inset 0 0 10px rgba(45, 0, 104, 1);
     height: 20px;
 }
 ::-webkit-scrollbar-thumb:hover 
 {
-    background: rgb(118, 160, 39);
+    background: rgba(45, 0, 104, 1);
     cursor: grab;
     transition: 0.3s;
 }
@@ -77,9 +79,10 @@ nav a:hover
 }
 #Waystone_Logo
 {
-    /* TO BE ABJUSTED WHEN TRUE IMG IS ADDED */
-    width: 70%;
-    height: 250px;
+    display: block;
+    margin: auto;
+    width: 35%;
+    margin-top: 25px;
 }
 
 #main /* the whole page minus the navigation */
@@ -172,6 +175,7 @@ nav a:hover
 {
     border-radius: var(--border-radius);
     background: var(--background-gradient);
+    color: var(--text-color2);
     font-weight: bold;
     border: none;
     padding: 10px;
@@ -182,7 +186,6 @@ nav a:hover
 }
 #button-green:hover, #addview-green-bar:hover /* All green_ buttons button */ /* Green bars in add & view pages */
 {
-    color: var(--text-color2);
     transition: 0.5s;
     box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
     transform: translateY(-2px);
@@ -210,7 +213,8 @@ nav a:hover
     float: right;
 }
 
-/* input boxes */
+/* Input boxes */
+/* All buttons and buttons disguised as images */
 #button-icons
 {
     background: none;
@@ -218,6 +222,7 @@ nav a:hover
     padding: 0;
     margin: 0;
     padding-top: 5px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 #button-icons:hover
 {
@@ -225,6 +230,7 @@ nav a:hover
     transition: .3s;
     transform: translateY(-2px);
 }
+
 #UploadIMG_Logo
 {
     border-radius: var(--border-radius);
@@ -239,7 +245,7 @@ nav a:hover
     box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
     transform: translateY(-2px);
 }
-#Required_Logo, #Add_Logo
+#Required_Logo, #Add_Logo, #Minus_Logo
 {
     height: 20px; 
     width: 20px;
@@ -267,6 +273,8 @@ nav a:hover
 }
 /* White input boxes */
 
+
+/* HAS TO BE MOVED */
 .campaigns-page {
     display: flex;
     background: var(--background-colour);
@@ -281,6 +289,8 @@ nav a:hover
     flex-direction: column;
 }
 
+/* !!! */
 /* Try and used existing css if possible */
 /* Add more necessary *shared* CSS here */
 /* Seperate css that is only need for 1 or 2 pages */
+/* !!! */

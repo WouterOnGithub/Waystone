@@ -1,58 +1,76 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; 
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
+import Waystone_Logo from "../assets/Waystone_Logo.png";
+import Waystone_Background from "../assets/PlaceholderImage.jpg";
 
-/* Editing this page -Henry */
-function Login_Page() {
+function Login_Page() 
+{
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { signIn } = useAuth();
+
+  const navigate = useNavigate();
+
+const handleLogin = async () => 
+{
+  setError("");
+  try {
+    await signIn(email, password);
+    navigate("/user/Main_Page"); // Redirect if successful login
+  } catch (err) {
+    setError(err.message); // Display error if NOT successful login
+  }
+};
+
   return (
-    <div id="login-container">
+    <div id="login-register-page"> {/* The whole page */}
 
-      {/* Left side: login form */}
-      <div id="login-section">
-        <h1 id="login-title">Login</h1>
+      <div id="login-register-section"> {/* Login form */}
 
-        <input
-          type="text"
-          placeholder="Example_Username"
-          className="login-input"
+        {/* The login & register title */}
+        <h1 id="login-register-title">Login</h1>
+
+      {/* The form */}
+      <form>
+      <div id="input-box-gray">
+        <input type="email" placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
-
-        <input
-          type="email"
-          placeholder="Example_Email"
-          className="login-input"
+        <br /><br />
+        <input type="password" placeholder="Enter Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
         />
-
-        <input
-          type="password"
-          placeholder="************"
-          className="login-input"
-        />
-
-        <Link to="/Register_Page" id="login-register-link">
-          Don't have an account? Create one here!
-        </Link>
-
-        <Link to="/Main_Page" id="mainpage-button">
-        <button id="login-button">Enter</button>
-        </Link>
-        
       </div>
 
-      {/* Right side: image background + logo */}
-      <div
-                  id="login-image-section"
-                  style={{ backgroundImage: `url(${PlaceholderImage})` }}
-              >
-                  <img src={Waystone_Logo} alt="Waystone Logo" id="login-logo" />
+        {/* A link to Register_Page */}
+        <div id="login-register-link">
+          <Link to="/user/Register_Page" id="login-register-link">Don't have an account ?  Create one here !</Link>
         </div>
+
+        <br /><br />
+        <div id="login-register-button"><button id="button-green" type="button" onClick={handleLogin}>Enter</button></div>
+
+        {/* An error message in case an error occures */}
+        {error && <p style={{ color: "#D34848" }}>{error}</p>}
+      </form>
+      </div>
+
+      {/* Background and Waystone_Logo */}
+      <div id="login-image-section" 
+           style={{ backgroundImage: `url(${Waystone_Background})` }}>
+        
+        {/* The Waystone_Logo above the Waystone_Background image */}
+        <img src={Waystone_Logo} alt="Waystone_Logo" id="Waystone_Logo" />
+      </div>
 
     </div>
   );
