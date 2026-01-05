@@ -6,7 +6,7 @@ import { usePlayer } from "../../hooks/usePlayer";
 export default function TokenMenu({ userId,playerId,campaignId, position, onClose }) {
   const menuRef = useRef();
   const menuWidth = 150;
-  const cellSize = 50;
+  const cellSize = 80;
    const player = usePlayer(userId, campaignId, playerId);
 
   let left = position.x + cellSize + 5;

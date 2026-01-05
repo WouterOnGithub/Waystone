@@ -1,12 +1,14 @@
 import React from "react";
-import { usePlayer } from "../../hooks/usePlayer";
+import { usePlayer } from "../../hooks/usePlayerMap";
 import "./token.css"
 
 export default function Token({ userId,tokenId, x, y, onDragStart, onClick, campaignId }) {
   //use user.uid inplace of UID
   const player = usePlayer(userId, campaignId, tokenId);
+  
 
   if (!player) return null;
+  console.log("Token image:", player.imageUrl);
 
   return (
     
