@@ -65,7 +65,7 @@ function My_Campaigns_Page()
     loadCampaigns();
   }, [user]);
 
-  const recentCampaigns = allCampaigns.slice(0, 5);
+  const recentCampaigns = allCampaigns.slice(0, 4);
 
   const dynamicSections = [
     {
