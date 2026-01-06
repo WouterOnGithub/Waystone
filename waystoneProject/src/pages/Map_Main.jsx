@@ -18,6 +18,7 @@ function Map_Main() {
   const [campaignLocations, setCampaignLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sessionCode, setSessionCode] = useState('');
+  const [isCodeVisible, setIsCodeVisible] = useState(false);
 
   // Load campaign data and main map when component mounts or campaignId changes
   useEffect(() => {
@@ -134,7 +135,26 @@ function Map_Main() {
             {/* Session Code Display */}
             <div className="session-code-display">
               <span className="code-label">Session Code:</span>
-              <span className="code-value">{sessionCode}</span>
+              <span className={`code-value ${!isCodeVisible ? 'hidden' : ''}`}>
+                {isCodeVisible ? sessionCode : '••••••••••••'}
+              </span>
+              <button 
+                className="code-visibility-toggle"
+                onClick={() => setIsCodeVisible(!isCodeVisible)}
+                title={isCodeVisible ? 'Hide code' : 'Show code'}
+              >
+                {isCodeVisible ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M1 12s4-8 11-8 11 8-4 8-11 8-11-8-4-8-11 8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-5.38 0-10.17-2.88-11.99-7.5L1 12l1.01-1.01C3.83 15.17 8.62 12 14 12c5.38 0 10.17 2.88 11.99 7.5L23 12l-1.01 1.01A10.07 10.07 0 0 1 17.94 17.94z"/>
+                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c1.42 0 2.76.38 3.9 1.04l.01.01-.01L9.9 4.24z"/>
+                  </svg>
+                )}
+              </button>
             </div>
 
             {/* Settings Menu */}
