@@ -4,7 +4,7 @@
 }
 
 /* The titles throughout the page */
-.category-title, .faq-section b, .help-sidebar b  /* The article title */
+.category-title, .faq-section b, .help-sidebar b, .tutorials-section-title  /* The article title */
 {
   border-bottom: 2px var(--text-color3) solid;
   padding-bottom: 5px;
@@ -25,7 +25,7 @@
   padding-top: 20px;
   padding-bottom: 40px;
   margin-bottom: 60px;
-  width: 72%;
+  width: 95%;
   box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
 .help-intro b /* The title */
@@ -62,21 +62,22 @@
   transition: 0.3s;
 }
 
-/* The categories and category content - left sidebar  */
+/* The categories and category content - sidebars  */
 .help-content-wrapper /* The categories and category content  */
 {
   display: flex;
   margin-bottom: 50px;
   gap: 20px;
-  width: 72%;
+  width: 95%;
 }
+/* Left sidebar  */
 .help-sidebar /* The categories sidebar */
 {
   background: var(--background-colour);
   border-radius: var(--border-radius);
   height: fit-content;
   padding: 30px;
-  width: 25%;
+  width: 35%;
   box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
 .category-nav /* The navigation within the sidebar */
@@ -125,14 +126,14 @@
   box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
 
-/* The help articles of each button - left sidebar  */
+/* The help articles of each button - right sidebar  */
 .help-articles /* The article section */
 {
   background: var(--background-colour);
   border-radius: var(--border-radius);
   padding: 30px;
   margin-bottom: 20px;
-  width: 75%;
+  width: 95%;
   box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
 
@@ -179,7 +180,7 @@
   border-radius: var(--border-radius);
   padding: 30px;
   margin-bottom: 60px;
-  width: 68%;
+  width: 90%;
   box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
 .faq-list /* The FAQ list of questions */
@@ -260,46 +261,45 @@
 .tutorial-grid /* To display the video boxes into a grid */
 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
-
-.tutorial-card {
-  padding: 24px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border: 2px solid rgba(43, 43, 43, 0.1);
-  border-radius: 12px;
+.tutorial-card /* The individual video boxes */
+{
+  background: var(--text-color2);
+  border-radius: var(--border-radius);
+  border: 2px rgba(43, 43, 43, 0.1) solid;
   transition: all 0.3s ease;
   cursor: pointer;
-  margin: 20px;
+  margin: 10px;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  padding: 20px;
+}
+.tutorial-card:hover /* The individual video boxes when hovering */
+{
+  transform: translateY(-4px);
+  border-color: var(--text-color3);
   box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
-
-.tutorial-card:hover {
-  transform: translateY(-4px);
-  border-color: #9d5cd0;
-  box-shadow: 0 8px 24px rgba(157, 92, 208, 0.2);
-}
-
-.tutorial-thumbnail {
-  width: 100%;
-  height: 160px;
-  background: linear-gradient(135deg, #9d5cd0 0%, #8b45ff 100%);
-  border-radius: 8px;
+.tutorial-thumbnail 
+{
+  border-radius: var(--border-radius);
+  color: var(--text-color2);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
-  margin-bottom: 16px;
-  color: white;
+  width: 100%;
+  height: 150px;
+  font-size: 50px;
+  margin-bottom: 10px;
 }
+#tutorial-thumbnail-colour1{ background: var(--projectbox-colour); }
+#tutorial-thumbnail-colour2{ background: var(--projectbox-colour2); }
+#tutorial-thumbnail-colour3{ background: var(--projectbox-colour3); }
 
-
-
-.tutorial-card p {
-  color: #4a5568;
-  font-size: 0.9rem;
-  margin: 0;
-  line-height: 1.5;
+.tutorial-card p 
+{
+  opacity: 0.5;
 }
 
 /* Responsive Design */

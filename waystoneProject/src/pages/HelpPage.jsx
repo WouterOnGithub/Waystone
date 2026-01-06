@@ -5,11 +5,6 @@ import './pages-css/HelpPage.css';
 import Header from '../components/UI/Header';
 import Footer from '../components/UI/Footer';
 import Sidebar from '../components/UI/Sidebar';
-<<<<<<< Updated upstream
-import './pages-css/HelpPage.css';
-import './pages-css/Main_Page.css';
-=======
->>>>>>> Stashed changes
 
 function HelpPage() 
 {
@@ -158,13 +153,6 @@ function HelpPage()
   };
 
   return (
-<<<<<<< Updated upstream
-    <div className="page-layout">
-      <Sidebar />
-      <div className="main-wrapper">
-        <div id="main">
-          <Header title="Help & Support" />
-=======
     <div>
 
       <Sidebar />
@@ -172,7 +160,6 @@ function HelpPage()
       <div id="main">
 
         <Header title="Help & Support" />
->>>>>>> Stashed changes
         
         <div id="content">
 
@@ -280,25 +267,25 @@ function HelpPage()
           {/* Video Tutorials Section */}
           <div className="tutorials-section">
 
-            <b>Video Tutorials</b>
+            <b className="tutorials-section-title">Video Tutorials</b>
 
             <div className="tutorial-grid">
 
               <div className="tutorial-card">
-                <div className="tutorial-thumbnail">▶️</div>
-                <h4>Getting Started</h4>
+                <div className="tutorial-thumbnail" id="tutorial-thumbnail-colour1">▶</div>
+                <b>Getting Started</b>
                 <p>Learn the basics of Waystone in 5 minutes</p>
               </div>
 
               <div className="tutorial-card">
-                <div className="tutorial-thumbnail">▶️</div>
-                <h4>Running Your First Session</h4>
+                <div className="tutorial-thumbnail" id="tutorial-thumbnail-colour2">▶</div>
+                <b>Running Your First Session</b>
                 <p>A complete walkthrough for DMs</p>
               </div>
 
               <div className="tutorial-card">
-                <div className="tutorial-thumbnail">▶️</div>
-                <h4>Advanced Combat</h4>
+                <div className="tutorial-thumbnail" id="tutorial-thumbnail-colour3">▶</div>
+                <b>Advanced Combat</b>
                 <p>Master the combat encounter system</p>
               </div>
 
@@ -309,11 +296,6 @@ function HelpPage()
         </div>
 
         <Footer />
-<<<<<<< Updated upstream
-        </div>
-=======
-
->>>>>>> Stashed changes
       </div>
     </div>
   );
