@@ -7,11 +7,12 @@
 
     --text-color: #303030;
     --text-color2: #ffffff;
-    --text-color3: rgba(80, 111, 23, 1);
-    --text-color4: rgba(44, 65, 7, 1);
+    --text-color3: rgb(176, 87, 4);
+    --text-color4: rgb(130, 63, 0);
 
-    --background-gradient: linear-gradient(90deg,rgba(44, 65, 7, 1) 0%, rgba(80, 111, 23, 1) 50%, rgba(44, 65, 7, 1) 100%);
-    --background-gradient2: radial-gradient(circle, rgb(56, 78, 16) 50%, rgb(27, 40, 4) 100%);
+    --background-gradient: linear-gradient(90deg,rgb(130, 63, 0) 0%, rgb(176, 87, 4) 50%, rgb(130, 63, 0) 100%);
+    --background-gradient4: linear-gradient(90deg,rgb(146, 73, 5) 0%, rgb(176, 87, 4) 50%, rgb(146, 73, 5) 100%);
+    --background-gradient2: radial-gradient(circle, rgb(176, 87, 4) 50%, rgb(130, 63, 0) 100%);
     --background-gradient3: linear-gradient(90deg,#1e1e1e 0%, #303030 50%, #1e1e1e 100%);
 
     --background-colour:#ffffff;
@@ -52,13 +53,13 @@
 ::-webkit-scrollbar-thumb 
 {
     border-radius: var(--border-radius);
-    background: linear-gradient(135deg, rgba(44, 65, 7, 1) 0%, rgba(80, 111, 23, 1) 100%);
-    box-shadow: inset 0 0 10px rgba(44, 65, 7, 1);
+    background: linear-gradient(135deg, rgb(130, 63, 0) 0%, rgb(176, 87, 4) 100%);
+    box-shadow: inset 0 0 10px rgb(130, 63, 0);
     height: 20px;
 }
 ::-webkit-scrollbar-thumb:hover 
 {
-    background: rgba(44, 65, 7, 1);
+    background: rgb(130, 63, 0);
     cursor: grab;
     transition: 0.3s;
 }
@@ -87,7 +88,7 @@
 #button-green, #button-gray /* All green_ & gray_ buttons button */
 {
     border-radius: var(--border-radius);
-    background: var(--background-gradient);
+    background: var(--background-gradient4);
     font-weight: bold;
     border: none;
     padding: 10px;
