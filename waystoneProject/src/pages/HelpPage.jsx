@@ -4,6 +4,7 @@ import Header from '../components/UI/Header';
 import Footer from '../components/UI/Footer';
 import Sidebar from '../components/UI/Sidebar';
 import './pages-css/HelpPage.css';
+import './pages-css/Main_Page.css';
 
 function HelpPage() {
   const [activeCategory, setActiveCategory] = useState('getting-started');
@@ -151,10 +152,11 @@ function HelpPage() {
   };
 
   return (
-    <div className="page-container">
+    <div className="page-layout">
       <Sidebar />
-      <div className="main-content">
-        <Header title="Help & Support" />
+      <div className="main-wrapper">
+        <div id="main">
+          <Header title="Help & Support" />
         
         <div className="help-page">
           <div className="help-intro">
@@ -265,6 +267,7 @@ function HelpPage() {
         </div>
 
         <Footer />
+        </div>
       </div>
     </div>
   );

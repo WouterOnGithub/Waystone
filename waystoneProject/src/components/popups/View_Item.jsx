@@ -15,9 +15,7 @@ function View_Item()
 
         <form id="input-box-gray">
             <br />
-            <p>
-                Small, not very sturdy
-            </p>
+            <p>Small, not very sturdy</p>
             <br />
 
             <div id="view-title-box">
@@ -38,9 +36,9 @@ function View_Item()
             <p id="view-body">Bonus-Effect_name</p> {/* All except 1 later deleted */}
             <p id="view-body">Bonus-Effect_name</p> {/* All except 1 later deleted */}
 
-            <br /><br />
+            <br />
                 <button id="button-green">Back</button>
-            <br /><br />
+        
         </form>
 
       </div>

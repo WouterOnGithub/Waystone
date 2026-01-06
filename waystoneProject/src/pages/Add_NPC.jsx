@@ -2,7 +2,7 @@ import React, { useState , useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
-import "./pages-css/Add_characters.css";
+import "./pages-css/Main_Page.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
@@ -203,10 +203,11 @@ function Add_NPC() {
   };
 
   return (
-    <div className="campaign-page">
+    <div className="page-layout">
       <Sidebar />
-      <div className="campaign-main">
-        <Header title="New Campaign" />
+      <div className="main-wrapper">
+        <div id="main">
+          <Header title="New Campaign" />
         <div className="campaign-body">
           <div className="campaign-tabs">
             <button className="campaign-tab">Campaign</button>
@@ -511,6 +512,7 @@ function Add_NPC() {
           </div>
         </div>
         <Footer />
+        </div>
       </div>
     </div>
   );

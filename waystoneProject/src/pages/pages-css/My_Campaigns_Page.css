@@ -1,26 +1,68 @@
-.campaigns-content#content {
-  /* Override global #content sizing only on My Campaigns page */
-  margin-right: 0;
-  width: 100%;      /* always span the available main area */
-  max-width: none;  /* don't let content get narrower than the main area */
-  min-width: calc(100vw - 350px); /* fill viewport width minus sidebar */
-  box-sizing: border-box;
+#box-section /* a card box section (first used for My Campaigns at the Main_Page) */
+{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+#box-text
+{
+    margin-left: -10px;
+    margin-bottom: 20px;
+}
+#box-text p /* a card box section (first used for My Campaigns at the Main_Page) */
+{
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+    color: var(--text-color2);
+    text-align: right;
+    margin-left: 30px; /* Keep the same as the #box margin-left !!! */
+    width: 260px; /* Keep the same as the #box width !!! */
+    padding-top: 10px;
+    height: 120px;
 }
 
-/* Make individual campaign cards slightly smaller so ~5 fit in a row,
-   but keep the same general look as the global styles */
-.campaigns-content #box-section {
-  gap: 12px;
+/* To loop colors through the campaign boxes */
+/* The first, fourth, etc. color */
+#box-section > #box-text:nth-child(3n + 1) p {
+  background: var(--projectbox-colour);
 }
 
-.campaigns-content #box-text p {
-  width: 225px;   /* slightly smaller than the global 250px */
-  height: 100px;  /* keep original height so the coloured area looks the same */
-  margin-left: 25px; /* keep spacing similar to global but a bit tighter */
+/* The second, fifth, etc. color */
+#box-section > #box-text:nth-child(3n + 2) p {
+  background: var(--projectbox-colour2);
 }
 
-.campaigns-content #box {
-  width: 225px;   /* match the title width so the white area lines up */
-  height: 40px;   /* keep original height so the archive bar looks the same */
-  margin-left: 25px;
+/* The third, sixth, etc. color */
+#box-section > #box-text:nth-child(3n + 3) p {
+  background: var(--projectbox-colour3);
+}
+
+#box /* a card box (part of it) (first used for My Campaigns at the Main_Page) */
+{
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    background-color: var(--background-colour);
+    text-align: right;
+    margin-left: 30px; /* Keep the same as the #box-text p margin-left !!! */
+    width: 260px; /* Keep the same as the #box-text p width !!! */
+    height: 50px;
+}
+#box button /* Archive button */
+{
+    background-color: var(--background-colour4);
+    color: var(--text-color2);
+    border-radius: var(--border-radius2);
+    border: none;
+    padding: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+#box button:hover /* Archive button */
+{
+    background-color: var(--background-colour);
+    color: var(--text-color);
+    text-decoration: underline;
+    transition: 0.3s; 
 }

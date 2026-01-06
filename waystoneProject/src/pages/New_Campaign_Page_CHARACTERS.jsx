@@ -21,7 +21,8 @@
   import { useCampaign } from "../hooks/useCampaign";
   import { getCampaign } from "../api/userCampaigns";
 
-  function New_Campaign_Page_CHARACTERS() {
+  function New_Campaign_Page_CHARACTERS() 
+{
     const {campaignId} = useParams()
     const navigate = useNavigate();
     const {user} = useAuth();
@@ -90,48 +91,46 @@
     const [npcs, setNPCs] = useState([]);
     const [enemies, setEnemies] = useState([]);
 
-    return (
-      <div className="campaign-page">
-        <Sidebar />
-        <div className="campaign-main">
-          <Header
-            title={
+  return (
+    <div className="page-layout">
+      <Sidebar />
+      <div className="main-wrapper">
+        <div id="main">
+
+        <Header
+          title={
               isNewCampaign
-                ? "New Campaign"
-                : data?.name
-                ? `${data.name}`
-                : "Campaign"
-            }
-          />
-          <div className="campaign-body">
-            <div className="campaign-tabs">
-              <button 
-                className="campaign-tab"
-                disabled={!campaignId}
-                onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}
-              >
-                Campaign
-              </button>
+                ? "New Campaign" : data?.name ? `${data.name}` : "Campaign"
+          } />
+        </div>
 
-              <button
-                className="campaign-tab"
-                disabled={!campaignId}
-                onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}
-              >
-                Map Builder
-              </button>
+        <div>
 
-              <button
-                className="campaign-tab active"
-                disabled={!campaignId}
-                onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}
-              >
-                Characters
-              </button>
-            </div>
+          {/* The buttons (campaign, mapbuilder, character)*/}
+          <div id="campaign-tabs">
 
-            <div className="campaign-card">
-              <h3>Characters</h3>
+            {/* The campaign button */}
+            <button id="campaign-tab" disabled={!campaignId}
+                    onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}>
+              Campaign
+            </button>
+
+            {/* The map builder button */}
+            <button id="campaign-tab" disabled={!campaignId}
+                    onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}>
+              Map Builder
+            </button>
+
+            {/* The characters button */}
+            <button id="campaign-tab-active" disabled={!campaignId}
+                    onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}>
+              Characters
+            </button>
+
+          </div>
+
+          {/* The characters players, npc's and custom enemies */}
+          <div id="content">
 
               <div className="character-section">
                 <h4>Players</h4>
@@ -145,15 +144,20 @@
                 <button className="add-button" onClick={handleAddPlayer}>add Player</button>
               </div>
 
+            {/* The npc's */}
               <div className="character-section">
-                <h4>NPCs</h4>
+                <b>NPC's</b>
                 {npcs.map((npc) => (
+
+                /* The npc bar */
                   <div key={npc.id} className="character-row">
-                    <span>{npc.name} | Job: {npc.job}</span>
-                    <button className="edit-button" onClick={() => handleEditNpc(npc.id)}>edit</button>
+                    <span>{npc.name} | race: {npc.race}</span>
+                    <button id="edit-button" onClick={() => handleEditNpc(npc.id)}>edit</button>
                   </div>
+
                 ))}
-                <button className="add-button" onClick={handleAddNpc}>add NPC</button>
+              {/* To add another npc */}
+                <button id="button-green" onClick={handleAddNpc}>add NPC</button>
               </div>
 
               <div className="character-section">
@@ -164,25 +168,28 @@
                     <button className="edit-button" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
                   </div>
                 ))}
-                <button className="add-button" onClick={handleAddEnemy}>add enemy</button>
+                <button className="button-green" onClick={handleAddEnemy}>add enemy</button>
               </div>
 
-              <div className="campaign-actions">
-                <button className="campaign-save">Save and Continue</button>
-                <button 
-                  className="campaign-enter"
-                  onClick={() => navigate(`/user/Map_Main/${campaignId}`)}
-                  disabled={!campaignId}
-                >
-                  Enter
-                </button>
-              </div>
+            <div className="campaign-actions">
+              <button id="button-green">Save and Continue</button>
+              <button 
+                id="button-gray"
+                onClick={() => navigate(`/user/Map_Main/${campaignId}`)}
+                disabled={!campaignId}
+              >
+                Enter
+              </button>
             </div>
           </div>
-          <Footer />
+
+        </div>
+
+        <Footer />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   export default New_Campaign_Page_CHARACTERS;

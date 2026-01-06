@@ -37,13 +37,16 @@ const handleLogin = async () =>
 
       {/* The form */}
       <form>
+
       <div id="input-box-gray">
         <input type="email" placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
         <br /><br />
+
         <input type="password" placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -60,7 +63,8 @@ const handleLogin = async () =>
         <div id="login-register-button"><button id="button-green" type="button" onClick={handleLogin}>Enter</button></div>
 
         {/* An error message in case an error occures */}
-        {error && <p style={{ color: "#D34848" }}>{error}</p>}
+        {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
+        
       </form>
       </div>
 

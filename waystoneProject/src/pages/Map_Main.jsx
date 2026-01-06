@@ -92,11 +92,9 @@ function Map_Main() {
               <div className="map-settings-menu">
                 <h3>Settings</h3>
                 <ul>
-                  <li>Edit Map</li>
-                  <li>Add Location</li>
-                  <li>Grid Settings</li>
-                  <li>Upload Background</li>
-                  <li>Reset View</li>
+                  <li>Hervatten</li>
+                  <li>Opslaan</li>
+                  <li>Sessie beëindigen</li>
                 </ul>
               </div>
             )}

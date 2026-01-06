@@ -112,18 +112,18 @@ function Account_Page_EDIT() {
   };
 
   return (
-    <div className="account-page">
+    <div>
       <Sidebar />
-      <div className="account-shell">
+      <div id="main">
         <Header title="Account" />
 
-        <main className="account-content">
-          <section id="account-box" className="account-card">
+        <div id="content">
+          <section id="account-box" className="account-profile">
             <div className="account-avatar-wrap">
               <img
                 src={getAvatarUrl()}
-                alt="UploadIMG_Logo"
-                id="UploadIMG_Logo"
+                alt="Account profile"
+                id="account-profile-image"
                 onClick={() => document.getElementById("upload-img").click()}
                 style={{ cursor: "pointer" }}
               />
@@ -135,43 +135,44 @@ function Account_Page_EDIT() {
                 onChange={handleImageChange}
               />
             </div>
-
-            <form className="account-details" id="input-box-gray" onSubmit={handleSave}>
-              <label htmlFor="Username">
-                <b>Username</b>
-              </label>{" "}
-              <br />
-              <input 
-                type="text" 
-                id="nickname" 
-                placeholder="DM_0124" 
-                required 
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <br />
-              <br />
-              <label htmlFor="introduction">
-                <b>Introduction</b> (max. 150 characters)
-              </label>
-              <br />
-              <textarea
-                name="introduction"
-                id="introduction"
-                placeholder="Hello, my name is [Your name] "
-                maxLength="150"
-                value={introduction}
-                onChange={(e) => setIntroduction(e.target.value)}
-              />
-              <br />
-              <div className="account-actions">
-                <button id="button-green" type="submit">
-                  Save
-                </button>
-              </div>
-            </form>
+            <div className="account-details">
+              <form onSubmit={handleSave}>
+                <label htmlFor="nickname">
+                  <b>Username</b>
+                </label>
+                <br />
+                <input 
+                  type="text" 
+                  id="nickname" 
+                  placeholder="DM_0124" 
+                  required 
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <br />
+                <br />
+                <label htmlFor="introduction">
+                  <b>Introduction</b> (max. 150 characters)
+                </label>
+                <br />
+                <textarea
+                  name="introduction"
+                  id="introduction"
+                  placeholder="Hello, my name is [Your name] "
+                  maxLength="150"
+                  value={introduction}
+                  onChange={(e) => setIntroduction(e.target.value)}
+                />
+                <br />
+                <div className="account-actions">
+                  <button id="button-green" type="submit">
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
           </section>
-        </main>
+        </div>
 
         <Footer />
       </div>

@@ -1,333 +1,171 @@
-/* Page layout */
-.campaign-page {
+/* New_Campaign_Page_ALL */
+#campaign-tabs /* The buttons (campaign, mapbuilder, character)*/
+{
+  
   display: flex;
-  min-height: 100vh;
-  width: 100vw;
-  background: var(--background-colour);
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: -60px;
+  gap: 120px;
 }
-
-.campaign-main {
-  flex: 1;
-  background: var(--background-colour);
-  margin-left: 350px;
-  width: calc(100vw - 350px);
-  min-width: 0;
-}
-
-.campaign-main #main {
-  margin-left: 0;
-}
-
-.campaign-body {
-  margin: 20px 40px 60px 30px;
-}
-
-/* Tabs */
-.campaign-tabs {
-  display: flex;
-  gap: 16px;
-  margin-top: 12px;
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 50;
-}
-
-.campaign-tab {
-  min-width: 150px;
-  padding: 12px 18px;
-  border: none;
-  border-radius: var(--border-radius);
+#campaign-tab, #campaign-tab-active /* The top 3 buttons */
+{
+  border-radius: var(--border-radius3);
   background: var(--background-colour3);
   color: var(--text-color2);
-  font-weight: 600;
-  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.15);
-  transition: all 0.2s ease;
+  font-size: var(--head-text);
+  border: none;
+  height: auto;
+  opacity: 0.5;
+  width: 250px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-
-.campaign-tab.active {
-  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
+#campaign-tab-active /* The active button within the top 3 button */
+{
+  background: var(--background-gradient);
+  opacity: 1;
+}
+#campaign-tab:hover /* The gray_ top 3 buttons while hovering */
+{
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.2);
   transform: translateY(-2px);
-  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.25), 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: 0.5s;
+}
+#campaign-tab-active:hover /* The active button within the top 3 button while hovering */
+{
+  cursor: auto;
 }
 
-/* Form card */
-.campaign-card {
-  background: var(--background-colour2);
-  border-radius: 8px;
-  padding: 32px 40px 42px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-}
 
-.campaign-card h2 {
-  font-size: 26px;
-  margin-bottom: 18px;
-}
 
-.campaign-card h3 {
-  font-size: 28px;
-  margin-bottom: 32px;
-  color: var(--text-color);
-  font-weight: 700;
-}
-
-.campaign-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.campaign-label {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.campaign-input,
-.campaign-textarea {
-  width: 100%;
-  max-width: 700px;
-  padding: 12px 14px;
-  border: 1px solid #c8c8c8;
-  border-radius: 5px;
-  background: #fff;
-  font-size: 16px;
-  color: var(--text-color);
-}
-
-.campaign-textarea {
-  min-height: 180px;
-  resize: vertical;
-  line-height: 1.45;
-}
-
-/* Buttons */
-.campaign-pill-row {
-  display: flex;
-  gap: 12px;
-  margin: 12px 0 24px;
-}
-
-.campaign-pill {
-  border: none;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
-  color: white;
-  padding: 10px 18px;
-  font-weight: 700;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
-  transition: all 0.2s ease;
-}
-
-.campaign-save {
-  display: inline-block;
-  min-width: 220px;
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
-  color: #b8b5f5;
-  padding: 12px 22px;
-  font-weight: 700;
-  margin-bottom: 14px;
-  transition: all 0.2s ease;
-}
-
-.campaign-enter {
-  display: inline-block;
-  min-width: 160px;
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
-  color: #b8b5f5;
-  padding: 12px 22px;
-  font-weight: 800;
-  font-size: 20px;
-  transition: all 0.2s ease;
-}
-
-.campaign-actions {
+/* New_Campaign_Page_CAMPAIGN */
+.campaign-actions /* The save and continue, and enter button */
+{
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 32px;
-  padding-top: 28px;
-  border-top: 2px solid rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  padding-top: 20px;
+  width: 72%;
+  border-top: 2px solid var(--background-colour3);
 }
 
-.campaign-actions button:hover,
-.campaign-pill:hover,
-.campaign-tab:hover {
-  cursor: pointer;
-  filter: brightness(1.05);
+
+
+/* New_Campaign_Page_MAPBUILDER */
+#campaign-select select
+{
+  border-radius: var(--border-radius);
+  border: none;
+  width: 250px;
+  height: 50px;
+  padding: 5px;
 }
 
-/* CHARACTERS PAGE DESIGN */
 
-.character-section {
-  margin-bottom: 42px;
-  padding-bottom: 28px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.06);
-}
 
-.character-section:last-of-type {
-  border-bottom: none;
-}
+/* New_Campaign_Page_CHARACTERS */
+/* *On the main CSS* */
 
-.character-section h4 {
-  font-size: 22px;
-  font-weight: 700;
+
+
+/* Add_Character */
+.character-base-stat /* the individual base stats (ex. name, race, ...) */
+{
   margin-bottom: 20px;
-  color: var(--text-color);
+  margin-right: 40px;
+  width: min-content;
+}
+.character-base-stats-section /* The sections of the stats, each containing 3 input boxes per section */
+{
   display: flex;
-  align-items: center;
-  gap: 10px;
 }
-
-.character-section h4::before {
-  content: '';
-  width: 4px;
-  height: 24px;
- background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
-  border-radius: 2px;
-}
-
-.character-row {
+/* The ability scores */
+.ability-grid /* The ability section */
+{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  margin-bottom: 12px;
-  background: var(--background-colour3);
-  border-radius: 8px;
-  border-left: 4px solid #211d70;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
+  flex-wrap: wrap;
 }
-
-.character-row:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-left-color: #272287;
+.ability-box /* The individual ability box */
+{
+  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  border-radius: var(--border-radius);
+  text-align: center;
+  padding: 20px;
+  width: 280px;
+  margin-left: 40px;
+  margin-bottom: 20px;
 }
-
-.character-row span {
-  font-size: 16px;
+.ability-name, .skill-label /* The ability and skill name */
+{
+  color: var(--text-color2);
+  font-size: var(--body-text);
+  text-transform: uppercase;
   font-weight: 600;
-  color: var(--text-color);
-  flex: 1;
 }
-
-.add-button {
-  display: inline-block;
-  min-width: 180px;
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
-  color: #afb0f2;
-  padding: 11px 20px;
-  font-weight: 700;
-  margin-top: 12px;
-  font-size: 15px;
-  transition: all 0.2s ease;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-}
-
-.add-button:hover {
-  cursor: pointer;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-  filter: brightness(1.08);
-}
-
-.edit-button {
-  display: inline-block;
-  min-width: 100px;
-  border: none;
-  border-radius: 5px;
-  background: linear-gradient(135deg, #421c5f 0%, #4403ab 100%);
-  color: #bdbaf9;
-  padding: 9px 18px;
-  font-weight: 600;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
-}
-
-.edit-button:hover {
-  cursor: pointer;
-  transform: scale(1.05);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
-  filter: brightness(1.1);
-}
-
-/* Empty state styling */
-.character-section:has(.character-row:first-of-type) {
-  min-height: auto;
-}
-
-/* MAPBUILDER - behouden zoals origineel */
-.mapbuilder-row {
+.ability-inputs /* The ability input field and ability +modifier */
+{
   display: flex;
-  align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 20px;
 }
-
-.mapbuilder-select {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #999;
-  color: #ffffff;
+.ability-score /* The ability input field */
+{
+  border-radius: var(--border-radius);
+  text-align: center;
+  border: none;
+  width: 150px;
 }
-
-.mapbuilder-file {
-  padding: 6px;
-}
-
-.mapbuilder-icon {
-  position: absolute;
-  font-size: 25px;
-  left: 40%;
-  top: 60%;
-  transform: translate(-50%, -50%);
-}
-
-.mapbuilder-preview {
-  width: fit-content;
-  height: fit-content;
-  margin: 30px auto;
-  border: 3px solid #ffffff;
-  background-color: var(--background-colour3);
-  position: relative;
-  border-radius: 10px;
+.ability-modifier /* The ability +modifier */
+{
+  background: var(--background-colour4);
+  color: var(--text-color2);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  max-width: 90%;
+  width: 40px;
+  height: 40px;
+  border-radius: 500px;
+  font-weight: 600;
 }
 
-.mapbuilder-preview-icon {
-  position: absolute;
-  font-size: 42px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+/* The skills */
+.skill-row /* The row of a skill */
+{
+  background: var(--background-colour3);
+  border-radius: var(--border-radius);
+  display: grid;
+  padding: 15px;
+  margin-bottom: 20px;
+  grid-template-columns: 250px 1fr;
+}
+.skill-row:first-child /* The first row of the skills list */
+{
+  background: var(--background-gradient2);
+  color: var(--text-color2);
+  font-weight: 600;
 }
 
-.mapbuilder-preview-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 6px;
-  display: block;
+.skill-bonus /* The green_ skills +modifier */
+{
+  background: var(--background-gradient);
+  color: var(--text-color2);
+  border-radius: var(--border-radius);
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 15px;
+  font-weight: 600;
 }
-
-.mapbuilder-button-row {
-  display: flex;
-  gap: 20px;
-  margin-top: 18px;
-}
-
-.mapbuilder-browse {
-  background-color: var(--text-color);
-  color: white;
+.skill-select /* The proficiency modifier */
+{ 
+  border-radius: var(--border-radius);
+  border: none;
+  padding: 15px;
+  margin-right: 15px;
+  font-weight: 600;
 }

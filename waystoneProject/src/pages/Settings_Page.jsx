@@ -2,23 +2,19 @@
 import React from "react";
 import "./pages-css/CSS.css";
 import "./pages-css/Settings_Page.css";
+import "./pages-css/Main_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
-import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-import Required_Logo from "../assets/Required_Logo.webp";
-import Delete_Logo from "../assets/Delete_Logo.webp";
-import Add_Logo from "../assets/Add_Logo.webp";
-import Placeholder from "../assets/PlaceholderImage.jpg";
 
-function Settings_Page() {
+function Settings_Page() 
+{
   return (
-    <div className="settings-page">
+    <div className="page-layout">
       <Sidebar />
-
-      <div id="main" className="settings-shell">
-        <Header title="Settings" />
+      <div className="main-wrapper">
+        <div id="main">
+          <Header title="Settings" />
 
         {/* The settings section */}
         <div id="content" className="settings-content">
@@ -27,26 +23,25 @@ function Settings_Page() {
               <b>Change Password</b>
               <br />
               <div id="settings-password">
+
                 <div id="settings-passwords">
-                  <label htmlFor="password">
-                    <b>Password</b>
-                  </label>
+                  <label htmlFor="password"><b>Password</b></label>
                   <br />
                   <input type="password" id="password" />
                 </div>
+
                 <div id="settings-passwords">
-                  <label htmlFor="password-confirm">
-                    <b>Confirm Password</b>
-                  </label>
+                  <label htmlFor="password-confirm"><b>Confirm Password</b></label>
                   <br />
                   <input type="password" id="password-confirm" />
                 </div>
+                
               </div>
 
               <br />
               <b>Language</b>
               <br />
-              {/* A way to make the selected btn based on the language display throughout the site */}
+              {/* Needs a way to make the selected btn based on the language display throughout the site */}
               <div id="settings-language-radiobtn">
                 <input
                   type="radio"
@@ -55,6 +50,7 @@ function Settings_Page() {
                   value="English"
                 />
                 <label htmlFor="english">English</label>
+
                 <br />
                 <input
                   type="radio"
@@ -63,6 +59,7 @@ function Settings_Page() {
                   value="Nederlands"
                 />
                 <label htmlFor="nederlands">Nederlands</label>
+
                 <br />
                 <input
                   type="radio"
@@ -75,12 +72,13 @@ function Settings_Page() {
 
               <br />
               <br />
-              <button id="button-green">Confirm changes</button>
+              <button id="button-green">Save</button>
             </form>
           </div>
         </div>
 
         <Footer />
+        </div>
       </div>
     </div>
   );

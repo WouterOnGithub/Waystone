@@ -1,19 +1,44 @@
-.account-avatar-wrap {
-  display: block;        /* normal block container */
-  width: fit-content;    /* shrink to content only */
-  margin: 0 auto 20px;   /* center horizontally, add spacing below */
+.account-actions {
+  margin-top: 20px;
 }
 
-.account-avatar-wrap label {
-  display: inline-block; /* shrink to image size */
-  cursor: pointer;       /* shows pointer on hover */
+.account-details input {
+  width: 500px;
+  padding: 8px;
+  border: 1px solid var(--background-colour3);
+  border-radius: var(--border-radius);
+  background: var(--form-box-colour);
+  color: var(--text-color);
+}
+
+.account-details textarea {
+  width: 600px;
+  height: 80px;
+  padding: 8px;
+  border: 1px solid var(--background-colour3);
+  border-radius: var(--border-radius);
+  background: var(--form-box-colour);
+  color: var(--text-color);
+  resize: vertical;
+}
+
+.account-details label {
+  color: var(--text-color);
+  margin-bottom: 5px;
+  display: block;
+}
+
+.account-profile {
+  align-items: flex-start;
+  gap: 40px;
+  justify-content: flex-end;
 }
 
 .account-avatar-wrap img {
-  display: block;        /* removes extra inline spacing */
-  width: 150px;          /* fixed avatar width */
-  height: 150px;         /* fixed avatar height */
-  object-fit: cover;     /* maintains aspect ratio, fills box */
-  border-radius: 50%;    /* circular avatar */
-  border: 2px solid #ccc; /* optional border */
+  background: var(--background-colour3);
+  object-fit: cover;
+  border-radius: 500px;
+  height: 200px;
+  width: 200px;
+  cursor: pointer;
 }

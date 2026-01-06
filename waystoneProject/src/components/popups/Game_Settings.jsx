@@ -20,15 +20,13 @@ function Game_Settings()
                                                 {/* onClick navigates back 1 page */}
                 <br /><button id="button-icons" onClick={() => navigate(-1)}>Resume Game</button>
                 <br /><Link to="/user/Game_Settings_SAVEGAME"><button id="button-icons">Save Game</button></Link>
-                <br /><button id="button-icons">New Player</button>
                 {/* I'm not sure if help & tutorial is still supposed to be included, can be deleted if not */}
                 <br /><button id="button-icons">Help & Tutorial</button>
             </div>
 
-            <br /><br />
+            <br />
                 <button id="button-green">Return to Main Menu</button>
-            <br /><br />
-            <br /><br />
+                
         </form>
 
       </div>

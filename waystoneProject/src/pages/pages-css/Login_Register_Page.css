@@ -15,16 +15,17 @@
   /* Displays content center & horizontal */
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 
-  width: 35%;
+  margin-left: 120px;
+  width: 30%;
 }
 #login-register-title /* Login & register title */
 {
   font-size: var(--login-register-text);
-  margin-bottom: 90px;
-  overflow: hidden;       
+  
+  margin-left: 15%;
+  margin-bottom: 35%;    
 }
 
 /* Register link */
@@ -34,20 +35,19 @@
   font-size: var(--link-text);
   text-decoration: underline;
   margin-top: 5px;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin-left: 5px;
 }
 #login-register-link:hover 
 {
-  transform: translateY(-1px);
+  color: var(--text-color);
+  transition: 0.5s;
 }
 
 /* The form button (just to center it) */
 #login-register-button
 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 10px; /* To stop the top of the button from clipping */
+  margin-left: 25%;
+  padding-top: 10px; /* To stop the top of the button from clipping during the animation */
 }
 
 /* Background and Waystone_Logo */
@@ -61,7 +61,7 @@
   background-position: center;  
   background-repeat: no-repeat;
 
-  /* In case the background image doesn't load */
+  /* In case the background image doesn't load ('a back-up') */
   background-color: var(--background-colour4);
   position: relative;
 }

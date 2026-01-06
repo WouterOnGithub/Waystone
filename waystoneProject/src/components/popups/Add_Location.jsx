@@ -142,11 +142,13 @@ function Add_Location({ campaignId, location, userId, baseUrl }) {
 
   return (
     <div id="addview-page">
-      <div id="addview-box">
-        <p id="addview-title">Add Location</p>
+    <div id="addview-box">
 
-        <div id="addview-content">
-          <form id="input-box-gray" onSubmit={handleSave}>
+      <p id="addview-title">Add Location</p>
+
+      <div id="addview-content">
+
+        <form id="input-box-gray" onSubmit={handleSave}>
             <img
               src={imagePreview || UploadIMG_Logo}
               alt="UploadIMG_Logo"
@@ -199,11 +201,11 @@ function Add_Location({ campaignId, location, userId, baseUrl }) {
                 <p>{message}</p>
               </>
             )}
-            <br />
-            <br />
-          </form>
-        </div>
+            
+        </form>
+
       </div>
+    </div>
     </div>
   );
 }

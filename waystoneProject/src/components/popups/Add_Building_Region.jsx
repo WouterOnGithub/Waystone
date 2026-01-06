@@ -195,7 +195,6 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
                 <p>{message}</p>
               </>
             )}
-            <br /><br />
         </form>
 
       </div>

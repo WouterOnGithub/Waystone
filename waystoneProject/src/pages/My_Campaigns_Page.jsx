@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { getAllCampaigns } from "../api/userCampaigns";
 import "./pages-css/CSS.css";
 import "./pages-css/My_Campaigns_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
-import { useAuth } from "../context/AuthContext";
-import { getAllCampaigns } from "../api/userCampaigns";
 
 // Static dummy data for free campaigns (kept as-is)
 const freeCampaignSection = {
@@ -32,7 +32,8 @@ const getCampaignSortDate = (campaign) => {
   return Number.isNaN(time) ? 0 : time;
 };
 
-function My_Campaigns_Page() {
+function My_Campaigns_Page() 
+{
   const { user } = useAuth();
   const navigate = useNavigate();
   const [allCampaigns, setAllCampaigns] = useState([]);
@@ -72,7 +73,7 @@ function My_Campaigns_Page() {
       items: recentCampaigns.map((c, idx) => ({
         id: c.id,
         name: c.name || "Unnamed campaign",
-        color: ["#E7D665", "#447DC9", "#D34848", "#E7D665", "#447DC9"][idx % 5],
+        color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
       })),
     },
     {
@@ -80,7 +81,7 @@ function My_Campaigns_Page() {
       items: allCampaigns.map((c, idx) => ({
         id: c.id,
         name: c.name || "Unnamed campaign",
-        color: ["#E7D665", "#447DC9", "#D34848"][idx % 3],
+        color: ["#303030", "#303030", "#303030"][idx % 3],
       })),
     },
     freeCampaignSection,
@@ -92,45 +93,60 @@ function My_Campaigns_Page() {
   };
 
   return (
-    <div className="campaigns-page">
+    <div>
+      
       <Sidebar />
-      <div id="main" className="campaigns-shell">
-        <Header title="My Campaigns" />
 
-        <div id="content" className="campaigns-content">
+      <div id="main">
+      
+      <Header title="My Campaigns" />
+
+        <div id="content">
           {loading && <p>Loading campaigns...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
 
           {dynamicSections.map((section) => (
+
             <section key={section.title}>
+
+              {/* The title per section of campaigns */}
               <b>{section.title}</b>
+
+              {/* The area that holds the campaign boxes */}
               <div id="box-section">
                 {section.items.map((item, idx) => (
-                  <div
-                    id="box-text"
-                    key={item.id ? item.id : `${section.title}-${idx}`}
-                    onClick={() => handleOpenCampaign(item.id)}
-                    style={item.id ? { cursor: "pointer" } : undefined}
+                  /* A campaigns box */
+                  <div id="box-text" 
+                       key={item.id ? item.id : `${section.title}-${idx}`}
+                       onClick={() => handleOpenCampaign(item.id)}
+                       style={item.id ? { cursor: "pointer" } : undefined}
                   >
-                    <p style={{ backgroundColor: item.color }}>{item.name}</p>
+                    
+                    {/* The campaigns project name */}
+                    <p>{item.name}&#10240;</p>
+                    
+                    {/* The bottom part of the box (the white) which contains the archive button */}
                     <div id="box">
                       <button
-                        onClick={(e) => {
+                          onClick={(e) => {
                           e.stopPropagation();
                           // TODO: implement archive behaviour
-                        }}
+                          }}
                       >
                         Archive
                       </button>
                     </div>
+
                   </div>
                 ))}
               </div>
+
             </section>
           ))}
         </div>
 
         <Footer />
+
       </div>
     </div>
   );
