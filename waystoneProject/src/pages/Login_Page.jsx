@@ -27,6 +27,10 @@ const handleLogin = async () =>
   }
 };
 
+const handleSession= [
+    { to: "/user/Join_Session", label: "Session" },
+  ];
+
   return (
     <div id="login-register-page"> {/* The whole page */}
 
@@ -62,6 +66,7 @@ const handleLogin = async () =>
         <br /><br />
         <div id="login-register-button"><button id="button-green" type="button" onClick={handleLogin}>Enter</button></div>
 
+        <div id="login-Join-Session-button"><button id="button-green" type="button" onClick={handleSession}>Join Session</button></div>
         {/* An error message in case an error occures */}
         {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
         

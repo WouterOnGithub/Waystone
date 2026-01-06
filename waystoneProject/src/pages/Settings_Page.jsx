@@ -10,7 +10,7 @@ import Sidebar from "../components/UI/Sidebar";
 function Settings_Page() 
 {
   return (
-    <div className="page-layout">
+    <div className="full-page">
       <Sidebar />
       <div className="main-wrapper">
         <div id="main">

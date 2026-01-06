@@ -66,6 +66,7 @@ function Map_Building_Region() {
   };
 
   return (
+    <div className="full-page">
     <div className="campaign-page">
       
 
@@ -159,6 +160,7 @@ function Map_Building_Region() {
               </div>
             </div>
           </div>
+        </div>
         </div>
   );
 }

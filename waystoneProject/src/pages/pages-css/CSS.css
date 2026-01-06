@@ -75,7 +75,7 @@
 #content /* Gray section under the green_ bar */
 {
     border-radius: var(--border-radius); 
-    background-color: var(--background-colour2);
+    background: var(--background-colour2);
     margin-top: 100px;
     padding: 30px;
     width: 76vw;
@@ -86,6 +86,11 @@
 #content b
 {
     font-size: var(--head-text);
+}
+
+.full-page
+{
+    background: white; /* To fix the dark blocks if a user is on darkmode */
 }
 
 #button-green, #button-gray /* All green_ & gray_ buttons button */

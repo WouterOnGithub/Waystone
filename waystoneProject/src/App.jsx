@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 /* IMPORTS OF ALL THE PAGES OF THE WEBSITE */
 import Settings_Page from "./pages/Settings_Page"
 import Login_Page from "./pages/Login_Page"; 
+import Join_Session from "./pages/Join_Session"; 
 import Register_Page from "./pages/Register_Page"; 
 
 import Main_Page from "./pages/Main_Page";
@@ -53,6 +54,7 @@ function App()
                 {/* Login and Register */}
                 <Route path="/user/Login_Page" element={<Login_Page />} />
                 <Route path="/user/Register_Page" element={<Register_Page />} />
+                 <Route path="/user/Join_Session" element={<Join_Session />} />
 
                 {/* Main page or Home page */}
                 <Route path="/user/Main_Page" element={<Main_Page />} />

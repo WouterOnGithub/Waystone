@@ -49,6 +49,7 @@
 .help-search /* The search bar in the 'How can we help you ?' section */
 {
   border-radius: var(--border-radius);
+  background-color: white;
   border: none;
   flex: 1;
   padding-left: 20px;
@@ -208,6 +209,7 @@
 
 .faq-question /* The individual questions in the list */
 {
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -136,7 +136,7 @@ function New_Campaign_Page_CAMPAIGN()
   };
 
   return (
-    <div>
+    <div className="full-page">
 
       <Sidebar />
 
