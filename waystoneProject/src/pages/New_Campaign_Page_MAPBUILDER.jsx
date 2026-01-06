@@ -2,15 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { updateCampaignInfo, getLocations, getBuildingsRegions, createBuildingRegion, updateBuildingRegion, deleteBuildingRegion, getContainers, getCampaign, updateContainer, deleteContainer } from "../api/userCampaigns";
 import { useCampaign } from "../hooks/useCampaign";
-import {
-  getLocations,
-  deleteLocation,
-  getCampaign,
-  updateCampaignInfo,
-  getBuildingsRegions,
-  deleteBuildingRegion,
-} from "../api/userCampaigns";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -29,20 +22,29 @@ function New_Campaign_Page_MAPBUILDER()
   const userId = user?.uid || null;
   
   const isNewCampaign = !campaignId;
-  const { data, loading, error, setData } = useCampaign(
-    isNewCampaign? null : userId, 
-    isNewCampaign? null : campaignId
+  const { data, loading, error } = useCampaign(
+    userId,
+    campaignId
   );
 
   const fileInputRef = React.useRef(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [mapFile, setMapFile] = useState(null);
-  const [saving, setSaving] = useState(false);
-  const [saveMessage, setSaveMessage] = useState("");
+  const [showAddLocationPopup, setShowAddLocationPopup] = useState(false);
+  const [showAddRegionPopup, setShowAddRegionPopup] = useState(false);
+  const [showAddContainerPopup, setShowAddContainerPopup] = useState(false);
+  const [showContainers, setShowContainers] = useState(false);
+  const [containers, setContainers] = useState([]);
+  const [editingLocation, setEditingLocation] = useState(null);
+  const [editingRegion, setEditingRegion] = useState(null);
+  const [editingContainer, setEditingContainer] = useState(null);
+  const [selectedLocationId, setSelectedLocationId] = useState(null);
   const [locations, setLocations] = useState([]);
   const [showLocations, setShowLocations] = useState(false);
   const [buildings, setBuildings] = useState([]);
   const [showBuildings, setShowBuildings] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [mapFile, setMapFile] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
 
   const SIZE_LIMITS = useMemo(
     () => ({
@@ -289,6 +291,7 @@ function New_Campaign_Page_MAPBUILDER()
       }
     };
 
+    // Initial load
     loadBuildings();
 
     const handleFocus = () => {
@@ -299,11 +302,127 @@ function New_Campaign_Page_MAPBUILDER()
     return () => window.removeEventListener("focus", handleFocus);
   }, [userId, campaignId]);
 
+  // Load containers for this campaign
+  useEffect(() => {
+    const loadContainers = async () => {
+      if (!userId || !campaignId) return;
+      try {
+        const containerList = await getContainers(userId, campaignId);
+        // Deduplicate containers by ID to prevent duplicates
+        const uniqueContainers = containerList ? Array.from(
+          new Map(containerList.map(container => [container.id, container])).values()
+        ) : [];
+        console.log("Loaded unique containers:", uniqueContainers);
+        setContainers(uniqueContainers);
+      } catch (err) {
+        console.error("Failed to load containers:", err);
+      }
+    };
+
+    const handleFocus = () => {
+      loadContainers();
+    };
+
+    // Initial load
+    loadContainers();
+    
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [userId, campaignId]);
+
+  const refreshLocations = async () => {
+    if (!userId || !campaignId) return;
+    try {
+      const list = await getLocations(userId, campaignId);
+      setLocations(list || []);
+    } catch (err) {
+      console.error("Failed to refresh locations:", err);
+    }
+  };
+
+  const refreshBuildings = async () => {
+    if (!userId || !campaignId) return;
+    try {
+      console.log("Refreshing buildings/regions...");
+      const list = await getBuildingsRegions(userId, campaignId);
+      console.log("Buildings/regions from API:", list);
+      setBuildings(list || []);
+      console.log("Buildings/regions state set to:", list || []);
+    } catch (err) {
+      console.error("Failed to refresh buildings/regions:", err);
+    }
+  };
+
+  const refreshContainers = async () => {
+    if (!userId || !campaignId) return;
+    try {
+      const containerList = await getContainers(userId, campaignId);
+      // Deduplicate containers by ID to prevent duplicates
+      const uniqueContainers = containerList ? Array.from(
+        new Map(containerList.map(container => [container.id, container])).values()
+      ) : [];
+      console.log("Refreshed containers:", uniqueContainers);
+      setContainers(uniqueContainers);
+    } catch (err) {
+      console.error("Failed to refresh containers:", err);
+    }
+  };
+
   const handleBrowseClick = () => {
     fileInputRef.current?.click();
   };
 
+  const handleDeleteContainer = async (container) => {
+    console.log("Attempting to delete container:", container);
+    
+    if (
+      !window.confirm(
+        `Delete Container "${container.name || "Unnamed Container"}?`
+      )
+    ) {
+      console.log("User cancelled deletion");
+      return;
+    }
+    if (!userId || !campaignId) {
+      console.log("Missing userId or campaignId:", { userId, campaignId });
+      return;
+    }
+    
+    try {
+      console.log("Calling deleteContainer with:", { userId, campaignId, containerId: container.id });
+      const ok = await deleteContainer(userId, campaignId, container.id);
+      console.log("Delete result:", ok);
+      
+      if (ok) {
+        console.log("Delete successful, reloading containers...");
+        const containerList = await getContainers(userId, campaignId);
+        console.log("Reloaded containers:", containerList);
+        // Deduplicate containers by ID to prevent duplicates
+        const uniqueContainers = containerList ? Array.from(
+          new Map(containerList.map(container => [container.id, container])).values()
+        ) : [];
+        console.log("Setting unique containers:", uniqueContainers);
+        setContainers(uniqueContainers);
+      } else {
+        console.error("Delete returned false");
+        alert("Failed to delete container. Please try again.");
+      }
+    } catch (err) {
+      console.error("Failed to delete container:", err);
+      alert("An error occurred while deleting the container. Please try again.");
+    }
+  };
+
   const handleSaveMap = async () => {
+    if(!userId) return;
+    
+    if (!data?.name) {
+    alert("Campaign name is required");
+      return;
+    }
+
+    setSaving(true);
+    setSaveMessage("");
     if (!mapFile) {
       setSaveMessage("Please upload a map before saving.");
       return;
@@ -467,13 +586,11 @@ function New_Campaign_Page_MAPBUILDER()
             <b>Add Elements</b>
             <div>
               <button id="button-green" 
-                      onClick={() =>
-                          openPopup(AddLocation, "Add Location", {
-                            campaignId,
-                            userId,
-                          })
-                        }
-                        type="button"
+                      onClick={() => {
+                        setEditingLocation(null);
+                        setShowAddLocationPopup(true);
+                      }}
+                      type="button"
                 >Add Location
               </button>
               <button
@@ -516,13 +633,10 @@ function New_Campaign_Page_MAPBUILDER()
                         id="button-green"
                         type="button"
                         style={{ width: "160px", height: "50px", fontSize: "16px" }}
-                        onClick={() =>
-                          openPopup(AddLocation, "Edit Location", {
-                            campaignId,
-                            userId,
-                            location: loc,
-                          })
-                        }
+                        onClick={() => {
+                          setEditingLocation(loc);
+                          setShowAddLocationPopup(true);
+                        }}
                       >
                         {`Edit ${loc.name || "Location"}`}
                       </button>
@@ -569,13 +683,11 @@ function New_Campaign_Page_MAPBUILDER()
                               id="button-green"
                               type="button"
                               style={{ width: "120px", height: "45px", fontSize: "14px" }}
-                              onClick={() =>
-                                openPopup(AddBuildingRegion, "Edit Building / Region", {
-                                  campaignId,
-                                  userId,
-                                  building: building,
-                                })
-                              }
+                              onClick={() => {
+                                  setEditingRegion(building);
+                                  setSelectedLocationId(building.locationId || loc.id);
+                                  setShowAddRegionPopup(true);
+                                }}
                             >
                               {`Edit ${building.name || "Region"}`}
                             </button>
@@ -614,13 +726,11 @@ function New_Campaign_Page_MAPBUILDER()
                           id="button-green"
                           type="button"
                           style={{ width: "180px", height: "45px", fontSize: "14px", marginTop: "8px" }}
-                          onClick={() =>
-                            openPopup(AddBuildingRegion, "Add Region to Location", {
-                              campaignId,
-                              userId,
-                              locationId: loc.id,
-                            })
-                          }
+                          onClick={() => {
+                            setEditingRegion(null);
+                            setSelectedLocationId(loc.id);
+                            setShowAddRegionPopup(true);
+                          }}
                         >
                           + Add Region to {loc.name || "This Location"}
                         </button>
@@ -633,13 +743,11 @@ function New_Campaign_Page_MAPBUILDER()
                         id="button-green"
                         type="button"
                         style={{ width: "180px", height: "45px", fontSize: "14px", marginLeft: "20px", marginTop: "8px" }}
-                        onClick={() =>
-                          openPopup(AddBuildingRegion, "Add Region to Location", {
-                            campaignId,
-                            userId,
-                            locationId: loc.id,
-                          })
-                        }
+                        onClick={() => {
+                          setEditingRegion(null);
+                          setSelectedLocationId(loc.id);
+                          setShowAddRegionPopup(true);
+                        }}
                       >
                         + Add Region to {loc.name || "This Location"}
                       </button>
@@ -665,13 +773,11 @@ function New_Campaign_Page_MAPBUILDER()
                     <button
                       id="button-green"
                       type="button"
-                      onClick={() =>
-                        openPopup(AddBuildingRegion, "Edit Building(s) / Region(s)", {
-                          campaignId,
-                          userId,
-                          building: bld,
-                        })
-                      }
+                      onClick={() => {
+                        setEditingRegion(bld);
+                        setSelectedLocationId(bld.locationId || null);
+                        setShowAddRegionPopup(true);
+                      }}
                     >
                       {`Edit ${bld.name || "Building(s) / Region(s)"}`}
                     </button>
@@ -716,16 +822,90 @@ function New_Campaign_Page_MAPBUILDER()
 
             {/* The add and show container buttons*/}
             <div>
-              <button id="button-green"
-                      onClick={() => openPopup(AddContainer, "Add Container")}
-                      type="button"
+              <button
+                id="button-green"
+                onClick={() => {
+                  setEditingContainer(null);
+                  setShowAddContainerPopup(true);
+                }}
+                type="button"
               >
                 Add Container
               </button>
-              <button id="button-green">Show All Container(s)</button>
+              <button
+                id="button-green"
+                onClick={async () => {
+                  const next = !showContainers;
+                  setShowContainers(next);
+                  if (next && userId && campaignId) {
+                    try {
+                      const containerList = await getContainers(userId, campaignId);
+                      // Deduplicate containers by ID to prevent duplicates
+                      const uniqueContainers = containerList ? Array.from(
+                        new Map(containerList.map(container => [container.id, container])).values()
+                      ) : [];
+                      setContainers(uniqueContainers);
+                    } catch (err) {
+                      console.error("Failed to load containers:", err);
+                    }
+                  }
+                }}
+                type="button"
+              >
+                {showContainers ? "Hide All Container(s)" : "Show All Container(s)"}
+              </button>
             </div>
 
-            {/* The save and continue button */}
+            {/* Display all containers */}
+            {showContainers && (
+              <>
+                <div style={{
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginTop: "20px"
+                }}>
+                  {containers.map((container) => (
+                    <div
+                      key={container.id}
+                      style={{ 
+                        display: "flex", 
+                        flexDirection: "column", 
+                        gap: "4px", 
+                        width: "100%",
+                        maxWidth: "800px",
+                        margin: "0 auto 10px auto",
+                        padding: "15px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        backgroundColor: "#f9f9f9"
+                      }}
+                    >
+                      <b>{container.name}</b>
+                      <div style={{ display: "flex", gap: "8px" }}>
+                        <button
+                          id="button-green"
+                          type="button"
+                          onClick={() => {
+                            setEditingContainer(container);
+                            setShowAddContainerPopup(true);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          id="button-green"
+                          onClick={() => handleDeleteContainer(container)}
+                        >
+                          Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              </>
+            )}
             <div className="campaign-actions">
               
               <button id="button-green" onClick={handleSaveMap} disabled={saving}>
@@ -750,6 +930,49 @@ function New_Campaign_Page_MAPBUILDER()
 
         <Footer />
       </div>
+
+      {showAddLocationPopup && (
+        <AddLocation 
+          onClose={() => {
+            setShowAddLocationPopup(false);
+            setEditingLocation(null);
+            refreshLocations(); // Refresh when popup closes
+          }}
+          campaignId={campaignId}
+          userId={userId}
+          location={editingLocation}
+          onLocationSaved={refreshLocations}
+        />
+      )}
+
+      {showAddRegionPopup && (
+        <AddBuildingRegion 
+          onClose={() => {
+            setShowAddRegionPopup(false);
+            setEditingRegion(null);
+            setSelectedLocationId(null);
+            refreshBuildings(); // Refresh when popup closes
+          }}
+          campaignId={campaignId}
+          userId={userId}
+          building={editingRegion}
+          locationId={selectedLocationId}
+          onBuildingRegionSaved={refreshBuildings}
+        />
+      )}
+
+      {showAddContainerPopup && (
+        <AddContainer 
+          onClose={() => {
+            setShowAddContainerPopup(false);
+            setEditingContainer(null);
+            refreshContainers(); // Refresh when popup closes
+          }}
+          campaignId={campaignId}
+          container={editingContainer}
+          onContainerSaved={refreshContainers}
+        />
+      )}
     </div>
   );
 }

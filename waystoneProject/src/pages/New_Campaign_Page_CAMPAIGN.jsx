@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
-import { createCampaign, updateCampaignInfo } from "../api/userCampaigns";
+import { createCampaign, updateCampaignInfo, getItems, deleteItem } from "../api/userCampaigns";
 import { useCampaign } from "../hooks/useCampaign";
 import { useAuth } from "../context/AuthContext";
 import "./pages-css/CSS.css";
@@ -9,6 +8,7 @@ import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
+import Add_Item from "../components/popups/Add_Item";
 
 function New_Campaign_Page_CAMPAIGN() 
 {
@@ -34,8 +34,73 @@ function New_Campaign_Page_CAMPAIGN()
     genre:"",
     backstory:""
   });
+  const [showAddItemPopup, setShowAddItemPopup] = useState(false);
+  const [showItems, setShowItems] = useState(false);
+  const [items, setItems] = useState([]);
+  const [editingItem, setEditingItem] = useState(null);
   const formData = isNewCampaign ? draft : data;
   const setFormData = isNewCampaign ? setDraft : setData;
+
+  // Load items for this campaign
+  useEffect(() => {
+    const loadItems = async () => {
+      if (!userId || !campaignId) return;
+      try {
+        const list = await getItems(userId, campaignId);
+        setItems(list || []);
+      } catch (err) {
+        console.error("Failed to load items:", err);
+      }
+    };
+
+    // Initial load
+    loadItems();
+
+    // Reload when the window gets focus again (e.g. after closing popup)
+    const handleFocus = () => {
+      loadItems();
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [userId, campaignId]);
+
+  const handleEditItem = (item) => {
+    setEditingItem(item);
+    setShowAddItemPopup(true);
+  };
+
+  const handleDeleteItem = async (item) => {
+    if (!window.confirm(`Delete item "${item.name || "Unnamed Item"}"?`)) {
+      return;
+    }
+    if (!userId || !campaignId) return;
+    
+    try {
+      const success = await deleteItem(userId, campaignId, item.id);
+      if (success) {
+        const list = await getItems(userId, campaignId);
+        setItems(list || []);
+      }
+    } catch (err) {
+      console.error("Failed to delete item:", err);
+      alert("Failed to delete item. Please try again.");
+    }
+  };
+
+  const handleItemPopupClose = async () => {
+    setShowAddItemPopup(false);
+    setEditingItem(null);
+    // Reload items to reflect any changes
+    if (userId && campaignId) {
+      try {
+        const list = await getItems(userId, campaignId);
+        setItems(list || []);
+      } catch (err) {
+        console.error("Failed to reload items:", err);
+      }
+    }
+  };
 
   const handleSave = async () => {
     if(!userId) return;
@@ -109,6 +174,7 @@ function New_Campaign_Page_CAMPAIGN()
 
             {/* The campaign name */}
             <div id="input-box-white">
+              <br></br>
               <label htmlFor="campaign-name"><b>Campaign Name</b></label><br />
               <input id="campaign-name" placeholder="Enter text here..."
                      value={formData?.name || ""}
@@ -142,9 +208,128 @@ function New_Campaign_Page_CAMPAIGN()
 
             {/* The add and show item buttons */}
             <div>
-              <button id="button-green">Add Item</button>
-              <button id="button-green">Show Current Item(s)</button>
+              <button id="button-green" onClick={() => setShowAddItemPopup(true)}>Add Item</button>
+              <button
+                id="button-green"
+                onClick={async () => {
+                  const next = !showItems;
+                  setShowItems(next);
+                  if (next && userId && campaignId) {
+                    try {
+                      const list = await getItems(userId, campaignId);
+                      setItems(list || []);
+                    } catch (err) {
+                      console.error("Failed to load items:", err);
+                    }
+                  }
+                }}
+                disabled={!campaignId || !userId}
+              >
+                {showItems ? "Hide Current Item(s)" : "Show Current Item(s)"}
+              </button>
             </div>
+
+            {/* Display current items */}
+            {showItems && (
+              <div style={{
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginTop: "20px"
+              }}>
+                {items.length > 0 ? (
+                  items.map((item) => (
+                    <div
+                      key={item.id}
+                      style={{ 
+                        display: "flex", 
+                        flexDirection: "column", 
+                        gap: "4px", 
+                        width: "100%",
+                        padding: "10px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        backgroundColor: "#f9f9f9"
+                      }}
+                    >
+                      <div style={{ display: "flex", gap: "12px", width: "100%", alignItems: "center" }}>
+                        <div style={{ flex: 1 }}>
+                          <b>{item.name || "Unnamed Item"}</b>
+                          {item.description && (
+                            <div style={{ fontSize: "14px", color: "#666", marginTop: "2px" }}>
+                              {item.description}
+                            </div>
+                          )}
+                          {(item.value !== undefined || item.weight !== undefined) && (
+                            <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>
+                              {item.value !== undefined && `Value: ${item.value}`}
+                              {item.value !== undefined && item.weight !== undefined && " | "}
+                              {item.weight !== undefined && `Weight: ${item.weight}`}
+                            </div>
+                          )}
+                          {item.effects && item.effects.length > 0 && (
+                            <div style={{ fontSize: "12px", color: "#666", marginTop: "2px" }}>
+                              Effects: {item.effects.join(", ")}
+                            </div>
+                          )}
+                          {item.bonusEffects && item.bonusEffects.length > 0 && (
+                            <div style={{ fontSize: "12px", color: "#666", marginTop: "2px" }}>
+                              Bonus: {item.bonusEffects.join(", ")}
+                            </div>
+                          )}
+                        </div>
+                        <div style={{ display: "flex", gap: "8px", marginRight: "40px" }}>
+                          <button
+                            id="button-green"
+                            type="button"
+                            style={{ 
+                              width: "80px", 
+                              height: "40px", 
+                              fontSize: "14px",
+                              padding: "8px 12px",
+                              border: "none",
+                              borderRadius: "4px",
+                              cursor: "pointer"
+                            }}
+                            onClick={() => handleEditItem(item)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            id="button-green"
+                            style={{ 
+                              width: "80px", 
+                              height: "40px", 
+                              fontSize: "14px",
+                              padding: "8px 12px",
+                              border: "none",
+                              borderRadius: "4px",
+                              cursor: "pointer"
+                            }}
+                            onClick={() => handleDeleteItem(item)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div style={{ 
+                    marginTop: "20px", 
+                    color: "#666", 
+                    fontStyle: "italic",
+                    padding: "20px",
+                    border: "1px dashed #ccc",
+                    borderRadius: "8px",
+                    textAlign: "center"
+                  }}>
+                    No items found. Create your first item!
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* The Save and continue, and enter button */}
             <div className="campaign-actions">
@@ -159,6 +344,14 @@ function New_Campaign_Page_CAMPAIGN()
         <Footer />
 
       </div>
+
+      {showAddItemPopup && (
+        <Add_Item 
+          onClose={handleItemPopupClose} 
+          campaignId={campaignId}
+          item={editingItem}
+        />
+      )}
 
     </div>
   );
