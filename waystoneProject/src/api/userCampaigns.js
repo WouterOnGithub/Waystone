@@ -332,6 +332,27 @@ export const getItems = async (userId, campaignId) => {
   }
 };
 
+// CONTAINER HELPERS
+
+export const createContainer = async (userId, campaignId, containerData) => {
+  try {
+    const collectionRef = collection(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Containers"
+    );
+    const docRef = await addDoc(collectionRef, containerData);
+    const newDoc = await getDoc(docRef);
+    return newDoc.exists() ? { id: docRef.id, ...newDoc.data() } : null;
+  } catch (error) {
+    console.error("Error creating container:", error);
+    return null;
+  }
+};
+
 export const deleteItem = async (userId, campaignId, itemId) => {
   try {
     const docRef = doc(
@@ -347,6 +368,74 @@ export const deleteItem = async (userId, campaignId, itemId) => {
     return true;
   } catch (error) {
     console.error("Error deleting item:", error);
+    return false;
+  }
+};
+
+export const getContainers = async (userId, campaignId) => {
+  try {
+    const collectionRef = collection(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Containers"
+    );
+    const querySnapshot = await getDocs(collectionRef);
+    const containers = querySnapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    }));
+    return containers;
+  } catch (error) {
+    console.error("Error getting containers:", error);
+    return [];
+  }
+};
+
+export const updateContainer = async (
+  userId,
+  campaignId,
+  containerId,
+  containerData
+) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Containers",
+      containerId
+    );
+    await setDoc(docRef, containerData, { merge: true });
+    const updatedDoc = await getDoc(docRef);
+    return updatedDoc.exists()
+      ? { id: updatedDoc.id, ...updatedDoc.data() }
+      : null;
+  } catch (error) {
+    console.error("Error updating container:", error);
+    return null;
+  }
+};
+
+export const deleteContainer = async (userId, campaignId, containerId) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Containers",
+      containerId
+    );
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error("Error deleting container:", error);
     return false;
   }
 };

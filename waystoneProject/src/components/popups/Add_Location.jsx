@@ -19,7 +19,7 @@ function resolveImageUrl(imageUrl, baseUrl) {
   return `${origin}/${imageUrl}`;
 }
 
-function Add_Location({ campaignId, location, userId, baseUrl, onClose }) {
+function Add_Location({ campaignId, location, userId, baseUrl, onLocationSaved, onClose }) {
   const fileInputRef = useRef(null);
 
   const [name, setName] = useState(location?.name || "");
@@ -125,8 +125,12 @@ function Add_Location({ campaignId, location, userId, baseUrl, onClose }) {
       }
 
       setMessage("Location saved successfully.");
-      // Close popup using onClose callback
-      if (onClose) {
+      // Call callback to refresh locations in parent component
+      if (onLocationSaved) {
+        onLocationSaved();
+      }
+      // Only close popup for new locations, not for edits
+      if (!location?.id && onClose) {
         onClose();
       }
     } catch (err) {

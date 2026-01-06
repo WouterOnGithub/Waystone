@@ -23,7 +23,7 @@ function resolveImageUrl(imageUrl, baseUrl) {
   return `${origin}/${imageUrl}`;
 }
 
-function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId, onClose }) 
+function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId, onClose, onBuildingRegionSaved }) 
 {
   const fileInputRef = useRef(null);
   const [name, setName] = useState(building?.name || "");
@@ -32,8 +32,30 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
   const [imagePreview, setImagePreview] = useState(
     resolveImageUrl(building?.imageUrl || null, baseUrl)
   );
+  const [availableLocations, setAvailableLocations] = useState([]);
+  const [selectedLocationId, setSelectedLocationId] = useState(
+    locationId || building?.locationId || ""
+  );
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    setSelectedLocationId(locationId || building?.locationId || "");
+  }, [locationId, building?.locationId]);
+
+  useEffect(() => {
+    const loadLocations = async () => {
+      if (!userId || !campaignId) return;
+      try {
+        const list = await getLocations(userId, campaignId);
+        setAvailableLocations(list || []);
+      } catch (err) {
+        console.error("Failed to load locations:", err);
+      }
+    };
+
+    loadLocations();
+  }, [userId, campaignId]);
 
   useEffect(() => {
     return () => {
@@ -104,11 +126,19 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
         imageUrl = result.url;
       }
 
+      const resolvedLocationId = selectedLocationId || building?.locationId || "";
+
+      if (!building?.id && !resolvedLocationId) {
+        setMessage("Please select a location for this building/region.");
+        setSaving(false);
+        return;
+      }
+
       const payload = {
         name: name.trim(),
         description: description.trim(),
         imageUrl: imageUrl || "",
-        locationId: locationId || "",
+        locationId: resolvedLocationId,
         updatedAt: new Date().toISOString(),
       };
 
@@ -128,7 +158,12 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
       }
 
       setMessage("Building/Region saved successfully.");
-      if (onClose) {
+      // Call callback to refresh buildings/regions in parent component
+      if (onBuildingRegionSaved) {
+        onBuildingRegionSaved();
+      }
+      // Only close popup for new buildings/regions, not for edits
+      if (!building?.id && onClose) {
         onClose();
       }
     } catch (err) {
@@ -162,6 +197,21 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
               hidden
             />
             <label htmlFor="name-buildingregion"><b>Name</b></label> <br /> 
+            <label htmlFor="location-buildingregion"><b>Location</b></label> <br />
+            <select
+              id="location-buildingregion"
+              value={selectedLocationId}
+              onChange={(e) => setSelectedLocationId(e.target.value)}
+            >
+              <option value="">Select a location...</option>
+              {availableLocations.map((loc) => (
+                <option key={loc.id} value={loc.id}>
+                  {loc.name || "Unnamed Location"}
+                </option>
+              ))}
+            </select>
+            <br />
+            <br />
             <input
               type="text"
               id="name-buildingregion"
