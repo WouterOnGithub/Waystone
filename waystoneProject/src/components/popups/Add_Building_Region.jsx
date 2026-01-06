@@ -23,7 +23,7 @@ function resolveImageUrl(imageUrl, baseUrl) {
   return `${origin}/${imageUrl}`;
 }
 
-function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId }) 
+function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId, onClose }) 
 {
   const fileInputRef = useRef(null);
   const [name, setName] = useState(building?.name || "");
@@ -128,12 +128,8 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
       }
 
       setMessage("Building/Region saved successfully.");
-      if (typeof window !== "undefined" && window.close) {
-        try {
-          window.close();
-        } catch {
-          // ignore close errors
-        }
+      if (onClose) {
+        onClose();
       }
     } catch (err) {
       setMessage(err?.message || "An error occurred while saving.");
@@ -188,6 +184,9 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
             <br />
             <button id="button-green" type="submit" disabled={saving}>
               {saving ? "Saving..." : "Save"}
+            </button>
+            <button id="button-green" type="button" onClick={onClose}>
+              Back
             </button>
             {message && (
               <>

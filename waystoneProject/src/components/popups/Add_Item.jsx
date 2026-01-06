@@ -4,7 +4,7 @@ import "../../pages/pages-css/CSS.css";
 import "../../pages/pages-css/Add_View.css";
 import Add_Logo from "../../assets/Add_Logo.webp";
 
-function Add_Item() 
+function Add_Item({onClose}) 
 {
   return (
     <div id="addview-page">
@@ -63,7 +63,7 @@ function Add_Item()
             </div>
 
               <button id="button-green">Save</button>
-              <button id="button-green">Back</button>
+              <button id="button-green" onClick={onClose}>Back</button>
               
         </form>
 

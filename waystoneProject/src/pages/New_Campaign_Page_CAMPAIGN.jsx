@@ -9,6 +9,7 @@ import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
+import Add_Item from "../components/popups/Add_Item";
 
 function New_Campaign_Page_CAMPAIGN() 
 {
@@ -34,6 +35,7 @@ function New_Campaign_Page_CAMPAIGN()
     genre:"",
     backstory:""
   });
+  const [showAddItemPopup, setShowAddItemPopup] = useState(false);
   const formData = isNewCampaign ? draft : data;
   const setFormData = isNewCampaign ? setDraft : setData;
 
@@ -142,7 +144,7 @@ function New_Campaign_Page_CAMPAIGN()
 
             {/* The add and show item buttons */}
             <div>
-              <button id="button-green">Add Item</button>
+              <button id="button-green" onClick={() => setShowAddItemPopup(true)}>Add Item</button>
               <button id="button-green">Show Current Item(s)</button>
             </div>
 
@@ -159,6 +161,8 @@ function New_Campaign_Page_CAMPAIGN()
         <Footer />
 
       </div>
+
+      {showAddItemPopup && <Add_Item onClose={() => setShowAddItemPopup(false)} />}
 
     </div>
   );

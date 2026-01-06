@@ -43,6 +43,11 @@ function New_Campaign_Page_MAPBUILDER()
   const [showLocations, setShowLocations] = useState(false);
   const [buildings, setBuildings] = useState([]);
   const [showBuildings, setShowBuildings] = useState(false);
+  const [showAddLocationPopup, setShowAddLocationPopup] = useState(false);
+  const [showAddRegionPopup, setShowAddRegionPopup] = useState(false);
+  const [editingLocation, setEditingLocation] = useState(null);
+  const [editingRegion, setEditingRegion] = useState(null);
+  const [selectedLocationId, setSelectedLocationId] = useState(null);
 
   const SIZE_LIMITS = useMemo(
     () => ({
@@ -467,13 +472,11 @@ function New_Campaign_Page_MAPBUILDER()
             <b>Add Elements</b>
             <div>
               <button id="button-green" 
-                      onClick={() =>
-                          openPopup(AddLocation, "Add Location", {
-                            campaignId,
-                            userId,
-                          })
-                        }
-                        type="button"
+                      onClick={() => {
+                        setEditingLocation(null);
+                        setShowAddLocationPopup(true);
+                      }}
+                      type="button"
                 >Add Location
               </button>
               <button
@@ -516,13 +519,10 @@ function New_Campaign_Page_MAPBUILDER()
                         id="button-green"
                         type="button"
                         style={{ width: "160px", height: "50px", fontSize: "16px" }}
-                        onClick={() =>
-                          openPopup(AddLocation, "Edit Location", {
-                            campaignId,
-                            userId,
-                            location: loc,
-                          })
-                        }
+                        onClick={() => {
+                          setEditingLocation(loc);
+                          setShowAddLocationPopup(true);
+                        }}
                       >
                         {`Edit ${loc.name || "Location"}`}
                       </button>
@@ -569,13 +569,10 @@ function New_Campaign_Page_MAPBUILDER()
                               id="button-green"
                               type="button"
                               style={{ width: "120px", height: "45px", fontSize: "14px" }}
-                              onClick={() =>
-                                openPopup(AddBuildingRegion, "Edit Building / Region", {
-                                  campaignId,
-                                  userId,
-                                  building: building,
-                                })
-                              }
+                              onClick={() => {
+                                  setEditingRegion(building);
+                                  setShowAddRegionPopup(true);
+                                }}
                             >
                               {`Edit ${building.name || "Region"}`}
                             </button>
@@ -614,13 +611,11 @@ function New_Campaign_Page_MAPBUILDER()
                           id="button-green"
                           type="button"
                           style={{ width: "180px", height: "45px", fontSize: "14px", marginTop: "8px" }}
-                          onClick={() =>
-                            openPopup(AddBuildingRegion, "Add Region to Location", {
-                              campaignId,
-                              userId,
-                              locationId: loc.id,
-                            })
-                          }
+                          onClick={() => {
+                            setEditingRegion(null);
+                            setSelectedLocationId(loc.id);
+                            setShowAddRegionPopup(true);
+                          }}
                         >
                           + Add Region to {loc.name || "This Location"}
                         </button>
@@ -633,13 +628,11 @@ function New_Campaign_Page_MAPBUILDER()
                         id="button-green"
                         type="button"
                         style={{ width: "180px", height: "45px", fontSize: "14px", marginLeft: "20px", marginTop: "8px" }}
-                        onClick={() =>
-                          openPopup(AddBuildingRegion, "Add Region to Location", {
-                            campaignId,
-                            userId,
-                            locationId: loc.id,
-                          })
-                        }
+                        onClick={() => {
+                          setEditingRegion(null);
+                          setSelectedLocationId(loc.id);
+                          setShowAddRegionPopup(true);
+                        }}
                       >
                         + Add Region to {loc.name || "This Location"}
                       </button>
@@ -665,13 +658,10 @@ function New_Campaign_Page_MAPBUILDER()
                     <button
                       id="button-green"
                       type="button"
-                      onClick={() =>
-                        openPopup(AddBuildingRegion, "Edit Building(s) / Region(s)", {
-                          campaignId,
-                          userId,
-                          building: bld,
-                        })
-                      }
+                      onClick={() => {
+                        setEditingRegion(bld);
+                        setShowAddRegionPopup(true);
+                      }}
                     >
                       {`Edit ${bld.name || "Building(s) / Region(s)"}`}
                     </button>
@@ -750,6 +740,25 @@ function New_Campaign_Page_MAPBUILDER()
 
         <Footer />
       </div>
+
+      {showAddLocationPopup && (
+        <AddLocation 
+          onClose={() => setShowAddLocationPopup(false)}
+          campaignId={campaignId}
+          userId={userId}
+          location={editingLocation}
+        />
+      )}
+
+      {showAddRegionPopup && (
+        <AddBuildingRegion 
+          onClose={() => setShowAddRegionPopup(false)}
+          campaignId={campaignId}
+          userId={userId}
+          building={editingRegion}
+          locationId={selectedLocationId}
+        />
+      )}
     </div>
   );
 }
