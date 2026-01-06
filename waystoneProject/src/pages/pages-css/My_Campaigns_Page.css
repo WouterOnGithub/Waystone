@@ -43,7 +43,7 @@
 {
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
-    background-color: var(--background-colour);
+    background: var(--background-colour);
     text-align: right;
     margin-left: 30px; /* Keep the same as the #box-text p margin-left !!! */
     width: 260px; /* Keep the same as the #box-text p width !!! */
@@ -51,7 +51,7 @@
 }
 #box button /* Archive button */
 {
-    background-color: var(--background-colour4);
+    background: var(--background-colour4);
     color: var(--text-color2);
     border-radius: var(--border-radius2);
     border: none;
@@ -61,7 +61,7 @@
 }
 #box button:hover /* Archive button */
 {
-    background-color: var(--background-colour);
+    background: var(--background-colour);
     color: var(--text-color);
     text-decoration: underline;
     transition: 0.3s; 
