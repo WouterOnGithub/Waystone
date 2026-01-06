@@ -11,7 +11,7 @@ export default function TokenSidebar({ players, onDragStart }) {
           <Token
             key={player.id}
             tokenId={player.id}
-            tokenImageUrl={player.imageUrl} // optional
+            tokenImageUrl={player.imageUrl}
             onDragStart={() => onDragStart(player)}
           />
         ))}
