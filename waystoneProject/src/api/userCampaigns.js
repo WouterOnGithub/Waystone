@@ -262,3 +262,91 @@ export const deleteBuildingRegion = async (userId, campaignId, buildingId) => {
     return false;
   }
 };
+
+// ITEM HELPERS
+
+export const createItem = async (userId, campaignId, itemData) => {
+  try {
+    const collectionRef = collection(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Items"
+    );
+    const docRef = await addDoc(collectionRef, itemData);
+    const newDoc = await getDoc(docRef);
+    return newDoc.exists() ? { id: docRef.id, ...newDoc.data() } : null;
+  } catch (error) {
+    console.error("Error creating item:", error);
+    return null;
+  }
+};
+
+export const updateItem = async (
+  userId,
+  campaignId,
+  itemId,
+  itemData
+) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Items",
+      itemId
+    );
+    await setDoc(docRef, itemData, { merge: true });
+    const updatedDoc = await getDoc(docRef);
+    return updatedDoc.exists()
+      ? { id: updatedDoc.id, ...updatedDoc.data() }
+      : null;
+  } catch (error) {
+    console.error("Error updating item:", error);
+    return null;
+  }
+};
+
+export const getItems = async (userId, campaignId) => {
+  try {
+    const collectionRef = collection(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Items"
+    );
+    const querySnapshot = await getDocs(collectionRef);
+    return querySnapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    }));
+  } catch (error) {
+    console.error("Error getting items:", error);
+    return [];
+  }
+};
+
+export const deleteItem = async (userId, campaignId, itemId) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Items",
+      itemId
+    );
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    return false;
+  }
+};
