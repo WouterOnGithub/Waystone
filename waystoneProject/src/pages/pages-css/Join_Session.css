@@ -1,73 +1,332 @@
-/* Container centraal in het scherm */
+/* Container met project-specifieke dark orange gradient achtergrond */
 .join-session-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
+  min-height: 100vh;
+  background: var(--background-gradient);
+  font-family: Garamond, serif, cursive;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* Box rondom de input en knoppen */
+/* Animerende achtergrond elementen met project thema */
+.join-session-container::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: backgroundMove 20s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes backgroundMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* Moderne glazen morfisme box met grotere afmetingen */
 .join-session-box {
   text-align: center;
-  padding: 40px;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 60px 50px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.6s ease-out;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100vw
 }
 
-/* Vraag boven het inputveld */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icoon boven de vraag */
+.join-session-box::before {
+  content: '⚔️';
+  font-size: 64px;
+  display: block;
+  margin-bottom: 30px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Moderne vraag styling met project kleuren */
 .join-session-question {
-  margin-bottom: 20px;
-  font-size: 20px;
-  color: #333;
+  margin-bottom: 40px;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-color4);
+  letter-spacing: -0.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Inputveld voor de code */
+/* Modern inputveld met focus effecten en project thema */
 .join-session-input {
-  padding: 10px;
-  width: 250px;
-  font-size: 16px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  width: 80%;
+  max-width: 400px;
+  padding: 20px 24px;
+  font-size: 20px;
+  margin-bottom: 40px;
+  border: 2px solid var(--background-colour3);
+  border-radius: 12px;
+  background: var(--form-box-colour2);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-weight: 500;
+  letter-spacing: 2px;
+  display: flex;
+  align-self: center;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: Garamond, serif, cursive;
 }
 
-/* Container voor de knoppen */
+.join-session-input:focus {
+  outline: none;
+  border-color: var(--text-color3);
+  background: white;
+  box-shadow: 
+    0 0 0 3px rgba(176, 87, 4, 0.1),
+    0 4px 12px rgba(176, 87, 4, 0.15);
+  transform: translateY(-2px);
+}
+
+.join-session-input::placeholder {
+  color: #a0aec0;
+  text-transform: none;
+  font-weight: 400;
+}
+
+/* Container voor de knoppen met verbeterde spacing */
 .join-session-buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
+  flex-wrap: wrap;
 }
 
-/* Enter knop */
+/* Moderne Enter knop met project gradient */
 .join-session-enter {
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
   border: none;
-  background-color: #4caf50;
-  color: #fff;
+  background: var(--projectbox-colour);
+  color: var(--text-color);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(176, 87, 4, 0.3);
+  position: relative;
+  overflow: hidden;
+  min-width: 150px;
+  font-family: Garamond, serif, cursive;
+}
+
+.join-session-enter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.join-session-enter:hover::before {
+  left: 100%;
 }
 
 .join-session-enter:hover {
-  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(176, 87, 4, 0.4);
 }
 
-/* Terug knop */
+.join-session-enter:active {
+  transform: translateY(0);
+}
+
+/* Moderne Terug knop met project thema */
 .join-session-back {
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: none;
-  background-color: #f44336;
-  color: #fff;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 2px solid var(--background-colour3);
+  background: var(--form-box-colour2);
+  color: var(--text-color);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  font-family: Garamond, serif, cursive;
 }
 
 .join-session-back:hover {
-  background-color: #e53935;
+  background: var(--form-box-colour);
+  border-color: var(--text-color3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(176, 87, 4, 0.2);
+}
+
+.join-session-back:active {
+  transform: translateY(0);
+}
+
+/* Responsief design */
+@media (max-width: 768px) {
+  .join-session-container {
+    padding: 15px;
+  }
+  
+  .join-session-box {
+    padding: 50px 40px;
+    max-width: 100%;
+    min-height: 450px;
+  }
+  
+  .join-session-question {
+    font-size: 28px;
+  }
+  
+  .join-session-input {
+    font-size: 18px;
+    padding: 18px 20px;
+  }
+  
+  .join-session-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .join-session-enter,
+  .join-session-back {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .join-session-box {
+    padding: 40px 30px;
+    min-height: 400px;
+  }
+  
+  .join-session-question {
+    font-size: 24px;
+  }
+  
+  .join-session-input {
+    font-size: 16px;
+    padding: 16px 18px;
+  }
+  
+  .join-session-box::before {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Error message styling met project kleuren */
+.join-session-error {
+  background: var(--projectbox-colour2);
+  color: var(--text-color2);
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  animation: shake 0.5s ease-in-out;
+  box-shadow: 0 4px 12px rgba(176, 49, 49, 0.3);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Loading spinner */
+.join-session-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Help text styling */
+.join-session-help {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 2px solid var(--background-colour3);
+}
+
+.join-session-help p {
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Disabled state for buttons */
+.join-session-enter:disabled,
+.join-session-back:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.join-session-enter:disabled:hover,
+.join-session-back:disabled:hover {
+  transform: none !important;
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3) !important;
+}
+
+/* Focus states for accessibility met project kleuren */
+.join-session-enter:focus,
+.join-session-back:focus {
+  outline: 2px solid var(--text-color3);
+  outline-offset: 2px;
+}
+
+/* Success animation (for future use) */
+@keyframes success {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
