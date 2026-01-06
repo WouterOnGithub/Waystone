@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import "./token.css"
-import { usePlayer } from "../../hooks/usePlayer";
+import { usePlayer } from "../../hooks/usePlayerMap"
 
 export default function TokenMenu({ userId,playerId,campaignId, position, onClose }) {
   const menuRef = useRef();
@@ -39,8 +39,8 @@ if (!player) return null
       ref={menuRef}
       className= "tokenMenu"
       style={{
-  left,top
-}}
+      left,top
+    }}
       >
       <h3>{player.name}</h3>
       <p>HP: {player.hp}</p>
