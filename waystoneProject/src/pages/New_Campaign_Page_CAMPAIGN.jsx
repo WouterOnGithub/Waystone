@@ -88,6 +88,20 @@ function New_Campaign_Page_CAMPAIGN()
     }
   };
 
+  const handleItemPopupClose = async () => {
+    setShowAddItemPopup(false);
+    setEditingItem(null);
+    // Reload items to reflect any changes
+    if (userId && campaignId) {
+      try {
+        const list = await getItems(userId, campaignId);
+        setItems(list || []);
+      } catch (err) {
+        console.error("Failed to reload items:", err);
+      }
+    }
+  };
+
   const handleSave = async () => {
     if(!userId) return;
     
@@ -333,10 +347,7 @@ function New_Campaign_Page_CAMPAIGN()
 
       {showAddItemPopup && (
         <Add_Item 
-          onClose={() => {
-            setShowAddItemPopup(false);
-            setEditingItem(null);
-          }} 
+          onClose={handleItemPopupClose} 
           campaignId={campaignId}
           item={editingItem}
         />
