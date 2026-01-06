@@ -153,7 +153,7 @@ function HelpPage()
   };
 
   return (
-    <div>
+    <div className="full-page">
 
       <Sidebar />
 

@@ -84,6 +84,7 @@ function Map_Main() {
   };
 
   return (
+    <div className="full-page">
     <div className="campaign-page">
       <div className="map-container">
 
@@ -190,6 +191,7 @@ function Map_Main() {
         </div>
 
       </div>
+    </div>
     </div>
   );
 }

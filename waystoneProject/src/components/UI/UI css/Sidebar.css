@@ -5,6 +5,7 @@
     z-index: 1;
     position: fixed;
     overflow-x: hidden;
+    height: 100vh;
 }
 
 .navigation nav /* Navigation Side-bar */
@@ -36,9 +37,9 @@ nav a:hover /* Navigation Side-bar links */
 
 #button-green-sidebar /* The Exit button in the sidebar */
 {   
-    background: var(--background-colour);
+    background: transparent;
     border-radius: var(--border-radius);
-    border: 1px var(--text-color) solid;
+    border: 2px var(--text-color) solid;
     font-weight: bold;
     padding: 10px;
     padding-left: 25px;

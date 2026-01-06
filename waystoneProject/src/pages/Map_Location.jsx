@@ -66,6 +66,7 @@ function Map_Location() {
   };
 
   return (
+    <div className="full-page">
     <div className="campaign-page">
       
 
@@ -185,6 +186,7 @@ function Map_Location() {
               </div>
             </div>
           </div>
+        </div>
         </div>
   );
 }
