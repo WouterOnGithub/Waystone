@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&display=swap');
 
 /* Help Page Layout */
@@ -56,27 +57,44 @@
 }
 
 .help-search:focus {
+=======
+*
+{
+  --help-button-gradient: linear-gradient(90deg,rgb(130, 63, 0) 0%, rgb(176, 87, 4) 100%);
+}
+
+/* The titles throughout the page */
+.category-title, .faq-section b, .help-sidebar b  /* The article title */
+{
+  border-bottom: 2px var(--text-color3) solid;
+  padding-bottom: 5px;
+}
+
+/* The borders of the buttons */
+.category-button:focus, .category-button:active, .faq-item:focus, .faq-item:active, .faq-question:hover, .faq-question:active /* To get rid of the border when clicking on a category button */
+{
+>>>>>>> Stashed changes
   outline: none;
-  border-color: #9d5cd0;
-  box-shadow: 0 0 0 3px rgba(157, 92, 208, 0.1);
 }
 
-.search-button {
-  padding: 14px 30px;
-  background: linear-gradient(135deg, #9d5cd0 0%, #8b45ff 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* The 'How can we help ?' section */
+.help-intro /* The 'How can we help ?' section */
+{
+  background: var(--background-colour);
+  border-radius: var(--border-radius);
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  margin-bottom: 60px;
+  width: 72%;
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
-
-.search-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(157, 92, 208, 0.4);
+.help-intro b /* The title */
+{
+  border-bottom: 2px var(--text-color3) solid;
+  padding-bottom: 5px;
 }
+<<<<<<< Updated upstream
 
 /* Content Wrapper */
 .help-content-wrapper {
@@ -86,252 +104,214 @@
   margin-bottom: 40px;
   max-width: 100%;
   overflow: hidden;
+=======
+.help-intro p /* The line of text under the title */
+{
+  opacity: 0.5;
+  margin-top: 10px;
+  margin-bottom: 50px;
+>>>>>>> Stashed changes
+}
+.search-box /* The search bar and search button in the 'How can we help you ?' section */
+{
+  display: flex;
+  margin: auto;
+  max-width: 800px;
+  gap: 20px;
+}
+.help-search /* The search bar in the 'How can we help you ?' section */
+{
+  border-radius: var(--border-radius);
+  border: none;
+  flex: 1;
+  padding-left: 20px;
+  padding-right: 10px;
+  margin: 5px;
+}
+.help-search:focus /* The search bar in the 'How can we help you ?' section when you click into it */
+{
+  outline: none;
+  border: 2px var(--text-color3) solid;
+  transition: 0.3s;
 }
 
-/* Sidebar Navigation */
-.help-sidebar {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  border: 2px solid rgba(157, 92, 208, 0.1);
+/* The categories and category content - left sidebar  */
+.help-content-wrapper /* The categories and category content  */
+{
+  display: flex;
+  margin-bottom: 50px;
+  gap: 20px;
+  width: 72%;
+}
+.help-sidebar /* The categories sidebar */
+{
+  background: var(--background-colour);
+  border-radius: var(--border-radius);
   height: fit-content;
-  position: sticky;
-  top: 20px;
+  padding: 30px;
+  width: 25%;
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
-
-.help-sidebar h3 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.2rem;
-  color: #1a0f2e;
-  margin: 0 0 20px 0;
-}
-
-.category-nav {
+.category-nav /* The navigation within the sidebar */
+{
+  margin-top: 35px;
+  margin-bottom: 35px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+}
+.category-button /* The category buttons within the navigation */
+{
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  text-align: left;
+  border: none;
+  background: transparent;
+  gap: 10px;
+  padding: 10px;
+  margin-right: 5px; /* To prevent the buttons clipping */
+  transition: all 0.3s ease;
+}
+.category-button:hover /* The category buttons within the navigation while hovering over it */
+{
+  background: rgb(176, 87, 4, 0.2);
+  transform: translateX(2px);
+}
+.category-button.active /* The category button within the navigation when clicked on */
+{
+  background: var(--help-button-gradient);
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
+}
+
+.category-button.active span /* The category button within the navigation when clicked on */
+{
+  color: var(--text-color2);
+}
+
+.help-cta /* The 'Still need help ?' section under the categories in the sidebar */
+{
+  background: var(--background-colour);
+  border-radius: var(--border-radius);
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
+}
+
+/* The help articles of each button - left sidebar  */
+.help-articles /* The article section */
+{
+  background: var(--background-colour);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  margin-bottom: 20px;
+  width: 75%;
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
+}
+
+/* The article content */
+.help-article /* The article */
+{
+  margin-top: 30px;
   margin-bottom: 30px;
 }
-
-.category-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: transparent;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: left;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  color: #4a5568;
-}
-
-.category-button:hover {
-  background: rgba(157, 92, 208, 0.1);
-  transform: translateX(4px);
-}
-
-.category-button.active {
-  background: linear-gradient(135deg, #9d5cd0 0%, #8b45ff 100%);
-  color: white;
-  box-shadow: 0 4px 12px rgba(157, 92, 208, 0.3);
-}
-
-.category-icon {
-  font-size: 1.3rem;
-  min-width: 24px;
-}
-
-.category-label {
-  flex: 1;
-  font-weight: 500;
-}
-
-/* Help CTA */
-.help-cta {
-  padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-radius: 12px;
-  text-align: center;
-}
-
-.help-cta h4 {
-  font-family: 'Montserrat', sans-serif;
-  color: #1a0f2e;
-  margin: 0 0 8px 0;
-  font-size: 1.1rem;
-}
-
-.help-cta p {
-  color: #4a5568;
-  font-size: 0.9rem;
-  margin: 0 0 16px 0;
-}
-
-.contact-button {
-  display: inline-block;
-  padding: 10px 24px;
-  background: linear-gradient(135deg, #9d5cd0 0%, #8b45ff 100%);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-.contact-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(157, 92, 208, 0.4);
-}
-
-/* Help Articles */
-.help-articles {
-  background: white;
-  padding: 40px;
-  border-radius: 20px;
-  border: 2px solid rgba(157, 92, 208, 0.1);
-}
-
-.category-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2rem;
-  color: #1a0f2e;
-  margin: 0 0 30px 0;
-  padding-bottom: 15px;
-  border-bottom: 3px solid #9d5cd0;
-}
-
-.help-article {
-  margin-bottom: 35px;
-}
-
-.help-article h3 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.4rem;
-  color: #2d1b4e;
-  margin: 0 0 12px 0;
-}
-
-.help-article p {
-  color: #4a5568;
-  line-height: 1.7;
-  font-size: 1rem;
-}
-
-/* Quick Tips */
-.quick-tips {
-  margin-top: 40px;
-  padding: 25px;
-  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
-  border-radius: 12px;
-  border-left: 4px solid #f59e0b;
-}
-
-.quick-tips h3 {
-  font-family: 'Montserrat', sans-serif;
-  color: #92400e;
-  margin: 0 0 16px 0;
-  font-size: 1.2rem;
-}
-
-.quick-tips ul {
-  margin: 0;
-  padding-left: 20px;
-}
-
-.quick-tips li {
-  color: #78350f;
+.help-article p /* The article paragraph */
+{
+  opacity: 0.8;
   line-height: 1.8;
-  margin-bottom: 8px;
 }
 
-/* FAQ Section */
-.faq-section {
-  background: white;
-  padding: 40px;
-  border-radius: 20px;
-  border: 2px solid rgba(157, 92, 208, 0.1);
-  margin-bottom: 50px;
+/* The quick tips */
+.quick-tips /* The quick tips section  */
+{
+  padding: 10px;
+  background: rgb(176, 87, 4, 0.2);
+  border-radius: 12px;
+  border-left: 4px var(--text-color3) solid;
+}
+.quick-tips svg /* The quick tips icon */
+{
+  width: 40px;
+  height: 20px;
+}
+.quick-tips b /* The quick tips title */
+{
+  color: var(--text-color4);
+}
+.quick-tips li /* The quick tips content */
+{
+  color: var(--text-color3);
+  line-height: 1.5;
+  margin-bottom: 10px;
 }
 
-.faq-section h2 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2rem;
-  color: #1a0f2e;
-  margin: 0 0 30px 0;
-  padding-bottom: 15px;
-  border-bottom: 3px solid #9d5cd0;
+/* The FAQ */
+.faq-section /* The FAQ section */
+{
+  background: var(--background-colour);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  margin-bottom: 60px;
+  width: 68%;
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
-
-.faq-list {
+.faq-list /* The FAQ list of questions */
+{
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
-.faq-item {
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.faq-item:hover {
-  border-color: #9d5cd0;
-  box-shadow: 0 4px 12px rgba(157, 92, 208, 0.1);
-}
-
-.faq-question {
-  width: 100%;
-  padding: 18px 24px;
-  background: white;
+.faq-item /* The individual questions and answers in the list */
+{
+  border-radius: var(--border-radius);
   border: none;
+  background: transparent;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 40px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
+}
+.faq-item:hover /* The individual questions and answers in the list while hovering */
+{
+  transform: translateX(2px);
+}
+
+.faq-question /* The individual questions in the list */
+{
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
+  justify-content: space-between;
+  border: none;
+  width: 100%;
   font-weight: 600;
-  color: #2d3748;
-  text-align: left;
   transition: all 0.3s ease;
 }
-
-.faq-question:hover {
-  background: rgba(157, 92, 208, 0.05);
+.faq-question:hover, .faq-question.active
+{
+  background: rgb(176, 87, 4, 0.2);
 }
 
-.faq-question.active {
-  background: rgba(157, 92, 208, 0.1);
-  color: #9d5cd0;
+.faq-icon /* The icon next to the questions */
+{
+  font-size: 25px;
+  font-weight: 600;
 }
-
-.faq-icon {
-  font-size: 1.5rem;
-  color: #9d5cd0;
-  font-weight: 300;
-  min-width: 24px;
-  text-align: center;
-}
-
-.faq-answer {
+.faq-answer /* The answer per question text */
+{
   padding: 0 24px 20px 24px;
-  background: rgba(157, 92, 208, 0.02);
   animation: slideDown 0.3s ease;
 }
-
-.faq-answer p {
-  color: #4a5568;
-  line-height: 1.7;
-  margin: 0;
+.faq-answer p /* The answer per question text */
+{
+  opacity: 0.8;
+  line-height: 1.4;
 }
 
-@keyframes slideDown {
+/* The animation (?) */
+@keyframes slideDown 
+{
   from {
     opacity: 0;
     transform: translateY(-10px);
@@ -342,37 +322,29 @@
   }
 }
 
-/* Video Tutorials */
-.tutorials-section {
-  background: white;
+/* The video tutorials */
+.tutorials-section /* The video tutorials section */
+{
+  border-radius: var(--border-radius);
+  background: var(--background-colour);
   padding: 40px;
-  border-radius: 20px;
-  border: 2px solid rgba(157, 92, 208, 0.1);
   margin-bottom: 50px;
 }
-
-.tutorials-section h2 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2rem;
-  color: #1a0f2e;
-  margin: 0 0 30px 0;
-  padding-bottom: 15px;
-  border-bottom: 3px solid #9d5cd0;
-}
-
-.tutorial-grid {
+.tutorial-grid /* To display the video boxes into a grid */
+{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
 }
 
 .tutorial-card {
   padding: 24px;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border: 2px solid #e2e8f0;
+  border: 2px solid rgba(43, 43, 43, 0.1);
   border-radius: 12px;
   transition: all 0.3s ease;
   cursor: pointer;
+  margin: 20px;
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
 
 .tutorial-card:hover {
@@ -394,12 +366,7 @@
   color: white;
 }
 
-.tutorial-card h4 {
-  font-family: 'Montserrat', sans-serif;
-  color: #1a0f2e;
-  margin: 0 0 8px 0;
-  font-size: 1.1rem;
-}
+
 
 .tutorial-card p {
   color: #4a5568;

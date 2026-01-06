@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import "./pages-css/CSS.css";
+import './pages-css/HelpPage.css';
 import Header from '../components/UI/Header';
 import Footer from '../components/UI/Footer';
 import Sidebar from '../components/UI/Sidebar';
+<<<<<<< Updated upstream
 import './pages-css/HelpPage.css';
 import './pages-css/Main_Page.css';
+=======
+>>>>>>> Stashed changes
 
-function HelpPage() {
+function HelpPage() 
+{
   const [activeCategory, setActiveCategory] = useState('getting-started');
   const [openFAQ, setOpenFAQ] = useState(null);
 
@@ -152,122 +158,162 @@ function HelpPage() {
   };
 
   return (
+<<<<<<< Updated upstream
     <div className="page-layout">
       <Sidebar />
       <div className="main-wrapper">
         <div id="main">
           <Header title="Help & Support" />
+=======
+    <div>
+
+      <Sidebar />
+
+      <div id="main">
+
+        <Header title="Help & Support" />
+>>>>>>> Stashed changes
         
-        <div className="help-page">
+        <div id="content">
+
           <div className="help-intro">
-            <h2>How can we help you?</h2>
-            <p>Find answers to common questions and learn how to make the most of Waystone</p>
+
+            <b>How can we help you ?</b>
+            <p>Find answers to your questions and learn how to make the most of your Waystone experience</p>
+
             <div className="search-box">
-              <input 
-                type="text" 
-                placeholder="Search for help articles..."
-                className="help-search"
-              />
-              <button className="search-button">Search</button>
+              <input type="text" placeholder="Search for help articles ..." className="help-search"/>
+              <button id="button-gray">Search</button>
             </div>
+            
           </div>
 
           <div className="help-content-wrapper">
-            {/* Category Navigation */}
+
+            {/* The categories - left sidebar */}
             <div className="help-sidebar">
-              <h3>Categories</h3>
+              
+              <b>Categories</b>
+
               <nav className="category-nav">
                 {categories.map(category => (
-                  <button
-                    key={category.id}
-                    className={`category-button ${activeCategory === category.id ? 'active' : ''}`}
-                    onClick={() => setActiveCategory(category.id)}
+                  <button key={category.id}
+                          className={`category-button ${activeCategory === category.id ? 'active' : ''}`}
+                          onClick={() => setActiveCategory(category.id)}
                   >
-                    <span className="category-icon">{category.icon}</span>
-                    <span className="category-label">{category.label}</span>
+                  
+                  {/* The category icon and title */}
+                  <span>{category.icon}</span>
+                  <span>{category.label}</span>
                   </button>
                 ))}
               </nav>
 
               <div className="help-cta">
-                <h4>Still need help?</h4>
-                <p>Can't find what you're looking for?</p>
-                <Link to="/contact" className="contact-button">Contact Support</Link>
+                <b>Still need help ?</b>
+                <div>&#10240;</div> {/* To create space between the b and button */}
+                <Link to="/contact" id="button-gray">Contact Support</Link>
               </div>
             </div>
 
-            {/* Help Articles */}
+            {/* The category articles in the right-side section */}
             <div className="help-articles">
-              <h2 className="category-title">{helpContent[activeCategory].title}</h2>
+
+              <b className="category-title">{helpContent[activeCategory].title}</b>
               
               {helpContent[activeCategory].sections.map((section, index) => (
+                
                 <div key={index} className="help-article">
-                  <h3>{section.title}</h3>
+                  <b>{section.title}</b>
                   <p>{section.content}</p>
                 </div>
+
               ))}
 
-              {/* Quick Tips */}
+              {/* Quick tips under the category content */}
               <div className="quick-tips">
-                <h3>💡 Quick Tips</h3>
+                
+                <b> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="var(--text-color3)"><path d="M420.9 448C428.2 425.7 442.8 405.5 459.3 388.1C492 353.7 512 307.2 512 256C512 150 426 64 320 64C214 64 128 150 128 256C128 307.2 148 353.7 180.7 388.1C197.2 405.5 211.9 425.7 219.1 448L420.8 448zM416 496L224 496L224 512C224 556.2 259.8 592 304 592L336 592C380.2 592 416 556.2 416 512L416 496zM312 176C272.2 176 240 208.2 240 248C240 261.3 229.3 272 216 272C202.7 272 192 261.3 192 248C192 181.7 245.7 128 312 128C325.3 128 336 138.7 336 152C336 165.3 325.3 176 312 176z"/></svg>
+                  Quick Tips</b>
+                
+
                 <ul>
                   <li>Use keyboard shortcuts: Press '?' to view all available shortcuts</li>
                   <li>Right-click on any element for context-specific actions</li>
                   <li>Enable auto-save notifications in settings for peace of mind</li>
                   <li>Create templates for frequently used NPCs and encounters</li>
                 </ul>
+
               </div>
             </div>
           </div>
 
           {/* FAQ Section */}
           <div className="faq-section">
-            <h2>Frequently Asked Questions</h2>
+
+            <b>Frequently Asked Questions</b>
+
             <div className="faq-list">
               {faqs.map((faq, index) => (
+                
                 <div key={index} className="faq-item">
                   <button 
                     className={`faq-question ${openFAQ === index ? 'active' : ''}`}
                     onClick={() => toggleFAQ(index)}
                   >
-                    <span>{faq.question}</span>
+                    <span>&#11208; {faq.question}</span>
                     <span className="faq-icon">{openFAQ === index ? '−' : '+'}</span>
                   </button>
+
                   {openFAQ === index && (
                     <div className="faq-answer">
                       <p>{faq.answer}</p>
                     </div>
                   )}
                 </div>
+
               ))}
             </div>
+
           </div>
 
           {/* Video Tutorials Section */}
           <div className="tutorials-section">
-            <h2>Video Tutorials</h2>
+
+            <b>Video Tutorials</b>
+
             <div className="tutorial-grid">
+
               <div className="tutorial-card">
                 <div className="tutorial-thumbnail">▶️</div>
                 <h4>Getting Started</h4>
                 <p>Learn the basics of Waystone in 5 minutes</p>
               </div>
+
               <div className="tutorial-card">
                 <div className="tutorial-thumbnail">▶️</div>
                 <h4>Running Your First Session</h4>
                 <p>A complete walkthrough for DMs</p>
               </div>
+
               <div className="tutorial-card">
                 <div className="tutorial-thumbnail">▶️</div>
                 <h4>Advanced Combat</h4>
                 <p>Master the combat encounter system</p>
               </div>
+
             </div>
+
           </div>
+
         </div>
 
         <Footer />
+<<<<<<< Updated upstream
         </div>
+=======
+
+>>>>>>> Stashed changes
       </div>
     </div>
   );

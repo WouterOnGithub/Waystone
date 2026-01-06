@@ -21,7 +21,7 @@
   border: 2px solid transparent;
 
   /* Makes the border gradient */
-  background: linear-gradient(135deg,rgb(176, 87, 4) 0%, rgba(255, 255, 255, 1) 45%) padding-box,
+  background: linear-gradient(135deg,var(--text-color3) 0%, rgba(255, 255, 255, 1) 45%) padding-box,
               linear-gradient(45deg, #ffffff, var(--text-color3), #ffffff) border-box;
   
   border-right: none;
@@ -91,7 +91,7 @@
 .footer-badge
 { 
   color: var(--text-color2);
-  background: linear-gradient(135deg,rgb(176, 87, 4) 0%, rgb(130, 63, 0) 45%);
+  background: linear-gradient(135deg,var(--text-color3) 0%, var(--text-color4) 45%);
   border-radius: var(--border-radius3);
   padding: 4px;
   padding-left: 10px;
