@@ -1,15 +1,12 @@
   import React, { useState, useEffect } from "react";
   import { useParams, useNavigate } from "react-router-dom";
   import { useAuth } from "../context/AuthContext.jsx";
-  import {usePlayer} from "../hooks/usePlayer.js";
   import "./pages-css/CSS.css";
   import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
   import Footer from "../components/UI/Footer";
   import Header from "../components/UI/Header";
   import Sidebar from "../components/UI/Sidebar";
 
-
-  import { useAuth } from "../context/AuthContext.jsx";
   import {usePlayer} from "../hooks/usePlayer.js";
   import {deletePlayerAndSubCollections} from "../api/players.js";
   import { db } from "../firebase/firebase";
