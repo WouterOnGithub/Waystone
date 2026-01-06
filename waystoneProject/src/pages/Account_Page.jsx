@@ -119,7 +119,7 @@ function Account_Page()
 
           <section id="account-archived">
             {/* The archive button to see archived campaigns */}
-            <button id="button-green">Archived Campaigns</button>
+            <Link to="/user/Archived_Campaigns" id="button-green">Archived Campaigns</Link>
           </section>
 
           {/* The notes section */}

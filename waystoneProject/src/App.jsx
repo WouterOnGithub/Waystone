@@ -10,6 +10,7 @@ import Main_Page from "./pages/Main_Page";
 import Account_Page from "./pages/Account_Page"
 import Account_Page_EDIT from "./pages/Account_Page_EDIT"
 import My_Campaigns_Page from "./pages/My_Campaigns_Page"
+import Archived_Campaigns from "./pages/Archived_Campaigns"
 import HelpPage from "./pages/HelpPage"
 
 import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN"
@@ -65,6 +66,7 @@ function App()
 
                 {/* All the campaigns */}
                 <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} />
+                <Route path="/user/Archived_Campaigns" element={<Archived_Campaigns />} />
                 <Route path ="/user/HelpPage" element={<HelpPage/>}/>
                 
                 {/* CAMPAIGNS */}

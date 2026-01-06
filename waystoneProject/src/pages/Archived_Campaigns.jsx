@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getAllCampaigns } from "../api/userCampaigns";
+import { getAllCampaigns, updateCampaignInfo } from "../api/userCampaigns";
 import "./pages-css/CSS.css";
 import "./pages-css/My_Campaigns_Page.css";
 import Header from "../components/UI/Header";
@@ -65,31 +65,39 @@ function My_Campaigns_Page()
     loadCampaigns();
   }, [user]);
 
-  const recentCampaigns = allCampaigns.slice(0, 5);
+  const archivedCampaigns = allCampaigns.filter(campaign => campaign.isArchived);
 
   const dynamicSections = [
     {
-      title: "Recent Campaigns",
-      items: recentCampaigns.map((c, idx) => ({
-        id: c.id,
-        name: c.name || "Unnamed campaign",
-        color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
-      })),
-    },
-    {
-      title: "All Campaigns",
-      items: allCampaigns.map((c, idx) => ({
+      title: "Archived Campaigns",
+      items: archivedCampaigns.map((c, idx) => ({
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030"][idx % 3],
       })),
     },
-    freeCampaignSection,
   ];
 
   const handleOpenCampaign = (campaignId) => {
     if (!campaignId) return;
     navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`);
+  };
+
+  const handleUnarchiveCampaign = async (campaignId) => {
+    if (!campaignId || !user?.uid) return;
+    
+    try {
+      await updateCampaignInfo(user.uid, campaignId, { isArchived: false });
+      // Refresh campaigns list
+      const campaigns = await getAllCampaigns(user.uid);
+      const sorted = [...campaigns].sort(
+        (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
+      );
+      setAllCampaigns(sorted);
+    } catch (err) {
+      console.error("Failed to unarchive campaign:", err);
+      setError("Failed to unarchive campaign");
+    }
   };
 
   return (
@@ -99,7 +107,7 @@ function My_Campaigns_Page()
 
       <div id="main">
       
-      <Header title="My Campaigns" />
+      <Header title="Archived Campaigns" />
 
         <div id="content">
           {loading && <p>Loading campaigns...</p>}
@@ -130,10 +138,10 @@ function My_Campaigns_Page()
                       <button
                           onClick={(e) => {
                           e.stopPropagation();
-                          // TODO: implement archive behaviour
+                          handleUnarchiveCampaign(item.id);
                           }}
                       >
-                        Archive
+                        Unarchive
                       </button>
                     </div>
 

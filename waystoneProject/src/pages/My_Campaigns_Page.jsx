@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getAllCampaigns } from "../api/userCampaigns";
+import { getAllCampaigns, updateCampaignInfo } from "../api/userCampaigns";
 import "./pages-css/CSS.css";
 import "./pages-css/My_Campaigns_Page.css";
 import Header from "../components/UI/Header";
@@ -66,11 +66,12 @@ function My_Campaigns_Page()
   }, [user]);
 
   const recentCampaigns = allCampaigns.slice(0, 4);
+  const activeCampaigns = allCampaigns.filter(campaign => !campaign.isArchived);
 
   const dynamicSections = [
     {
       title: "Recent Campaigns",
-      items: recentCampaigns.map((c, idx) => ({
+      items: recentCampaigns.filter(c => !c.isArchived).map((c, idx) => ({
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
@@ -78,7 +79,7 @@ function My_Campaigns_Page()
     },
     {
       title: "All Campaigns",
-      items: allCampaigns.map((c, idx) => ({
+      items: activeCampaigns.map((c, idx) => ({
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030"][idx % 3],
@@ -90,6 +91,26 @@ function My_Campaigns_Page()
   const handleOpenCampaign = (campaignId) => {
     if (!campaignId) return;
     navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`);
+  };
+
+  const handleArchiveCampaign = async (campaignId, campaignName) => {
+    if (!campaignId || !user?.uid) return;
+    
+    const confirmed = window.confirm(`Are you sure you want to archive "${campaignName}"?`);
+    if (!confirmed) return;
+    
+    try {
+      await updateCampaignInfo(user.uid, campaignId, { isArchived: true });
+      // Refresh campaigns list
+      const campaigns = await getAllCampaigns(user.uid);
+      const sorted = [...campaigns].sort(
+        (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
+      );
+      setAllCampaigns(sorted);
+    } catch (err) {
+      console.error("Failed to archive campaign:", err);
+      setError("Failed to archive campaign");
+    }
   };
 
   return (
@@ -130,7 +151,7 @@ function My_Campaigns_Page()
                       <button
                           onClick={(e) => {
                           e.stopPropagation();
-                          // TODO: implement archive behaviour
+                          handleArchiveCampaign(item.id, item.name);
                           }}
                       >
                         Archive

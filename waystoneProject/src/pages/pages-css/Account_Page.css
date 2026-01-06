@@ -69,6 +69,13 @@
     padding-top: 20px;
 }
 
+#account-archived a /* Archived campaigns link styling */
+{
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
 .account-notes /* The notes */
 {
     /* Because the account-box is in flex display */
