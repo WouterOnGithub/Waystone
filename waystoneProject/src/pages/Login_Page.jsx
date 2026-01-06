@@ -69,11 +69,13 @@ const handleSession= [
 
         <br /><br />
         <div id="login-register-button"><button id="button-green" type="button" onClick={handleLogin}>Enter</button></div>
-         <div><button id="button-green" onClick={goToSession}>Join Session</button></div>
-        {/* An error message in case an error occures */}
-        {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
         
       </form>
+      
+      <div style={{ marginLeft: '20%' }}><button id="button-green" onClick={goToSession}>Join Session</button></div>
+      
+      {/* An error message in case an error occures */}
+      {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
       </div>
 
       {/* Background and Waystone_Logo */}

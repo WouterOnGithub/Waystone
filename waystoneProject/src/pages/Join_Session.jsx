@@ -46,7 +46,7 @@ const Join_Session = () => {
   };
 
   const handleBack = () => {
-    navigate("/user/Login_Page");
+    navigate("/");
   };
 
   const handleKeyPress = (e) => {
