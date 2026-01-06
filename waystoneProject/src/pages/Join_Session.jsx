@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./pages-css/Join_Session.css";
 
-const JoinSession = () => {
+const Join_Session = () => {
   const [code, setCode] = useState("");
 
   const handleEnter = () => {
@@ -42,4 +42,4 @@ const JoinSession = () => {
   );
 };
 
-export default JoinSession;
+export default Join_Session;
