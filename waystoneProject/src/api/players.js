@@ -37,10 +37,25 @@ export const updatePlayer = async (userId, campaignId, playerId, playerData) => 
     await updateDoc(playerDoc, playerData);
 }
 
-export const deletePlayer = async(userId, campaignId, playerId) => {
-    if(!userId ||!campaignId || !playerId) {
-        throw new Error("Missing parameters for deletePlayer");
+export const deletePlayerAndSubCollections = async (playerRef) => {
+  const subCollections = await getSubCollections(playerRef);
+
+  for (const sub of subCollections) {
+    const snap = await getDocs(sub);
+    for (const d of snap.docs) {
+      await deleteDoc(d.ref);   
     }
-    const playerRef = doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
-    await deleteDoc(playerRef);
-} 
+  }
+
+  await deleteDoc(playerRef);  
+};
+
+const getSubCollections = async (docRef) => {
+  const possibleSubCollections = [
+    "Inventory",
+    "Spells",
+    "Logs",
+  ];
+
+  return possibleSubCollections.map(name => collection(docRef, name));
+};

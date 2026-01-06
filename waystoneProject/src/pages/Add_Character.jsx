@@ -10,7 +10,10 @@
 
   import { useAuth } from "../context/AuthContext.jsx";
   import {usePlayer} from "../hooks/usePlayer.js";
-  import {deletePlayer} from "../api/players.js";
+  import {deletePlayerAndSubCollections} from "../api/players.js";
+  import { db } from "../firebase/firebase";
+  import { doc } from "firebase/firestore";
+
 
   function Add_Character() {
     const { campaignId, CharacterId } = useParams();
@@ -130,15 +133,19 @@
     };
 
     const handleDeletePlayer = async () => {
-      if (!window.confirm("Delete this player?")) return;
+      if (!window.confirm("Are you sure you want to delete this character?")) return;
 
       try {
-        await deletePlayer(userId, campaignId, player.id);
+        await deletePlayerAndSubCollections(
+          doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId)
+        );
+
         navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
       } catch (err) {
         console.error("Error deleting player:", err);
       }
     };
+
 
     const handleCancel = () => {
       navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
