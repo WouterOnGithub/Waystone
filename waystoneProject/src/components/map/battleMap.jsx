@@ -5,12 +5,13 @@ import { generateGrid } from "../../utils/generateGrid";
 import Token from "../character/token";
 import { moveToken } from "../../services/mapServices";
 import TokenMenu from "../character/tokenMenu";
+import { doc, setDoc} from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 import "./battleMap.css"
 
-export default function BattleMap({ userId, campaignId, mapId}) {
+export default function BattleMap({ userId, campaignId, mapId, draggedToken, setDraggedToken}) {
   const map = useMap(userId, campaignId, mapId);
   const cellsData = useMapCells(userId, campaignId, mapId);
-  const [draggedToken, setDraggedToken] = useState(null);
   const [selectedToken, setSelectedToken] = useState(null);
    const cellSize = 80;
 
@@ -26,19 +27,27 @@ export default function BattleMap({ userId, campaignId, mapId}) {
   const handleDrop = async (x, y) => {
     if (!draggedToken) return;
 
-    await moveToken(
-      userId,
-      campaignId,
-      mapId,
-      draggedToken.tokenId,
-      draggedToken.x,
-      draggedToken.y,
-      x,
-      y
-    );
+    if (!draggedToken.x && !draggedToken.y) {
+      // New sidebar token
+      const newCell = doc(db, "Users", userId, "Campaigns", campaignId, "Maps", mapId, "Cells", `${x}_${y}`);
+      await setDoc(newCell, { tokenId: draggedToken.playerId });
+    } else {
+      // Existing token
+      await moveToken(
+        userId,
+        campaignId,
+        mapId,
+        draggedToken.tokenId,
+        draggedToken.x,
+        draggedToken.y,
+        x,
+        y
+      );
+    }
 
     setDraggedToken(null);
   };
+
 
 
 const handleTokenClick = (tokenId, player, x, y) => {
