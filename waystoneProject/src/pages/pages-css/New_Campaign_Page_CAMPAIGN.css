@@ -43,11 +43,6 @@
 
 
 /* New_Campaign_Page_CAMPAIGN */
-#content {
-  max-width: 90%;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
 
 .campaign-actions /* The save and continue, and enter button */
 {
