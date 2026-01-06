@@ -73,7 +73,7 @@
 {
     /* Because the account-box is in flex display */
     flex-direction: column;
-
+    
     gap: 20px;
     margin-top: 20px;
 }
@@ -81,6 +81,7 @@
 {   
     border: none;
     height: 100px;
+    background-color: transparent;
 }
 .account-notes button /* The notes save button */
 {   

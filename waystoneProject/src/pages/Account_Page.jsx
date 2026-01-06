@@ -65,7 +65,7 @@ function Account_Page()
 
 
   return (
-    <div>
+    <div className="full-page">
       
       <Sidebar />
       

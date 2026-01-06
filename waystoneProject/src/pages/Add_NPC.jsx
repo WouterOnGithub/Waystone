@@ -218,6 +218,7 @@ function Add_NPC() {
   };
 
   return (
+    <div className="full-page">
     <div className="page-layout">
       <Sidebar />
       <div className="main-wrapper">
@@ -546,6 +547,7 @@ function Add_NPC() {
         <Footer />
         </div>
       </div>
+    </div>
     </div>
   );
 }

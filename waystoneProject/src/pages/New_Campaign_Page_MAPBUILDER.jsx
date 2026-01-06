@@ -492,7 +492,7 @@ function New_Campaign_Page_MAPBUILDER()
   };
 
   return (
-    <div>
+    <div className="full-page">
 
       <Sidebar />
 

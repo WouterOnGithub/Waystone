@@ -93,7 +93,7 @@ function My_Campaigns_Page()
   };
 
   return (
-    <div>
+    <div className="full-page">
       
       <Sidebar />
 
