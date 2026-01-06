@@ -5,7 +5,6 @@ import UploadIMG_Logo from "../../assets/PlaceholderImage.jpg";
 import {
   createBuildingRegion,
   updateBuildingRegion,
-  getLocations,
 } from "../../api/userCampaigns";
 
 function resolveImageUrl(imageUrl, baseUrl) {
@@ -23,7 +22,7 @@ function resolveImageUrl(imageUrl, baseUrl) {
   return `${origin}/${imageUrl}`;
 }
 
-function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId }) 
+function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId, onClose, onBuildingRegionSaved }) 
 {
   const fileInputRef = useRef(null);
   const [name, setName] = useState(building?.name || "");
@@ -104,11 +103,19 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
         imageUrl = result.url;
       }
 
+      const resolvedLocationId = locationId || building?.locationId || "";
+
+      if (!building?.id && !resolvedLocationId) {
+        setMessage("No location selected for this building/region.");
+        setSaving(false);
+        return;
+      }
+
       const payload = {
         name: name.trim(),
         description: description.trim(),
         imageUrl: imageUrl || "",
-        locationId: locationId || "",
+        locationId: resolvedLocationId,
         updatedAt: new Date().toISOString(),
       };
 
@@ -128,12 +135,13 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
       }
 
       setMessage("Building/Region saved successfully.");
-      if (typeof window !== "undefined" && window.close) {
-        try {
-          window.close();
-        } catch {
-          // ignore close errors
-        }
+      // Call callback to refresh buildings/regions in parent component
+      if (onBuildingRegionSaved) {
+        onBuildingRegionSaved();
+      }
+      // Only close popup for new buildings/regions, not for edits
+      if (!building?.id && onClose) {
+        onClose();
       }
     } catch (err) {
       setMessage(err?.message || "An error occurred while saving.");
@@ -188,6 +196,9 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
             <br />
             <button id="button-green" type="submit" disabled={saving}>
               {saving ? "Saving..." : "Save"}
+            </button>
+            <button id="button-green" type="button" onClick={onClose}>
+              Back
             </button>
             {message && (
               <>

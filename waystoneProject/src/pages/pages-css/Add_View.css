@@ -8,24 +8,30 @@
 
 #addview-page
 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 10px;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    padding: 20px;
     box-sizing: border-box;
-    background-color: var(--background-colour);
 }
 
 #addview-box /* The pop-up */
 {
     border-radius: var(--border-radius);
     background-color: var(--background-colour);
-    width: 98%;
-    max-width: none;
-    margin: 5px auto;
-    box-shadow: none;
-    min-height: 90vh;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    margin: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
 }
 
 #addview-title /* The title inside the green_ bar */

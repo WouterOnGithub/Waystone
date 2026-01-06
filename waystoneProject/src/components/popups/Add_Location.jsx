@@ -19,7 +19,7 @@ function resolveImageUrl(imageUrl, baseUrl) {
   return `${origin}/${imageUrl}`;
 }
 
-function Add_Location({ campaignId, location, userId, baseUrl }) {
+function Add_Location({ campaignId, location, userId, baseUrl, onLocationSaved, onClose }) {
   const fileInputRef = useRef(null);
 
   const [name, setName] = useState(location?.name || "");
@@ -125,13 +125,13 @@ function Add_Location({ campaignId, location, userId, baseUrl }) {
       }
 
       setMessage("Location saved successfully.");
-      // Close popup window immediately after successful save
-      if (typeof window !== "undefined" && window.close) {
-        try {
-          window.close();
-        } catch {
-          // ignore if close fails
-        }
+      // Call callback to refresh locations in parent component
+      if (onLocationSaved) {
+        onLocationSaved();
+      }
+      // Only close popup for new locations, not for edits
+      if (!location?.id && onClose) {
+        onClose();
       }
     } catch (err) {
       setMessage(err?.message || "An error occurred while saving.");
@@ -194,6 +194,9 @@ function Add_Location({ campaignId, location, userId, baseUrl }) {
             <br />
             <button id="button-green" type="submit" disabled={saving}>
               {saving ? "Saving..." : "Save"}
+            </button>
+            <button id="button-green" type="button" onClick={onClose}>
+              Back
             </button>
             {message && (
               <>
