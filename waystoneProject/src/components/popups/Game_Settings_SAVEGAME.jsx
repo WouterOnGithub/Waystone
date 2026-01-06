@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../pages/pages-css/CSS.css";
-import "../pages/pages-css/Add_View.css";
+import "../../pages/pages-css/CSS.css";
+import "../../pages/pages-css/Add_View.css";
 
 function Game_Settings_SAVEGAME() 
 {
