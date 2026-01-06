@@ -498,7 +498,12 @@ function New_Campaign_Page_MAPBUILDER()
 
       <div id="main">
 
-        <Header title="New Campaign" />
+        <Header
+          title={
+            isNewCampaign
+              ? "New Campaign" : data?.name ? `${data.name}` : "Campaign"
+          }
+        />
 
         <div>
 

@@ -142,7 +142,12 @@ function New_Campaign_Page_CAMPAIGN()
 
       <div id="main">
 
-        <Header title="New Campaign" />
+        <Header
+          title={
+            isNewCampaign
+              ? "New Campaign" : data?.name ? `${data.name}` : "Campaign"
+          }
+        />
 
         <div>
 
