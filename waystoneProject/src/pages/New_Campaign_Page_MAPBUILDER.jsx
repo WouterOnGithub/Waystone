@@ -858,54 +858,52 @@ function New_Campaign_Page_MAPBUILDER()
 
             {/* Display all containers */}
             {showContainers && (
-              <>
-                <div style={{
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: "8px",
-                  marginTop: "20px"
-                }}>
-                  {containers.map((container) => (
-                    <div
-                      key={container.id}
-                      style={{ 
-                        display: "flex", 
-                        flexDirection: "column", 
-                        gap: "4px", 
-                        width: "100%",
-                        maxWidth: "800px",
-                        margin: "0 auto 10px auto",
-                        padding: "15px",
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
-                        backgroundColor: "#f9f9f9"
-                      }}
-                    >
-                      <b>{container.name}</b>
-                      <div style={{ display: "flex", gap: "8px" }}>
-                        <button
-                          id="button-green"
-                          type="button"
-                          onClick={() => {
-                            setEditingContainer(container);
-                            setShowAddContainerPopup(true);
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          id="button-green"
-                          onClick={() => handleDeleteContainer(container)}
-                        >
-                          Delete
+              <div style={{
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginTop: "10px"
+              }}>
+                {containers.map((container) => (
+                  <div
+                    key={container.id}
+                    style={{ 
+                      display: "flex", 
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      maxWidth: "400px",
+                      padding: "15px",
+                      border: "1px solid #ddd",
+                      borderRadius: "8px",
+                      backgroundColor: "#f9f9f9"
+                    }}
+                  >
+                    <b>{container.name}</b>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <button
+                        id="button-green"
+                        type="button"
+                        onClick={() => {
+                          setEditingContainer(container);
+                          setShowAddContainerPopup(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        id="button-green"
+                        onClick={() => handleDeleteContainer(container)}
+                      >
+                        Delete
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-              </>
             )}
+
             <div className="campaign-actions">
               
               <button id="button-green" onClick={handleSaveMap} disabled={saving}>
