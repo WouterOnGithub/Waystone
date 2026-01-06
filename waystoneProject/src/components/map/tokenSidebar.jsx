@@ -1,5 +1,5 @@
 import React from "react";
-import Token from "../character/token";
+import SidebarToken from "../character/sidebarToken";
 import "./tokenSidebar.css";
 
 export default function TokenSidebar({ players, onDragStart }) {
@@ -8,12 +8,11 @@ export default function TokenSidebar({ players, onDragStart }) {
       <h3>Available Players</h3>
       <div className="token-list">
         {players.map((player) => (
-          <Token
-            key={player.id}
-            tokenId={player.id}
-            tokenImageUrl={player.imageUrl}
-            onDragStart={() => onDragStart(player)}
-          />
+          <SidebarToken
+  key={player.id}
+  player={player}
+  onDragStart={onDragStart}
+/>
         ))}
       </div>
     </div>
