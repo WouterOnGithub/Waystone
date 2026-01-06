@@ -28,7 +28,7 @@ const handleLogin = async () =>
 };
 
 const handleSession= [
-    { to: "/user/Join_Session", label: "Session" },
+    { to: "./user/Join_Session", label: "Join_Session" },
   ];
 
   return (
