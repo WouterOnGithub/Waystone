@@ -15,15 +15,15 @@
     --background-gradient2: radial-gradient(circle, rgb(176, 87, 4) 50%, rgb(130, 63, 0) 100%);
     --background-gradient3: linear-gradient(90deg,#1e1e1e 0%, #303030 50%, #1e1e1e 100%);
 
-    --background-colour:linear-gradient(180deg,rgba(255, 255, 255, 1) 0%, rgb(227, 227, 227) 100%);;
+    --background-colour: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(227, 227, 227) 100%);
     --background-colour2:#d9d9d9;
     --background-colour3:#bfbfbf;
     --background-colour4: #303030;
 
-    --projectbox-colour: linear-gradient(90deg,rgb(216, 188, 63) 0%, rgba(231, 214, 101, 1) 50%, rgb(216, 188, 63) 100%);; 
-    --projectbox-colour2: linear-gradient(90deg,rgba(176, 49, 49, 1) 0%, rgba(211, 72, 72, 1) 50%, rgba(176, 49, 49, 1) 100%);;
+    --projectbox-colour: linear-gradient(90deg,rgb(216, 188, 63) 0%, rgba(231, 214, 101, 1) 50%, rgb(216, 188, 63) 100%); 
+    --projectbox-colour2: linear-gradient(90deg,rgba(176, 49, 49, 1) 0%, rgba(211, 72, 72, 1) 50%, rgba(176, 49, 49, 1) 100%);
     --projectbox-colour3: linear-gradient(90deg,rgba(50, 104, 173, 1) 0%, rgba(68, 125, 201, 1) 50%, rgba(50, 104, 173, 1) 100%);
-    --projectbox-colour4: linear-gradient(90deg,rgba(184, 184, 184, 1) 0%, rgba(217, 217, 217, 1) 50%, rgba(184, 184, 184, 1) 100%);;
+    --projectbox-colour4: linear-gradient(90deg,rgba(184, 184, 184, 1) 0%, rgba(217, 217, 217, 1) 50%, rgba(184, 184, 184, 1) 100%);
 
     --form-box-colour: #E0E0E0;
     --form-box-colour2: #ffffff;
