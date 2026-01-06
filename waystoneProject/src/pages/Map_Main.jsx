@@ -79,7 +79,7 @@ function Map_Main() {
       "Return to main menu? Any unsaved progress will be lost."
     );
     if (confirmReturn) {
-      navigate("/user/dashboard");
+      navigate("Main_Page.jsx");
     }
   };
 
