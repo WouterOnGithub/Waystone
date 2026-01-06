@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
 import { getCampaign, getBuildingsRegions, getLocations } from "../api/userCampaigns";
+import { getSharedSessionCode, releaseMapPage } from "../utils/sessionCode";
 
 function Map_Location() {
   const { campaignId, locationId } = useParams();
@@ -17,6 +18,7 @@ function Map_Location() {
   const [campaignRegions, setCampaignRegions] = useState([]);
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sessionCode, setSessionCode] = useState('');
 
   // Load campaign data and location when component mounts or campaignId/locationId changes
   useEffect(() => {
@@ -49,6 +51,21 @@ function Map_Location() {
 
     loadData();
   }, [campaignId, locationId, userId]);
+
+  // Generate session code when component mounts and user is available
+  useEffect(() => {
+    if (userId) {
+      const code = getSharedSessionCode(userId);
+      setSessionCode(code);
+    }
+  }, [userId]);
+
+  // Cleanup when component unmounts
+  useEffect(() => {
+    return () => {
+      releaseMapPage();
+    };
+  }, []);
 
   const toggleRegions = () => {
     setRegionsOpen(!regionsOpen);
@@ -94,6 +111,12 @@ function Map_Location() {
                   <path d="M19.07 4.93l-4.24 4.24m0 5.66l4.24 4.24m-14.14 0l4.24-4.24m0-5.66L4.93 4.93" />
                 </svg>
               </button>
+            </div>
+
+            {/* Session Code Display */}
+            <div className="session-code-display">
+              <span className="code-label">Session Code:</span>
+              <span className="code-value">{sessionCode}</span>
             </div>
 
             {/* Settings Menu */}
