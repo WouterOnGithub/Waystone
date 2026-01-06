@@ -149,7 +149,8 @@
             <div id="content">
 
                 <div className="character-section">
-                  <h4>Players</h4>
+                  <b>Players</b>
+                  <br />
                   {players.map((player, index) => (
                     <div key={index} className="character-row">
                       <span>{player.name} | lvl {player.level} | Hp  {player.HpCurrent}/{player.HpMax}</span>
@@ -165,6 +166,7 @@
               {/* The npc's */}
                 <div className="character-section">
                   <b>NPC's</b>
+                  <br />
                   {npcs.map((npc) => (
 
                   /* The npc bar */
@@ -182,7 +184,8 @@
                 </div>
 
                 <div className="character-section">
-                  <h4>Custom Enemies</h4>
+                  <b>Custom Enemies</b>
+                  <br />
                   {enemies.map((enemy) => (
                     <div key={enemy.id} className="character-row">
                       <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
