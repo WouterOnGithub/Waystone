@@ -250,6 +250,7 @@
 
           {/* The character sheet */}
           <div id="content">
+          <div className="add-fullwidth">
 
             
             <h1>Character Sheet</h1>
@@ -621,6 +622,7 @@
         <Footer />
 
       </div>
+    </div>
     </div>
     );
   }

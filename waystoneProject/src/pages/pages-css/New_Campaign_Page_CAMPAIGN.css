@@ -78,14 +78,13 @@
 /* Add_Character */
 .character-base-stat /* the individual base stats (ex. name, race, ...) */
 {
-  margin-bottom: 20px;
-  margin-right: 40px;
-  width: min-content;
+  
 }
 .character-base-stats-section /* The sections of the stats, each containing 3 input boxes per section */
 {
   display: flex;
 }
+
 /* The ability scores */
 .ability-grid /* The ability section */
 {
