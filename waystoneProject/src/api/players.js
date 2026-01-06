@@ -16,8 +16,6 @@ export const getPlayersByCampaign = async (userId, campaignId) => {
     }
 };    
 
-
-
 export const getPlayerById = async (userId, campaignId, playerId) => {
     const playerRef = doc (db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
     const snapshot = await getDoc (playerRef);
@@ -38,3 +36,11 @@ export const updatePlayer = async (userId, campaignId, playerId, playerData) => 
     const playerDoc = doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
     await updateDoc(playerDoc, playerData);
 }
+
+export const deletePlayer = async(userId, campaignId, playerId) => {
+    if(!userId ||!campaignId || !playerId) {
+        throw new Error("Missing parameters for deletePlayer");
+    }
+    const playerRef = doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
+    await deleteDoc(playerRef);
+} 

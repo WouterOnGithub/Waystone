@@ -10,6 +10,7 @@
 
   import { useAuth } from "../context/AuthContext.jsx";
   import {usePlayer} from "../hooks/usePlayer.js";
+  import {deletePlayer} from "../api/players.js";
 
   function Add_Character() {
     const { campaignId, CharacterId } = useParams();
@@ -110,6 +111,8 @@
       ]
     });
 
+    
+
     useEffect(() => {
       if (player) {
         setCharacterData(player);
@@ -123,6 +126,17 @@
       } catch (err) {
         console.error("Error saving character:", err);
         alert("Failed to save character. Please try again.");
+      }
+    };
+
+    const handleDeletePlayer = async () => {
+      if (!window.confirm("Delete this player?")) return;
+
+      try {
+        await deletePlayer(userId, campaignId, player.id);
+        navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+      } catch (err) {
+        console.error("Error deleting player:", err);
       }
     };
 
@@ -508,6 +522,8 @@
               <div className="char-actions">
                 <button className="char-save-btn" onClick={handleSave}>Save Character</button>
                 <button className="char-cancel-btn" onClick={handleCancel}>Cancel</button>
+                <button className="char-delete-btn" onClick={handleDeletePlayer}>Delete</button>
+
               </div>
             </div>
           </div>
