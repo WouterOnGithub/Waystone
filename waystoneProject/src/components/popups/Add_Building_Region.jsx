@@ -5,7 +5,6 @@ import UploadIMG_Logo from "../../assets/PlaceholderImage.jpg";
 import {
   createBuildingRegion,
   updateBuildingRegion,
-  getLocations,
 } from "../../api/userCampaigns";
 
 function resolveImageUrl(imageUrl, baseUrl) {
@@ -32,30 +31,8 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
   const [imagePreview, setImagePreview] = useState(
     resolveImageUrl(building?.imageUrl || null, baseUrl)
   );
-  const [availableLocations, setAvailableLocations] = useState([]);
-  const [selectedLocationId, setSelectedLocationId] = useState(
-    locationId || building?.locationId || ""
-  );
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    setSelectedLocationId(locationId || building?.locationId || "");
-  }, [locationId, building?.locationId]);
-
-  useEffect(() => {
-    const loadLocations = async () => {
-      if (!userId || !campaignId) return;
-      try {
-        const list = await getLocations(userId, campaignId);
-        setAvailableLocations(list || []);
-      } catch (err) {
-        console.error("Failed to load locations:", err);
-      }
-    };
-
-    loadLocations();
-  }, [userId, campaignId]);
 
   useEffect(() => {
     return () => {
@@ -126,10 +103,10 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
         imageUrl = result.url;
       }
 
-      const resolvedLocationId = selectedLocationId || building?.locationId || "";
+      const resolvedLocationId = locationId || building?.locationId || "";
 
       if (!building?.id && !resolvedLocationId) {
-        setMessage("Please select a location for this building/region.");
+        setMessage("No location selected for this building/region.");
         setSaving(false);
         return;
       }
@@ -197,21 +174,6 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
               hidden
             />
             <label htmlFor="name-buildingregion"><b>Name</b></label> <br /> 
-            <label htmlFor="location-buildingregion"><b>Location</b></label> <br />
-            <select
-              id="location-buildingregion"
-              value={selectedLocationId}
-              onChange={(e) => setSelectedLocationId(e.target.value)}
-            >
-              <option value="">Select a location...</option>
-              {availableLocations.map((loc) => (
-                <option key={loc.id} value={loc.id}>
-                  {loc.name || "Unnamed Location"}
-                </option>
-              ))}
-            </select>
-            <br />
-            <br />
             <input
               type="text"
               id="name-buildingregion"

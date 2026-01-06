@@ -291,6 +291,9 @@ function New_Campaign_Page_MAPBUILDER()
       }
     };
 
+    // Initial load
+    loadBuildings();
+
     const handleFocus = () => {
       loadBuildings();
     };
@@ -707,7 +710,7 @@ function New_Campaign_Page_MAPBUILDER()
                                   building.id
                                 );
                                 if (ok) {
-                                  const list = await getBuildingsRegionsRegions(
+                                  const list = await getBuildingsRegions(
                                     userId,
                                     campaignId
                                   );
@@ -796,7 +799,7 @@ function New_Campaign_Page_MAPBUILDER()
                           bld.id
                         );
                         if (ok) {
-                          const list = await getBuildingsRegionsRegions(
+                          const list = await getBuildingsRegions(
                             userId,
                             campaignId
                           );
