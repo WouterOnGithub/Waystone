@@ -126,8 +126,6 @@ function My_Campaigns_Page()
                   /* A campaigns box */
                   <div id="box-text" 
                        key={item.id ? item.id : `${section.title}-${idx}`}
-                       onClick={() => handleOpenCampaign(item.id)}
-                       style={item.id ? { cursor: "pointer" } : undefined}
                   >
                     
                     {/* The campaigns project name */}
