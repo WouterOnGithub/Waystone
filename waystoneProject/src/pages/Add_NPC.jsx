@@ -7,7 +7,8 @@ import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
 
-import { addNPC, getEntityById, updateEntity } from "../api/npcs";
+import { addNPC, getEntityById, updateEntity,deleteEntityAndSubCollections } from "../api/npcs";
+import { db } from "../firebase/firebase";
 import { useAuth } from "../context/AuthContext";
 import { setDoc } from "firebase/firestore";
 
@@ -34,6 +35,20 @@ function Add_NPC() {
       console.error("Error saving NPC", error);
     }
   };
+
+  const handleDeleteNPC = async () => {
+    if (!npcId) return;
+    if (!window.confirm("Are you sure you want to delete this NPC?")) return;
+
+    try {
+      const npcRef = doc(db, "Users", userId, "Campaigns", campaignId, "Entities", npcId);
+      await deleteEntityAndSubCollections(npcRef);
+      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+    } catch (error) {
+      console.error("Error deleting NPC:", error);
+    }
+  };
+
 
   const handleCancel = () =>{
     if(!campaignId) return;
@@ -209,10 +224,24 @@ function Add_NPC() {
         <div id="main">
           <Header title="New Campaign" />
         <div className="campaign-body">
-          <div className="campaign-tabs">
-            <button className="campaign-tab">Campaign</button>
-            <button className="campaign-tab">Map Builder</button>
-            <button className="campaign-tab active">Characters</button>
+          {/* The buttons (campaign, mapbuilder, character)*/}
+          <div id="campaign-tabs">
+
+            {/* The campaign button */}
+            <button id="campaign-tab">
+              Campaign
+            </button>
+
+            {/* The map builder button */}
+            <button id="campaign-tab">
+              Map Builder
+            </button>
+
+            {/* The characters button */}
+            <button id="campaign-tab-active">
+              Characters
+            </button>
+
           </div>
 
           <div className="character-sheet">
@@ -508,6 +537,9 @@ function Add_NPC() {
             <div className="char-actions">
               <button className="char-save-btn" onClick={handleSaveCharacter}>Save Character</button>
               <button className="char-cancel-btn" onClick={handleCancel}>Cancel</button>
+              {npcId && (
+                  <button className="char-delete-btn" onClick={handleDeleteNPC}>Delete NPC</button>
+                )}
             </div>
           </div>
         </div>

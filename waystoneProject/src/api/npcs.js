@@ -4,7 +4,8 @@ import {
   getDocs,
   getDoc,
   doc,
-  setDoc
+  setDoc,
+  deleteDoc
 } from "firebase/firestore";
 
 import { createBaseCharacter } from "./entityCore";
@@ -37,6 +38,30 @@ export const updateEntity =async(userId, campaignId, entityId, updateData)=>{
     throw error;
   }
 }
+
+export const deleteEntityAndSubCollections = async (entityRef) => {
+  const subCollections = await getSubCollections(entityRef);
+
+  for (const sub of subCollections) {
+    const snap = await getDocs(sub);
+    for (const d of snap.docs) {
+      await deleteDoc(d.ref);
+    }
+  }
+
+  await deleteDoc(entityRef);
+};
+
+// List the known subcollections for entities
+const getSubCollections = async (docRef) => {
+  const possibleSubCollections = [
+    "Inventory",
+    "Spells",
+    "Logs",
+  ];
+
+  return possibleSubCollections.map(name => collection(docRef, name));
+};
 
 export const getEntitiesByType= async (userId, campaignId, type) => {
   if(!userId || !campaignId) return[];

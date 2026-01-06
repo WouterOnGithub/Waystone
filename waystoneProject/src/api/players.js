@@ -16,8 +16,6 @@ export const getPlayersByCampaign = async (userId, campaignId) => {
     }
 };    
 
-
-
 export const getPlayerById = async (userId, campaignId, playerId) => {
     const playerRef = doc (db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
     const snapshot = await getDoc (playerRef);
@@ -38,3 +36,26 @@ export const updatePlayer = async (userId, campaignId, playerId, playerData) => 
     const playerDoc = doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
     await updateDoc(playerDoc, playerData);
 }
+
+export const deletePlayerAndSubCollections = async (playerRef) => {
+  const subCollections = await getSubCollections(playerRef);
+
+  for (const sub of subCollections) {
+    const snap = await getDocs(sub);
+    for (const d of snap.docs) {
+      await deleteDoc(d.ref);   
+    }
+  }
+
+  await deleteDoc(playerRef);  
+};
+
+const getSubCollections = async (docRef) => {
+  const possibleSubCollections = [
+    "Inventory",
+    "Spells",
+    "Logs",
+  ];
+
+  return possibleSubCollections.map(name => collection(docRef, name));
+};

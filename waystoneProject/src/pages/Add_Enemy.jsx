@@ -8,7 +8,8 @@ import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
 
 import { useAuth } from "../context/AuthContext";
-import { addEnemy,getEntityById, updateEntity } from "../api/npcs";
+import { db } from "../firebase/firebase";
+import { addEnemy,getEntityById, updateEntity, deleteEntityAndSubCollections } from "../api/npcs";
 
 function Add_Enemy() {
   const { user } = useAuth();
@@ -130,6 +131,20 @@ function Add_Enemy() {
     }
   };
 
+  const handleDeleteEnemy = async () => {
+    if (!enemyId) return; // Only allow delete if editing
+    if (!window.confirm("Are you sure you want to delete this Enemy?")) return;
+
+    try {
+      const enemyRef = doc(db, "Users", userId, "Campaigns", campaignId, "Entities", enemyId);
+      await deleteEntityAndSubCollections(enemyRef);
+      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+    } catch (error) {
+      console.error("Error deleting Enemy:", error);
+    }
+  };
+
+
   const calculateModifier = (score) => {
     return Math.floor((score - 10) / 2);
   };
@@ -194,10 +209,24 @@ function Add_Enemy() {
         <div id="main">
           <Header title="New Campaign" />
         <div className="campaign-body">
-          <div className="campaign-tabs">
-            <button className="campaign-tab">Campaign</button>
-            <button className="campaign-tab">Map Builder</button>
-            <button className="campaign-tab active">Characters</button>
+          {/* The buttons (campaign, mapbuilder, character)*/}
+          <div id="campaign-tabs">
+
+            {/* The campaign button */}
+            <button id="campaign-tab">
+              Campaign
+            </button>
+
+            {/* The map builder button */}
+            <button id="campaign-tab">
+              Map Builder
+            </button>
+
+            {/* The characters button */}
+            <button id="campaign-tab-active">
+              Characters
+            </button>
+
           </div>
 
           <div className="character-sheet">
@@ -493,6 +522,9 @@ function Add_Enemy() {
             <div className="char-actions">
               <button className="char-save-btn" onClick={handleSaveCharacter}>Save Character</button>
               <button className="char-cancel-btn">Cancel</button>
+              {enemyId && (
+                <button className="char-delete-btn" onClick={handleDeleteEnemy}>Delete Enemy</button>
+              )}
             </div>
           </div>
         </div>

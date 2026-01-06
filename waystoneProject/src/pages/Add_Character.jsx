@@ -1,15 +1,19 @@
   import React, { useState, useEffect } from "react";
   import { useParams, useNavigate } from "react-router-dom";
   import { useAuth } from "../context/AuthContext.jsx";
-  import {usePlayer} from "../hooks/usePlayer.js";
   import "./pages-css/CSS.css";
   import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
   import Footer from "../components/UI/Footer";
   import Header from "../components/UI/Header";
   import Sidebar from "../components/UI/Sidebar";
 
-  function Add_Character() 
-  {
+  import {usePlayer} from "../hooks/usePlayer.js";
+  import {deletePlayerAndSubCollections} from "../api/players.js";
+  import { db } from "../firebase/firebase";
+  import { doc } from "firebase/firestore";
+
+
+  function Add_Character() {
     const { campaignId, CharacterId } = useParams();
     const playerId = CharacterId;
     const { user } = useAuth();
@@ -108,6 +112,8 @@
       ]
     });
 
+    
+
     useEffect(() => {
       if (player) {
         setCharacterData(player);
@@ -123,6 +129,21 @@
         alert("Failed to save character. Please try again.");
       }
     };
+
+    const handleDeletePlayer = async () => {
+      if (!window.confirm("Are you sure you want to delete this character?")) return;
+
+      try {
+        await deletePlayerAndSubCollections(
+          doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId)
+        );
+
+        navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+      } catch (err) {
+        console.error("Error deleting player:", err);
+      }
+    };
+
 
     const handleCancel = () => {
       navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
@@ -590,6 +611,7 @@
             <div className="campaign-actions">
               <button id="button-green" onClick={handleSave}>Save</button>
               <button id="button-gray" onClick={handleCancel}>Cancel</button>
+              <button id="button-gray" onClick={handleDeletePlayer}>Delete</button>
             </div>
 
           </div>
