@@ -203,6 +203,7 @@ function Add_Enemy() {
   };
 
   return (
+    <div className="full-page">
     <div className="page-layout">
       <Sidebar />
       <div className="main-wrapper">
@@ -531,6 +532,7 @@ function Add_Enemy() {
         <Footer />
         </div>
       </div>
+    </div>
     </div>
   );
 }

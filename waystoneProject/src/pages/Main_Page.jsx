@@ -14,6 +14,7 @@ function Main_Page()
   console.log("Context user:", user.uid);
   
   return (
+    <div className="full-page">
     <div className="page-layout">
       <Sidebar />
 
@@ -85,6 +86,7 @@ function Main_Page()
 
         <Footer />
       </div>
+    </div>
     </div>
   );
 }

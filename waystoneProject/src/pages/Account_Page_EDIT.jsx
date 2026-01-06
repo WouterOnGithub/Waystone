@@ -112,7 +112,7 @@ function Account_Page_EDIT() {
   };
 
   return (
-    <div>
+    <div className="full-page">
       <Sidebar />
       <div id="main">
         <Header title="Account" />

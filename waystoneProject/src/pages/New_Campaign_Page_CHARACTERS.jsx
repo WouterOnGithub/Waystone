@@ -108,6 +108,7 @@
 
 
     return (
+      <div className="full-page">
       <div className="page-layout">
           <Sidebar />
         <div className="main-wrapper">
@@ -214,6 +215,7 @@
 
           <Footer />
           </div>
+        </div>
         </div>
     );
   }
