@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions } from "../api/userCampaigns";
-import { getSharedSessionCode, releaseMapPage, setSessionCleanupCallback } from "../utils/sessionCode";
+import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat } from "../api/userCampaigns";
+import { getSharedSessionCode, releaseMapPage, setSessionCleanupCallback, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Location() {
   const { campaignId, locationId } = useParams();
@@ -63,16 +63,17 @@ function Map_Location() {
 
   // Generate session code when component mounts and user is available
   useEffect(() => {
-    if (userId) {
-      const code = getSharedSessionCode(userId);
+    if (userId && campaignId) {
+      // Get existing session code for this campaign (if any)
+      const code = getSharedSessionCode(userId, campaignId);
       setSessionCode(code);
     }
-  }, [userId]);
+  }, [userId, campaignId]);
 
-  // Save session data to Firestore when campaign data is loaded
+  // Save session data to Firestore when session is active
   useEffect(() => {
     const saveSessionData = async () => {
-      if (sessionCode && campaign && userId) {
+      if (sessionCode && campaign && userId && isSessionActive()) {
         try {
           const sessionData = {
             sessionCode: sessionCode,
@@ -82,7 +83,8 @@ function Map_Location() {
             mainMapUrl: campaign.mainMapUrl || null,
             isActive: true,
             createdAt: new Date().toISOString(),
-            lastUpdated: new Date().toISOString()
+            lastUpdated: new Date().toISOString(),
+            lastHeartbeat: new Date().toISOString()
           };
           
           await createSession(sessionCode, sessionData);
@@ -95,6 +97,41 @@ function Map_Location() {
 
     saveSessionData();
   }, [sessionCode, campaign, campaignId, userId]);
+
+  // Heartbeat mechanism to keep session alive
+  useEffect(() => {
+    if (!sessionCode) return;
+
+    const heartbeatInterval = setInterval(() => {
+      // Only send heartbeat if page is visible
+      if (!document.hidden) {
+        updateSessionHeartbeat(sessionCode);
+      }
+    }, 30000); // Send heartbeat every 30 seconds
+
+    // Send initial heartbeat
+    updateSessionHeartbeat(sessionCode);
+
+    // Handle page visibility changes
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Page is hidden, stop heartbeat
+        console.log("Page hidden, stopping heartbeat");
+        clearInterval(heartbeatInterval);
+      } else {
+        // Page is visible, restart heartbeat
+        console.log("Page visible, restarting heartbeat");
+        updateSessionHeartbeat(sessionCode);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      clearInterval(heartbeatInterval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [sessionCode]);
 
   // Cleanup when component unmounts
   useEffect(() => {
@@ -117,6 +154,21 @@ function Map_Location() {
   const selectRegion = (region) => {
     setSelectedRegion(region);
     setRegionsOpen(false);
+  };
+
+  const handleEndSession = () => {
+    const confirmEnd = window.confirm(
+      "Are you sure you want to end this session? This will kick all players out."
+    );
+    if (confirmEnd) {
+      // Delete session when explicitly ending it
+      if (sessionCode) {
+        deleteSession(sessionCode);
+      }
+      endCurrentSession();
+      setSessionCode('');
+      // Stay on the same page, just end the session
+    }
   };
 
   return (
@@ -185,6 +237,7 @@ function Map_Location() {
                   <li>Grid Settings</li>
                   <li>Upload Background</li>
                   <li>Reset View</li>
+                  <li onClick={handleEndSession} style={{color: 'red', cursor: 'pointer'}}>End Session</li>
                 </ul>
               </div>
             )}

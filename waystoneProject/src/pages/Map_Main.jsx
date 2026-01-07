@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
 import { getCampaign, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat } from "../api/userCampaigns";
-import { getSharedSessionCode, releaseMapPage, setSessionCleanupCallback } from "../utils/sessionCode";
+import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Main() {
   const { campaignId } = useParams();
@@ -54,21 +54,24 @@ function Map_Main() {
     });
   }, []);
 
-  // Generate session code when component mounts and user is available
+  // Get existing session code when component mounts (don't auto-generate)
   useEffect(() => {
-    if (userId) {
-      // Clean up old inactive sessions before generating new code (30+ minutes old or inactive)
+    if (userId && campaignId) {
+      // Clean up old inactive sessions first
       cleanupInactiveSessions().catch(console.error);
       
-      const code = getSharedSessionCode(userId);
-      setSessionCode(code);
+      // Only get existing session code, don't generate new one
+      // Map_Main should start with inactive session
+      const code = getExistingSessionCode(userId, campaignId);
+      // If no session exists, code will be null, which is what we want
+      setSessionCode(code || '');
     }
-  }, [userId]);
+  }, [userId, campaignId]);
 
-  // Save session data to Firestore when campaign data is loaded
+  // Save session data to Firestore when session is active
   useEffect(() => {
     const saveSessionData = async () => {
-      if (sessionCode && campaign && userId) {
+      if (sessionCode && campaign && userId && isSessionActive()) {
         try {
           const sessionData = {
             sessionCode: sessionCode,
@@ -131,14 +134,10 @@ function Map_Main() {
   // Cleanup when component unmounts
   useEffect(() => {
     return () => {
-      // Delete session immediately when owner leaves to prevent joining
-      if (sessionCode) {
-        deleteSession(sessionCode);
-        console.log("Session deleted immediately on owner leave");
-      }
+      // Don't delete session on unmount - only delete when explicitly ending session
       releaseMapPage();
     };
-  }, [sessionCode]);
+  }, []);
 
   const toggleLocations = () => {
     setLocationsOpen(!locationsOpen);
@@ -165,14 +164,24 @@ function Map_Main() {
 
   const handleEndSession = () => {
     const confirmEnd = window.confirm(
-      "Are you sure you want to end this session? Make sure you've saved your progress."
+      "Are you sure you want to end this session? This will kick all players out."
     );
     if (confirmEnd) {
       // Delete session when explicitly ending it
       if (sessionCode) {
         deleteSession(sessionCode);
       }
-      navigate("/user/campaigns");
+      endCurrentSession();
+      setSessionCode('');
+      // Stay on the same page, just end the session
+    }
+  };
+
+  const handleStartSession = () => {
+    if (userId && campaignId) {
+      const newCode = startNewSession(userId, campaignId);
+      setSessionCode(newCode);
+      console.log("New session started with code:", newCode);
     }
   };
 
@@ -216,16 +225,17 @@ function Map_Main() {
               </button>
             </div>
 
-            {/* Session Code Display */}
+            {/* Session Code Display and Controls */}
             <div className="session-code-display">
               <span className="code-label">Session Code:</span>
               <span className={`code-value ${!isCodeVisible ? 'hidden' : ''}`}>
-                {isCodeVisible ? sessionCode : '••••••••••••'}
+                {isCodeVisible && sessionCode ? sessionCode : '•••••••••••••'}
               </span>
               <button 
                 className="code-visibility-toggle"
                 onClick={() => setIsCodeVisible(!isCodeVisible)}
                 title={isCodeVisible ? 'Hide code' : 'Show code'}
+                disabled={!sessionCode}
               >
                 {isCodeVisible ? (
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -239,6 +249,27 @@ function Map_Main() {
                   </svg>
                 )}
               </button>
+              
+              {/* Session Control Buttons */}
+              <div className="session-control-buttons">
+                {!sessionCode ? (
+                  <button 
+                    className="start-session-btn"
+                    onClick={handleStartSession}
+                    title="Start new session"
+                  >
+                    Start Session
+                  </button>
+                ) : (
+                  <button 
+                    className="end-session-btn"
+                    onClick={handleEndSession}
+                    title="End current session"
+                  >
+                    End Session
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Settings Menu */}
