@@ -266,6 +266,33 @@
 
 
 
+/* Image upload area styling */
+.image-upload-area {
+  margin: 15px 0;
+  padding: 10px;
+  border: 2px dashed var(--background-colour3);
+  border-radius: var(--border-radius);
+  background: var(--form-box-colour);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.image-upload-area:hover {
+  border-color: var(--text-color3);
+  background: var(--form-box-colour2);
+}
+
+.image-upload-area img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-upload-area img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.2);
+}
+
+
+
 /* !!! */
 /* Try and used existing css if possible */
 /* Add more necessary *shared* CSS here */

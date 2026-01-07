@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase/firebase";
 import { addEnemy,getEntityById, updateEntity, deleteEntityAndSubCollections } from "../api/npcs";
+import { handleImageUpload, resolveImageUrl } from "../utils/imageUpload.js";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import "./pages-css/Main_Page.css";
@@ -16,6 +17,14 @@ function Add_Enemy()
   const userId = user ? user.uid : null;
   const { campaignId, enemyId } = useParams(); // enemyId check
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(
+    resolveImageUrl(null)
+  );
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [characterData, setCharacterData] = useState({
     name: "",
@@ -25,6 +34,7 @@ function Add_Enemy()
     background: "",
     alignment: "",
     level: 1,
+    imageUrl: "",
     
     // Ability Scores
     strength: 10,
@@ -105,6 +115,7 @@ function Add_Enemy()
         try {
           const existingEnemy = await getEntityById(userId, campaignId, enemyId);
           setCharacterData(prev => ({ ...prev, ...existingEnemy }));
+          setImagePreview(resolveImageUrl(existingEnemy?.imageUrl || null));
         } catch (err) {
           console.error("Error fetching enemy", err);
         }
@@ -113,21 +124,111 @@ function Add_Enemy()
     }
   }, [enemyId, campaignId]);
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview && imagePreview.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageFile(file);
+    const url = URL.createObjectURL(file);
+    setImagePreview((prev) => {
+      if (prev && prev.startsWith("blob:")) {
+        URL.revokeObjectURL(prev);
+      }
+      return url;
+    });
+  };
+
+  const handleImageUploadSuccess = (downloadURL) => {
+    setCharacterData(prev => ({ ...prev, imageUrl: downloadURL }));
+  };
+
+  const handleImageUploadError = (errorMessage) => {
+    setMessage(`Image upload failed: ${errorMessage}`);
+  };
+
+  const handleImageChange = (event) => {
+    handleImageUpload(
+      event, 
+      'upload-entity', 
+      campaignId, 
+      handleImageUploadSuccess, 
+      handleImageUploadError,
+      characterData.imageUrl
+    );
+  };
+
   const handleSaveCharacter = async () => {
     if (!userId || !campaignId) return;
 
+    if (!characterData.name.trim()) {
+      setMessage("Please enter a name for this Enemy.");
+      return;
+    }
+
+    setSaving(true);
+    setMessage("");
+
     try {
+      let imageUrl = characterData?.imageUrl || null;
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("campaignId", campaignId);
+        formData.append("image", imageFile);
+        // Ask server to delete previous image file when replacing it
+        if (characterData?.imageUrl) {
+          formData.append("previousUrl", characterData.imageUrl);
+        }
+
+        const res = await fetch("/api/upload-entity", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || "Image upload failed.");
+        }
+
+        const result = await res.json();
+        // Keep local preview as selected file (blob) so it doesn't
+        // disappear while saving; just update URL we store in Firestore.
+        imageUrl = result.url;
+      }
+
+      const payload = {
+        ...characterData,
+        imageUrl: imageUrl || "",
+        updatedAt: new Date().toISOString(),
+      };
+
       if (enemyId) {
-        await updateEntity(userId, campaignId, enemyId, characterData);
+        await updateEntity(userId, campaignId, enemyId, payload);
         console.log("Enemy updated successfully");
       } else {
-        const newEnemy = await addEnemy(userId, campaignId, characterData);
+        const newEnemy = await addEnemy(userId, campaignId, payload);
         console.log("Enemy added successfully");
       }
 
-      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+      setMessage("Enemy saved successfully.");
+      setTimeout(() => {
+        navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+      }, 1000);
     } catch (error) {
-      console.error("Error saving enemy", error);
+      setMessage(error?.message || "An error occurred while saving.");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -143,7 +244,6 @@ function Add_Enemy()
       console.error("Error deleting Enemy:", error);
     }
   };
-
 
   const calculateModifier = (score) => {
     return Math.floor((score - 10) / 2);
@@ -244,6 +344,25 @@ function Add_Enemy()
 
                 {/* The basic enemy info */}
                 <div id="input-box-white" className="character-base-stats-section">
+                <div className="character-base-stat">
+                  <b>Enemy Image</b>
+                  <div className="image-upload-area">
+                    <img
+                      src={imagePreview || "/assets/PlaceholderImage.jpg"}
+                      alt="Enemy"
+                      className="addview-uploadimg"
+                      onClick={handleUploadClick}
+                      style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover', cursor: 'pointer', border: '2px solid #ccc', borderRadius: '8px' }}
+                    />
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      hidden
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
 
                 <div className="character-base-stat">
                   <b>Enemy Name</b>
@@ -592,11 +711,19 @@ function Add_Enemy()
           </div>
 
           <div className="campaign-actions">
-            <button id="button-green" onClick={handleSaveCharacter}>Save</button>
+            <button id="button-green" onClick={handleSaveCharacter} disabled={saving}>
+              {saving ? "Saving..." : "Save"}
+            </button>
             <button id="button-gray">Cancel</button>
            {enemyId && (
                   <button id="button-gray" onClick={handleDeleteEnemy}>Delete</button>
                 )}
+           {message && (
+                <>
+                  <br />
+                  <p>{message}</p>
+                </>
+              )}
            </div>
         </div>
 
