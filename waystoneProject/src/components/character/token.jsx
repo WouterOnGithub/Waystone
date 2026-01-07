@@ -10,16 +10,14 @@ export default function Token({ userId,tokenId, x, y, onDragStart, onClick, camp
   const data = player || entity;
 
   if (!data) return null;
-
-
-
+  
   return (
     
     <div
       className="token"
       draggable
       onDragStart={() => onDragStart(tokenId, x, y)}
-      onClick={() => onClick(tokenId, player)}
+      onClick={() => onClick(tokenId, data)}
       style={{ cursor: "grab" }}
     >
       <img
