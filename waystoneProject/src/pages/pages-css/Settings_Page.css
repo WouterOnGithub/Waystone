@@ -3,13 +3,14 @@
 {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   box-sizing: border-box;
 }
 
 #settings-password
 {
     display: flex;
+    gap: 20px;
 }
 
 #settings-passwords

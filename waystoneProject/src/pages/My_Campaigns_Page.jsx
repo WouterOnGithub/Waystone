@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getAllCampaigns, updateCampaignInfo } from "../api/userCampaigns";
+import {
+  getAllCampaigns,
+  publishCampaign,
+  unpublishCampaign,
+  getFreeCampaigns,
+  updateCampaignInfo
+} from "../api/userCampaigns";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 import "./pages-css/CSS.css";
 import "./pages-css/My_Campaigns_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
-
-// Static dummy data for free campaigns (kept as-is)
-const freeCampaignSection = {
-  title: "Free Campaigns",
-  items: [
-    { name: "Project__Name", color: "#E7D665" },
-    { name: "Project__Name", color: "#447DC9" },
-  ],
-};
 
 // Helper to normalise Firestore / ISO dates
 const getCampaignSortDate = (campaign) => {
@@ -39,6 +38,7 @@ function My_Campaigns_Page()
   const [allCampaigns, setAllCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [freeCampaigns, setFreeCampaigns] = useState([]);
 
   useEffect(() => {
     const loadCampaigns = async () => {
@@ -65,6 +65,30 @@ function My_Campaigns_Page()
     loadCampaigns();
   }, [user]);
 
+  useEffect(() => {
+    // Real-time listener for FreeCampaigns
+    const freeCampaignsRef = collection(db, "FreeCampaigns");
+    
+    const unsubscribe = onSnapshot(
+      freeCampaignsRef,
+      (snapshot) => {
+        const campaigns = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setFreeCampaigns(campaigns);
+      },
+      (error) => {
+        console.error("Error listening to free campaigns:", error);
+        // Fallback to one-time fetch if listener fails
+        getFreeCampaigns().then(setFreeCampaigns).catch(console.error);
+      }
+    );
+
+    // Cleanup listener on unmount
+    return () => unsubscribe();
+  }, []);
+
   const recentCampaigns = allCampaigns.slice(0, 5);
   const activeCampaigns = allCampaigns.filter(campaign => !campaign.isArchived);
 
@@ -75,7 +99,7 @@ function My_Campaigns_Page()
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
-        isPublished: c.isPublished || false,
+        published: c.published === true,
       })),
     },
     {
@@ -84,10 +108,18 @@ function My_Campaigns_Page()
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030"][idx % 3],
-        isPublished: c.isPublished || false,
+      published: c.published === true,
       })),
     },
-    freeCampaignSection,
+    {
+  title: "Free Campaigns",
+  items: freeCampaigns.map((c, idx) => ({
+    id: c.campaignId || c.id,
+    name: c.name || "Unnamed campaign",
+    color: ["#447DC9", "#E7D665"][idx % 2],
+    published: true,
+  })),
+}
   ];
 
   const handleOpenCampaign = (campaignId) => {
@@ -117,31 +149,36 @@ function My_Campaigns_Page()
 
   const handlePublishCampaign = async (campaignId, campaignName, isCurrentlyPublished) => {
     if (!campaignId || !user?.uid) return;
-    
+
     const action = isCurrentlyPublished ? "unpublish" : "publish";
     const confirmed = window.confirm(
-      `Are you sure you want to ${action} "${campaignName}"?\n\nClick OK to ${action.charAt(0).toUpperCase() + action.slice(1)} or Cancel to abort.`
+      `Are you sure you want to ${action} "${campaignName}"?`
     );
     if (!confirmed) return;
-    
+
     try {
-      // Toggle the published status
-      await updateCampaignInfo(user.uid, campaignId, { isPublished: !isCurrentlyPublished });
-      
-      // Success message
-      alert(`"${campaignName}" has been successfully ${action}ed!`);
-      
-      // Refresh campaigns list
+      if (isCurrentlyPublished) {
+        await unpublishCampaign(user.uid, campaignId);
+      } else {
+        await publishCampaign(user.uid, campaignId);
+      }
+
+      // Refresh campaigns list and sort
       const campaigns = await getAllCampaigns(user.uid);
       const sorted = [...campaigns].sort(
         (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
       );
       setAllCampaigns(sorted);
+
+      // Refresh free campaigns list to show published campaigns
+      const freeCampaignsData = await getFreeCampaigns();
+      setFreeCampaigns(freeCampaignsData);
     } catch (err) {
       console.error(`Failed to ${action} campaign:`, err);
       setError(`Failed to ${action} campaign`);
     }
   };
+
 
   return (
     <div className="full-page">
@@ -183,10 +220,10 @@ function My_Campaigns_Page()
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              handlePublishCampaign(item.id, item.name, item.isPublished);
+                              handlePublishCampaign(item.id, item.name, item.published);
                             }}
                           >
-                            {item.isPublished ? "Unpublish" : "Publish"}
+                            {item.published ? "Unpublish" : "Publish"}
                           </button>
                           <button
                             onClick={(e) => {

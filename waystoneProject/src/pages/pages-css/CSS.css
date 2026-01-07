@@ -171,7 +171,7 @@
 }
 #UploadIMG_Logo:hover
 {
-    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
+    box-shadow: 0 8px 20px rgba(107, 70, 193, 0.4);
     transform: translateY(-2px);
 }
 #Required_Logo, #Add_Logo, #Minus_Logo

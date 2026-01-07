@@ -1,55 +1,153 @@
-.navigation /* Navigation Side-bar */
-{
+
+/* Navigation Sidebar Container */
+.navigation {
     background: var(--background-colour);
-    width: 350px;
-    z-index: 1;
+    width: 280px;
+    z-index: 1000;
     position: fixed;
     overflow-x: hidden;
     height: 100vh;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
-.navigation nav /* Navigation Side-bar */
-{
-    margin-left: 15%;
+.navigation nav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0 30px;
 }
 
-nav a /* Navigation Side-bar links */
-{
+/* Logo Section */
+.logo-container {
+    cursor: pointer;
+    padding: 40px 0 30px 0;
+    border-bottom: 2px solid var(--background-colour3);
+    transition: opacity 0.3s ease;
+}
+
+.logo-container:hover {
+    opacity: 0.8;
+}
+
+#Waystone_Logo-sidebar {
+    width: 100%;
+    max-width: 200px;
+    display: block;
+}
+
+/* Navigation Links Section */
+.nav-links {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 30px 0;
+}
+
+.nav-link {
     font-size: var(--head-text);
     color: var(--text-color);
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    display: block;
 }
-nav a:hover /* Navigation Side-bar links */
-{
+
+.nav-link:hover {
+    background: var(--background-colour3);
     color: var(--text-color3);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    transition: 0.5s;
+    transform: translateX(4px);
 }
 
-#Waystone_Logo-sidebar
-{
-    cursor: pointer;
-    width: 75%;
-    margin-top: 50px;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--background-colour3);
+.nav-link.active {
+    background: var(--background-colour4);
+    color: var(--text-color2);
+    font-weight: 600;
 }
 
-#button-green-sidebar /* The Exit button in the sidebar */
-{   
+.nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: var(--text-color3);
+    border-radius: 0 4px 4px 0;
+}
+
+/* Logout Button Container */
+.logout-container {
+    padding: 30px 0;
+    border-top: 2px solid var(--background-colour3);
+}
+
+#button-green-sidebar {
     background: transparent;
     border-radius: var(--border-radius);
     border: 2px var(--text-color) solid;
-    font-weight: bold;
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 30px;
+    font-weight: 600;
+    padding: 12px 24px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    color: var(--text-color);
 }
-#button-green-sidebar:hover
-{
+
+#button-green-sidebar:hover {
     background: var(--background-colour4);
     color: var(--text-color2);
-    transition: 0.5s;
+    border-color: var(--background-colour4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#button-green-sidebar:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#button-green-sidebar svg {
+    transition: transform 0.3s ease;
+}
+
+#button-green-sidebar:hover svg {
+    transform: translateX(3px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .navigation {
+        width: 240px;
+    }
+    
+    .navigation nav {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navigation {
+        width: 200px;
+    }
+    
+    .nav-link {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+    
+    #button-green-sidebar {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
 }
