@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, getLocations, createSession } from "../api/userCampaigns";
-import { getSharedSessionCode, releaseMapPage } from "../utils/sessionCode";
+import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions } from "../api/userCampaigns";
+import { getSharedSessionCode, releaseMapPage, setSessionCleanupCallback } from "../utils/sessionCode";
 
 function Map_Location() {
   const { campaignId, locationId } = useParams();
@@ -53,6 +53,14 @@ function Map_Location() {
     loadData();
   }, [campaignId, locationId, userId]);
 
+  // Set up session cleanup callback
+  useEffect(() => {
+    setSessionCleanupCallback((code) => {
+      // Don't delete session automatically - only delete when explicitly ending session
+      console.log("Session cleanup callback called for code:", code, "- not deleting automatically");
+    });
+  }, []);
+
   // Generate session code when component mounts and user is available
   useEffect(() => {
     if (userId) {
@@ -72,6 +80,7 @@ function Map_Location() {
             campaignId: campaignId,
             campaignName: campaign.name || 'Unnamed Campaign',
             mainMapUrl: campaign.mainMapUrl || null,
+            isActive: true,
             createdAt: new Date().toISOString(),
             lastUpdated: new Date().toISOString()
           };
@@ -90,6 +99,7 @@ function Map_Location() {
   // Cleanup when component unmounts
   useEffect(() => {
     return () => {
+      // Don't delete session on unmount - only delete when explicitly ending session
       releaseMapPage();
     };
   }, []);

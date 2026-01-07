@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
-import { getSession } from "../api/userCampaigns";
+import { getSession, subscribeToSessionStatus } from "../api/userCampaigns";
+import { useAuth } from "../context/AuthContext";
 
 function Active_Session() {
   const { sessionCode } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const userId = user?.uid || null;
   
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,11 +23,22 @@ function Active_Session() {
         return;
       }
 
+      // Check if user is authenticated
+      if (!userId) {
+        setError("You must be logged in to view a session.");
+        setLoading(false);
+        return;
+      }
+
       try {
         const data = await getSession(sessionCode);
         
         if (!data) {
           setError("Invalid session code or session has expired");
+        } else if (data.isActive === false) {
+          setError("This session is no longer active");
+        } else if (data.userId !== userId) {
+          setError("You don't have access to this session. This is not your session.");
         } else {
           setSessionData(data);
         }
@@ -37,7 +51,40 @@ function Active_Session() {
     };
 
     loadSession();
-  }, [sessionCode]);
+  }, [sessionCode, userId]);
+
+  // Monitor session status in real-time
+  useEffect(() => {
+    if (!sessionCode) return;
+
+    const unsubscribe = subscribeToSessionStatus(sessionCode, (data) => {
+      if (!data) {
+        // Session was deleted
+        console.log("Session deleted, kicking out user");
+        navigate("/user/Join_Session");
+        return;
+      }
+
+      // Check if session has recent heartbeat (within last 45 seconds)
+      const now = new Date();
+      const lastHeartbeat = data.lastHeartbeat ? new Date(data.lastHeartbeat) : new Date(data.lastUpdated);
+      const secondsSinceHeartbeat = (now - lastHeartbeat) / 1000;
+
+      if (secondsSinceHeartbeat > 45) {
+        // Owner hasn't sent heartbeat in 45 seconds - session is dead
+        console.log("Session owner heartbeat stopped, kicking out user");
+        navigate("/user/Join_Session");
+        return;
+      }
+
+      // Update session data if it changed
+      setSessionData(data);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [sessionCode, navigate]);
 
   const handleBack = () => {
     navigate("/user/Join_Session");

@@ -8,6 +8,7 @@ import {
   doc,
   setDoc,
   getDoc,
+  onSnapshot,
 } from "firebase/firestore";
 
 
@@ -520,6 +521,82 @@ export const deleteSession = async (sessionCode) => {
     return true;
   } catch (error) {
     console.error("Error deleting session:", error);
+    return false;
+  }
+};
+
+export const updateSessionStatus = async (sessionCode, isActive) => {
+  try {
+    const docRef = doc(db, "Sessions", sessionCode);
+    await updateDoc(docRef, {
+      isActive: isActive,
+      lastUpdated: new Date().toISOString()
+    });
+    return true;
+  } catch (error) {
+    console.error("Error updating session status:", error);
+    return false;
+  }
+};
+
+export const subscribeToSessionStatus = (sessionCode, callback) => {
+  const docRef = doc(db, "Sessions", sessionCode);
+  
+  const unsubscribe = onSnapshot(docRef, (docSnap) => {
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      callback(data);
+    } else {
+      callback(null); // Session doesn't exist
+    }
+  }, (error) => {
+    console.error("Error listening to session:", error);
+    callback(null);
+  });
+
+  return unsubscribe;
+};
+
+export const updateSessionHeartbeat = async (sessionCode) => {
+  try {
+    const docRef = doc(db, "Sessions", sessionCode);
+    await updateDoc(docRef, {
+      lastHeartbeat: new Date().toISOString(),
+      isActive: true
+    });
+    return true;
+  } catch (error) {
+    console.error("Error updating session heartbeat:", error);
+    return false;
+  }
+};
+
+export const cleanupInactiveSessions = async () => {
+  try {
+    const sessionsRef = collection(db, "Sessions");
+    const querySnapshot = await getDocs(sessionsRef);
+    
+    const now = new Date();
+    const cleanupPromises = [];
+    
+    querySnapshot.forEach((docSnap) => {
+      const sessionData = docSnap.data();
+      const lastHeartbeat = sessionData.lastHeartbeat ? new Date(sessionData.lastHeartbeat) : new Date(sessionData.lastUpdated);
+      
+      // Delete sessions that haven't had a heartbeat in 2 minutes
+      const minutesSinceHeartbeat = (now - lastHeartbeat) / (1000 * 60);
+      
+      if (minutesSinceHeartbeat > 2) {
+        console.log(`Cleaning up session ${docSnap.id}: minutes since heartbeat=${minutesSinceHeartbeat.toFixed(1)}`);
+        cleanupPromises.push(deleteSession(docSnap.id));
+      }
+    });
+    
+    await Promise.all(cleanupPromises);
+    console.log(`Cleaned up ${cleanupPromises.length} inactive sessions`);
+    return true;
+  } catch (error) {
+    console.error("Error cleaning up inactive sessions:", error);
     return false;
   }
 };

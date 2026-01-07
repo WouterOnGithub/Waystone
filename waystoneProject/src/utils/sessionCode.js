@@ -2,6 +2,7 @@
 let sharedSessionCode = null;
 let activeMapPages = 0; // Track how many map pages are currently active
 let resetTimeout = null; // Timeout for delayed reset
+let sessionCleanupCallback = null; // Callback to clean up session in Firestore
 
 // Function to generate unique session code for a specific user
 export const generateSessionCode = (userId) => {
@@ -16,6 +17,11 @@ export const generateSessionCode = (userId) => {
   
   // Combine user hash, timestamp, and random part for guaranteed uniqueness
   return `${userHash}-${randomPart}-${timestamp.slice(-4)}`.toUpperCase();
+};
+
+// Set callback for session cleanup
+export const setSessionCleanupCallback = (callback) => {
+  sessionCleanupCallback = callback;
 };
 
 // Get or create shared session code (call when map page mounts)
@@ -44,6 +50,9 @@ export const releaseMapPage = () => {
     resetTimeout = setTimeout(() => {
       if (activeMapPages <= 0) {
         // All map pages have been unmounted for more than 100ms, reset the session code
+        if (sessionCleanupCallback && sharedSessionCode) {
+          sessionCleanupCallback(sharedSessionCode);
+        }
         sharedSessionCode = null;
         activeMapPages = 0; // Reset to 0
       }
@@ -57,6 +66,9 @@ export const resetSharedSessionCode = () => {
   if (resetTimeout) {
     clearTimeout(resetTimeout);
     resetTimeout = null;
+  }
+  if (sessionCleanupCallback && sharedSessionCode) {
+    sessionCleanupCallback(sharedSessionCode);
   }
   sharedSessionCode = null;
   activeMapPages = 0;

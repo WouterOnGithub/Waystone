@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getLocations, createSession } from "../api/userCampaigns";
-import { getSharedSessionCode, releaseMapPage } from "../utils/sessionCode";
+import { getCampaign, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat } from "../api/userCampaigns";
+import { getSharedSessionCode, releaseMapPage, setSessionCleanupCallback } from "../utils/sessionCode";
 
 function Map_Main() {
   const { campaignId } = useParams();
@@ -45,9 +45,21 @@ function Map_Main() {
     loadCampaign();
   }, [campaignId, userId]);
 
+  // Set up session cleanup callback
+  useEffect(() => {
+    setSessionCleanupCallback((code) => {
+      // Don't delete session automatically - only delete when explicitly ending session
+      // This prevents accidental deletion when navigating between pages
+      console.log("Session cleanup callback called for code:", code, "- not deleting automatically");
+    });
+  }, []);
+
   // Generate session code when component mounts and user is available
   useEffect(() => {
     if (userId) {
+      // Clean up old inactive sessions before generating new code (30+ minutes old or inactive)
+      cleanupInactiveSessions().catch(console.error);
+      
       const code = getSharedSessionCode(userId);
       setSessionCode(code);
     }
@@ -64,8 +76,10 @@ function Map_Main() {
             campaignId: campaignId,
             campaignName: campaign.name || 'Unnamed Campaign',
             mainMapUrl: campaign.mainMapUrl || null,
+            isActive: true,
             createdAt: new Date().toISOString(),
-            lastUpdated: new Date().toISOString()
+            lastUpdated: new Date().toISOString(),
+            lastHeartbeat: new Date().toISOString()
           };
           
           await createSession(sessionCode, sessionData);
@@ -79,12 +93,52 @@ function Map_Main() {
     saveSessionData();
   }, [sessionCode, campaign, campaignId, userId]);
 
+  // Heartbeat mechanism to keep session alive
+  useEffect(() => {
+    if (!sessionCode) return;
+
+    const heartbeatInterval = setInterval(() => {
+      // Only send heartbeat if page is visible
+      if (!document.hidden) {
+        updateSessionHeartbeat(sessionCode);
+      }
+    }, 30000); // Send heartbeat every 30 seconds
+
+    // Send initial heartbeat
+    updateSessionHeartbeat(sessionCode);
+
+    // Handle page visibility changes
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Page is hidden, stop heartbeat
+        console.log("Page hidden, stopping heartbeat");
+        clearInterval(heartbeatInterval);
+      } else {
+        // Page is visible, restart heartbeat
+        console.log("Page visible, restarting heartbeat");
+        updateSessionHeartbeat(sessionCode);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      clearInterval(heartbeatInterval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [sessionCode]);
+
   // Cleanup when component unmounts
   useEffect(() => {
     return () => {
+      // Delete session immediately when owner leaves to prevent joining
+      if (sessionCode) {
+        deleteSession(sessionCode);
+        console.log("Session deleted immediately on owner leave");
+      }
       releaseMapPage();
     };
-  }, []);
+  }, [sessionCode]);
 
   const toggleLocations = () => {
     setLocationsOpen(!locationsOpen);
@@ -114,6 +168,10 @@ function Map_Main() {
       "Are you sure you want to end this session? Make sure you've saved your progress."
     );
     if (confirmEnd) {
+      // Delete session when explicitly ending it
+      if (sessionCode) {
+        deleteSession(sessionCode);
+      }
       navigate("/user/campaigns");
     }
   };
