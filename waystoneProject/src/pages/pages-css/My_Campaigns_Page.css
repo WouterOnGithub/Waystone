@@ -6,7 +6,7 @@
     margin-top: 15px;
     margin-bottom: 20px;
 }
-#box-text
+#box-text /* The section that holds the project_name */
 {
     margin-left: -10px;
     margin-bottom: 20px;
@@ -18,9 +18,9 @@
     color: var(--text-color2);
     text-align: right;
     margin-left: 30px; /* Keep the same as the #box margin-left !!! */
-    width: 260px; /* Keep the same as the #box width !!! */
+    width: 240px; /* Keep the same as the #box width !!! */
     padding-top: 10px;
-    height: 120px;
+    height: 100px;
 }
 
 /* To loop colors through the campaign boxes */
@@ -46,7 +46,7 @@
     background: var(--background-colour);
     text-align: right;
     margin-left: 30px; /* Keep the same as the #box-text p margin-left !!! */
-    width: 260px; /* Keep the same as the #box-text p width !!! */
+    width: 240px; /* Keep the same as the #box-text p width !!! */
     height: 50px;
 }
 #box button /* Archive button */
@@ -64,5 +64,5 @@
     background: var(--background-colour);
     color: var(--text-color);
     text-decoration: underline;
-    transition: 0.3s; 
+    transition: 0.5s; 
 }
