@@ -12,7 +12,7 @@
 .account-profile /* The profile section (the profile image, username, description) */
 {
     align-items: center;
-    gap: 20px;
+    gap: 30px;
 }
 
 #account-profile-image /* the profile image */

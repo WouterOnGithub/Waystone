@@ -1,43 +1,26 @@
-.account-actions {
+.account-actions /* The save and cancel button */
+{
   margin-top: 20px;
 }
 
-.account-details input {
-  width: 500px;
-  padding: 8px;
-  border: 1px solid var(--background-colour3);
-  border-radius: var(--border-radius);
-  background: var(--form-box-colour);
-  color: var(--text-color);
-}
-
-.account-details textarea {
-  width: 600px;
-  height: 80px;
-  padding: 8px;
-  border: 1px solid var(--background-colour3);
-  border-radius: var(--border-radius);
-  background: var(--form-box-colour);
-  color: var(--text-color);
-  resize: vertical;
-}
-
-.account-details label {
-  color: var(--text-color);
-  margin-bottom: 5px;
-  display: block;
-}
-
-.account-profile {
+.account-profile /* The profile section */
+{
   align-items: flex-start;
-  gap: 40px;
 }
 
-.account-avatar-wrap img {
-  background: var(--background-colour3);
+.account-avatar-wrap img /* The profile image */
+{
   object-fit: cover;
+  cursor: pointer;
   border-radius: 500px;
   height: 200px;
   width: 200px;
-  cursor: pointer;
+  margin: 20px;
+  margin-right: 100px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.account-avatar-wrap img:hover
+{
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.3);
+  transform: translateY(-2px);
 }
