@@ -58,7 +58,7 @@ const Join_Session = () => {
   return (
     <div className="join-session-container">
       <div className="join-session-box">
-        <h2 className="join-session-question">Voer de sessiecode in:</h2>
+        <h2 className="join-session-question">Enter your session code:</h2>
         
         {error && (
           <div className="join-session-error">
