@@ -28,11 +28,11 @@ const Join_Session = () => {
       return;
     }
 
-    // Check if user is authenticated
-    if (!userId) {
-      setError("You must be logged in to join a session.");
-      return;
-    }
+    // Remove authentication check - non-logged-in users can join sessions
+    // if (!userId) {
+    //   setError("You must be logged in to join a session.");
+    //   return;
+    // }
 
     setIsLoading(true);
     setError("");
@@ -66,12 +66,13 @@ const Join_Session = () => {
         return;
       }
 
+      // Remove ownership check - any user can join any active session
       // Check if current user is the session creator
-      if (sessionData.userId !== userId) {
-        console.log("User ID mismatch - showing ownership error");
-        setError("You can only join your own sessions. This session belongs to another user.");
-        return;
-      }
+      // if (sessionData.userId !== userId) {
+      //   console.log("User ID mismatch - showing ownership error");
+      //   setError("You can only join your own sessions. This session belongs to another user.");
+      //   return;
+      // }
 
       console.log("All checks passed - navigating to session");
       console.log("Joining session with code:", code, "Session data:", sessionData);
