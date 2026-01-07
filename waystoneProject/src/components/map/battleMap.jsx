@@ -58,6 +58,7 @@ const handleTokenClick = (tokenId, player, x, y) => {
       tokenId,
       player,
       position: { x: x * cellSize, y: y * cellSize },
+      gridPosition: { x , y  }
     });
   }
 };
@@ -113,7 +114,10 @@ const handleTokenClick = (tokenId, player, x, y) => {
         userId={userId}
         playerId={selectedToken.tokenId}
         campaignId={campaignId}
+        mapId={mapId}
         position={selectedToken.position}
+        posX={selectedToken.gridPosition.x}
+        posY={selectedToken.gridPosition.y}
         onClose={() => setSelectedToken(null)}
       />
     )}

@@ -4,8 +4,10 @@ import "./token.css";
 import { usePlayer,useUpdateHp } from "../../hooks/usePlayerMap";
 import { useInventory } from "../../hooks/useInventory";
 import { useItems } from "../../hooks/useItems";
+import { doc, deleteDoc} from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
-export default function TokenMenu({ userId, playerId, campaignId, position, onClose }) {
+export default function TokenMenu({ userId, playerId, campaignId, position,posX, posY , mapId={mapId}, onClose }) {
   const menuRef = useRef();
   const defaultWidth = 180;
   const expandedWidth = 400; // breder menu voor inventory
@@ -25,8 +27,7 @@ export default function TokenMenu({ userId, playerId, campaignId, position, onCl
   const [healAmount, setHealAmount] = useState("");
   const [activeField, setActiveField] = useState(null); // "damage" | "heal" | null
 
-
-
+  
   let left = position.x + cellSize + 5;
   const top = position.y;
   const menuWidth = showInventory ? expandedWidth : defaultWidth;
@@ -46,29 +47,44 @@ export default function TokenMenu({ userId, playerId, campaignId, position, onCl
   const toggleItem = (slotKey) => {
     setExpandedItems(prev => ({ ...prev, [slotKey]: !prev[slotKey] }));
   };
+  //deal damage
+  const handleDamage = () => {
+    const dmg = parseInt(damageAmount);
+    if (isNaN(dmg) || dmg <= 0) return;
 
-const handleDamage = () => {
-  const dmg = parseInt(damageAmount);
-  if (isNaN(dmg) || dmg <= 0) return;
+    // Bereken nieuwe HP
+    const newHp = Math.max(0, player.HpCurrent - dmg);
+    updateHp(newHp)
 
-  // Bereken nieuwe HP
-  const newHp = Math.max(0, player.HpCurrent - dmg);
-  updateHp(newHp)
+    setDamageAmount("");
+    setShowDamageField(false);
+  };
+  //heal
+  const handleHeal = () => {
+    const heal = parseInt(healAmount);
+    if (isNaN(heal) || heal <= 0) return;
 
-  setDamageAmount("");
-  setShowDamageField(false);
+    // Bereken nieuwe HP
+    const newHp = Math.min(player.HpMax, player.HpCurrent + heal);
+    updateHp(newHp)
+
+    setHealAmount("");
+    setShowHealField(false);
   };
 
-  const handleHeal = () => {
-  const heal = parseInt(healAmount);
-  if (isNaN(heal) || heal <= 0) return;
+  // Delete handler via x_y doc name
+  const handleDeleteToken = async () => {
+    if (!mapId || !position) return;
 
-  // Bereken nieuwe HP
-  const newHp = Math.min(player.HpMax, player.HpCurrent + heal);
-  updateHp(newHp)
+    const docName = `${posX}_${posY}`;
+    const cellRef = doc(db, "Users", userId, "Campaigns", campaignId, "Maps", mapId, "Cells", docName);
 
-  setHealAmount("");
-  setShowHealField(false);
+    try {
+      await deleteDoc(cellRef);
+      onClose();
+    } catch (err) {
+      console.error("Error deleting cell:", err);
+    }
   };
 
   return createPortal(
@@ -150,6 +166,8 @@ const handleDamage = () => {
           ))}
         </div>
       )}
+
+      <button onClick={handleDeleteToken}>remove from board</button>
     </div>,
     document.body
   );
