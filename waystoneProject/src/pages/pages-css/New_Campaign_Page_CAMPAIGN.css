@@ -75,7 +75,7 @@
 
 
 
-/* Add_Character */
+/* Add_Character */ /* Add_Enemy */ /* Add_NPC */
 .character-base-stat /* the individual base stats (ex. name, race, ...) */
 {
   display: flex;

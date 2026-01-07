@@ -24,8 +24,6 @@
 #login-register-title /* Login & register title */
 {
   font-size: var(--login-register-text);
-  
-  margin-left: 15%;
   margin-bottom: 35%;    
 }
 
@@ -47,7 +45,6 @@
 /* The form button (just to center it) */
 #login-register-button
 {
-  margin-left: 25%;
   padding-top: 10px; /* To stop the top of the button from clipping during the animation */
 }
 

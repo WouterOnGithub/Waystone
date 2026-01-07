@@ -1,5 +1,9 @@
 import React, { useState , useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { addNPC, getEntityById, updateEntity,deleteEntityAndSubCollections } from "../api/npcs";
+import { db } from "../firebase/firebase";
+import { useAuth } from "../context/AuthContext";
+import { setDoc } from "firebase/firestore";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import "./pages-css/Main_Page.css";
@@ -7,12 +11,8 @@ import Footer from "../components/UI/Footer";
 import Header from "../components/UI/Header";
 import Sidebar from "../components/UI/Sidebar";
 
-import { addNPC, getEntityById, updateEntity,deleteEntityAndSubCollections } from "../api/npcs";
-import { db } from "../firebase/firebase";
-import { useAuth } from "../context/AuthContext";
-import { setDoc } from "firebase/firestore";
-
-function Add_NPC() {
+function Add_NPC() 
+{
   const { user } = useAuth();
   const userId = user ? user.uid : null;
   const { campaignId, npcId } = useParams();
@@ -219,12 +219,15 @@ function Add_NPC() {
 
   return (
     <div className="full-page">
-    <div className="page-layout">
-      <Sidebar />
-      <div className="main-wrapper">
-        <div id="main">
-          <Header title="New Campaign" />
-        <div className="campaign-body">
+      
+    <Sidebar />
+
+    <div id="main">
+
+      <Header title="New Campaign" />
+
+        <div>
+          
           {/* The buttons (campaign, mapbuilder, character)*/}
           <div id="campaign-tabs">
 
@@ -245,91 +248,104 @@ function Add_NPC() {
 
           </div>
 
-          <div className="character-sheet">
-            {/* Character Basics */}
-            <div className="char-section">
-              <h3 className="char-section-title">Character Sheet</h3>
+          {/* The NPC Sheet */}
+          <div id="content">
+          <div className="add-fullwidth">
+
+            <h1>NPC Sheet</h1>
               
-              <div className="char-grid-3">
-                <div className="char-field">
-                  <label>Character Name</label>
-                  <input 
-                    type="text" 
-                    value={characterData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
+            {/* NPC Basics */}
+            <div className="character-section">
+
+              {/* The basic NPC info */}
+              <div id="input-box-white" className="character-base-stats-section">
+
+                <div className="character-base-stat">
+                  <b>NPC Name</b>
+                  <input type="text" 
+                         value={characterData.name}
+                         onChange={(e) => handleInputChange('name', e.target.value)}
                   />
                 </div>
-                <div className="char-field">
-                  <label>Character Race</label>
-                  <input 
-                    type="text" 
-                    value={characterData.race}
-                    onChange={(e) => handleInputChange('race', e.target.value)}
+
+                <div className="character-base-stat">
+                  <b>NPC Race</b>
+                  <input type="text" 
+                         value={characterData.race}
+                         onChange={(e) => handleInputChange('race', e.target.value)}
                   />
                 </div>
-                <div className="char-field">
-                  <label>Character SubClass</label>
-                  <input 
-                    type="text" 
-                    value={characterData.subKlassen}
-                    onChange={(e) => handleInputChange('subKlassen', e.target.value)}
+
+                <div className="character-base-stat">
+                  <b>NPC SubClass</b>
+                  <input type="text" 
+                         value={characterData.subKlassen}
+                         onChange={(e) => handleInputChange('subKlassen', e.target.value)}
                   />
                 </div>
+
               </div>
 
-              <div className="char-grid-3">
-                <div className="char-field">
-                  <label>Character Class</label>
-                  <input 
-                    type="text" 
-                    value={characterData.klassen}
-                    onChange={(e) => handleInputChange('klassen', e.target.value)}
-                  />
-                </div>
-                <div className="char-field">
-                  <label>Background</label>
-                  <input 
-                    type="text" 
-                    value={characterData.background}
-                    onChange={(e) => handleInputChange('background', e.target.value)}
-                  />
-                </div>
-                <div className="char-field">
-                  <label>Alignment</label>
-                  <select 
-                    value={characterData.alignment}
-                    onChange={(e) => handleInputChange('alignment', e.target.value)}
-                  >
-                    <option value="">Select...</option>
-                    <option value="Lawful Good">Lawful Good</option>
-                    <option value="Neutral Good">Neutral Good</option>
-                    <option value="Chaotic Good">Chaotic Good</option>
-                    <option value="Lawful Neutral">Lawful Neutral</option>
-                    <option value="True Neutral">True Neutral</option>
-                    <option value="Chaotic Neutral">Chaotic Neutral</option>
-                    <option value="Lawful Evil">Lawful Evil</option>
-                    <option value="Neutral Evil">Neutral Evil</option>
-                    <option value="Chaotic Evil">Chaotic Evil</option>
-                  </select>
-                </div>
-                <div className="char-field">
-                  <label>Level</label>
-                  <input 
-                    type="number" 
-                    value={characterData.level}
-                    onChange={(e) => handleNumberInputChange('level', e.target.value)}
-                  />
-                </div>
+            <div id="input-box-white" className="character-base-stats-section">
+
+              <div className="character-base-stat">
+                <b>NPC Class</b>
+                <input type="text" 
+                       value={characterData.klassen}
+                       onChange={(e) => handleInputChange('klassen', e.target.value)}
+                />
               </div>
+
+              <div className="character-base-stat">
+                <b>Background</b>
+                <input type="text" 
+                       value={characterData.background}
+                       onChange={(e) => handleInputChange('background', e.target.value)}
+                />
+              </div>
+
+                <div className="char-field">
+                  <b>Level</b><br />
+                  <input type="number" 
+                         value={characterData.level}
+                         onChange={(e) => handleNumberInputChange('level', e.target.value)}
+                  />
+                </div>
+
+              </div>
+
+              <div id="campaign-select">
+                <b>Alignment</b><br />
+                <select 
+                  value={characterData.alignment}
+                  onChange={(e) => handleInputChange('alignment', e.target.value)}
+                >
+                  <option value="">Select...</option>
+                  <option value="Lawful Good">Lawful Good</option>
+                  <option value="Neutral Good">Neutral Good</option>
+                  <option value="Chaotic Good">Chaotic Good</option>
+                  <option value="Lawful Neutral">Lawful Neutral</option>
+                  <option value="True Neutral">True Neutral</option>
+                  <option value="Chaotic Neutral">Chaotic Neutral</option>
+                  <option value="Lawful Evil">Lawful Evil</option>
+                  <option value="Neutral Evil">Neutral Evil</option>
+                  <option value="Chaotic Evil">Chaotic Evil</option>
+                </select>
+              </div>
+
             </div>
 
-            {/* Ability Scores */}
-            <div className="char-section">
-              <h3 className="char-section-title">Ability Scores</h3>
+            {/* The ability scores */}
+            <br />
+            <h1>Ability Scores</h1>
+            <div className="character-section">
+
               <div className="ability-grid">
                 {['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'].map((ability) => (
+                  
                   <div key={ability} className="ability-box">
                     <div className="ability-name">{ability.charAt(0).toUpperCase() + ability.slice(1)} + Modifier</div>
+                    
                     <div className="ability-inputs">
                       <input 
                         type="number" 
@@ -337,92 +353,110 @@ function Add_NPC() {
                         onChange={(e) => handleNumberInputChange(ability, e.target.value) || 10 }
                         className="ability-score"
                       />
+
                       <div className="ability-modifier">
-                        {calculateModifier(characterData[ability]) >= 0 ? '+' : ''}
+                        {calculateModifier(characterData[ability]) >= 0 ? '+ ' : ''}
                         {calculateModifier(characterData[ability])}
                       </div>
                     </div>
+
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Combat Statistics */}
-            <div className="char-section">
-              <h3 className="char-section-title">Combat Statistics</h3>
-              <div className="combat-grid">
-                <div className="combat-stat">
-                  <label>Armor Class</label>
-                  <input 
-                    type="number" 
-                    value={characterData.armorKlassen}
-                    onChange={(e) => handleNumberInputChange('armorKlassen', e.target.value)}
+            {/* The combat statistics */}
+            <br />
+            <h1>Combat Statistics</h1>
+            <div className="character-section">
+
+              <div id="input-box-white" className="character-base-stats-section">
+
+                <div className="character-base-stat">
+                  <b>Armor Class</b>
+                  <input type="number" 
+                         value={characterData.armorKlassen}
+                         onChange={(e) => handleNumberInputChange('armorKlassen', e.target.value)}
                   />
                 </div>
-                <div className="combat-stat">
-                  <label>Initiative</label>
-                  <input 
-                    type="number" 
-                    value={characterData.initiative}
-                    onChange={(e) => handleNumberInputChange('initiative', e.target.value)}
+
+                <div className="character-base-stat">
+                  <b>Initiative</b>
+                  <input type="number" 
+                         value={characterData.initiative}
+                         onChange={(e) => handleNumberInputChange('initiative', e.target.value)}
                   />
                 </div>
-                <div className="combat-stat">
-                  <label>Speed</label>
-                  <input 
-                    type="number" 
-                    value={characterData.speed}
-                    onChange={(e) => handleNumberInputChange('speed', e.target.value)}
+
+                <div className="character-base-stat">
+                  <b>Speed</b>
+                  <input type="number" 
+                         value={characterData.speed}
+                         onChange={(e) => handleNumberInputChange('speed', e.target.value)}
                   />
                 </div>
-                <div className="combat-stat">
-                  <label>Hit Dice</label>
-                  <input 
-                    type="text" 
-                    value={characterData.hitDice}
-                    onChange={(e) => handleInputChange('hitDice', e.target.value)}
-                    placeholder="1d8"
+
+              </div>
+
+              <div id="input-box-white" className="character-base-stats-section">
+
+                <div className="character-base-stat">
+                  <b>Hit Dice</b>
+                  <input type="text" 
+                         value={characterData.hitDice}
+                         onChange={(e) => handleInputChange('hitDice', e.target.value)}
+                         placeholder="1d8"
                   />
                 </div>
-                <div className="combat-stat">
-                  <label>Current HP</label>
-                  <input 
-                    type="number" 
-                    value={characterData.HpCurrent}
-                    onChange={(e) => handleNumberInputChange('HpCurrent',e.target.value)}
+
+                <div className="character-base-stat">
+                  <b>Current HP</b>
+                  <input type="number" 
+                         value={characterData.HpCurrent}
+                         onChange={(e) => handleNumberInputChange('HpCurrent',e.target.value)}
                   />
                 </div>
-                <div className="combat-stat">
+
+                <div className="character-base-stat">
                   <label>Max HP</label>
-                  <input 
-                    type="number" 
-                    value={characterData.HpMax}
-                    onChange={(e) => handleNumberInputChange('HpMax', e.target.value)}
+                  <input type="number" 
+                         value={characterData.HpMax}
+                         onChange={(e) => handleNumberInputChange('HpMax', e.target.value)}
                   />
                 </div>
               </div>
-              <div className="char-field">
-                <label>Saving Throw Proficiencies</label>
-                <input 
-                  type="text" 
-                  value={characterData.savingThrows}
-                  onChange={(e) => handleInputChange('savingThrows', e.target.value)}
-                  placeholder="e.g., Strength, Constitution" 
-                />
+
+              <div id="combat-statistics-checkboxes">
+                <b>Saving Throw Proficiencies</b><br />
+                <label>
+                  <input 
+                    type="checkbox" 
+                    value={characterData.savingThrows}
+                    onChange={(e) => handleInputChange('savingThrows', e.target.value)}
+                  />
+                  &#10240;(placeholder)
+                </label>
               </div>
+
             </div>
 
-            {/* Skills */}
-            <div className="char-section">
-              <h3 className="char-section-title">Skills</h3>
-              <div className="skills-grid">
+            {/* The skills */}
+            <br />
+            <h1>Skills</h1>
+            <div id="input-box-white" className="character-section">
+
+              <div>
+
                 <div className="skill-row">
                   <span className="skill-label">Skill Bonus</span>
                   <span className="skill-label">Proficiency Modifier</span>
                 </div>
+
                 {Object.keys(characterData.skills).map((skill) => (
                   <div key={skill} className="skill-row">
-                    <div className="skill-bonus">{skillNames[skill]}: +{characterData.skills[skill]}</div>
+                    
+                    <div className="skill-bonus">{skillNames[skill]}: + {characterData.skills[skill]}</div>
+                    
                     <select 
                       value={characterData.skills[skill]}
                       onChange={(e) => handleSkillChange(skill, e.target.value)}
@@ -432,123 +466,164 @@ function Add_NPC() {
                       <option value="2">Proficient (+2)</option>
                       <option value="4">Expert (+4)</option>
                     </select>
+
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Class Features */}
-            <div className="char-section">
-              <h3 className="char-section-title">Class Features ⓘ</h3>
-              <div className="feature-list">
-                {characterData.classFeatures.map((feature, index) => (
-                  <div key={index} className="feature-item">
-                    <span>{feature.name}: {feature.bonus}</span>
-                    <button className="feature-info">ⓘ {feature.description}</button>
-                  </div>
-                ))}
-              </div>
-              <button className="add-feature-btn" onClick={() => addFeature('classFeatures')}>Add Feature +</button>
-            </div>
+            {/* The class features */}
+            <br />
+            <h1>Class Features</h1>
+            <div className="character-section">
 
-            {/* Background Features */}
-            <div className="char-section">
-              <h3 className="char-section-title">Background Features ⓘ</h3>
-              <div className="feature-list">
+              {characterData.classFeatures.map((feature, index) => (
+                
+                <div key={index} className="character-row">
+                  <span>{feature.name}: {feature.bonus}</span>
+                  <div>
+                    <button id="button-gray">{feature.description + " "}ⓘ</button>
+                    <button id="button-gray">delete</button>
+                  </div>
+
+                </div>
+
+              ))}
+
+            <button id="button-gray" onClick={() => addFeature('classFeatures')}>add feature</button>
+          </div>
+
+            {/* The background features */}
+            <br />
+            <h1>Background Features</h1>
+            <div className="character-section">
+
                 {characterData.backgroundFeatures.map((feature, index) => (
-                  <div key={index} className="feature-item">
+                  
+                  <div key={index} className="character-row">
                     <span>{feature.name}: {feature.bonus}</span>
-                    <button className="feature-info">ⓘ {feature.description}</button>
+                    <div>
+                      <button id="button-gray">{feature.description + " "}ⓘ</button>
+                      <button id="button-gray">delete</button>
+                    </div>
+
                   </div>
+
                 ))}
-              </div>
-              <button className="add-feature-btn" onClick={() => addFeature('backgroundFeatures')}>Add Feature +</button>
+                
+              <button id="button-gray" onClick={() => addFeature('backgroundFeatures')}>add feature</button>
             </div>
 
-            {/* Racial Traits */}
-            <div className="char-section">
-              <h3 className="char-section-title">Racial Traits ⓘ</h3>
-              <div className="char-field">
-                <label>Speed: {characterData.racialSpeed}</label>
+            {/* The racial traits */}
+            <br />
+            <h1>Racial Traits</h1>
+            <div id="input-box-white" className="character-section">
+              
+              <div>
+                <b>Speed: {characterData.racialSpeed}</b><br />
+                
                 <textarea 
                   value={characterData.racialTraits}
                   onChange={(e) => handleInputChange('racialTraits', e.target.value)}
                   placeholder="Darkvision, Ability Boost, Attack Bonus"
                 ></textarea>
+
               </div>
             </div>
 
-            {/* Known Spells */}
-            <div className="char-section">
-              <h3 className="char-section-title">Known Spells ⓘ</h3>
-              <div className="spell-list">
+            {/* The known spells */}
+            <br />
+            <h1>Known Spells</h1>
+            <div className="character-section">
+
                 {characterData.knownSpells.map((spell, index) => (
-                  <div key={index} className="spell-item">
-                    {spell.name}: {spell.level} Level {spell.concentration ? '[ Concentration ]' : ''}
+
+                  <div key={index} className="character-row">
+                    <span>{spell.name}: {spell.level} lvl {spell.concentration ? '[ Concentration ]' : ''}</span>
+                    <button id="button-gray">delete</button>
                   </div>
+
                 ))}
-              </div>
-              <button className="add-feature-btn" onClick={addSpell}>Add Spell +</button>
+                
+              <button id="button-gray" onClick={addSpell}>Add Spell +</button>
             </div>
 
-            {/* Personality & Story */}
-            <div className="char-section">
-              <h3 className="char-section-title">Personality & Story</h3>
-              <div className="char-field">
-                <label>Ideals</label>
-                <input 
-                  type="text" 
-                  value={characterData.ideals}
-                  onChange={(e) => handleInputChange('ideals', e.target.value)}
-                  placeholder="Bonds" 
+            {/* The personality & story */}
+            <br />
+            <h1>Personality & Story</h1>
+            <div className="character-section">
+              
+              <div id="input-box-white">
+                <b>Ideals</b>
+                <br />
+                <input type="text" 
+                       value={characterData.ideals}
+                       onChange={(e) => handleInputChange('ideals', e.target.value)}
+                       placeholder="Bonds" 
                 />
               </div>
-              <div className="char-field">
-                <label>Backstory</label>
+
+              <br />
+
+              <div id="input-box-white">
+                <b>Backstory</b>
+                <br />
                 <textarea 
                   value={characterData.backstory}
                   onChange={(e) => handleInputChange('backstory', e.target.value)}
                   rows="3"
                 ></textarea>
               </div>
-              <div className="char-field">
-                <label>Notes</label>
+
+              <br />
+
+              <div id="input-box-white">
+                <b>Notes</b>
+                <br />
                 <textarea 
                   value={characterData.notes}
                   onChange={(e) => handleInputChange('notes', e.target.value)}
                   rows="4"
                 ></textarea>
               </div>
+
             </div>
 
-            {/* Personal Traits */}
-            <div className="char-section">
-              <h3 className="char-section-title">Personal Traits ⓘ</h3>
-              <div className="traits-grid">
+            {/* The personal traits */}
+            <br />
+            <h1>Personal Traits</h1>
+            <div className="character-section">
+
+              <div>
                 {characterData.personalTraits.map((trait, index) => (
-                  <div key={index} className="trait-box">
-                    {trait.name}: {trait.bonus}
+
+                  <div key={index} className="character-row">
+                    <span>{trait.name}: {trait.bonus}</span>
+                    <button id="button-gray">delete</button>
                   </div>
+
                 ))}
               </div>
-              <button className="add-feature-btn" onClick={addTrait}>Add Trait +</button>
+              <button id="button-gray" onClick={addTrait}>add trait</button>
             </div>
 
-            {/* Action Buttons */}
-            <div className="char-actions">
-              <button className="char-save-btn" onClick={handleSaveCharacter}>Save Character</button>
-              <button className="char-cancel-btn" onClick={handleCancel}>Cancel</button>
+            <div className="campaign-actions">
+              <button id="button-green" onClick={handleSaveCharacter}>Save</button>
+              <button id="button-gray" onClick={handleCancel}>Cancel</button>
               {npcId && (
-                  <button className="char-delete-btn" onClick={handleDeleteNPC}>Delete NPC</button>
+                  <button id="button-gray" onClick={handleDeleteNPC}>Delete</button>
                 )}
             </div>
+
           </div>
+
         </div>
+
         <Footer />
+
         </div>
       </div>
-    </div>
-    </div>
+      </div>
   );
 }
 
