@@ -13,7 +13,8 @@
   import { doc } from "firebase/firestore";
 
 
-  function Add_Character() {
+  function Add_Character() 
+  {
     const { campaignId, CharacterId } = useParams();
     const playerId = CharacterId;
     const { user } = useAuth();
@@ -427,7 +428,7 @@
               </div>
 
               {/* NEEDS TO STILL BE FIXED, I'LL DO IT SOON ! -H */}
-              <div id="input-box-white">
+              <div id="combat-statistics-checkboxes">
                 <b>Saving Throw Proficiencies</b><br />
                 {['strength','dexterity','constitution','intelligence','wisdom','charisma'].map((ability) => (
                       <label key={ability}>
@@ -436,7 +437,7 @@
                           checked={characterData.savingThrows[ability]}
                           onChange={() => handleSavingThrowChange(ability)}
                         />
-                        {ability.charAt(0).toUpperCase() + ability.slice(1)}
+                        &#10240;{ability.charAt(0).toUpperCase() + ability.slice(1)}
                       </label>
                     ))}
               </div>

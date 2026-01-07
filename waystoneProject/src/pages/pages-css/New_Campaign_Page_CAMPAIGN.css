@@ -78,11 +78,14 @@
 /* Add_Character */
 .character-base-stat /* the individual base stats (ex. name, race, ...) */
 {
-  
+  display: flex;
+  flex-direction: column;
 }
 .character-base-stats-section /* The sections of the stats, each containing 3 input boxes per section */
 {
   display: flex;
+  gap: 40px;
+  margin-bottom: 20px;
 }
 
 /* The ability scores */
@@ -93,11 +96,11 @@
 }
 .ability-box /* The individual ability box */
 {
-  background: linear-gradient(180deg, #5b701d 0%, #2e3d08 100%);
+  background: var(--background-gradient2);
   border-radius: var(--border-radius);
   text-align: center;
   padding: 20px;
-  width: 280px;
+  width: 270px;
   margin-left: 40px;
   margin-bottom: 20px;
 }
@@ -133,6 +136,34 @@
   height: 40px;
   border-radius: 500px;
   font-weight: 600;
+}
+/* The checkboxes of Saving Throw Proficiencies */
+#combat-statistics-checkboxes /* The checkbox section */
+{
+  margin-top: 20px
+}
+#combat-statistics-checkboxes label /* The title per checkbox */
+{
+  margin-right: 50px;
+}
+#combat-statistics-checkboxes input /* The checkbox */
+{
+  border-radius: var(--border-radius3);
+  background: #ffffff;   /* stays white_ in dark mode */
+  appearance: none; /* Makes it be customizable */
+  border: none;
+  width: 20px;
+  height: 20px;
+  transition: 0.3s;
+}
+#combat-statistics-checkboxes input:hover /* The checkbox while hovering */
+{
+  border-color: var(--text-color3);
+}
+#combat-statistics-checkboxes input:checked /* The checkbox when clicked on */
+{
+  background: var(--text-color3);
+  border: 2px var(--text-color4) solid;
 }
 
 /* The skills */
