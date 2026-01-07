@@ -6,10 +6,16 @@
     margin-top: 15px;
     margin-bottom: 20px;
 }
-#box-text /* The section that holds the project_name */
+#box-text /* A project box */
 {
+    margin-top: 5px;
     margin-left: -10px;
     margin-bottom: 20px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+#box-text:hover /* A project box while hovering */
+{
+    transform: translateY(-2px);
 }
 #box-text p /* a card box section (first used for My Campaigns at the Main_Page) */
 {
