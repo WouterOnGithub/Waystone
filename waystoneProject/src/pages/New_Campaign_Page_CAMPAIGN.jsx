@@ -136,13 +136,18 @@ function New_Campaign_Page_CAMPAIGN()
   };
 
   return (
-    <div>
+    <div className="full-page">
 
       <Sidebar />
 
       <div id="main">
 
-        <Header title="New Campaign" />
+        <Header
+          title={
+            isNewCampaign
+              ? "New Campaign" : data?.name ? `${data.name}` : "Campaign"
+          }
+        />
 
         <div>
 

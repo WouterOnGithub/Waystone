@@ -1,5 +1,6 @@
 #login-register-page /* The full page */
 {
+  background: var(--background-colour);
   --login-register-text: 60px;
 
   display: flex;

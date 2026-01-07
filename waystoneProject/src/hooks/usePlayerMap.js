@@ -45,3 +45,33 @@ export function useUpdateHp(userId, campaignId, playerId) {
     [userId, campaignId, playerId]
   );
 }
+
+export function useEntity(userId, campaignId, entityId) {
+  const [entity, setEntity] = useState(null);
+
+  useEffect(() => {
+    if (!userId || !campaignId || !entityId) return;
+
+    const ref = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Entities",
+      entityId
+    );
+
+    const unsub = onSnapshot(ref, (snap) => {
+      if (snap.exists()) {
+        setEntity(snap.data());
+      } else {
+        setEntity(null); // Entity was deleted or doesn't exist
+      }
+    });
+
+    return unsub; // unsubscribe on cleanup
+  }, [userId, campaignId, entityId]);
+
+  return entity;
+}

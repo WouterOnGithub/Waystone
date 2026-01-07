@@ -451,6 +451,124 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
 }
 
+/* Session Code Display - Top Center */
+.session-code-display {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgba(197, 210, 140, 0.95) 0%, rgba(176, 189, 120, 0.95) 100%);
+  border: 2px solid #2e3d08;
+  border-radius: 12px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
+
+.code-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2e3d08;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.code-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2e3d08;
+  font-family: 'Courier New', monospace;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.code-value.hidden {
+  background: rgba(255, 255, 255, 0.2);
+  color: #666;
+  font-style: italic;
+}
+
+/* Eye Icon Toggle Button */
+.code-visibility-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2e3d08;
+}
+
+.code-visibility-toggle:hover {
+  background: rgba(197, 210, 140, 0.2);
+  transform: scale(1.1);
+}
+
+.code-visibility-toggle svg {
+  transition: transform 0.2s ease;
+}
+
+/* Session Control Buttons */
+.session-control-buttons {
+  display: flex;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+.start-session-btn, .end-session-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.start-session-btn {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.start-session-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.end-session-btn {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+}
+
+.end-session-btn:hover {
+  background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+}
+
+.start-session-btn:disabled, .end-session-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
 /* Locations Dropdown - Top Right */
 .map-locations-dropdown {
   position: absolute;

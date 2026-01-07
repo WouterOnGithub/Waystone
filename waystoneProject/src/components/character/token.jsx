@@ -1,13 +1,17 @@
 import React from "react";
-import { usePlayer } from "../../hooks/usePlayerMap";
+import { usePlayer, useEntity } from "../../hooks/usePlayerMap";
 import "./token.css"
 
 export default function Token({ userId,tokenId, x, y, onDragStart, onClick, campaignId }) {
   //use user.uid inplace of UID
   const player = usePlayer(userId, campaignId, tokenId);
+  const entity = useEntity(userId,campaignId,tokenId)
   
+  const data = player || entity;
 
-  if (!player) return null;
+  if (!data) return null;
+
+
 
   return (
     
@@ -19,8 +23,8 @@ export default function Token({ userId,tokenId, x, y, onDragStart, onClick, camp
       style={{ cursor: "grab" }}
     >
       <img
-        src={player.imageUrl}
-        alt={player.name}
+        src={data.imageUrl}
+        alt={data.name}
         className="token-image"
       />
     </div>
