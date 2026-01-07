@@ -1,5 +1,6 @@
 /* Settings Page Layout */
-.settings-content {
+.settings-content 
+{
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -9,23 +10,33 @@
 #settings-password
 {
     display: flex;
-    gap: 20px;
 }
 
 #settings-passwords
 {
-    padding: 15px;
-    width: 300px;
+    padding: 20px;
+    width: 400px;
     box-sizing: border-box;
 }
 
 #settings-language-radiobtn input[type="radio"] 
 {
     accent-color: var(--text-color3);
+    border-radius: var(--border-radius3);
+    appearance: none;
     cursor: pointer;
     width: 20px;
     height: 20px;
     margin-left: 20px;
+}
+#settings-language-radiobtn input[type="radio"]:checked 
+{
+  background: var(--text-color3);
+  border: 2px var(--text-color4) solid;
+}
+#settings-language-radiobtn input[type="radio"]:hover
+{
+  border-color: var(--text-color3);
 }
 
 #settings-language-radiobtn label 
