@@ -165,9 +165,8 @@ function Account_Page_EDIT() {
                 />
                 <br />
                 <div className="account-actions">
-                  <button id="button-green" type="submit">
-                    Save
-                  </button>
+                  <button id="button-green" type="submit">Save</button>
+                  <button id="button-gray" type="submit">Cancel</button>
                 </div>
               </form>
             </div>
