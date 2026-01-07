@@ -27,22 +27,25 @@ export function usePlayer(userId, campaignId, playerId) {
     return unsub;
   }, [userId, campaignId, playerId]);
 
-  return player;
+  return player ? { ...player, id: playerId, tokenType: "player" }: null;
+  
 }
 
-export function useUpdateHp(userId, campaignId, playerId) {
+export function useUpdateHp(userId, campaignId, tokenType, tokenId) {
   return useCallback(
     async (newHp) => {
-      if (!userId || !campaignId || !playerId) return;
+      if (!userId || !campaignId || !tokenId || !tokenType) return;
 
-      const ref = doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
+      const collection = tokenType === "player" ? "Players" : "Entities";
+      const ref = doc(db, "Users", userId, "Campaigns", campaignId, collection, tokenId);
+  
       try {
         await updateDoc(ref, { HpCurrent: newHp });
       } catch (err) {
-        console.error("Error updating player HP:", err);
+        console.error("Error updating HP:", err);
       }
     },
-    [userId, campaignId, playerId]
+    [userId, campaignId, tokenId, tokenType]
   );
 }
 
@@ -73,5 +76,5 @@ export function useEntity(userId, campaignId, entityId) {
     return unsub; // unsubscribe on cleanup
   }, [userId, campaignId, entityId]);
 
-  return entity;
+  return entity? { ...entity, id: entityId, tokenType: "entity" } : null;
 }

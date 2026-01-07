@@ -1,21 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./token.css";
-import { usePlayer,useUpdateHp } from "../../hooks/usePlayerMap";
+import { usePlayer,useUpdateHp, useEntity } from "../../hooks/usePlayerMap";
 import { useInventory } from "../../hooks/useInventory";
 import { useItems } from "../../hooks/useItems";
 import { doc, deleteDoc} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
-export default function TokenMenu({ userId, playerId, campaignId, position,posX, posY , mapId={mapId}, onClose }) {
+export default function TokenMenu({ userId, campaignId, position,posX, posY , mapId={mapId}, tokenId, onClose }) {
   const menuRef = useRef();
   const defaultWidth = 180;
   const expandedWidth = 400; // breder menu voor inventory
   const cellSize = 80;
 
-  const player = usePlayer(userId, campaignId, playerId);
-  const updateHp = useUpdateHp(userId, campaignId, playerId);
-  const inventories = useInventory(playerId, campaignId, userId);
+  const playerData = usePlayer(userId, campaignId, tokenId);
+  const entityData = useEntity(userId, campaignId, tokenId);
+  const data = playerData || entityData || { HpCurrent: 0, HpMax: 0, ac: 0, tokenType: "player", name: "Loading..." };;
+  if (!data) return null;
+
+  const isDataLoaded = !!data;
+  const isPlayer = data?.tokenType === "player";
+  const isEntity = data?.tokenType === "entity";
+
+  const updateHp = useUpdateHp(userId, campaignId, data?.tokenType, data?.id  );
+  
+  const inventories = useInventory(data.id, campaignId, userId, data.tokenType);
+  
+
   const items = useItems(userId, campaignId);
 
   const [expandedItems, setExpandedItems] = useState({});
@@ -26,7 +37,7 @@ export default function TokenMenu({ userId, playerId, campaignId, position,posX,
   const [showHealField, setShowHealField] = useState(false);
   const [healAmount, setHealAmount] = useState("");
   const [activeField, setActiveField] = useState(null); // "damage" | "heal" | null
-
+  
   
   let left = position.x + cellSize + 5;
   const top = position.y;
@@ -42,18 +53,19 @@ export default function TokenMenu({ userId, playerId, campaignId, position,posX,
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
-  if (!player) return null;
+  if (!data) return null;
 
   const toggleItem = (slotKey) => {
     setExpandedItems(prev => ({ ...prev, [slotKey]: !prev[slotKey] }));
   };
+
   //deal damage
   const handleDamage = () => {
     const dmg = parseInt(damageAmount);
     if (isNaN(dmg) || dmg <= 0) return;
 
     // Bereken nieuwe HP
-    const newHp = Math.max(0, player.HpCurrent - dmg);
+    const newHp = Math.max(0, data.HpCurrent - dmg);
     updateHp(newHp)
 
     setDamageAmount("");
@@ -65,7 +77,7 @@ export default function TokenMenu({ userId, playerId, campaignId, position,posX,
     if (isNaN(heal) || heal <= 0) return;
 
     // Bereken nieuwe HP
-    const newHp = Math.min(player.HpMax, player.HpCurrent + heal);
+    const newHp = Math.min(data.HpMax, data.HpCurrent + heal);
     updateHp(newHp)
 
     setHealAmount("");
@@ -89,10 +101,10 @@ export default function TokenMenu({ userId, playerId, campaignId, position,posX,
 
   return createPortal(
     <div ref={menuRef} className="tokenMenu" style={{ left, top, width: menuWidth }}>
-      <h3>{player.name}</h3>
-      <p>HP: {player.HpCurrent} / {player.HpMax}</p>
-      <p>AC: {player.ac}</p>
-      <p>Race: {player.race}</p>
+      <h3>{data.name}</h3>
+      <p>HP: {data.HpCurrent} / {data.HpMax}</p>
+      <p>AC: {data.ac}</p>
+      <p>Race: {data.tokenType}</p>
 
       <div style={{ display: "flex", gap: "10px", margin: "5px 0" }}>
         <button onClick={() => {setShowDamageField(prev => !prev); setShowHealField(false); }}> Damage </button>
