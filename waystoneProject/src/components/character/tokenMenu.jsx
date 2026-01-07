@@ -1,22 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./token.css";
-import { usePlayer } from "../../hooks/usePlayerMap";
+import { usePlayer,useUpdateHp } from "../../hooks/usePlayerMap";
 import { useInventory } from "../../hooks/useInventory";
 import { useItems } from "../../hooks/useItems";
 
 export default function TokenMenu({ userId, playerId, campaignId, position, onClose }) {
   const menuRef = useRef();
-  const defaultWidth = 150;
+  const defaultWidth = 180;
   const expandedWidth = 400; // breder menu voor inventory
   const cellSize = 80;
 
   const player = usePlayer(userId, campaignId, playerId);
+  const updateHp = useUpdateHp(userId, campaignId, playerId);
   const inventories = useInventory(playerId, campaignId, userId);
   const items = useItems(userId, campaignId);
 
   const [expandedItems, setExpandedItems] = useState({});
   const [showInventory, setShowInventory] = useState(false);
+
+  const [showDamageField, setShowDamageField] = useState(false);
+  const [damageAmount, setDamageAmount] = useState("");
+  const [showHealField, setShowHealField] = useState(false);
+  const [healAmount, setHealAmount] = useState("");
+  const [activeField, setActiveField] = useState(null); // "damage" | "heal" | null
+
+
 
   let left = position.x + cellSize + 5;
   const top = position.y;
@@ -38,12 +47,63 @@ export default function TokenMenu({ userId, playerId, campaignId, position, onCl
     setExpandedItems(prev => ({ ...prev, [slotKey]: !prev[slotKey] }));
   };
 
+const handleDamage = () => {
+  const dmg = parseInt(damageAmount);
+  if (isNaN(dmg) || dmg <= 0) return;
+
+  // Bereken nieuwe HP
+  const newHp = Math.max(0, player.HpCurrent - dmg);
+  updateHp(newHp)
+
+  setDamageAmount("");
+  setShowDamageField(false);
+  };
+
+  const handleHeal = () => {
+  const heal = parseInt(healAmount);
+  if (isNaN(heal) || heal <= 0) return;
+
+  // Bereken nieuwe HP
+  const newHp = Math.min(player.HpMax, player.HpCurrent + heal);
+  updateHp(newHp)
+
+  setHealAmount("");
+  setShowHealField(false);
+  };
+
   return createPortal(
     <div ref={menuRef} className="tokenMenu" style={{ left, top, width: menuWidth }}>
       <h3>{player.name}</h3>
       <p>HP: {player.HpCurrent} / {player.HpMax}</p>
       <p>AC: {player.ac}</p>
       <p>Race: {player.race}</p>
+
+      <div style={{ display: "flex", gap: "10px", margin: "5px 0" }}>
+        <button onClick={() => {setShowDamageField(prev => !prev); setShowHealField(false); }}> Damage </button>
+        <button onClick={() => {setShowHealField(prev => !prev); setShowDamageField(false); }}> Heal </button>
+      </div>
+
+      <div style={{ marginTop: "5px", display: "flex", gap: "5px" }}>
+        {showDamageField && (
+          <>
+            <input type="number" placeholder="Amount" value={damageAmount} onChange={e => setDamageAmount(e.target.value)} style={{ width: "60px" }} />
+            <button onClick={handleDamage}>
+              Confirm
+            </button>
+          </>
+        )}
+        {showHealField && (
+          <>
+            <input type="number" placeholder="Amount" value={healAmount} onChange={e => setHealAmount(e.target.value)} style={{ width: "60px" }}/>
+            <button onClick={handleHeal}>
+              Confirm
+            </button>
+          </>
+        )}
+      </div>
+
+  
+
 
       <button onClick={() => setShowInventory(prev => !prev)} style={{ margin: "5px 0", padding: "5px 10px" }}>
         {showInventory ? "Sluit Inventory" : "Open Inventory"}
