@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
 * /* Defined sets of colours, font sizes, etc. to use for the whole website */
 {
     --title-text: 120px;
@@ -10,7 +12,7 @@
     --text-color3: #2c2c5e;
     --text-color4: #1a1a2e;
 
-    --background-gradient: linear-gradient(90deg,rgb(130, 63, 0) 0%, rgb(176, 87, 4) 50%, rgb(130, 63, 0) 100%);
+    --background-gradient: linear-gradient(90deg,linear-gradient(90deg, rgba(106, 90, 205, 0.2) 0%, transparent 100%) 0%, rgb(34, 7, 172) 50%, rgb(13, 0, 130) 100%);
     --background-gradient4: linear-gradient(90deg,rgb(146, 73, 5) 0%, rgb(176, 87, 4) 50%, rgb(146, 73, 5) 100%);
     --background-gradient2: radial-gradient(circle, rgb(176, 87, 4) 50%, rgb(130, 63, 0) 100%);
     --background-gradient3: linear-gradient(90deg,#1e1e1e 0%, #303030 50%, #1e1e1e 100%);
@@ -33,7 +35,7 @@
     --border-radius2: 5px;
     --border-radius3: 50px;
 
-    font-family: Garamond, serif, cursive;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     overflow-x: hidden;
     color: var(--text-color);
     font-size: var(--body-text);
