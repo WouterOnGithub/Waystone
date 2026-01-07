@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
 import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat } from "../api/userCampaigns";
-import { getSharedSessionCode, releaseMapPage, setSessionCleanupCallback, endCurrentSession, isSessionActive } from "../utils/sessionCode";
+import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Location() {
   const { campaignId, locationId } = useParams();
@@ -61,12 +61,13 @@ function Map_Location() {
     });
   }, []);
 
-  // Generate session code when component mounts and user is available
+  // Get existing session code when component mounts (don't auto-generate)
   useEffect(() => {
     if (userId && campaignId) {
-      // Get existing session code for this campaign (if any)
-      const code = getSharedSessionCode(userId, campaignId);
-      setSessionCode(code);
+      // Only get existing session code, don't generate new one
+      // Map_Location should not auto-start session when navigating
+      const code = getExistingSessionCode(userId, campaignId);
+      setSessionCode(code || '');
     }
   }, [userId, campaignId]);
 
@@ -171,6 +172,14 @@ function Map_Location() {
     }
   };
 
+  const handleStartSession = () => {
+    if (userId && campaignId) {
+      const newCode = startNewSession(userId, campaignId);
+      setSessionCode(newCode);
+      console.log("New session started with code:", newCode);
+    }
+  };
+
   return (
     <div className="full-page">
     <div className="campaign-page">
@@ -202,16 +211,17 @@ function Map_Location() {
               </button>
             </div>
 
-            {/* Session Code Display */}
+            {/* Session Code Display and Controls */}
             <div className="session-code-display">
               <span className="code-label">Session Code:</span>
               <span className={`code-value ${!isCodeVisible ? 'hidden' : ''}`}>
-                {isCodeVisible ? sessionCode : '••••••••••••'}
+                {isCodeVisible && sessionCode ? sessionCode : '•••••••••••••'}
               </span>
               <button 
                 className="code-visibility-toggle"
                 onClick={() => setIsCodeVisible(!isCodeVisible)}
                 title={isCodeVisible ? 'Hide code' : 'Show code'}
+                disabled={!sessionCode}
               >
                 {isCodeVisible ? (
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -225,6 +235,27 @@ function Map_Location() {
                   </svg>
                 )}
               </button>
+              
+              {/* Session Control Buttons */}
+              <div className="session-control-buttons">
+                {!sessionCode ? (
+                  <button 
+                    className="start-session-btn"
+                    onClick={handleStartSession}
+                    title="Start new session"
+                  >
+                    Start Session
+                  </button>
+                ) : (
+                  <button 
+                    className="end-session-btn"
+                    onClick={handleEndSession}
+                    title="End current session"
+                  >
+                    End Session
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Settings Menu */}
