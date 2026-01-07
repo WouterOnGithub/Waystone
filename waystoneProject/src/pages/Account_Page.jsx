@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { getUser, setUser } from "../api/firestore";
+import { getAllCampaigns } from "../api/userCampaigns";
 import "./pages-css/CSS.css";
 import "./pages-css/Account_Page.css";
 import Header from "../components/UI/Header";
@@ -14,31 +15,51 @@ function Account_Page()
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
   const [notes, setNotes] = useState("");
+  const [campaigns, setCampaigns] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
+      if (!user?.uid) return;
+      setLoading(true);
+      
       try {
-        if (user?.uid) {
-          const data = await getUser(user.uid);
-          console.debug("Loaded account user data:", data);
-          setUserData(data);
-          setNotes(data?.notes || "");
-        } else {
-          console.debug("No authenticated user in Account_Page");
-          setUserData(null);
-          setNotes("");
-        }
+        // Fetch user data
+        const data = await getUser(user.uid);
+        console.debug("Loaded account user data:", data);
+        setUserData(data);
+        setNotes(data?.notes || "");
+        
+        // Fetch campaigns
+        const userCampaigns = await getAllCampaigns(user.uid);
+        setCampaigns(userCampaigns);
       } catch (err) {
-        console.error("Failed to load account user data:", err);
+        console.error("Failed to load data:", err);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchUserData();
+
+    fetchData();
   }, [user]);
 
   const handleSaveNotes = async () => {
     if (user?.uid) {
       await setUser(user.uid, { notes });
     }
+  };
+
+  const getLastPlayedCampaign = () => {
+    if (campaigns.length === 0) return null;
+    
+    // Sort by lastUpdatedAt, fallback to createdAt
+    const sorted = [...campaigns].sort((a, b) => {
+      const aTime = new Date(a.lastUpdatedAt || a.createdAt || 0).getTime();
+      const bTime = new Date(b.lastUpdatedAt || b.createdAt || 0).getTime();
+      return bTime - aTime;
+    });
+    
+    return sorted[0];
   };
 
   const getAvatarUrl = () => {
@@ -65,7 +86,7 @@ function Account_Page()
 
 
   return (
-    <div>
+    <div className="full-page">
       
       <Sidebar />
       
@@ -91,14 +112,14 @@ function Account_Page()
 
           {/* The campaigns section (total created, last played) */}
           <section id="account-box" className="account-campaigns">
-            <p> <b>Total campaigns:</b> <i>0</i> </p>
+            <p> <b>Total campaigns:</b> <i>{campaigns.length}</i> </p>
             
-            <p> <b>Last played:</b> <i>Project__name</i> </p>
+            <p> <b>Last played:</b> <i>{getLastPlayedCampaign()?.name || "No campaigns yet"}</i> </p>
           </section>
 
           <section id="account-archived">
             {/* The archive button to see archived campaigns */}
-            <button id="button-green">Archived Campaigns</button>
+            <Link to="/user/Archived_Campaigns" id="button-green">Archived Campaigns</Link>
           </section>
 
           {/* The notes section */}

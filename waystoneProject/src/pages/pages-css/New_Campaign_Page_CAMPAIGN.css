@@ -43,11 +43,6 @@
 
 
 /* New_Campaign_Page_CAMPAIGN */
-#content {
-  max-width: 90%;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
 
 .campaign-actions /* The save and continue, and enter button */
 {
@@ -56,7 +51,7 @@
   gap: 10px;
   margin-top: 20px;
   padding-top: 20px;
-  width: 72%;
+  width: 95%;
   border-top: 2px solid var(--background-colour3);
 }
 
@@ -65,6 +60,7 @@
 /* New_Campaign_Page_MAPBUILDER */
 #campaign-select select
 {
+  background-color: white;
   border-radius: var(--border-radius);
   border: none;
   width: 250px;
@@ -121,6 +117,7 @@
 }
 .ability-score /* The ability input field */
 {
+  background-color: white;
   border-radius: var(--border-radius);
   text-align: center;
   border: none;
@@ -169,6 +166,7 @@
 }
 .skill-select /* The proficiency modifier */
 { 
+  background-color: white;
   border-radius: var(--border-radius);
   border: none;
   padding: 15px;

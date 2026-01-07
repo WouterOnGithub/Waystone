@@ -65,29 +65,17 @@ function My_Campaigns_Page()
     loadCampaigns();
   }, [user]);
 
-  const recentCampaigns = allCampaigns.slice(0, 5);
-  const activeCampaigns = allCampaigns.filter(campaign => !campaign.isArchived);
+  const archivedCampaigns = allCampaigns.filter(campaign => campaign.isArchived);
 
   const dynamicSections = [
     {
-      title: "Recent Campaigns",
-      items: recentCampaigns.filter(c => !c.isArchived).map((c, idx) => ({
-        id: c.id,
-        name: c.name || "Unnamed campaign",
-        color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
-        isPublished: c.isPublished || false,
-      })),
-    },
-    {
-      title: "All Campaigns",
-      items: activeCampaigns.map((c, idx) => ({
+      title: "Archived Campaigns",
+      items: archivedCampaigns.map((c, idx) => ({
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030"][idx % 3],
-        isPublished: c.isPublished || false,
       })),
     },
-    freeCampaignSection,
   ];
 
   const handleOpenCampaign = (campaignId) => {
@@ -95,14 +83,11 @@ function My_Campaigns_Page()
     navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`);
   };
 
-  const handleArchiveCampaign = async (campaignId, campaignName) => {
+  const handleUnarchiveCampaign = async (campaignId) => {
     if (!campaignId || !user?.uid) return;
     
-    const confirmed = window.confirm(`Are you sure you want to archive "${campaignName}"?`);
-    if (!confirmed) return;
-    
     try {
-      await updateCampaignInfo(user.uid, campaignId, { isArchived: true });
+      await updateCampaignInfo(user.uid, campaignId, { isArchived: false });
       // Refresh campaigns list
       const campaigns = await getAllCampaigns(user.uid);
       const sorted = [...campaigns].sort(
@@ -110,36 +95,8 @@ function My_Campaigns_Page()
       );
       setAllCampaigns(sorted);
     } catch (err) {
-      console.error("Failed to archive campaign:", err);
-      setError("Failed to archive campaign");
-    }
-  };
-
-  const handlePublishCampaign = async (campaignId, campaignName, isCurrentlyPublished) => {
-    if (!campaignId || !user?.uid) return;
-    
-    const action = isCurrentlyPublished ? "unpublish" : "publish";
-    const confirmed = window.confirm(
-      `Are you sure you want to ${action} "${campaignName}"?\n\nClick OK to ${action.charAt(0).toUpperCase() + action.slice(1)} or Cancel to abort.`
-    );
-    if (!confirmed) return;
-    
-    try {
-      // Toggle the published status
-      await updateCampaignInfo(user.uid, campaignId, { isPublished: !isCurrentlyPublished });
-      
-      // Success message
-      alert(`"${campaignName}" has been successfully ${action}ed!`);
-      
-      // Refresh campaigns list
-      const campaigns = await getAllCampaigns(user.uid);
-      const sorted = [...campaigns].sort(
-        (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
-      );
-      setAllCampaigns(sorted);
-    } catch (err) {
-      console.error(`Failed to ${action} campaign:`, err);
-      setError(`Failed to ${action} campaign`);
+      console.error("Failed to unarchive campaign:", err);
+      setError("Failed to unarchive campaign");
     }
   };
 
@@ -150,7 +107,7 @@ function My_Campaigns_Page()
 
       <div id="main">
       
-      <Header title="My Campaigns" />
+      <Header title="Archived Campaigns" />
 
         <div id="content">
           {loading && <p>Loading campaigns...</p>}
@@ -169,44 +126,21 @@ function My_Campaigns_Page()
                   /* A campaigns box */
                   <div id="box-text" 
                        key={item.id ? item.id : `${section.title}-${idx}`}
-                       onClick={() => handleOpenCampaign(item.id)}
-                       style={item.id ? { cursor: "pointer" } : undefined}
                   >
                     
                     {/* The campaigns project name */}
                     <p>{item.name}&#10240;</p>
                     
-                    {/* The bottom part of the box (the white) which contains the buttons */}
+                    {/* The bottom part of the box (the white) which contains the archive button */}
                     <div id="box">
-                      {section.title === "All Campaigns" ? (
-                        <>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handlePublishCampaign(item.id, item.name, item.isPublished);
-                            }}
-                          >
-                            {item.isPublished ? "Unpublish" : "Publish"}
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleArchiveCampaign(item.id, item.name);
-                            }}
-                          >
-                            Archive
-                          </button>
-                        </>
-                      ) : (
-                        <button
+                      <button
                           onClick={(e) => {
-                            e.stopPropagation();
-                            handleArchiveCampaign(item.id, item.name);
+                          e.stopPropagation();
+                          handleUnarchiveCampaign(item.id);
                           }}
-                        >
-                          Archive
-                        </button>
-                      )}
+                      >
+                        Unarchive
+                      </button>
                     </div>
 
                   </div>

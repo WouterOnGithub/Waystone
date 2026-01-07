@@ -31,7 +31,6 @@
 .account-profile {
   align-items: flex-start;
   gap: 40px;
-  justify-content: flex-end;
 }
 
 .account-avatar-wrap img {

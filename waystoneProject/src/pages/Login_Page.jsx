@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
 import Waystone_Logo from "../assets/Waystone_Logo.png";
-import Waystone_Background from "../assets/background_1.png";
+import Waystone_Background from "../assets/background.jpg";
 
 function Login_Page() 
 {
@@ -26,6 +26,14 @@ const handleLogin = async () =>
     setError(err.message); // Display error if NOT successful login
   }
 };
+
+const handleSession= [
+    { to: "./user/Join_Session", label: "Join_Session" },
+  ];
+
+   const goToSession = () => {
+    navigate(handleSession[0].to); // dit voert de navigatie uit
+  };
 
   return (
     <div id="login-register-page"> {/* The whole page */}
@@ -61,11 +69,13 @@ const handleLogin = async () =>
 
         <br /><br />
         <div id="login-register-button"><button id="button-green" type="button" onClick={handleLogin}>Enter</button></div>
-
-        {/* An error message in case an error occures */}
-        {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
         
       </form>
+      
+      <div style={{ marginLeft: '20%' }}><button id="button-green" onClick={goToSession}>Join Session</button></div>
+      
+      {/* An error message in case an error occures */}
+      {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
       </div>
 
       {/* Background and Waystone_Logo */}

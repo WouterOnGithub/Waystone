@@ -26,6 +26,7 @@
 {
     border-radius: var(--border-radius);
     background-color: var(--background-colour);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(227, 227, 227) 100%);
     width: 90%;
     max-width: 600px;
     max-height: 90vh;

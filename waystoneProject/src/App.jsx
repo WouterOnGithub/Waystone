@@ -4,12 +4,14 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 /* IMPORTS OF ALL THE PAGES OF THE WEBSITE */
 import Settings_Page from "./pages/Settings_Page"
 import Login_Page from "./pages/Login_Page"; 
+import Join_Session from "./pages/Join_Session"; 
 import Register_Page from "./pages/Register_Page"; 
 
 import Main_Page from "./pages/Main_Page";
 import Account_Page from "./pages/Account_Page"
 import Account_Page_EDIT from "./pages/Account_Page_EDIT"
 import My_Campaigns_Page from "./pages/My_Campaigns_Page"
+import Archived_Campaigns from "./pages/Archived_Campaigns"
 import HelpPage from "./pages/HelpPage"
 
 import New_Campaign_Page_CAMPAIGN from "./pages/New_Campaign_Page_CAMPAIGN"
@@ -34,6 +36,7 @@ import Game_Settings_SAVEGAME from "./components/popups/Game_Settings_SAVEGAME"
 import Map_Main from "./pages/Map_Main"
 import Map_Location from "./pages/Map_Location"
 import Map_Building_Region from "./pages/Map_Building_Region"
+import Active_Session from "./pages/Active_Session"
 // import Map_Battle_View from "./pages/Map_Battle_View"
 
 import BattleMapTest from './pages/battleMapTest';
@@ -52,6 +55,8 @@ function App()
                 {/* Login and Register */}
                 <Route path="/user/Login_Page" element={<Login_Page />} />
                 <Route path="/user/Register_Page" element={<Register_Page />} />
+                 <Route path="/user/Join_Session" element={<Join_Session />} />
+                 <Route path="/user/Active_Session/:sessionCode" element={<Active_Session />} />
 
                 {/* Main page or Home page */}
                 <Route path="/user/Main_Page" element={<Main_Page />} />
@@ -65,6 +70,7 @@ function App()
 
                 {/* All the campaigns */}
                 <Route path="/user/My_Campaigns_Page" element={<My_Campaigns_Page />} />
+                <Route path="/user/Archived_Campaigns" element={<Archived_Campaigns />} />
                 <Route path ="/user/HelpPage" element={<HelpPage/>}/>
                 
                 {/* CAMPAIGNS */}
