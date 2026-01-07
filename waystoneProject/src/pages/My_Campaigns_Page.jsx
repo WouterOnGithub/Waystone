@@ -75,6 +75,7 @@ function My_Campaigns_Page()
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
+        isPublished: c.isPublished || false,
       })),
     },
     {
@@ -83,6 +84,7 @@ function My_Campaigns_Page()
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030"][idx % 3],
+        isPublished: c.isPublished || false,
       })),
     },
     freeCampaignSection,
@@ -113,10 +115,32 @@ function My_Campaigns_Page()
     }
   };
 
-  const handlePublishCampaign = (campaignName) => {
-    // TODO: Implement publish functionality
-    alert(`Are you sure you want to publish "${campaignName}" to the community...`);
-    console.log("Publishing campaign:", campaignName);
+  const handlePublishCampaign = async (campaignId, campaignName, isCurrentlyPublished) => {
+    if (!campaignId || !user?.uid) return;
+    
+    const action = isCurrentlyPublished ? "unpublish" : "publish";
+    const confirmed = window.confirm(
+      `Are you sure you want to ${action} "${campaignName}"?\n\nClick OK to ${action.charAt(0).toUpperCase() + action.slice(1)} or Cancel to abort.`
+    );
+    if (!confirmed) return;
+    
+    try {
+      // Toggle the published status
+      await updateCampaignInfo(user.uid, campaignId, { isPublished: !isCurrentlyPublished });
+      
+      // Success message
+      alert(`"${campaignName}" has been successfully ${action}ed!`);
+      
+      // Refresh campaigns list
+      const campaigns = await getAllCampaigns(user.uid);
+      const sorted = [...campaigns].sort(
+        (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
+      );
+      setAllCampaigns(sorted);
+    } catch (err) {
+      console.error(`Failed to ${action} campaign:`, err);
+      setError(`Failed to ${action} campaign`);
+    }
   };
 
   return (
@@ -154,15 +178,15 @@ function My_Campaigns_Page()
                     
                     {/* The bottom part of the box (the white) which contains the buttons */}
                     <div id="box">
-                      {section.title === "Free Campaigns" ? (
+                      {section.title === "All Campaigns" ? (
                         <>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              handlePublishCampaign(item.name);
+                              handlePublishCampaign(item.id, item.name, item.isPublished);
                             }}
                           >
-                            Publish
+                            {item.isPublished ? "Unpublish" : "Publish"}
                           </button>
                           <button
                             onClick={(e) => {
