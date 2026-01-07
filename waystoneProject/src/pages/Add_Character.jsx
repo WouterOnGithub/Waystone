@@ -1,19 +1,18 @@
   import React, { useState, useEffect } from "react";
   import { useParams, useNavigate } from "react-router-dom";
   import { useAuth } from "../context/AuthContext.jsx";
+  import {usePlayer} from "../hooks/usePlayer.js";
+  import {deletePlayerAndSubCollections} from "../api/players.js";
+  import { db } from "../firebase/firebase";
+  import { doc } from "firebase/firestore";
   import "./pages-css/CSS.css";
   import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
   import Footer from "../components/UI/Footer";
   import Header from "../components/UI/Header";
   import Sidebar from "../components/UI/Sidebar";
 
-  import {usePlayer} from "../hooks/usePlayer.js";
-  import {deletePlayerAndSubCollections} from "../api/players.js";
-  import { db } from "../firebase/firebase";
-  import { doc } from "firebase/firestore";
-
-
-  function Add_Character() {
+  function Add_Character() 
+  {
     const { campaignId, CharacterId } = useParams();
     const playerId = CharacterId;
     const { user } = useAuth();
@@ -250,7 +249,7 @@
 
           {/* The character sheet */}
           <div id="content">
-
+          <div className="add-fullwidth">
             
             <h1>Character Sheet</h1>
 
@@ -425,8 +424,7 @@
                 </div>
               </div>
 
-              {/* NEEDS TO STILL BE FIXED, I'LL DO IT SOON ! -H */}
-              <div id="input-box-white">
+              <div id="combat-statistics-checkboxes">
                 <b>Saving Throw Proficiencies</b><br />
                 {['strength','dexterity','constitution','intelligence','wisdom','charisma'].map((ability) => (
                       <label key={ability}>
@@ -435,7 +433,7 @@
                           checked={characterData.savingThrows[ability]}
                           onChange={() => handleSavingThrowChange(ability)}
                         />
-                        {ability.charAt(0).toUpperCase() + ability.slice(1)}
+                        &#10240;{ability.charAt(0).toUpperCase() + ability.slice(1)}
                       </label>
                     ))}
               </div>
@@ -556,7 +554,8 @@
             <div className="character-section">
 
               <div id="input-box-white">
-                <b>Ideals</b><br />
+                <b>Ideals</b>
+                <br />
                 <input type="text" 
                        value={characterData.ideals}
                        onChange={(e) => handleInputChange('ideals', e.target.value)}
@@ -621,6 +620,7 @@
         <Footer />
 
       </div>
+    </div>
     </div>
     );
   }

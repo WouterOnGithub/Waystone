@@ -206,7 +206,7 @@
 }
 #input-box-white input
 {
-    height: 20px; 
+    height: 20px;
 }
 #input-box-white input, #input-box-white textarea
 {
@@ -219,7 +219,7 @@
   padding-top: 40px;
   padding-bottom: 20px;
   padding-right: 40px;
-  width: 72%;
+  width: 90%;
   border-top: 2px solid var(--background-colour3);
 }
 .character-section.addview
