@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
 import Waystone_Logo from "../assets/Waystone_Logo.png";
-import Waystone_Background from "../assets/background_1.png";
+import Waystone_Background from "../assets/background.jpg";
 
 function Login_Page() 
 {

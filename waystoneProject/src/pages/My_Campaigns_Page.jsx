@@ -113,6 +113,12 @@ function My_Campaigns_Page()
     }
   };
 
+  const handlePublishCampaign = (campaignName) => {
+    // TODO: Implement publish functionality
+    alert(`Are you sure you want to publish "${campaignName}" to the community...`);
+    console.log("Publishing campaign:", campaignName);
+  };
+
   return (
     <div className="full-page">
       
@@ -146,16 +152,37 @@ function My_Campaigns_Page()
                     {/* The campaigns project name */}
                     <p>{item.name}&#10240;</p>
                     
-                    {/* The bottom part of the box (the white) which contains the archive button */}
+                    {/* The bottom part of the box (the white) which contains the buttons */}
                     <div id="box">
-                      <button
+                      {section.title === "Free Campaigns" ? (
+                        <>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handlePublishCampaign(item.name);
+                            }}
+                          >
+                            Publish
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleArchiveCampaign(item.id, item.name);
+                            }}
+                          >
+                            Archive
+                          </button>
+                        </>
+                      ) : (
+                        <button
                           onClick={(e) => {
-                          e.stopPropagation();
-                          handleArchiveCampaign(item.id, item.name);
+                            e.stopPropagation();
+                            handleArchiveCampaign(item.id, item.name);
                           }}
-                      >
-                        Archive
-                      </button>
+                        >
+                          Archive
+                        </button>
+                      )}
                     </div>
 
                   </div>
