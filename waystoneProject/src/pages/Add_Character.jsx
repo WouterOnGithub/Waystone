@@ -228,9 +228,6 @@ function Add_Character()
       await savePlayer(payload);
       
       setMessage("Character saved successfully.");
-      setTimeout(() => {
-        navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
-      }, 1000);
     } catch (err) {
       setMessage(err?.message || "An error occurred while saving.");
     } finally {

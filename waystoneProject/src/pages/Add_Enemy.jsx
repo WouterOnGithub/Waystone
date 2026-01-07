@@ -222,9 +222,6 @@ function Add_Enemy()
       }
 
       setMessage("Enemy saved successfully.");
-      setTimeout(() => {
-        navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
-      }, 1000);
     } catch (error) {
       setMessage(error?.message || "An error occurred while saving.");
     } finally {
