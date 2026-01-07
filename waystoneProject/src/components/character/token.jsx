@@ -7,10 +7,10 @@ export default function Token({ userId,tokenId, x, y, onDragStart, onClick, camp
   const player = usePlayer(userId, campaignId, tokenId);
   const entity = useEntity(userId,campaignId,tokenId)
   
-  const data = player || entity;
+  const data = player || entity;  
 
   if (!data) return null;
-  
+
   return (
     
     <div

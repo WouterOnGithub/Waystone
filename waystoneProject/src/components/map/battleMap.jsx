@@ -54,7 +54,7 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
     } else {
       setSelectedToken({
         tokenId,
-        data: { ...data, id: tokenId },
+        data,
         position: { x: x * cellSize, y: y * cellSize },
         gridPosition: { x , y  }
       });
@@ -96,8 +96,8 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
                   x={x}
                   y={y}
                   onDragStart={handleDragStart}
-                  onClick={(tokenId, player) =>
-                    handleTokenClick(tokenId, player, x, y)
+                  onClick={(tokenId, data) =>
+                    handleTokenClick(tokenId, data, x, y)
                   }
                 />
               )}
@@ -114,6 +114,7 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
         campaignId={campaignId}
         mapId={mapId}
         data={selectedToken.data} 
+        tokenId={selectedToken.tokenId}
         position={selectedToken.position}
         posX={selectedToken.gridPosition.x}
         posY={selectedToken.gridPosition.y}

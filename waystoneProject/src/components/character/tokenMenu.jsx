@@ -7,17 +7,22 @@ import { useItems } from "../../hooks/useItems";
 import { doc, deleteDoc} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
-export default function TokenMenu({ userId, campaignId, data, position,posX, posY , mapId={mapId}, onClose }) {
+export default function TokenMenu({ userId, campaignId, position,posX, posY , mapId={mapId}, tokenId, onClose }) {
   const menuRef = useRef();
   const defaultWidth = 180;
   const expandedWidth = 400; // breder menu voor inventory
   const cellSize = 80;
 
+  const playerData = usePlayer(userId, campaignId, tokenId);
+  const entityData = useEntity(userId, campaignId, tokenId);
+  const data = playerData || entityData || { HpCurrent: 0, HpMax: 0, ac: 0, tokenType: "player", name: "Loading..." };;
+  if (!data) return null;
+
   const isDataLoaded = !!data;
   const isPlayer = data?.tokenType === "player";
   const isEntity = data?.tokenType === "entity";
 
-  const updateHp = useUpdateHp(userId, campaignId, data.id, data.tokenType);
+  const updateHp = useUpdateHp(userId, campaignId, data?.tokenType, data?.id  );
   
   const inventories = useInventory(data.id, campaignId, userId, data.tokenType);
   
