@@ -1,26 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./pages-css/Join_Session.css";
+import { getSession, cleanupInactiveSessions } from "../api/userCampaigns";
+import { useAuth } from "../context/AuthContext";
 
 const Join_Session = () => {
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const userId = user?.uid || null;
 
   useEffect(() => {
     // Clear error when code changes
     if (error) setError("");
-  }, [code, error]);
+  }, [code]);
 
   const handleEnter = async () => {
     if (code.trim() === "") {
-      setError("Voer een geldige code in!");
+      setError("Please enter a valid code!");
       return;
     }
 
     if (code.length < 4) {
-      setError("De code moet minimaal 4 karakters lang zijn!");
+      setError("The code must be at least 4 characters long!");
+      return;
+    }
+
+    // Check if user is authenticated
+    if (!userId) {
+      setError("You must be logged in to join a session.");
       return;
     }
 
@@ -28,17 +38,49 @@ const Join_Session = () => {
     setError("");
 
     try {
-      // Simulate API call - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Clean up inactive sessions before validating
+      await cleanupInactiveSessions();
       
-      console.log("Joining session with code:", code);
+      // Validate session code in Firestore
+      const sessionCodeUpper = code.trim().toUpperCase();
+      console.log("Looking for session code:", sessionCodeUpper);
       
-      // TODO: Replace with actual navigation logic
-      // For now, navigate to main page
-      navigate("/user/Main_Page");
+      const sessionData = await getSession(sessionCodeUpper);
+      console.log("Session data found:", sessionData);
+      
+      if (!sessionData) {
+        console.log("Session not found - showing invalid code error");
+        setError("Please enter a valid session code.");
+        return;
+      }
+
+      console.log("Session found, checking conditions...");
+      console.log("Session isActive:", sessionData.isActive);
+      console.log("Session userId:", sessionData.userId);
+      console.log("Current userId:", userId);
+
+      // Check if session is active
+      if (sessionData.isActive === false) {
+        console.log("Session is inactive - showing inactive error");
+        setError("This session is no longer active. Ask the dungeon master to start a new session.");
+        return;
+      }
+
+      // Check if current user is the session creator
+      if (sessionData.userId !== userId) {
+        console.log("User ID mismatch - showing ownership error");
+        setError("You can only join your own sessions. This session belongs to another user.");
+        return;
+      }
+
+      console.log("All checks passed - navigating to session");
+      console.log("Joining session with code:", code, "Session data:", sessionData);
+      
+      // Navigate to Active_Session with the session code
+      navigate(`/user/Active_Session/${sessionCodeUpper}`);
       
     } catch (err) {
-      setError("Er is een fout opgetreden. Probeer het opnieuw.");
+      setError("An error occurred. Please try again.");
       console.error("Error joining session:", err);
     } finally {
       setIsLoading(false);
@@ -58,7 +100,7 @@ const Join_Session = () => {
   return (
     <div className="join-session-container">
       <div className="join-session-box">
-        <h2 className="join-session-question">Voer de sessiecode in:</h2>
+        <h2 className="join-session-question">Enter your session code:</h2>
         
         {error && (
           <div className="join-session-error">
@@ -71,7 +113,7 @@ const Join_Session = () => {
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase())}
           onKeyPress={handleKeyPress}
-          placeholder="Sessiecode"
+          placeholder="Session Code"
           className="join-session-input"
           disabled={isLoading}
           maxLength={20}

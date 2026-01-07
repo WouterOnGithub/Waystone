@@ -36,6 +36,7 @@ import Game_Settings_SAVEGAME from "./components/popups/Game_Settings_SAVEGAME"
 import Map_Main from "./pages/Map_Main"
 import Map_Location from "./pages/Map_Location"
 import Map_Building_Region from "./pages/Map_Building_Region"
+import Active_Session from "./pages/Active_Session"
 // import Map_Battle_View from "./pages/Map_Battle_View"
 
 import BattleMapTest from './pages/battleMapTest';
@@ -55,6 +56,7 @@ function App()
                 <Route path="/user/Login_Page" element={<Login_Page />} />
                 <Route path="/user/Register_Page" element={<Register_Page />} />
                  <Route path="/user/Join_Session" element={<Join_Session />} />
+                 <Route path="/user/Active_Session/:sessionCode" element={<Active_Session />} />
 
                 {/* Main page or Home page */}
                 <Route path="/user/Main_Page" element={<Main_Page />} />

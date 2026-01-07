@@ -255,8 +255,8 @@
 
 /* Error message styling met project kleuren */
 .join-session-error {
-  background: var(--projectbox-colour2);
-  color: var(--text-color2);
+  background: linear-gradient(90deg, rgba(176, 49, 49, 1) 0%, rgba(211, 72, 72, 1) 50%, rgba(176, 49, 49, 1) 100%);
+  color: #ffffff;
   padding: 14px 20px;
   border-radius: 8px;
   margin-bottom: 25px;
@@ -264,6 +264,9 @@
   font-weight: 500;
   animation: shake 0.5s ease-in-out;
   box-shadow: 0 4px 12px rgba(176, 49, 49, 0.3);
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 @keyframes shake {
