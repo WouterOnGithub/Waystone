@@ -37,7 +37,7 @@ import Map_Main from "./pages/Map_Main"
 import Map_Location from "./pages/Map_Location"
 import Map_Building_Region from "./pages/Map_Building_Region"
 import Active_Session from "./pages/Active_Session"
-// import Map_Battle_View from "./pages/Map_Battle_View"
+import Map_Battle_View_DM from "./pages/Map_Battle_View_DM"
 
 import BattleMapTest from './pages/battleMapTest';
 
@@ -131,7 +131,7 @@ function App()
                 <Route path="/user/Map_Building_Region" element={<Map_Building_Region />} />
                 <Route path="/user/Map_Building_Region/:campaignId" element={<Map_Building_Region />} />
                 <Route path="/user/Map_Building_Region/:campaignId/:buildingId" element={<Map_Building_Region />} /> 
-                {/* <Route path="/user/Map_Battle_View" element={<Map_Battle_View />} /> */}
+                <Route path="/user/Map_Battle_View_DM" element={<Map_Battle_View_DM />} />
 
                 {/* TEST - To be removed later */}
                 <Route path="/battleMapTest" element={<BattleMapTest/>} />

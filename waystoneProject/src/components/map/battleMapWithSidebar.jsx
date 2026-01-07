@@ -5,6 +5,7 @@ import TokenSidebar from "./tokenSidebar";
 import  useMapCells  from "../../hooks/subcribeToCell";
 import { useAvailablePlayers } from "../../hooks/useAvailablePlayers";
 import {useEntitiesByType } from "../../hooks/useEntitiesByType";
+import Game_Settings from "../popups/Game_Settings";
 
 export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
   const cellsData = useMapCells(userId, campaignId, mapId);
@@ -20,8 +21,9 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
 };
 
   return (
+    
     <div className="battlemap-page" style={{ display: "flex", gap: "10px" }}>
-      
+        
       <BattleMap
         userId={userId}
         campaignId={campaignId}
