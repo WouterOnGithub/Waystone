@@ -12,7 +12,6 @@ import { collection, doc, getDocs } from "firebase/firestore";
 export function useInventory(playerId, campaignId, userId) {
   const [inventories, setInventories] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log("Fetching inventory for:", campaignId, playerId, userId);
 
   useEffect(() => {
     if (!playerId || !campaignId || !userId) return;
@@ -23,16 +22,14 @@ export function useInventory(playerId, campaignId, userId) {
         
         const invColRef = collection(db,"Users",userId, "Campaigns", campaignId, "Players", playerId, "Inventory");
         const snapshot = await getDocs(invColRef);
-        console.log("Inventory snapshot size:", snapshot.size);
 
         const invData = snapshot.docs.map((docSnap) => {
           const data = docSnap.data();
-          console.log("Document data:", docSnap.id, data);
 
           // Converteer de slots map naar een array
           const slotsArray = data.Slots
             ? Object.keys(data.Slots).map((key) => {
-                return { ...data.Slots[key], id: key }; // voeg de slot key toe als id
+                return { ...data.Slots[key], id: key };
               })
             : [];
 
@@ -54,5 +51,5 @@ export function useInventory(playerId, campaignId, userId) {
     fetchInventories();
   }, [playerId, campaignId, userId]);
 
-  return inventories; // je kan ook {inventories, loading} teruggeven als je loader wilt
+  return inventories;   
 }
