@@ -112,13 +112,18 @@ function Account_Page_EDIT() {
   };
 
   return (
+
     <div className="full-page">
+
       <Sidebar />
+
       <div id="main">
+
         <Header title="Account" />
 
         <div id="content">
           <section id="account-box" className="account-profile">
+            
             <div className="account-avatar-wrap">
               <img
                 src={getAvatarUrl()}
@@ -135,12 +140,16 @@ function Account_Page_EDIT() {
                 onChange={handleImageChange}
               />
             </div>
-            <div className="account-details">
+
+            <div id="input-box-gray">
               <form onSubmit={handleSave}>
-                <label htmlFor="nickname">
-                  <b>Username</b>
-                </label>
+
                 <br />
+
+                <label htmlFor="nickname"><b>Username</b></label>
+
+                <br />
+
                 <input 
                   type="text" 
                   id="nickname" 
@@ -149,12 +158,14 @@ function Account_Page_EDIT() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
+
                 <br />
                 <br />
-                <label htmlFor="introduction">
-                  <b>Introduction</b> (max. 150 characters)
-                </label>
+
+                <label htmlFor="introduction"><b>Introduction</b> (max. 150 characters)</label>
+
                 <br />
+
                 <textarea
                   name="introduction"
                   id="introduction"
@@ -163,17 +174,22 @@ function Account_Page_EDIT() {
                   value={introduction}
                   onChange={(e) => setIntroduction(e.target.value)}
                 />
+
                 <br />
+
                 <div className="account-actions">
                   <button id="button-green" type="submit">Save</button>
                   <button id="button-gray" type="submit">Cancel</button>
                 </div>
+
               </form>
             </div>
+
           </section>
         </div>
 
         <Footer />
+
       </div>
     </div>
   );
