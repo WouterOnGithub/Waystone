@@ -70,7 +70,7 @@ const handleSession= [
         <br /><br />
         <div id="login-register-button">
           <button id="button-green" type="button" onClick={handleLogin}>Enter</button>
-          <button id="button-gray" type="button" onClick={handleSession}>Join Session</button>
+          <button id="button-gray" type="button" onClick={goToSession}>Join Session</button>
         </div>
         {/* An error message in case an error occures */}
         {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
