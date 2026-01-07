@@ -77,8 +77,6 @@ const handleSession= [
         
       </form>
       
-      <div style={{ marginLeft: '20%' }}><button id="button-green" onClick={goToSession}>Join Session</button></div>
-      
       {/* An error message in case an error occures */}
       {/*{error && <p style={{ color: "#D34848" }}>{error}</p>}*/}
       </div>
