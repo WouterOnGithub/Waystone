@@ -23,12 +23,13 @@ function Active_Session() {
         return;
       }
 
+      // Remove authentication check - non-logged-in users can view sessions
       // Check if user is authenticated
-      if (!userId) {
-        setError("You must be logged in to view a session.");
-        setLoading(false);
-        return;
-      }
+      // if (!userId) {
+      //   setError("You must be logged in to view a session.");
+      //   setLoading(false);
+      //   return;
+      // }
 
       try {
         const data = await getSession(sessionCode);
@@ -37,9 +38,8 @@ function Active_Session() {
           setError("Invalid session code or session has expired");
         } else if (data.isActive === false) {
           setError("This session is no longer active");
-        } else if (data.userId !== userId) {
-          setError("You don't have access to this session. This is not your session.");
         } else {
+          // Remove ownership check - any user can view any active session
           setSessionData(data);
         }
       } catch (error) {
