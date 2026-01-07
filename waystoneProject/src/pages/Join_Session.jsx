@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./pages-css/Join_Session.css";
+import { getSession } from "../api/userCampaigns";
 
 const Join_Session = () => {
   const [code, setCode] = useState("");
@@ -28,14 +29,18 @@ const Join_Session = () => {
     setError("");
 
     try {
-      // Simulate API call - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Validate session code in Firestore
+      const sessionData = await getSession(code.trim().toUpperCase());
       
-      console.log("Joining session with code:", code);
+      if (!sessionData) {
+        setError("Ongeldige sessiecode. Controleer de code en probeer het opnieuw.");
+        return;
+      }
+
+      console.log("Joining session with code:", code, "Session data:", sessionData);
       
-      // TODO: Replace with actual navigation logic
-      // For now, navigate to main page
-      navigate("/user/Main_Page");
+      // Navigate to Active_Session with the session code
+      navigate(`/user/Active_Session/${code.trim().toUpperCase()}`);
       
     } catch (err) {
       setError("Er is een fout opgetreden. Probeer het opnieuw.");

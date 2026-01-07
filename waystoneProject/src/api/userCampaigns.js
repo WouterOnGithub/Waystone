@@ -488,3 +488,38 @@ export const deleteContainer = async (userId, campaignId, containerId) => {
     return false;
   }
 };
+
+// SESSION HELPERS
+
+export const createSession = async (sessionCode, sessionData) => {
+  try {
+    const docRef = doc(db, "Sessions", sessionCode);
+    await setDoc(docRef, sessionData);
+    return true;
+  } catch (error) {
+    console.error("Error creating session:", error);
+    return false;
+  }
+};
+
+export const getSession = async (sessionCode) => {
+  try {
+    const docRef = doc(db, "Sessions", sessionCode);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
+  } catch (error) {
+    console.error("Error getting session:", error);
+    return null;
+  }
+};
+
+export const deleteSession = async (sessionCode) => {
+  try {
+    const docRef = doc(db, "Sessions", sessionCode);
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error("Error deleting session:", error);
+    return false;
+  }
+};

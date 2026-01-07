@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getLocations } from "../api/userCampaigns";
+import { getCampaign, getLocations, createSession } from "../api/userCampaigns";
 import { getSharedSessionCode, releaseMapPage } from "../utils/sessionCode";
 
 function Map_Main() {
@@ -52,6 +52,32 @@ function Map_Main() {
       setSessionCode(code);
     }
   }, [userId]);
+
+  // Save session data to Firestore when campaign data is loaded
+  useEffect(() => {
+    const saveSessionData = async () => {
+      if (sessionCode && campaign && userId) {
+        try {
+          const sessionData = {
+            sessionCode: sessionCode,
+            userId: userId,
+            campaignId: campaignId,
+            campaignName: campaign.name || 'Unnamed Campaign',
+            mainMapUrl: campaign.mainMapUrl || null,
+            createdAt: new Date().toISOString(),
+            lastUpdated: new Date().toISOString()
+          };
+          
+          await createSession(sessionCode, sessionData);
+          console.log("Session data saved to Firestore:", sessionData);
+        } catch (error) {
+          console.error("Failed to save session data:", error);
+        }
+      }
+    };
+
+    saveSessionData();
+  }, [sessionCode, campaign, campaignId, userId]);
 
   // Cleanup when component unmounts
   useEffect(() => {
