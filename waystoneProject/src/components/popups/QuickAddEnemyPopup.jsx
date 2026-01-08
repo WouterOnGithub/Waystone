@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { addEnemy } from "../../api/npcs";
 
 export default function QuickAddEnemyPopup({isOpen, onClose, userId, campaignId}) {
+    const [imageFile, setImageFile] = useState(null)
+    const [imagePreview, setImagePreview] = useState("/assets/placeholderImage.jpg")
+    const fileInputRef = useRef(null)
+
     const [formData, setFormData] = useState({
         name:"",
         HpCurrent:"",
@@ -22,12 +26,32 @@ export default function QuickAddEnemyPopup({isOpen, onClose, userId, campaignId}
             console.error("userId of campaignId is undefined!", { userId, campaignId });
             return;
         }
+        
+        let imageUrl ="";
+
+        if (imageFile) {
+            const uploadData = new FormData();
+            uploadData.append("campaignId", campaignId);
+            console.log("QuickAddEnemyPopup campaignId:", campaignId);
+            uploadData.append("image", imageFile);
+
+            const res = await fetch("/api/upload-entity", {
+                method: "POST",
+                body: uploadData,
+            });
+
+            if (!res.ok) throw new Error("Image upload failed");
+
+            const result = await res.json();
+            imageUrl = result.url; // url in public/entities
+        }
 
         const enemyData = {
             name: formData.name,
             HpCurrent: Number(formData.HpCurrent),
             HpMax: Number(formData.HpMax),
-            armorKlassen: Number(formData.armorKlassen)
+            armorKlassen: Number(formData.armorKlassen),
+            imageUrl,
         };
         console.log("userId:", userId, "campaignId:", campaignId);
         await addEnemy(userId, campaignId, enemyData);
@@ -39,6 +63,8 @@ export default function QuickAddEnemyPopup({isOpen, onClose, userId, campaignId}
             HpMax:"",
             armorKlassen:""
         });
+        setImageFile(null);
+        setImagePreview("/assets/placeholderImage.jpg");
     };
 
     return (
@@ -81,6 +107,27 @@ export default function QuickAddEnemyPopup({isOpen, onClose, userId, campaignId}
                 onChange={handleChange}
                 required
             />
+
+            <div className="image-upload-area">
+                <img
+                    src={imagePreview}
+                    alt="Enemy"
+                    style={{ width: 100, height: 100, objectFit: "cover", cursor: "pointer" }}
+                    onClick={() => fileInputRef.current?.click()}
+                />
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    setImageFile(file);
+                    setImagePreview(URL.createObjectURL(file));
+                    }}
+                    hidden
+                    accept="image/*"
+                />
+            </div>
 
             <div className="popup-actions">
                 <button type="button" onClick={onClose}>
