@@ -107,36 +107,31 @@
     min-height: 100vh;
 }
 
-#button-green, #button-gray /* All buttons - dark purple with light purple text */
+#button-green, #button-gray
 {
     border-radius: var(--border-radius);
-    background: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
+    background: var(--background-gradient4);
     font-weight: bold;
-    border: 2px solid #8a7fd8;
+    border: none;
     padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 15px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    color: #e8e8f5;
-    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 #button-green:hover, #button-gray:hover, #addview-green-bar:hover
 {
-    color: #ffffff;
-    background: linear-gradient(135deg, #7b68ee 0%, #9370db 100%);
-    border-color: #9370db;
-    box-shadow: 
-        0 6px 20px rgba(106, 90, 205, 0.4),
-        0 0 20px rgba(106, 90, 205, 0.3);
-    transform: translateY(-3px);
+    color: var(--text-color2);
+    transition: 0.5s;
+    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
+    transform: translateY(-2px);
 }
 #button-gray
 {
-    background: linear-gradient(135deg, #4a4a6e 0%, #2d2d5f 100%);
-    border-color: #6a5acd;
+    background: var(--background-gradient3);
+    color: var(--text-color2);
 }
 
 #addview-green-bar /* Bars in add & view pages */
@@ -208,7 +203,6 @@
     width: 30px; 
 }
 
-/* Input boxes - light with purple accents */
 #input-box-white input
 {
     width: 300px;
@@ -222,8 +216,8 @@
 #input-box-white input, #input-box-white textarea
 {
     border-radius: var(--border-radius2);
-    background: #ffffff;
-    border: 2px solid rgba(106, 90, 205, 0.3);
+    background: var(--form-box-colour2);
+    border: none;
     padding: 10px;
     margin-bottom: 5px;
     box-shadow: 8px 8px 10px rgba(210, 200, 213, 0.2);
