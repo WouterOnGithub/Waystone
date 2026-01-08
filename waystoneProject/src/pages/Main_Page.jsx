@@ -53,6 +53,7 @@ function Main_Page()
           name: c.name || "Unnamed campaign",
           color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
           published: c.published === true,
+          mainMapUrl: c.mainMapUrl || null,
         }));
         
         setRecentCampaigns(recent);
@@ -92,6 +93,7 @@ function Main_Page()
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
         published: c.published === true,
+        mainMapUrl: c.mainMapUrl || null,
       }));
       setRecentCampaigns(recent);
     } catch (err) {
@@ -128,6 +130,7 @@ function Main_Page()
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
         published: c.published === true,
+        mainMapUrl: c.mainMapUrl || null,
       }));
       setRecentCampaigns(recent);
     } catch (err) {
@@ -137,11 +140,12 @@ function Main_Page()
   
   return (
     <div className="full-page">
-    <div className="page-layout">
+      
       <Sidebar />
 
-      <div className="main-wrapper">
-        <Header title="Welcome" />
+      <div id="main">
+      
+      <Header title="Welcome" />
 
         <div id="content">
           <b>Recent Campaigns</b>
@@ -205,8 +209,8 @@ function Main_Page()
         </div>
 
         <Footer />
+      
       </div>
-    </div>
     </div>
   );
 }

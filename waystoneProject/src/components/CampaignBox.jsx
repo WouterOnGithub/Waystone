@@ -8,49 +8,57 @@ const CampaignBox = ({
   onPublishCampaign, 
   onArchiveCampaign 
 }) => {
+  const isFreeCampaign = sectionTitle === "Free Campaigns";
+  
   return (
-    <div id="box-text" 
-         key={item.id ? item.id : `${sectionTitle}-${idx}`}
-         onClick={() => onOpenCampaign(item.id)}
-         style={item.id ? { cursor: "pointer" } : undefined}
-    >
+    <div className="campaign-box-container">
+      {/* Campaign name area */}
+      <div className="campaign-name-area">
+        <h3>{item.name}</h3>
+      </div>
       
-      {/* The campaigns project name */}
-      <p>{item.name}&#10240;</p>
-      
-      {/* The bottom part of the box (the white) which contains the buttons */}
-      <div id="box">
-        {sectionTitle === "All Campaigns" ? (
-          <>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onPublishCampaign(item.id, item.name, item.published);
-              }}
-            >
-              {item.published ? "Unpublish" : "Publish"}
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onArchiveCampaign(item.id, item.name);
-              }}
-            >
-              Archive
-            </button>
-          </>
+      {/* Campaign map area */}
+      <div 
+        className="campaign-map-area"
+        onClick={() => item.id && onOpenCampaign(item.id)}
+        style={item.id ? { cursor: "pointer" } : undefined}
+      >
+        {item.mainMapUrl ? (
+          <img 
+            src={item.mainMapUrl} 
+            alt={`${item.name} map`}
+            className="campaign-map-image"
+          />
         ) : (
+          <div className="campaign-map-placeholder">
+            <span>No Map Available</span>
+          </div>
+        )}
+      </div>
+      
+      {/* Buttons area */}
+      <div className="campaign-buttons-area">
+        {!isFreeCampaign && (
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onArchiveCampaign(item.id, item.name);
+              onPublishCampaign(item.id, item.name, item.published);
             }}
+            className="campaign-button publish-button"
           >
-            Archive
+            {item.published ? "Unpublish" : "Publish"}
           </button>
         )}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onArchiveCampaign(item.id, item.name);
+          }}
+          className="campaign-button archive-button"
+        >
+          Archive
+        </button>
       </div>
-
     </div>
   );
 };

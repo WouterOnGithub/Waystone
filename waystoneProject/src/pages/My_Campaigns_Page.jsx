@@ -101,6 +101,7 @@ function My_Campaigns_Page()
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
         published: c.published === true,
+        mainMapUrl: c.mainMapUrl || null,
       })),
     },
     {
@@ -110,6 +111,7 @@ function My_Campaigns_Page()
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030"][idx % 3],
       published: c.published === true,
+      mainMapUrl: c.mainMapUrl || null,
       })),
     },
     {
@@ -119,6 +121,7 @@ function My_Campaigns_Page()
     name: c.name || "Unnamed campaign",
     color: ["#447DC9", "#E7D665"][idx % 2],
     published: true,
+    mainMapUrl: c.mainMapUrl || null,
   })),
 }
   ];
