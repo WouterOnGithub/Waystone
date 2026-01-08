@@ -1,9 +1,10 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { addNPC, getEntityById, updateEntity,deleteEntityAndSubCollections } from "../api/npcs";
 import { db } from "../firebase/firebase";
 import { useAuth } from "../context/AuthContext";
 import { setDoc } from "firebase/firestore";
+import { handleImageUpload, resolveImageUrl } from "../utils/imageUpload.js";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import "./pages-css/Main_Page.css";
@@ -17,43 +18,14 @@ function Add_NPC()
   const userId = user ? user.uid : null;
   const { campaignId, npcId } = useParams();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
-  const handleSaveCharacter = async ()=>{
-  if (!userId || !campaignId) return
-
-    try {
-      if(npcId){
-        await updateEntity(userId, campaignId, npcId, characterData)
-        console.log("Npc uppdated succesfully");
-      }else{
-        const newNPC = await addNPC(userId, campaignId, characterData);
-        console.log("npc saved", newNPC);
-      }
-    
-      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
-    }catch(error){
-      console.error("Error saving NPC", error);
-    }
-  };
-
-  const handleDeleteNPC = async () => {
-    if (!npcId) return;
-    if (!window.confirm("Are you sure you want to delete this NPC?")) return;
-
-    try {
-      const npcRef = doc(db, "Users", userId, "Campaigns", campaignId, "Entities", npcId);
-      await deleteEntityAndSubCollections(npcRef);
-      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
-    } catch (error) {
-      console.error("Error deleting NPC:", error);
-    }
-  };
-
-
-  const handleCancel = () =>{
-    if(!campaignId) return;
-    navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
-  };
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(
+    resolveImageUrl(null)
+  );
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [characterData, setCharacterData] = useState({
     name: "",
@@ -63,6 +35,7 @@ function Add_NPC()
     background: "",
     alignment: "",
     level: 1,
+    imageUrl: "",
     
     // Ability Scores
     strength: 10,
@@ -143,6 +116,7 @@ function Add_NPC()
         try{
           const existingNPC = await getEntityById(userId,campaignId, npcId);
           setCharacterData(prev => ({...prev, ...existingNPC}));
+          setImagePreview(resolveImageUrl(existingNPC?.imageUrl || null));
         }catch(err){
           console.log('Error fetching npc')
         } 
@@ -150,6 +124,130 @@ function Add_NPC()
       fetchNPC();
     }
   }, [npcId, campaignId]);
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview && imagePreview.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageFile(file);
+    const url = URL.createObjectURL(file);
+    setImagePreview((prev) => {
+      if (prev && prev.startsWith("blob:")) {
+        URL.revokeObjectURL(prev);
+      }
+      return url;
+    });
+  };
+
+  const handleImageUploadSuccess = (downloadURL) => {
+    setCharacterData(prev => ({ ...prev, imageUrl: downloadURL }));
+  };
+
+  const handleImageUploadError = (errorMessage) => {
+    setMessage(`Image upload failed: ${errorMessage}`);
+  };
+
+  const handleImageChange = (event) => {
+    handleImageUpload(
+      event, 
+      'upload-entity', 
+      campaignId, 
+      handleImageUploadSuccess, 
+      handleImageUploadError,
+      characterData.imageUrl
+    );
+  };
+
+  const handleSaveCharacter = async ()=>{
+    if (!userId || !campaignId) return
+
+    if (!characterData.name.trim()) {
+      setMessage("Please enter a name for this NPC.");
+      return;
+    }
+
+    setSaving(true);
+    setMessage("");
+
+    try {
+      let imageUrl = characterData?.imageUrl || null;
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("campaignId", campaignId);
+        formData.append("image", imageFile);
+        // Ask server to delete previous image file when replacing it
+        if (characterData?.imageUrl) {
+          formData.append("previousUrl", characterData.imageUrl);
+        }
+
+        const res = await fetch("/api/upload-entity", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || "Image upload failed.");
+        }
+
+        const result = await res.json();
+        // Keep local preview as selected file (blob) so it doesn't
+        // disappear while saving; just update URL we store in Firestore.
+        imageUrl = result.url;
+      }
+
+      const payload = {
+        ...characterData,
+        imageUrl: imageUrl || "",
+        updatedAt: new Date().toISOString(),
+      };
+
+      if(npcId){
+        await updateEntity(userId, campaignId, npcId, payload)
+        console.log("Npc updated successfully");
+      }else{
+        const newNPC = await addNPC(userId, campaignId, payload);
+        console.log("npc saved", newNPC);
+      }
+    
+      setMessage("NPC saved successfully.");
+    }catch(error){
+      setMessage(error?.message || "An error occurred while saving.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteNPC = async () => {
+    if (!npcId) return;
+    if (!window.confirm("Are you sure you want to delete this NPC?")) return;
+
+    try {
+      const npcRef = doc(db, "Users", userId, "Campaigns", campaignId, "Entities", npcId);
+      await deleteEntityAndSubCollections(npcRef);
+      navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+    } catch (error) {
+      console.error("Error deleting NPC:", error);
+    }
+  };
+
+
+  const handleCancel = () =>{
+    if(!campaignId) return;
+    navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
+  };
 
   const calculateModifier = (score) => {
     return Math.floor((score - 10) / 2);
@@ -259,6 +357,25 @@ function Add_NPC()
 
               {/* The basic NPC info */}
               <div id="input-box-white" className="character-base-stats-section">
+                <div className="character-base-stat">
+                  <b>NPC Image</b>
+                  <div className="image-upload-area">
+                    <img
+                      src={imagePreview || "/assets/PlaceholderImage.jpg"}
+                      alt="NPC"
+                      className="addview-uploadimg"
+                      onClick={handleUploadClick}
+                      style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover', cursor: 'pointer', border: '2px solid #ccc', borderRadius: '8px' }}
+                    />
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      hidden
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
 
                 <div className="character-base-stat">
                   <b>NPC Name</b>
@@ -608,11 +725,19 @@ function Add_NPC()
             </div>
 
             <div className="campaign-actions">
-              <button id="button-green" onClick={handleSaveCharacter}>Save</button>
+              <button id="button-green" onClick={handleSaveCharacter} disabled={saving}>
+                {saving ? "Saving..." : "Save"}
+              </button>
               <button id="button-gray" onClick={handleCancel}>Cancel</button>
               {npcId && (
                   <button id="button-gray" onClick={handleDeleteNPC}>Delete</button>
                 )}
+              {message && (
+                <>
+                  <br />
+                  <p>{message}</p>
+                </>
+              )}
             </div>
 
           </div>

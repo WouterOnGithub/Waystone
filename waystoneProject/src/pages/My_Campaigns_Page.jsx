@@ -89,13 +89,13 @@ function My_Campaigns_Page()
     return () => unsubscribe();
   }, []);
 
-  const recentCampaigns = allCampaigns.slice(0, 5);
   const activeCampaigns = allCampaigns.filter(campaign => !campaign.isArchived);
+  const recentCampaigns = activeCampaigns.slice(0, 5);
 
   const dynamicSections = [
     {
       title: "Recent Campaigns",
-      items: recentCampaigns.filter(c => !c.isArchived).map((c, idx) => ({
+      items: recentCampaigns.map((c, idx) => ({
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],

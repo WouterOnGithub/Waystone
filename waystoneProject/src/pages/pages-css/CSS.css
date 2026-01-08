@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
 * /* Defined sets of colours, font sizes, etc. to use for the whole website */
 {
     --title-text: 120px;
@@ -5,35 +7,35 @@
     --body-text: 18px;
     --link-text: 12px;
 
-    --text-color: #1a1a2e;
+    --text-color: #11111f;
     --text-color2: #ffffff;
     --text-color3: #2c2c5e;
     --text-color4: #1a1a2e;
 
-    --background-gradient: linear-gradient(90deg,rgb(130, 63, 0) 0%, rgb(176, 87, 4) 50%, rgb(130, 63, 0) 100%);
-    --background-gradient4: linear-gradient(90deg,rgb(146, 73, 5) 0%, rgb(176, 87, 4) 50%, rgb(146, 73, 5) 100%);
-    --background-gradient2: radial-gradient(circle, rgb(176, 87, 4) 50%, rgb(130, 63, 0) 100%);
-    --background-gradient3: linear-gradient(90deg,#1e1e1e 0%, #303030 50%, #1e1e1e 100%);
+    --background-gradient: linear-gradient(90deg,linear-gradient(90deg, rgba(106, 90, 205, 0.2) 0%, transparent 100%) 0%, rgb(34, 7, 172) 50%, rgb(13, 0, 130) 100%);
+    --background-gradient4: linear-gradient(90deg,#1a1a2e 0%, #2c2c5e 50%, #1a1a2e 100%);
+    --background-gradient2: radial-gradient(circle, #2c2c5e 50%, #11111f 100%);
+    --background-gradient3: linear-gradient(90deg,#000000 0%, #131313 50%, #000000 100%);
 
-    --background-colour: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(227, 227, 227) 100%);
-    --background-colour2:#d9d9d9;
+    --background-colour: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(210, 200, 213) 100%);
+    --background-colour2: linear-gradient(180deg, rgb(200, 200, 200) 0%, rgb(101, 95, 104) 100%);
     --background-colour3:#bfbfbf;
     --background-colour4: #303030;
 
-    --projectbox-colour: linear-gradient(90deg,rgb(216, 188, 63) 0%, rgba(231, 214, 101, 1) 50%, rgb(216, 188, 63) 100%); 
-    --projectbox-colour2: linear-gradient(90deg,rgba(176, 49, 49, 1) 0%, rgba(211, 72, 72, 1) 50%, rgba(176, 49, 49, 1) 100%);
-    --projectbox-colour3: linear-gradient(90deg,rgba(50, 104, 173, 1) 0%, rgba(68, 125, 201, 1) 50%, rgba(50, 104, 173, 1) 100%);
+    --projectbox-colour: linear-gradient(90deg,#905600 0%, #a96500 50%, #905600 100%); 
+    --projectbox-colour2: linear-gradient(90deg,#831010 0%, #b91616 50%, #831010 100%);
+    --projectbox-colour3: linear-gradient(90deg,#103283 0%, #1648bc 50%, #103283 100%);
     --projectbox-colour4: linear-gradient(90deg,rgba(184, 184, 184, 1) 0%, rgba(217, 217, 217, 1) 50%, rgba(184, 184, 184, 1) 100%);
 
     --form-box-colour: #E0E0E0;
     --form-box-colour2: #ffffff;
-    --link-colour: #447DC9;
+    --link-colour: #1648bc;
 
     --border-radius: 10px;
     --border-radius2: 5px;
     --border-radius3: 50px;
 
-    font-family: Garamond, serif, cursive;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     overflow-x: hidden;
     color: var(--text-color);
     font-size: var(--body-text);
@@ -72,15 +74,14 @@
     margin-top: 15px;
 }
 
-#content /* Gray section under the green_ bar */
+#content /* Gray section under the bar */
 {
     border-radius: var(--border-radius); 
     background: var(--background-colour2);
-    margin-top: 100px;
+    margin-top: 80px;
     padding: 30px;
-    width: 76vw;
-    max-width: 100vw;
-    margin-left: auto;
+    width: 95%;
+    margin-left: 80px;
     margin-right: auto;
 }
 #content b
@@ -262,6 +263,33 @@
 .character-section:has(.character-row:first-of-type) /* Empty state styling (What does this mean?) */
 {
   min-height: auto;
+}
+
+
+
+/* Image upload area styling */
+.image-upload-area {
+  margin: 15px 0;
+  padding: 10px;
+  border: 2px dashed var(--background-colour3);
+  border-radius: var(--border-radius);
+  background: var(--form-box-colour);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.image-upload-area:hover {
+  border-color: var(--text-color3);
+  background: var(--form-box-colour2);
+}
+
+.image-upload-area img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-upload-area img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.2);
 }
 
 

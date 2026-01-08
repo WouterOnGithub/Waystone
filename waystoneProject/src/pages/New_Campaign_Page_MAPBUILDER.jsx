@@ -465,7 +465,6 @@ function New_Campaign_Page_MAPBUILDER()
         try {
           await updateCampaignInfo(userId, campaignId, {
             mainMapUrl: result.url,
-            lastUpdatedAt: new Date().toISOString(),
           });
 
           // Also keep a localStorage copy as a secondary fallback for older flows.

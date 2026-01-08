@@ -1,34 +1,37 @@
-  import React, { useState, useEffect } from "react";
-  import { useParams, useNavigate } from "react-router-dom";
-  import { useAuth } from "../context/AuthContext.jsx";
-  import {usePlayer} from "../hooks/usePlayer.js";
-  import {deletePlayerAndSubCollections} from "../api/players.js";
-  import { db } from "../firebase/firebase";
-  import { doc } from "firebase/firestore";
-  import "./pages-css/CSS.css";
-  import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
-  import Footer from "../components/UI/Footer";
-  import Header from "../components/UI/Header";
-  import Sidebar from "../components/UI/Sidebar";
+  import React, { useState, useEffect, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
+import {usePlayer} from "../hooks/usePlayer.js";
+import {deletePlayerAndSubCollections} from "../api/players.js";
+import { db } from "../firebase/firebase";
+import { doc } from "firebase/firestore";
+import { handleImageUpload, resolveImageUrl } from "../utils/imageUpload.js";
+import "./pages-css/CSS.css";
+import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
+import Footer from "../components/UI/Footer";
+import Header from "../components/UI/Header";
+import Sidebar from "../components/UI/Sidebar";
 
-  function Add_Character() 
-  {
-    const { campaignId, CharacterId } = useParams();
-    const playerId = CharacterId;
-    const { user } = useAuth();
-    const userId = user ? user.uid : null;
-    const navigate = useNavigate();
-    
-    const {player, loading, error, savePlayer, isEditMode} = usePlayer(campaignId, playerId);
+function Add_Character() 
+{
+  const { campaignId, CharacterId } = useParams();
+  const playerId = CharacterId;
+  const { user } = useAuth();
+  const userId = user ? user.uid : null;
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+  
+  const {player, loading, error, savePlayer, isEditMode} = usePlayer(campaignId, playerId);
 
-    const [characterData, setCharacterData] = useState({
-      name: "",
-      race: "",
-      class: "",
-      subclass: "",
-      background: "",
-      alignment: "",
-      level: 1,
+  const [characterData, setCharacterData] = useState({
+    name: "",
+    race: "",
+    class: "",
+    subclass: "",
+    background: "",
+    alignment: "",
+    level: 1,
+    imageUrl: "",
       
       // Ability Scores
       strength: 10,
@@ -113,21 +116,124 @@
 
     
 
-    useEffect(() => {
-      if (player) {
-        setCharacterData(player);
-      }
-    }, [player]);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(
+    resolveImageUrl(player?.imageUrl || null)
+  );
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
 
-    const handleSave = async () => {
-      try {
-        await savePlayer(characterData);
-        navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`);
-      } catch (err) {
-        console.error("Error saving character:", err);
-        alert("Failed to save character. Please try again.");
+  useEffect(() => {
+    if (player) {
+      setCharacterData(player);
+      setImagePreview(resolveImageUrl(player?.imageUrl || null));
+    }
+  }, [player]);
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview && imagePreview.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
       }
     };
+  }, [imagePreview]);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageFile(file);
+    const url = URL.createObjectURL(file);
+    setImagePreview((prev) => {
+      if (prev && prev.startsWith("blob:")) {
+        URL.revokeObjectURL(prev);
+      }
+      return url;
+    });
+  };
+
+  const handleImageUploadSuccess = (downloadURL) => {
+    setCharacterData({ ...characterData, imageUrl: downloadURL });
+  };
+
+  const handleImageUploadError = (errorMessage) => {
+    setMessage(`Image upload failed: ${errorMessage}`);
+  };
+
+  const handleImageChange = (event) => {
+    handleImageUpload(
+      event, 
+      'upload-player', 
+      campaignId, 
+      handleImageUploadSuccess, 
+      handleImageUploadError,
+      characterData.imageUrl
+    );
+  };
+
+  const handleSave = async () => {
+    if (!userId) {
+      setMessage("You must be signed in to save a character.");
+      return;
+    }
+    if (!campaignId) {
+      setMessage("No campaign selected for this character.");
+      return;
+    }
+    if (!characterData.name.trim()) {
+      setMessage("Please enter a name for this character.");
+      return;
+    }
+
+    setSaving(true);
+    setMessage("");
+
+    try {
+      let imageUrl = characterData?.imageUrl || null;
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("campaignId", campaignId);
+        formData.append("image", imageFile);
+        // Ask server to delete previous image file when replacing it
+        if (characterData?.imageUrl) {
+          formData.append("previousUrl", characterData.imageUrl);
+        }
+
+        const res = await fetch("/api/upload-player", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || "Image upload failed.");
+        }
+
+        const result = await res.json();
+        // Keep local preview as selected file (blob) so it doesn't
+        // disappear while saving; just update URL we store in Firestore.
+        imageUrl = result.url;
+      }
+
+      const payload = {
+        ...characterData,
+        imageUrl: imageUrl || "",
+        updatedAt: new Date().toISOString(),
+      };
+
+      await savePlayer(payload);
+      
+      setMessage("Character saved successfully.");
+    } catch (err) {
+      setMessage(err?.message || "An error occurred while saving.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
     const handleDeletePlayer = async () => {
       if (!window.confirm("Are you sure you want to delete this character?")) return;
@@ -258,6 +364,25 @@
 
               {/* The basic character info */}
               <div id="input-box-white" className="character-base-stats-section">
+                <div className="character-base-stat">
+                  <b>Character Image</b>
+                  <div className="image-upload-area">
+                    <img
+                      src={imagePreview || "/assets/PlaceholderImage.jpg"}
+                      alt="Character"
+                      className="addview-uploadimg"
+                      onClick={handleUploadClick}
+                      style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover', cursor: 'pointer', border: '2px solid #ccc', borderRadius: '8px' }}
+                    />
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      hidden
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
 
                 <div className="character-base-stat">
                   <b>Character Name</b>
@@ -608,9 +733,17 @@
             </div>
 
             <div className="campaign-actions">
-              <button id="button-green" onClick={handleSave}>Save</button>
+              <button id="button-green" onClick={handleSave} disabled={saving}>
+                {saving ? "Saving..." : "Save"}
+              </button>
               <button id="button-gray" onClick={handleCancel}>Cancel</button>
               <button id="button-gray" onClick={handleDeletePlayer}>Delete</button>
+              {message && (
+                <>
+                  <br />
+                  <p>{message}</p>
+                </>
+              )}
             </div>
 
           </div>
