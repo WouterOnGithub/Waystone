@@ -85,7 +85,10 @@ export const getAllCampaigns = async (userId) => {
 export const updateCampaignInfo = async (userId, campaignId, campaignInfo) => {
     try {
         const docRef = doc(db, "Users", userId, "Campaigns", campaignId);
-        await setDoc(docRef, campaignInfo, { merge: true });
+        await setDoc(docRef, {
+            ...campaignInfo,
+            lastUpdatedAt: new Date().toISOString()
+        }, { merge: true });
         const updatedDoc = await getDoc(docRef);
         return updatedDoc.exists() ? { id: updatedDoc.id, ...updatedDoc.data() } : null;
     } catch (error) {

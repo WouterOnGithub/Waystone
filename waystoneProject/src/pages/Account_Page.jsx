@@ -52,8 +52,12 @@ function Account_Page()
   const getLastPlayedCampaign = () => {
     if (campaigns.length === 0) return null;
     
+    // Filter out archived campaigns first
+    const activeCampaigns = campaigns.filter(campaign => !campaign.isArchived);
+    if (activeCampaigns.length === 0) return null;
+    
     // Sort by lastUpdatedAt, fallback to createdAt
-    const sorted = [...campaigns].sort((a, b) => {
+    const sorted = [...activeCampaigns].sort((a, b) => {
       const aTime = new Date(a.lastUpdatedAt || a.createdAt || 0).getTime();
       const bTime = new Date(b.lastUpdatedAt || b.createdAt || 0).getTime();
       return bTime - aTime;
