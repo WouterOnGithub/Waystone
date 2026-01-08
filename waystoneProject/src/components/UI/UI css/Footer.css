@@ -220,16 +220,14 @@
 }
 
 .footer-image {
-  position: relative;
-  display: inline-block;
+  position:relative;
+  display:contents;
 }
 
 .footer-image img {
   width: 280px;
   height: auto;
   border-radius: 12px;
-  border: 2px solid rgba(106, 90, 205, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   transition: all 0.4s ease;
   position: relative;
   z-index: 1;
@@ -237,10 +235,6 @@
 
 .footer-image:hover img {
   transform: translateY(-8px) scale(1.02);
-  border-color: rgba(106, 90, 205, 0.6);
-  box-shadow: 
-    0 12px 32px rgba(106, 90, 205, 0.3),
-    0 0 40px rgba(138, 43, 226, 0.2);
 }
 
 .image-glow {

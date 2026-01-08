@@ -9,8 +9,6 @@ import {
   setDoc,
   getDoc,
   onSnapshot,
-  query,
-  where,
 } from "firebase/firestore";
 
 
@@ -394,119 +392,6 @@ export const getItems = async (userId, campaignId) => {
   } catch (error) {
     console.error("Error getting items:", error);
     return [];
-  }
-};
-
-// EVENT HELPERS
-
-export const createEvent = async (userId, campaignId, eventData) => {
-  try {
-    // Generate a unique mapId for this event
-    const eventMapId = `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
-    const docRef = doc(
-      db,
-      "Users",
-      userId,
-      "Campaigns",
-      campaignId,
-      "Maps",
-      eventMapId
-    );
-    
-    // Add the eventMapId to the event data
-    const dataWithMapId = {
-      ...eventData,
-      mapId: eventMapId,
-      isEvent: true // Flag to identify this as an event map
-    };
-    
-    await setDoc(docRef, dataWithMapId);
-    const newDoc = await getDoc(docRef);
-    return newDoc.exists() ? { id: newDoc.id, mapId: eventMapId, ...newDoc.data() } : null;
-  } catch (error) {
-    console.error("Error creating event:", error);
-    return null;
-  }
-};
-
-export const updateEvent = async (
-  userId,
-  campaignId,
-  eventMapId,
-  eventData
-) => {
-  try {
-    const docRef = doc(
-      db,
-      "Users",
-      userId,
-      "Campaigns",
-      campaignId,
-      "Maps",
-      eventMapId
-    );
-    
-    const dataWithMapId = {
-      ...eventData,
-      mapId: eventMapId,
-      isEvent: true
-    };
-    
-    await setDoc(docRef, dataWithMapId, { merge: true });
-    const updatedDoc = await getDoc(docRef);
-    return updatedDoc.exists()
-      ? { id: updatedDoc.id, mapId: eventMapId, ...updatedDoc.data() }
-      : null;
-  } catch (error) {
-    console.error("Error updating event:", error);
-    return null;
-  }
-};
-
-export const getEvents = async (userId, campaignId) => {
-  try {
-    const mapsCollectionRef = collection(
-      db,
-      "Users",
-      userId,
-      "Campaigns",
-      campaignId,
-      "Maps"
-    );
-    
-    // Query for all maps that are events
-    const q = query(mapsCollectionRef, where("isEvent", "==", true));
-    const querySnapshot = await getDocs(q);
-    
-    const events = [];
-    querySnapshot.forEach((doc) => {
-      events.push({ id: doc.id, mapId: doc.id, ...doc.data() });
-    });
-    
-    return events;
-  } catch (error) {
-    console.error("Error getting events:", error);
-    return [];
-  }
-};
-
-export const deleteEvent = async (userId, campaignId, eventMapId) => {
-  try {
-    const docRef = doc(
-      db,
-      "Users",
-      userId,
-      "Campaigns",
-      campaignId,
-      "Maps",
-      eventMapId
-    );
-    await deleteDoc(docRef);
-    return true;
-  } catch (error) {
-    console.error("Error deleting event:", error);
-    return false;
   }
 };
 
