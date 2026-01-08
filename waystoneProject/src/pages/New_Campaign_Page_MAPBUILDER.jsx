@@ -922,6 +922,59 @@ function New_Campaign_Page_MAPBUILDER()
               </button>
             </div>
 
+            {/* Display all events */}
+            {showEvents && (
+              <div style={{
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginTop: "10px"
+              }}>
+                {events.map((event) => (
+                  <div
+                    key={event.id}
+                    style={{ 
+                      display: "flex", 
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      maxWidth: "400px",
+                      padding: "15px",
+                      border: "1px solid #ddd",
+                      borderRadius: "8px",
+                      backgroundColor: "#f9f9f9"
+                    }}
+                  >
+                    <div>
+                      <b>{event.name}</b>
+                      <div style={{ fontSize: "12px", color: "#666" }}>
+                        {event.width}x{event.height}
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <button
+                        id="button-green"
+                        type="button"
+                        onClick={() => {
+                          setEditingEvent(event);
+                          setShowAddEventPopup(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        id="button-green"
+                        onClick={() => handleDeleteEvent(event)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* The add and show container buttons*/}
             <div>
               <button
@@ -997,59 +1050,6 @@ function New_Campaign_Page_MAPBUILDER()
                         type="button"
                         id="button-green"
                         onClick={() => handleDeleteContainer(container)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Display all events */}
-            {showEvents && (
-              <div style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                marginTop: "10px"
-              }}>
-                {events.map((event) => (
-                  <div
-                    key={event.id}
-                    style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      maxWidth: "400px",
-                      padding: "15px",
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
-                      backgroundColor: "#f9f9f9"
-                    }}
-                  >
-                    <div>
-                      <b>{event.name}</b>
-                      <div style={{ fontSize: "12px", color: "#666" }}>
-                        {event.width}x{event.height}
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", gap: "8px" }}>
-                      <button
-                        id="button-green"
-                        type="button"
-                        onClick={() => {
-                          setEditingEvent(event);
-                          setShowAddEventPopup(true);
-                        }}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        id="button-green"
-                        onClick={() => handleDeleteEvent(event)}
                       >
                         Delete
                       </button>
