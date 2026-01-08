@@ -37,6 +37,7 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
         onDragStart={handleDragStart}
         userId={userId}
         campaignId={campaignId}
+        mapId={mapId}
       />
     </div>
   );
