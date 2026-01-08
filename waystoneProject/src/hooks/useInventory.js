@@ -9,18 +9,20 @@ import { collection, doc, getDocs } from "firebase/firestore";
  * @param {string} campaignId
  * @returns Array van inventory docs: [{ docName, slots: [...] }]
  */
-export function useInventory(playerId, campaignId, userId) {
+export function useInventory(ownerId, campaignId, userId, tokenType) { //owner id = player of entitie van wie de inventory is
   const [inventories, setInventories] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!playerId || !campaignId || !userId) return;
+    if (!ownerId || !campaignId || !userId || !tokenType) return;
 
-    const fetchInventories = async () => {
-      setLoading(true);
+    setInventories([]);
+
+    const fetchInventories = async () => {  
       try {
         
-        const invColRef = collection(db,"Users",userId, "Campaigns", campaignId, "Players", playerId, "Inventory");
+        const collectionName = tokenType === "player" ? "Players" : "Entities";
+        const invColRef = collection( db, "Users", userId, "Campaigns", campaignId, collectionName, ownerId, "Inventory");
+
         const snapshot = await getDocs(invColRef);
 
         const invData = snapshot.docs.map((docSnap) => {
@@ -43,13 +45,11 @@ export function useInventory(playerId, campaignId, userId) {
       } catch (error) {
         console.error("Fout bij ophalen inventory:", error);
         setInventories([]);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchInventories();
-  }, [playerId, campaignId, userId]);
+  }, [ownerId, campaignId, userId, tokenType]);
 
   return inventories;   
 }

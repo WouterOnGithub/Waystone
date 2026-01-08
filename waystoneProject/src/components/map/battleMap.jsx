@@ -14,7 +14,6 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
   const cellsData = useMapCells(userId, campaignId, mapId);
   const [selectedToken, setSelectedToken] = useState(null);
    const cellSize = 80;
-
   if (!map) return <div>Loading map...</div>;
 
   const grid = generateGrid(cellsData, map.width, map.height);
@@ -49,19 +48,18 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
   };
 
 
-
-const handleTokenClick = (tokenId, player, x, y) => {
-  if (selectedToken?.tokenId === tokenId) {
-    setSelectedToken(null);
-  } else {
-    setSelectedToken({
-      tokenId,
-      player,
-      position: { x: x * cellSize, y: y * cellSize },
-      gridPosition: { x , y  }
-    });
-  }
-};
+  const handleTokenClick = (tokenId, data, x, y) => {
+    if (selectedToken?.tokenId === tokenId) {
+      setSelectedToken(null);
+    } else {
+      setSelectedToken({
+        tokenId,
+        data,
+        position: { x: x * cellSize, y: y * cellSize },
+        gridPosition: { x , y  }
+      });
+    }
+  };
 
  return (
   <div
@@ -98,8 +96,8 @@ const handleTokenClick = (tokenId, player, x, y) => {
                   x={x}
                   y={y}
                   onDragStart={handleDragStart}
-                  onClick={(tokenId, player) =>
-                    handleTokenClick(tokenId, player, x, y)
+                  onClick={(tokenId, data) =>
+                    handleTokenClick(tokenId, data, x, y)
                   }
                 />
               )}
@@ -115,6 +113,8 @@ const handleTokenClick = (tokenId, player, x, y) => {
         playerId={selectedToken.tokenId}
         campaignId={campaignId}
         mapId={mapId}
+        data={selectedToken.data} 
+        tokenId={selectedToken.tokenId}
         position={selectedToken.position}
         posX={selectedToken.gridPosition.x}
         posY={selectedToken.gridPosition.y}

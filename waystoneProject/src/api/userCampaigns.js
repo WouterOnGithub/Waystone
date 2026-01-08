@@ -29,23 +29,33 @@ async function parseJson(res, fallbackMessage) {
 
 //create new campaign (campaign subtab)
 export const createCampaign = async (userId, campaignData) => {
-    console.log("createCampaign called with:", userId, campaignData);
+  if (!campaignData.name) {
+    throw new Error("Campaign name is required");
+  }
 
-    if (!campaignData.name) {
-        throw new Error("Campaign name is required");
-    }
+  try {
+    const collectionRef = collection(db, "Users", userId, "Campaigns");
 
-    try {
-        const collectionRef = collection(db, "Users", userId, "Campaigns");
-        const docRef = await addDoc(collectionRef, campaignData);
-        const newDoc = await getDoc(docRef);
-        console.log("New campaign created with ID:", docRef.id);
-        return newDoc.exists() ? { id: newDoc.id, ...newDoc.data() } : null;
-    } catch (error) {
-        console.error("Error creating campaign:", error);
-        return null;
-    }
+    const finalCampaignData = {
+      published: false,
+      isFree: true,
+      ownerId: userId,
+      createdAt: new Date().toISOString(),
+      ...campaignData,
+    };
+
+    const docRef = await addDoc(collectionRef, finalCampaignData);
+    const newDoc = await getDoc(docRef);
+
+    return newDoc.exists()
+      ? { id: docRef.id, ...newDoc.data() }
+      : null;
+  } catch (error) {
+    console.error("Error creating campaign:", error);
+    return null;
+  }
 };
+
 
 // Get campaign data (Campaign subtab)
 export const getCampaign = async (userId, campaignId) => {
@@ -600,3 +610,71 @@ export const cleanupInactiveSessions = async () => {
     return false;
   }
 };
+
+export const publishCampaign = async (userId, campaignId) => {
+  try {
+    const campaignRef = doc(db, "Users", userId, "Campaigns", campaignId);
+    const snap = await getDoc(campaignRef);
+
+    if (!snap.exists()) throw new Error("Campaign not found");
+
+    const campaignData = snap.data();
+
+    await updateDoc(campaignRef, {
+      published: true,
+      publishedAt: new Date().toISOString(),
+    });
+
+    // Add to FreeCampaigns when published (all published campaigns appear in free campaigns)
+    const freeRef = doc(db, "FreeCampaigns", campaignId);
+    await setDoc(freeRef, {
+      ...campaignData,
+      published: true,
+      isFree: true,
+      campaignId,
+      ownerId: userId,
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error publishing campaign:", error);
+    return false;
+  }
+};
+
+export const unpublishCampaign = async (userId, campaignId) => {
+  try {
+    const campaignRef = doc(db, "Users", userId, "Campaigns", campaignId);
+
+    await updateDoc(campaignRef, {
+      published: false,
+      unpublishedAt: new Date().toISOString(),
+    });
+
+    await deleteDoc(doc(db, "FreeCampaigns", campaignId));
+
+    return true;
+  } catch (error) {
+    console.error("Error unpublishing campaign:", error);
+    return false;
+  }
+};
+
+export const getFreeCampaigns = async () => {
+  try {
+    const ref = collection(db, "FreeCampaigns");
+    const snap = await getDocs(ref);
+    return snap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error getting free campaigns:", error);
+    return [];
+  }
+};
+
+
+
+
+

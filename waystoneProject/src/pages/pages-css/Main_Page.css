@@ -5,10 +5,10 @@
 #news-box /* a news box */
 {
     border-radius: 10px;
-    background-color: var(--background-colour);
+    background: var(--background-colour);
     display: flex;
     margin-bottom: 20px;
-    width: 65rem;
+    width: 95%;
 }
 
 #news-box-img /* a news box (part of it) */
