@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, getEvents } from "../api/userCampaigns";
+import { getCampaign, getBuildingsRegions, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, getEvents, updateSessionBattleMap } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Building_Region() {
@@ -163,6 +163,60 @@ function Map_Building_Region() {
       releaseMapPage();
     };
   }, []);
+
+  // Update session with building region data when component mounts or building changes
+  useEffect(() => {
+    const updateSessionWithBuildingRegion = async () => {
+      if (isSessionActive() && buildingId) {
+        const sessionCode = getExistingSessionCode(userId, campaignId);
+        
+        if (sessionCode) {
+          try {
+            await updateSessionBattleMap(sessionCode, {
+              buildingRegionActive: true,
+              buildingRegionUserId: userId,
+              buildingRegionCampaignId: campaignId,
+              buildingRegionId: buildingId,
+              // Clear other view states
+              battleMapActive: false,
+              locationActive: false
+            });
+            console.log("Session updated with building region data");
+          } catch (error) {
+            console.error("Failed to update session with building region data:", error);
+          }
+        }
+      }
+    };
+
+    updateSessionWithBuildingRegion();
+  }, [userId, campaignId, buildingId]);
+
+  // Clean up building region data when component unmounts
+  useEffect(() => {
+    return () => {
+      const cleanupBuildingRegion = async () => {
+        if (isSessionActive() && buildingId) {
+          const sessionCode = getExistingSessionCode(userId, campaignId);
+          if (sessionCode) {
+            try {
+              await updateSessionBattleMap(sessionCode, {
+                buildingRegionActive: false,
+                buildingRegionUserId: null,
+                buildingRegionCampaignId: null,
+                buildingRegionId: null
+              });
+              console.log("Session building region data cleared");
+            } catch (error) {
+              console.error("Failed to clear session building region data:", error);
+            }
+          }
+        }
+      };
+
+      cleanupBuildingRegion();
+    };
+  }, [userId, campaignId, buildingId]);
 
   const toggleRegions = () => {
     setRegionsOpen(!regionsOpen);

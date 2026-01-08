@@ -699,6 +699,19 @@ export const updateSessionHeartbeat = async (sessionCode) => {
   }
 };
 
+export const updateSessionBattleMap = async (sessionCode, battleMapData) => {
+  try {
+    console.log("updateSessionBattleMap: Updating session", sessionCode, "with data:", battleMapData);
+    const docRef = doc(db, "Sessions", sessionCode);
+    await setDoc(docRef, battleMapData, { merge: true });
+    console.log("updateSessionBattleMap: Successfully updated session");
+    return true;
+  } catch (error) {
+    console.error("Error updating session battle map:", error);
+    return false;
+  }
+};
+
 export const cleanupInactiveSessions = async () => {
   try {
     const sessionsRef = collection(db, "Sessions");

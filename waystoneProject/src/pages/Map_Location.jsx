@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat } from "../api/userCampaigns";
+import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, updateSessionBattleMap } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Location() {
@@ -141,6 +141,76 @@ function Map_Location() {
       releaseMapPage();
     };
   }, []);
+
+  // Update session with location data when component mounts or location changes
+  useEffect(() => {
+    const updateSessionWithLocation = async () => {
+      console.log("=== MAP LOCATION SESSION UPDATE START ===");
+      console.log("Map_Location: Component mounted with", {
+        isSessionActive: isSessionActive(),
+        locationId,
+        userId,
+        campaignId
+      });
+      
+      if (isSessionActive() && locationId) {
+        const sessionCode = getExistingSessionCode(userId, campaignId);
+        console.log("Map_Location: Got session code", sessionCode);
+        
+        if (sessionCode) {
+          try {
+            const updateData = {
+              locationActive: true,
+              locationUserId: userId,
+              locationCampaignId: campaignId,
+              locationId: locationId,
+              // Clear other view states
+              battleMapActive: false,
+              buildingRegionActive: false
+            };
+            console.log("Map_Location: About to send update", updateData);
+            const result = await updateSessionBattleMap(sessionCode, updateData);
+            console.log("Map_Location: Update result", result);
+          } catch (error) {
+            console.error("Failed to update session with location data:", error);
+          }
+        } else {
+          console.log("Map_Location: No session code available");
+        }
+      } else {
+        console.log("Map_Location: Session not active or no locationId");
+      }
+      console.log("=== MAP LOCATION SESSION UPDATE END ===");
+    };
+
+    updateSessionWithLocation();
+  }, [userId, campaignId, locationId]);
+
+  // Clean up location data when component unmounts
+  useEffect(() => {
+    return () => {
+      const cleanupLocation = async () => {
+        if (isSessionActive() && locationId) {
+          const sessionCode = getExistingSessionCode(userId, campaignId);
+          if (sessionCode) {
+            try {
+              await updateSessionBattleMap(sessionCode, {
+                locationActive: false,
+                locationUserId: null,
+                locationCampaignId: null,
+                locationId: null
+              });
+              console.log("Session location data cleared");
+            } catch (error) {
+              console.error("Failed to clear session location data:", error);
+            }
+          }
+        }
+      };
+
+      cleanupLocation();
+    };
+  }, [userId, campaignId, locationId]);
 
   const toggleRegions = () => {
     setRegionsOpen(!regionsOpen);

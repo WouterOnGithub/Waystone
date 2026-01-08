@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import BattleMap from "../components/map/battleMap";
 import BattleMapWithSidebar from "../components/map/battleMapWithSidebar";
+import { updateSessionBattleMap } from "../api/userCampaigns";
+import { getSharedSessionCode, getExistingSessionCode, isSessionActive } from "../utils/sessionCode";
 
 function Map_Battle_View_DM() {
   const { campaignId, eventMapId } = useParams();
@@ -13,6 +15,56 @@ function Map_Battle_View_DM() {
   const userId = "6v5VMJwiBgQjsAMLc42PBe7Krmd2";
   const finalCampaignId = campaignId || "gFOfbenj1aCJX46ZuJm8";
   const finalMapId = eventMapId || "abcdefg";
+
+  // Update session with battle map data when component mounts
+  useEffect(() => {
+    const updateSessionWithBattleMap = async () => {
+      if (isSessionActive()) {
+        const sessionCode = getExistingSessionCode(userId, finalCampaignId);
+        if (sessionCode) {
+          try {
+            await updateSessionBattleMap(sessionCode, {
+              battleMapActive: true,
+              battleMapUserId: userId,
+              battleMapCampaignId: finalCampaignId,
+              battleMapId: finalMapId
+            });
+            console.log("Session updated with battle map data");
+          } catch (error) {
+            console.error("Failed to update session with battle map data:", error);
+          }
+        }
+      }
+    };
+
+    updateSessionWithBattleMap();
+  }, [userId, finalCampaignId, finalMapId]);
+
+  // Clean up battle map data when component unmounts
+  useEffect(() => {
+    return () => {
+      const cleanupBattleMap = async () => {
+        if (isSessionActive()) {
+          const sessionCode = getExistingSessionCode(userId, finalCampaignId);
+          if (sessionCode) {
+            try {
+              await updateSessionBattleMap(sessionCode, {
+                battleMapActive: false,
+                battleMapUserId: null,
+                battleMapCampaignId: null,
+                battleMapId: null
+              });
+              console.log("Session battle map data cleared");
+            } catch (error) {
+              console.error("Failed to clear session battle map data:", error);
+            }
+          }
+        }
+      };
+
+      cleanupBattleMap();
+    };
+  }, [userId, finalCampaignId]);
   
   // Close dropdown when clicking outside
   useEffect(() => {

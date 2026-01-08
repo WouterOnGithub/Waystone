@@ -4,7 +4,7 @@ import "./pages-css/Campaign_Map.css";
 import { getSession, subscribeToSessionStatus } from "../api/userCampaigns";
 import { useAuth } from "../context/AuthContext";
 
-function Active_Session() {
+function Map_Main_Player() {
   const { sessionCode } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -22,14 +22,6 @@ function Active_Session() {
         setLoading(false);
         return;
       }
-
-      // Remove authentication check - non-logged-in users can view sessions
-      // Check if user is authenticated
-      // if (!userId) {
-      //   setError("You must be logged in to view a session.");
-      //   setLoading(false);
-      //   return;
-      // }
 
       try {
         const data = await getSession(sessionCode);
@@ -51,38 +43,88 @@ function Active_Session() {
     };
 
     loadSession();
-  }, [sessionCode, userId]);
+  }, [sessionCode]);
 
   // Monitor session status in real-time
   useEffect(() => {
     if (!sessionCode) return;
 
-    const unsubscribe = subscribeToSessionStatus(sessionCode, (data) => {
-      if (!data) {
-        // Session was deleted
-        console.log("Session deleted, kicking out user");
-        navigate("/user/Join_Session");
-        return;
-      }
+    // Small delay to ensure subscription is ready
+    const timer = setTimeout(() => {
+      const unsubscribe = subscribeToSessionStatus(sessionCode, (data) => {
+        console.log("=== MAP MAIN PLAYER RECEIVED UPDATE ===");
+        console.log("Map_Main_Player: Raw session data:", data);
+        console.log("Map_Main_Player: Parsed values:", {
+          battleMapActive: data?.battleMapActive,
+          locationActive: data?.locationActive,
+          buildingRegionActive: data?.buildingRegionActive
+        });
+        console.log("Map_Main_Player: Current URL:", window.location.href);
+        
+        if (!data) {
+          // Session was deleted
+          console.log("Session deleted, kicking out user");
+          navigate("/user/Join_Session");
+          return;
+        }
 
-      // Check if session has recent heartbeat (within last 45 seconds)
-      const now = new Date();
-      const lastHeartbeat = data.lastHeartbeat ? new Date(data.lastHeartbeat) : new Date(data.lastUpdated);
-      const secondsSinceHeartbeat = (now - lastHeartbeat) / 1000;
+        // Check if session has recent heartbeat (within last 45 seconds)
+        const now = new Date();
+        const lastHeartbeat = data.lastHeartbeat ? new Date(data.lastHeartbeat) : new Date(data.lastUpdated);
+        const secondsSinceHeartbeat = (now - lastHeartbeat) / 1000;
 
-      if (secondsSinceHeartbeat > 45) {
-        // Owner hasn't sent heartbeat in 45 seconds - session is dead
-        console.log("Session owner heartbeat stopped, kicking out user");
-        navigate("/user/Join_Session");
-        return;
-      }
+        if (secondsSinceHeartbeat > 45) {
+          // Owner hasn't sent heartbeat in 45 seconds - session is dead
+          console.log("Session owner heartbeat stopped, kicking out user");
+          navigate("/user/Join_Session");
+          setTimeout(() => {
+            window.location.href = "/user/Join_Session";
+          }, 100);
+          return;
+        }
 
-      // Update session data if it changed
-      setSessionData(data);
-    });
+        // Check what view is currently active and redirect if needed
+        if (data.battleMapActive) {
+          console.log("Battle map is active, redirecting to battle map view");
+          navigate(`/user/Map_Battle_View_Player/${sessionCode}`);
+          setTimeout(() => {
+            window.location.href = `/user/Map_Battle_View_Player/${sessionCode}`;
+          }, 100);
+          return;
+        }
+
+        // Check if location is active and redirect if needed
+        if (data.locationActive) {
+          console.log("Location is active, redirecting to location view");
+          navigate(`/user/Map_Location_Player/${sessionCode}`);
+          setTimeout(() => {
+            window.location.href = `/user/Map_Location_Player/${sessionCode}`;
+          }, 100);
+          return;
+        }
+
+        // Check if building region is active and redirect if needed
+        if (data.buildingRegionActive) {
+          console.log("Building region is active, redirecting to building region view");
+          navigate(`/user/Map_Building_Region_Player/${sessionCode}`);
+          setTimeout(() => {
+            window.location.href = `/user/Map_Building_Region_Player/${sessionCode}`;
+          }, 100);
+          return;
+        }
+
+        console.log("Map_Main_Player: No active view, staying on main map");
+        // Update session data if it changed
+        setSessionData(data);
+      });
+
+      return () => {
+        unsubscribe();
+      };
+    }, [sessionCode, navigate]);
 
     return () => {
-      unsubscribe();
+      clearTimeout(timer);
     };
   }, [sessionCode, navigate]);
 
@@ -160,4 +202,4 @@ function Active_Session() {
   );
 }
 
-export default Active_Session;
+export default Map_Main_Player;

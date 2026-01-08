@@ -82,7 +82,11 @@ function Map_Main() {
             isActive: true,
             createdAt: new Date().toISOString(),
             lastUpdated: new Date().toISOString(),
-            lastHeartbeat: new Date().toISOString()
+            lastHeartbeat: new Date().toISOString(),
+            // Initialize view state flags
+            battleMapActive: false,
+            locationActive: false,
+            buildingRegionActive: false
           };
           
           await createSession(sessionCode, sessionData);
@@ -130,6 +134,46 @@ function Map_Main() {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [sessionCode]);
+
+  // Update session with main map data when component mounts
+  useEffect(() => {
+    const updateSessionWithMainMap = async () => {
+      console.log("=== MAP MAIN SESSION UPDATE START ===");
+      console.log("Map_Main: Component mounted with", {
+        isSessionActive: isSessionActive(),
+        userId,
+        campaignId
+      });
+      
+      if (isSessionActive()) {
+        const sessionCode = getExistingSessionCode(userId, campaignId);
+        console.log("Map_Main: Got session code", sessionCode);
+        
+        if (sessionCode) {
+          try {
+            const updateData = {
+              // Clear all other view states to indicate main map is active
+              battleMapActive: false,
+              locationActive: false,
+              buildingRegionActive: false
+            };
+            console.log("Map_Main: About to send update", updateData);
+            const result = await updateSessionBattleMap(sessionCode, updateData);
+            console.log("Map_Main: Update result", result);
+          } catch (error) {
+            console.error("Failed to update session with main map data:", error);
+          }
+        } else {
+          console.log("Map_Main: No session code available");
+        }
+      } else {
+        console.log("Map_Main: Session not active");
+      }
+      console.log("=== MAP MAIN SESSION UPDATE END ===");
+    };
+
+    updateSessionWithMainMap();
+  }, [userId, campaignId]);
 
   // Cleanup when component unmounts
   useEffect(() => {
