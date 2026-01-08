@@ -3,7 +3,7 @@
 {
     --addview-text: 60px;
     --adview-text2: 22px;
-    --hp-text-color: #D34848;
+    --hp-text-color: #b91616;
 }
 
 #addview-page
@@ -25,31 +25,30 @@
 #addview-box /* The pop-up */
 {
     border-radius: var(--border-radius);
-    background-color: var(--background-colour);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(227, 227, 227) 100%);
+    background: var(--background-colour);
     width: 90%;
     max-width: 600px;
     max-height: 90vh;
-    margin: 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
 }
 
 #addview-title /* The title inside the green_ bar */
 {
-    background: var(--background-gradient);
+    background: var(--background-gradient2);
     font-size: var(--addview-text);
     color: var(--text-color2);
     text-align: center;
     width: auto;
     height: auto;
+    font-weight: 600;
     padding-top: 10px;
     padding-bottom: 15px;
 }
 
 #addview-content
 {
-    padding: 15px;
+    padding: 3%;
     height: calc(100% - 80px);
     overflow-y: auto;
 }
@@ -57,9 +56,9 @@
 .addview-uploadimg  /* Uploading an image */
 {
     display: block;
-    margin-left: 0;
+    margin-left: 15%;
     margin-top: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 #addview-discription textarea /* A textarea for a discription */
@@ -72,7 +71,7 @@
 #view-title-box /* The green_ small titles in the view pages (vertical) */
 {
     border-radius: var(--border-radius2);
-    background: var(--background-gradient);
+    background: var(--background-gradient4);
     text-align: center;
     width: 200px;
 }
@@ -80,7 +79,7 @@
 .view-title-box-long /* The green_ small titles in the view pages (the long ones) */
 {
     border-radius: var(--border-radius2);
-    background: var(--background-gradient);
+    background: var(--background-gradient4);
     text-align: center;
     width: 90%;
 }
@@ -112,9 +111,9 @@
     color: var(--text-color2);
     font-size: var(--adview-text2);
     text-align: center;
-    padding: 4px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
 
 }
 .view-stats-main /* The HP, LVL, EXP, STATUS sections */
@@ -149,9 +148,9 @@
 #view-paragraph-section /* the whole inventory section */
 { 
     border-radius: var(--border-radius2);
-    background-color: var(--background-colour2);
+    background: var(--background-colour2);
     color: var(--text-color2);
-    width: 240px; 
+    width: 285px; 
     padding-left: 15px;
     margin-top: 20px;
     margin-left: 0px;
@@ -201,6 +200,27 @@
     padding-right: 5px;
 }
 
+#addview-value-weight
+{
+    display: flex;
+}
+#addview-value-weight input
+{
+    width: 150px;
+}
+
+.addview-select select
+{
+   background: var(--form-box-colour2);
+   border-radius: var(--border-radius2);
+   border: none;
+   height: 35px;
+   padding: 5px;
+   margin-right: 10px;
+   margin-bottom: 10px;
+   box-shadow: 8px 8px 10px rgba(210, 200, 213, 0.2);
+}
+
 /* Local overrides to keep popup content contained */
 #UploadIMG_Logo
 {
@@ -209,25 +229,6 @@
     height: 260px;
     margin-right: 0;
     display: block;
-}
-
-#input-box-gray
-{
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-#input-box-gray input, #input-box-gray textarea
-{
-    width: 70%;
-    max-width: 100%;
-    box-sizing: border-box;
-    padding: 8px;
-    margin: 5px 0;
-}
-#input-box-gray textarea
-{
-    height: 180px;
 }
 
 /* Game_Settings pages */

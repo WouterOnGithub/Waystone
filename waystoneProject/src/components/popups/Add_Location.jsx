@@ -148,7 +148,7 @@ function Add_Location({ campaignId, location, userId, baseUrl, onLocationSaved, 
 
       <div id="addview-content">
 
-        <form id="input-box-gray" onSubmit={handleSave}>
+        <form id="input-box-white" onSubmit={handleSave}>
             <img
               src={imagePreview || UploadIMG_Logo}
               alt="UploadIMG_Logo"
@@ -195,7 +195,7 @@ function Add_Location({ campaignId, location, userId, baseUrl, onLocationSaved, 
             <button id="button-green" type="submit" disabled={saving}>
               {saving ? "Saving..." : "Save"}
             </button>
-            <button id="button-green" type="button" onClick={onClose}>
+            <button id="button-gray" type="button" onClick={onClose}>
               Back
             </button>
             {message && (
