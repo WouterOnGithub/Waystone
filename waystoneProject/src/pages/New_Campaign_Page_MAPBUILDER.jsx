@@ -509,12 +509,10 @@ function New_Campaign_Page_MAPBUILDER()
     if(!userId) return;
     
     if (!data?.name) {
-    alert("Campaign name is required");
+      alert("Campaign name is required");
       return;
     }
 
-    setSaving(true);
-    setSaveMessage("");
     if (!mapFile) {
       setSaveMessage("Please upload a map before saving.");
       return;
@@ -526,17 +524,29 @@ function New_Campaign_Page_MAPBUILDER()
 
     setSaving(true);
     setSaveMessage("");
-
+    
     try {
       const formData = new FormData();
       if (!campaignId) {
         setSaveMessage("No campaign selected.");
-        setSaving(false);
         return;
       }
       // Use campaignId so the backend can tag files per campaign when needed.
       formData.append("campaignId", campaignId);
       formData.append("map", mapFile);
+      
+      // Send the previous map URL for deletion
+      // Get the current main map URL from campaign document since we keep blob preview
+      try {
+        const campaign = await getCampaign(userId, campaignId);
+        const campaignMapUrl = campaign?.mainMapUrl;
+        
+        if (campaignMapUrl && !campaignMapUrl.startsWith('blob:')) {
+          formData.append("previousUrl", campaignMapUrl);
+        }
+      } catch (error) {
+        console.error('Error getting campaign for previousUrl:', error);
+      }
 
       const response = await fetch("/api/upload-map", {
         method: "POST",
@@ -550,6 +560,13 @@ function New_Campaign_Page_MAPBUILDER()
 
       const result = await response.json();
       setSaveMessage(`Map saved.`);
+
+      // Keep using the local blob preview for immediate display
+      // The server URL may not be immediately visible due to dev server timing
+      // Only update campaign data for persistence, don't change previewUrl
+      if (result?.url) {
+        console.log('Map uploaded, keeping blob preview, updating campaign data');
+      }
 
       // Persist the main map URL on the campaign document in Firestore so it
       // can be reliably loaded later, instead of reconstructing a file path.

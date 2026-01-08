@@ -17,6 +17,8 @@ function Map_Main() {
   const [campaign, setCampaign] = useState(null);
   const [campaignLocations, setCampaignLocations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [mapLoading, setMapLoading] = useState(true);
+  const [mapError, setMapError] = useState(false);
   const [sessionCode, setSessionCode] = useState('');
   const [isCodeVisible, setIsCodeVisible] = useState(false);
 
@@ -25,6 +27,7 @@ function Map_Main() {
     const loadCampaign = async () => {
       if (!campaignId || !userId) {
         setLoading(false);
+        setMapLoading(false);
         return;
       }
 
@@ -39,11 +42,57 @@ function Map_Main() {
         console.error("Failed to load campaign:", error);
       } finally {
         setLoading(false);
+        setMapLoading(false);
       }
     };
 
     loadCampaign();
   }, [campaignId, userId]);
+
+  // Add effect to periodically check if map URL needs updating
+  useEffect(() => {
+    if (!campaignId || !userId) return;
+
+    const checkMapUrl = async () => {
+      try {
+        const freshCampaignData = await getCampaign(userId, campaignId);
+        if (freshCampaignData?.mainMapUrl !== campaign?.mainMapUrl) {
+          console.log('Map URL updated, refreshing campaign data...');
+          setCampaign(freshCampaignData);
+        }
+      } catch (error) {
+        console.error('Error checking map URL:', error);
+      }
+    };
+
+    // Check immediately and then every 5 seconds
+    checkMapUrl();
+    const interval = setInterval(checkMapUrl, 5000);
+    
+    return () => clearInterval(interval);
+  }, [campaignId, userId]);
+
+  // Additional effect to handle map loading issues
+  useEffect(() => {
+    if (mapError && campaignId && userId) {
+      console.log('Map error detected, reloading campaign data...');
+      const retryLoad = async () => {
+        try {
+          const campaignData = await getCampaign(userId, campaignId);
+          setCampaign(campaignData);
+          setMapError(false);
+          setMapLoading(false);
+        } catch (error) {
+          console.error('Failed to reload campaign:', error);
+        }
+      };
+      
+      // Retry after 3 seconds
+      const retryTimer = setTimeout(retryLoad, 3000);
+      
+      return () => clearTimeout(retryTimer);
+    }
+  }, [mapError, campaignId, userId]);
 
   // Set up session cleanup callback
   useEffect(() => {
@@ -350,7 +399,7 @@ function Map_Main() {
 
             {/* Map Display */}
             <div className="map-display">
-              {loading ? (
+              {loading || mapLoading ? (
                 <div className="map-placeholder">
                   <p>Loading map...</p>
                 </div>
@@ -359,11 +408,43 @@ function Map_Main() {
                   src={campaign.mainMapUrl}
                   alt="Campaign Map"
                   className="map-image"
+                  onLoad={() => {
+                    setMapLoading(false);
+                    setMapError(false);
+                    console.log('Map loaded successfully:', campaign.mainMapUrl);
+                  }}
+                  onError={(e) => {
+                    console.error('Map image failed to load:', campaign.mainMapUrl);
+                    setMapError(true);
+                    setMapLoading(false);
+                    // Retry loading after a short delay to handle potential timing issues
+                    setTimeout(() => {
+                      const retryUrl = `${campaign.mainMapUrl}?retry=${Date.now()}`;
+                      console.log('Retrying map load with:', retryUrl);
+                      e.target.src = retryUrl;
+                      setMapError(false);
+                    }, 2000);
+                  }}
                 />
               ) : (
                 <div className="map-placeholder">
                   <p>No map uploaded yet</p>
                   <small>Upload a map in the Map Builder to see it here</small>
+                </div>
+              )}
+              
+              {mapError && (
+                <div style={{ 
+                  position: 'absolute', 
+                  top: '10px', 
+                  right: '10px', 
+                  background: '#ff6b6b', 
+                  color: 'white', 
+                  padding: '5px 10px', 
+                  borderRadius: '5px',
+                  fontSize: '12px'
+                }}>
+                  Map failed to load. Retrying...
                 </div>
               )}
 

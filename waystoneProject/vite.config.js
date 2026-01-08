@@ -743,6 +743,7 @@ export default defineConfig({
 
           let campaignId = '';
           let safeCampaignId = '';
+          let previousUrl = '';
           let savedFileName = '';
           let savedFileBytes = 0;
           let mapId = '';
@@ -752,6 +753,9 @@ export default defineConfig({
             if (name === 'campaignId') {
               campaignId = value;
               safeCampaignId = campaignId.replace(/[^a-zA-Z0-9_-]/g, '');
+            }
+            if (name === 'previousUrl') {
+              previousUrl = value;
             }
           });
 
@@ -797,7 +801,8 @@ export default defineConfig({
             });
 
             writeStream.on('finish', () => {
-              // nothing; response in close handler
+              // File writing is complete, but we'll delete previous file in the close event
+              // to ensure everything is processed correctly
             });
           });
 
@@ -807,6 +812,40 @@ export default defineConfig({
               sendJson(400, { error: 'No file uploaded' });
               return;
             }
+
+            // Attempt to delete previous map image if provided (after file is fully processed)
+            if (previousUrl) {
+              try {
+                const previousFileName = path.basename(previousUrl);
+                if (previousFileName) {
+                  const previousPath = path.join(
+                    process.cwd(),
+                    'public',
+                    'Main-Maps',
+                    previousFileName
+                  );
+
+                  // Delete previous main map file
+                  if (fs.existsSync(previousPath)) {
+                    try {
+                      fs.unlinkSync(previousPath);
+                      console.log('Successfully deleted previous main map:', previousFileName);
+                    } catch (deleteError) {
+                      console.error('Error deleting previous main map:', deleteError);
+                    }
+                  } else {
+                    console.log('Previous main map file does not exist:', previousFileName);
+                  }
+                } else {
+                  console.log('No filename extracted from previousUrl');
+                }
+              } catch (error) {
+                console.error('Error in previous map deletion process:', error);
+              }
+            } else {
+              console.log('No previousUrl provided for map upload');
+            }
+
             sendJson(200, {
               url: `/Main-Maps/${savedFileName}`,
               name: savedFileName,
@@ -816,6 +855,86 @@ export default defineConfig({
           });
 
           req.pipe(busboy);
+        });
+      },
+    },
+    {
+      name: 'delete-image-middleware',
+      configureServer(server) {
+        server.middlewares.use('/api/delete-image', (req, res, next) => {
+          if (req.method !== 'POST') return next();
+
+          const sendJson = (status, body) => {
+            res.statusCode = status;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(body));
+          };
+
+          let body = '';
+          req.on('data', chunk => {
+            body += chunk.toString();
+          });
+
+          req.on('end', () => {
+            try {
+              const { imageUrl } = JSON.parse(body);
+              
+              if (!imageUrl) {
+                sendJson(400, { error: 'imageUrl is required' });
+                return;
+              }
+
+              // Extract filename from imageUrl and validate it's safe
+              const fileName = path.basename(imageUrl);
+              if (!fileName || fileName.includes('..') || fileName.includes('/') || fileName.includes('\\')) {
+                sendJson(400, { error: 'Invalid imageUrl' });
+                return;
+              }
+
+              // Determine the image type and corresponding directory
+              let targetDir;
+              if (fileName.startsWith('event-')) {
+                targetDir = path.join(process.cwd(), 'public', 'Events');
+              } else if (fileName.startsWith('location-')) {
+                targetDir = path.join(process.cwd(), 'public', 'Locations');
+              } else if (fileName.startsWith('building-')) {
+                targetDir = path.join(process.cwd(), 'public', 'building');
+              } else if (fileName.startsWith('player-')) {
+                targetDir = path.join(process.cwd(), 'public', 'players');
+              } else if (fileName.startsWith('entity-')) {
+                targetDir = path.join(process.cwd(), 'public', 'entities');
+              } else if (fileName.startsWith('avatar-')) {
+                targetDir = path.join(process.cwd(), 'public', 'avatars');
+              } else if (fileName.startsWith('main-')) {
+                targetDir = path.join(process.cwd(), 'public', 'Main-Maps');
+              } else {
+                // For now, handle all known image types
+                console.log('Skipping deletion of unrecognized image type:', fileName);
+                sendJson(200, { success: true, message: 'Unrecognized image type, skipping deletion' });
+                return;
+              }
+
+              const filePath = path.join(targetDir, fileName);
+              
+              if (fs.existsSync(filePath)) {
+                try {
+                  fs.unlinkSync(filePath);
+                  console.log('Successfully deleted image:', fileName);
+                  sendJson(200, { success: true, message: 'Image deleted successfully' });
+                } catch (deleteError) {
+                  console.error('Failed to delete image:', deleteError);
+                  sendJson(500, { error: 'Failed to delete image file' });
+                }
+              } else {
+                // File doesn't exist, but that's okay - consider it successful
+                console.log('Image file not found, considering deletion successful:', fileName);
+                sendJson(200, { success: true, message: 'Image not found, but deletion considered successful' });
+              }
+            } catch (parseError) {
+              console.error('Error parsing delete-image request:', parseError);
+              sendJson(400, { error: 'Invalid JSON in request body' });
+            }
+          });
         });
       },
     },

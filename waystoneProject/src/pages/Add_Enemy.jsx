@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase/firebase";
+import { db, doc } from "../firebase/firebase";
 import { addEnemy,getEntityById, updateEntity, deleteEntityAndSubCollections } from "../api/npcs";
 import { handleImageUpload, resolveImageUrl } from "../utils/imageUpload.js";
 import "./pages-css/CSS.css";
@@ -314,12 +314,12 @@ function Add_Enemy()
           <div id="campaign-tabs">
 
             {/* The campaign button */}
-            <button id="campaign-tab">
+            <button id="campaign-tab" onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}>
               Campaign
             </button>
 
             {/* The map builder button */}
-            <button id="campaign-tab">
+            <button id="campaign-tab" onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}>
               Map Builder
             </button>
 
@@ -718,7 +718,7 @@ function Add_Enemy()
             <button id="button-green" onClick={handleSaveCharacter} disabled={saving}>
               {saving ? "Saving..." : "Save"}
             </button>
-            <button id="button-gray">Cancel</button>
+            <button id="button-gray" onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}>Cancel</button>
            {enemyId && (
                   <button id="button-gray" onClick={handleDeleteEnemy}>Delete</button>
                 )}
