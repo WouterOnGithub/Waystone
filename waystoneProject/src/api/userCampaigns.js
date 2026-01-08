@@ -395,6 +395,93 @@ export const getItems = async (userId, campaignId) => {
   }
 };
 
+// EVENT HELPERS
+
+export const createEvent = async (userId, campaignId, eventData, mapId) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Maps",
+      mapId
+    );
+    await setDoc(docRef, eventData, { merge: true });
+    const newDoc = await getDoc(docRef);
+    return newDoc.exists() ? { id: newDoc.id, ...newDoc.data() } : null;
+  } catch (error) {
+    console.error("Error creating event:", error);
+    return null;
+  }
+};
+
+export const updateEvent = async (
+  userId,
+  campaignId,
+  mapId,
+  eventData
+) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Maps",
+      mapId
+    );
+    await setDoc(docRef, eventData, { merge: true });
+    const updatedDoc = await getDoc(docRef);
+    return updatedDoc.exists()
+      ? { id: updatedDoc.id, ...updatedDoc.data() }
+      : null;
+  } catch (error) {
+    console.error("Error updating event:", error);
+    return null;
+  }
+};
+
+export const getEvents = async (userId, campaignId, mapId) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Maps",
+      mapId
+    );
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? [{ id: docSnap.id, ...docSnap.data() }] : [];
+  } catch (error) {
+    console.error("Error getting events:", error);
+    return [];
+  }
+};
+
+export const deleteEvent = async (userId, campaignId, mapId) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Maps",
+      mapId
+    );
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return false;
+  }
+};
+
 // CONTAINER HELPERS
 
 export const createContainer = async (userId, campaignId, containerData) => {
