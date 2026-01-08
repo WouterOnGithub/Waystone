@@ -873,7 +873,7 @@ const copyCampaignToFreeCampaigns = async (userId, campaignId, campaignData) => 
       published: true,
       isFree: true,
       campaignId,
-      ownerId: userId,
+      ownerId: userId, // Set to current user's ID
       originalCampaignId: campaignId, // Reference to original
     });
 

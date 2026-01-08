@@ -153,3 +153,11 @@
 .delete-button:hover {
     background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
 }
+
+.unarchive-button {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.unarchive-button:hover {
+    background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+}

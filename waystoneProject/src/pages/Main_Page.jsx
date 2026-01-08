@@ -47,8 +47,8 @@ function Main_Page()
           (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
         );
         
-        // Take only the first 5 for recent campaigns
-        const recent = sorted.slice(0, 5).map((c, idx) => ({
+        // Take only the first 4 for recent campaigns
+        const recent = sorted.slice(0, 4).map((c, idx) => ({
           id: c.id,
           name: c.name || "Unnamed campaign",
           color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],

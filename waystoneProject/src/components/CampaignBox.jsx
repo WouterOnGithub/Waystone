@@ -8,12 +8,18 @@ const CampaignBox = ({
   onOpenCampaign, 
   onPublishCampaign, 
   onArchiveCampaign,
-  onAddToMyCampaigns
+  onAddToMyCampaigns,
+  onUnarchiveCampaign
 }) => {
   const { user } = useAuth();
   const isFreeCampaign = sectionTitle === "Free Campaigns";
   const isArchivedCampaign = sectionTitle === "Archived Campaigns";
-  const isOriginalOwner = user?.uid && item.ownerId === user.uid;
+  
+  // Check if this is the user's own campaign that was published to free campaigns
+  const isOwnPublishedCampaign = isFreeCampaign && user?.uid && item.ownerId === user.uid;
+  
+  // Check if this is someone else's free campaign
+  const isOtherFreeCampaign = isFreeCampaign && user?.uid && item.ownerId !== user.uid;
   
   const handleAddToMyCampaigns = async () => {
     if (!item.id || !user?.uid) return;
@@ -58,30 +64,41 @@ const CampaignBox = ({
       {/* Buttons area */}
       <div className="campaign-buttons-area">
         {isFreeCampaign ? (
-          // Free campaigns logic
-          isOriginalOwner ? (
-            <button className="campaign-button disabled-button" disabled>
-              This is your campaign
-            </button>
-          ) : (
+          // Free campaigns logic - hide user's own campaigns
+          isOtherFreeCampaign ? (
             <button
               onClick={handleAddToMyCampaigns}
               className="campaign-button add-button"
             >
               Add to my campaigns
             </button>
+          ) : (
+            <button className="campaign-button disabled-button" disabled>
+              This is your campaign
+            </button>
           )
-        ) : sectionTitle === "Archived Campaigns" ? (
-          // Archived campaigns - only delete button
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onArchiveCampaign(item.id, item.name);
-            }}
-            className="campaign-button delete-button"
-          >
-            Delete
-          </button>
+        ) : isArchivedCampaign ? (
+          // Archived campaigns - unarchive and delete buttons
+          <>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onUnarchiveCampaign(item.id, item.name);
+              }}
+              className="campaign-button unarchive-button"
+            >
+              Unarchive
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onArchiveCampaign(item.id, item.name);
+              }}
+              className="campaign-button delete-button"
+            >
+              Delete
+            </button>
+          </>
         ) : (
           // Regular campaigns logic
           <>

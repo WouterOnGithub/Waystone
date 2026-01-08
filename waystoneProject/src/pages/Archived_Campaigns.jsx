@@ -104,6 +104,23 @@ function My_Campaigns_Page()
     }
   };
 
+  const handleUnarchiveCampaign = async (campaignId, campaignName) => {
+    if (!campaignId || !user?.uid) return;
+    
+    try {
+      await updateCampaignInfo(user.uid, campaignId, { isArchived: false });
+      // Refresh campaigns list
+      const campaigns = await getAllCampaigns(user.uid);
+      const sorted = [...campaigns].sort(
+        (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
+      );
+      setAllCampaigns(sorted);
+    } catch (err) {
+      console.error("Failed to unarchive campaign:", err);
+      setError("Failed to unarchive campaign");
+    }
+  };
+
   return (
     <div className="full-page">
       
@@ -135,6 +152,7 @@ function My_Campaigns_Page()
                     onOpenCampaign={handleOpenCampaign}
                     onPublishCampaign={() => {}} // No publish for archived
                     onArchiveCampaign={handleDeleteCampaign}
+                    onUnarchiveCampaign={handleUnarchiveCampaign}
                     onAddToMyCampaigns={() => {}} // No add for archived
                   />
                 ))}

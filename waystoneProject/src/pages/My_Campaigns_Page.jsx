@@ -110,20 +110,22 @@ function My_Campaigns_Page()
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030"][idx % 3],
-      published: c.published === true,
-      mainMapUrl: c.mainMapUrl || null,
+        published: c.published === true,
+        mainMapUrl: c.mainMapUrl || null,
       })),
     },
     {
-  title: "Free Campaigns",
-  items: freeCampaigns.map((c, idx) => ({
-    id: c.campaignId || c.id,
-    name: c.name || "Unnamed campaign",
-    color: ["#447DC9", "#E7D665"][idx % 2],
-    published: true,
-    mainMapUrl: c.mainMapUrl || null,
-  })),
-}
+      title: "Free Campaigns",
+      items: freeCampaigns.map((c, idx) => ({
+        id: c.campaignId || c.id,
+        name: c.name || "Unnamed campaign",
+        color: ["#447DC9", "#E7D665"][idx % 2],
+        published: true,
+        mainMapUrl: c.mainMapUrl || null,
+        ownerId: c.ownerId || null,
+        originalCampaignId: c.originalCampaignId || null,
+      })),
+    },
   ];
 
   const handleOpenCampaign = (campaignId) => {
