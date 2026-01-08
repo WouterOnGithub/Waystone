@@ -15,6 +15,7 @@ import "./pages-css/My_Campaigns_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
+import CampaignBox from "../components/CampaignBox";
 
 // Helper to normalise Firestore / ISO dates
 const getCampaignSortDate = (campaign) => {
@@ -203,50 +204,15 @@ function My_Campaigns_Page()
               {/* The area that holds the campaign boxes */}
               <div id="box-section">
                 {section.items.map((item, idx) => (
-                  /* A campaigns box */
-                  <div id="box-text" 
-                       key={item.id ? item.id : `${section.title}-${idx}`}
-                       onClick={() => handleOpenCampaign(item.id)}
-                       style={item.id ? { cursor: "pointer" } : undefined}
-                  >
-                    
-                    {/* The campaigns project name */}
-                    <p>{item.name}&#10240;</p>
-                    
-                    {/* The bottom part of the box (the white) which contains the buttons */}
-                    <div id="box">
-                      {section.title === "All Campaigns" ? (
-                        <>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handlePublishCampaign(item.id, item.name, item.published);
-                            }}
-                          >
-                            {item.published ? "Unpublish" : "Publish"}
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleArchiveCampaign(item.id, item.name);
-                            }}
-                          >
-                            Archive
-                          </button>
-                        </>
-                      ) : (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleArchiveCampaign(item.id, item.name);
-                          }}
-                        >
-                          Archive
-                        </button>
-                      )}
-                    </div>
-
-                  </div>
+                  <CampaignBox
+                    key={item.id ? item.id : `${section.title}-${idx}`}
+                    item={item}
+                    idx={idx}
+                    sectionTitle={section.title}
+                    onOpenCampaign={handleOpenCampaign}
+                    onPublishCampaign={handlePublishCampaign}
+                    onArchiveCampaign={handleArchiveCampaign}
+                  />
                 ))}
               </div>
 
