@@ -77,8 +77,8 @@ const Join_Session = () => {
       console.log("All checks passed - navigating to session");
       console.log("Joining session with code:", code, "Session data:", sessionData);
       
-      // Navigate to Active_Session with the session code
-      navigate(`/user/Active_Session/${sessionCodeUpper}`);
+      // Navigate to Map_Main_Player with the session code
+      navigate(`/user/Map_Main_Player/${sessionCodeUpper}`);
       
     } catch (err) {
       setError("An error occurred. Please try again.");

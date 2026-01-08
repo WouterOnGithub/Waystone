@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat } from "../api/userCampaigns";
+import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, updateSessionBattleMap } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Location() {
@@ -71,34 +71,6 @@ function Map_Location() {
     }
   }, [userId, campaignId]);
 
-  // Save session data to Firestore when session is active
-  useEffect(() => {
-    const saveSessionData = async () => {
-      if (sessionCode && campaign && userId && isSessionActive()) {
-        try {
-          const sessionData = {
-            sessionCode: sessionCode,
-            userId: userId,
-            campaignId: campaignId,
-            campaignName: campaign.name || 'Unnamed Campaign',
-            mainMapUrl: campaign.mainMapUrl || null,
-            isActive: true,
-            createdAt: new Date().toISOString(),
-            lastUpdated: new Date().toISOString(),
-            lastHeartbeat: new Date().toISOString()
-          };
-          
-          await createSession(sessionCode, sessionData);
-          console.log("Session data saved to Firestore:", sessionData);
-        } catch (error) {
-          console.error("Failed to save session data:", error);
-        }
-      }
-    };
-
-    saveSessionData();
-  }, [sessionCode, campaign, campaignId, userId]);
-
   // Heartbeat mechanism to keep session alive
   useEffect(() => {
     if (!sessionCode) return;
@@ -141,6 +113,61 @@ function Map_Location() {
       releaseMapPage();
     };
   }, []);
+
+  // Update session with location data when component mounts or location changes
+  useEffect(() => {
+    const updateSessionWithLocation = async () => {
+      if (isSessionActive() && locationId) {
+        const sessionCode = getExistingSessionCode(userId, campaignId);
+        
+        if (sessionCode) {
+          try {
+            const updateData = {
+              locationActive: true,
+              locationUserId: userId,
+              locationCampaignId: campaignId,
+              locationId: locationId,
+              // Clear other view states
+              battleMapActive: false,
+              buildingRegionActive: false
+            };
+            console.log("Map_Location: Sending update to session:", updateData);
+            await updateSessionBattleMap(sessionCode, updateData);
+            console.log("Map_Location: Update sent successfully");
+          } catch (error) {
+            console.error("Failed to update session with location data:", error);
+          }
+        }
+      }
+    };
+
+    updateSessionWithLocation();
+  }, [userId, campaignId, locationId]);
+
+  // Clean up location data when component unmounts
+  useEffect(() => {
+    return () => {
+      const cleanupLocation = async () => {
+        if (isSessionActive() && locationId) {
+          const sessionCode = getExistingSessionCode(userId, campaignId);
+          if (sessionCode) {
+            try {
+              await updateSessionBattleMap(sessionCode, {
+                locationActive: false,
+                locationUserId: null,
+                locationCampaignId: null,
+                locationId: null
+              });
+            } catch (error) {
+              console.error("Failed to clear session location data:", error);
+            }
+          }
+        }
+      };
+
+      cleanupLocation();
+    };
+  }, [userId, campaignId, locationId]);
 
   const toggleRegions = () => {
     setRegionsOpen(!regionsOpen);

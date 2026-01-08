@@ -82,7 +82,11 @@ function Map_Main() {
             isActive: true,
             createdAt: new Date().toISOString(),
             lastUpdated: new Date().toISOString(),
-            lastHeartbeat: new Date().toISOString()
+            lastHeartbeat: new Date().toISOString(),
+            // Initialize view state flags
+            battleMapActive: false,
+            locationActive: false,
+            buildingRegionActive: false
           };
           
           await createSession(sessionCode, sessionData);
@@ -130,6 +134,31 @@ function Map_Main() {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [sessionCode]);
+
+  // Update session with main map data when component mounts
+  useEffect(() => {
+    const updateSessionWithMainMap = async () => {
+      if (isSessionActive()) {
+        const sessionCode = getExistingSessionCode(userId, campaignId);
+        
+        if (sessionCode) {
+          try {
+            const updateData = {
+              // Clear all other view states to indicate main map is active
+              battleMapActive: false,
+              locationActive: false,
+              buildingRegionActive: false
+            };
+            await updateSessionBattleMap(sessionCode, updateData);
+          } catch (error) {
+            console.error("Failed to update session with main map data:", error);
+          }
+        }
+      }
+    };
+
+    updateSessionWithMainMap();
+  }, [userId, campaignId]);
 
   // Cleanup when component unmounts
   useEffect(() => {
