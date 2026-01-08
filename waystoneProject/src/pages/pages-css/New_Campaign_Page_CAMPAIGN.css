@@ -52,7 +52,7 @@
   margin-top: 20px;
   padding-top: 20px;
   width: 95%;
-  border-top: 2px solid var(--background-colour3);
+  border-top: 2px solid var(--text-color2);
 }
 
 
@@ -60,7 +60,7 @@
 /* New_Campaign_Page_MAPBUILDER */
 #campaign-select select
 {
-  background-color: white;
+  background: var(--form-box-colour2);
   border-radius: var(--border-radius);
   border: none;
   width: 250px;
@@ -96,7 +96,7 @@
 }
 .ability-box /* The individual ability box */
 {
-  background: var(--background-gradient2);
+  background: var(--background-gradient4);
   border-radius: var(--border-radius);
   text-align: center;
   padding: 20px;
@@ -119,8 +119,8 @@
 }
 .ability-score /* The ability input field */
 {
-  background-color: white;
   border-radius: var(--border-radius);
+  background: var(--form-box-colour2);
   text-align: center;
   border: none;
   width: 150px;
@@ -156,20 +156,16 @@
   height: 20px;
   transition: 0.3s;
 }
-#combat-statistics-checkboxes input:hover /* The checkbox while hovering */
-{
-  border-color: var(--text-color3);
-}
 #combat-statistics-checkboxes input:checked /* The checkbox when clicked on */
 {
   background: var(--text-color3);
-  border: 2px var(--text-color4) solid;
+  border: 2px var(--background-gradient4) solid;
 }
 
 /* The skills */
 .skill-row /* The row of a skill */
 {
-  background: var(--background-colour3);
+  background: var(--text-color);
   border-radius: var(--border-radius);
   display: grid;
   padding: 15px;
@@ -178,7 +174,7 @@
 }
 .skill-row:first-child /* The first row of the skills list */
 {
-  background: var(--background-gradient2);
+  background: var(--background-gradient4);
   color: var(--text-color2);
   font-weight: 600;
 }
@@ -196,7 +192,7 @@
 }
 .skill-select /* The proficiency modifier */
 { 
-  background-color: white;
+  background: var(--background-colour);
   border-radius: var(--border-radius);
   border: none;
   padding: 15px;
