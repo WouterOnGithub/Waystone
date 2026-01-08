@@ -71,34 +71,6 @@ function Map_Location() {
     }
   }, [userId, campaignId]);
 
-  // Save session data to Firestore when session is active
-  useEffect(() => {
-    const saveSessionData = async () => {
-      if (sessionCode && campaign && userId && isSessionActive()) {
-        try {
-          const sessionData = {
-            sessionCode: sessionCode,
-            userId: userId,
-            campaignId: campaignId,
-            campaignName: campaign.name || 'Unnamed Campaign',
-            mainMapUrl: campaign.mainMapUrl || null,
-            isActive: true,
-            createdAt: new Date().toISOString(),
-            lastUpdated: new Date().toISOString(),
-            lastHeartbeat: new Date().toISOString()
-          };
-          
-          await createSession(sessionCode, sessionData);
-          console.log("Session data saved to Firestore:", sessionData);
-        } catch (error) {
-          console.error("Failed to save session data:", error);
-        }
-      }
-    };
-
-    saveSessionData();
-  }, [sessionCode, campaign, campaignId, userId]);
-
   // Heartbeat mechanism to keep session alive
   useEffect(() => {
     if (!sessionCode) return;
@@ -145,17 +117,8 @@ function Map_Location() {
   // Update session with location data when component mounts or location changes
   useEffect(() => {
     const updateSessionWithLocation = async () => {
-      console.log("=== MAP LOCATION SESSION UPDATE START ===");
-      console.log("Map_Location: Component mounted with", {
-        isSessionActive: isSessionActive(),
-        locationId,
-        userId,
-        campaignId
-      });
-      
       if (isSessionActive() && locationId) {
         const sessionCode = getExistingSessionCode(userId, campaignId);
-        console.log("Map_Location: Got session code", sessionCode);
         
         if (sessionCode) {
           try {
@@ -168,19 +131,14 @@ function Map_Location() {
               battleMapActive: false,
               buildingRegionActive: false
             };
-            console.log("Map_Location: About to send update", updateData);
-            const result = await updateSessionBattleMap(sessionCode, updateData);
-            console.log("Map_Location: Update result", result);
+            console.log("Map_Location: Sending update to session:", updateData);
+            await updateSessionBattleMap(sessionCode, updateData);
+            console.log("Map_Location: Update sent successfully");
           } catch (error) {
             console.error("Failed to update session with location data:", error);
           }
-        } else {
-          console.log("Map_Location: No session code available");
         }
-      } else {
-        console.log("Map_Location: Session not active or no locationId");
       }
-      console.log("=== MAP LOCATION SESSION UPDATE END ===");
     };
 
     updateSessionWithLocation();
@@ -200,7 +158,6 @@ function Map_Location() {
                 locationCampaignId: null,
                 locationId: null
               });
-              console.log("Session location data cleared");
             } catch (error) {
               console.error("Failed to clear session location data:", error);
             }

@@ -93,34 +93,6 @@ function Map_Building_Region() {
     }
   }, [userId, campaignId]);
 
-  // Save session data to Firestore when session is active
-  useEffect(() => {
-    const saveSessionData = async () => {
-      if (sessionCode && campaign && userId && isSessionActive()) {
-        try {
-          const sessionData = {
-            sessionCode: sessionCode,
-            userId: userId,
-            campaignId: campaignId,
-            campaignName: campaign.name || 'Unnamed Campaign',
-            mainMapUrl: campaign.mainMapUrl || null,
-            isActive: true,
-            createdAt: new Date().toISOString(),
-            lastUpdated: new Date().toISOString(),
-            lastHeartbeat: new Date().toISOString()
-          };
-          
-          await createSession(sessionCode, sessionData);
-          console.log("Session data saved to Firestore:", sessionData);
-        } catch (error) {
-          console.error("Failed to save session data:", error);
-        }
-      }
-    };
-
-    saveSessionData();
-  }, [sessionCode, campaign, campaignId, userId]);
-
   // Heartbeat mechanism to keep session alive
   useEffect(() => {
     if (!sessionCode) return;
@@ -181,7 +153,6 @@ function Map_Building_Region() {
               battleMapActive: false,
               locationActive: false
             });
-            console.log("Session updated with building region data");
           } catch (error) {
             console.error("Failed to update session with building region data:", error);
           }
@@ -206,7 +177,6 @@ function Map_Building_Region() {
                 buildingRegionCampaignId: null,
                 buildingRegionId: null
               });
-              console.log("Session building region data cleared");
             } catch (error) {
               console.error("Failed to clear session building region data:", error);
             }

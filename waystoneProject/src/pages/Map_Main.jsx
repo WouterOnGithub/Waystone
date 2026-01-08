@@ -138,16 +138,8 @@ function Map_Main() {
   // Update session with main map data when component mounts
   useEffect(() => {
     const updateSessionWithMainMap = async () => {
-      console.log("=== MAP MAIN SESSION UPDATE START ===");
-      console.log("Map_Main: Component mounted with", {
-        isSessionActive: isSessionActive(),
-        userId,
-        campaignId
-      });
-      
       if (isSessionActive()) {
         const sessionCode = getExistingSessionCode(userId, campaignId);
-        console.log("Map_Main: Got session code", sessionCode);
         
         if (sessionCode) {
           try {
@@ -157,19 +149,12 @@ function Map_Main() {
               locationActive: false,
               buildingRegionActive: false
             };
-            console.log("Map_Main: About to send update", updateData);
-            const result = await updateSessionBattleMap(sessionCode, updateData);
-            console.log("Map_Main: Update result", result);
+            await updateSessionBattleMap(sessionCode, updateData);
           } catch (error) {
             console.error("Failed to update session with main map data:", error);
           }
-        } else {
-          console.log("Map_Main: No session code available");
         }
-      } else {
-        console.log("Map_Main: Session not active");
       }
-      console.log("=== MAP MAIN SESSION UPDATE END ===");
     };
 
     updateSessionWithMainMap();

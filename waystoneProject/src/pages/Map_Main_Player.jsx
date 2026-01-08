@@ -52,14 +52,13 @@ function Map_Main_Player() {
     // Small delay to ensure subscription is ready
     const timer = setTimeout(() => {
       const unsubscribe = subscribeToSessionStatus(sessionCode, (data) => {
-        console.log("=== MAP MAIN PLAYER RECEIVED UPDATE ===");
-        console.log("Map_Main_Player: Raw session data:", data);
-        console.log("Map_Main_Player: Parsed values:", {
+        console.log("=== SESSION UPDATE DEBUG ===");
+        console.log("Session data:", data);
+        console.log("Flags:", {
           battleMapActive: data?.battleMapActive,
           locationActive: data?.locationActive,
           buildingRegionActive: data?.buildingRegionActive
         });
-        console.log("Map_Main_Player: Current URL:", window.location.href);
         
         if (!data) {
           // Session was deleted
@@ -113,8 +112,8 @@ function Map_Main_Player() {
           return;
         }
 
-        console.log("Map_Main_Player: No active view, staying on main map");
-        // Update session data if it changed
+        console.log("No active view flags, staying on main map");
+        // Update session data if it changed (no log for staying on main map to reduce console noise)
         setSessionData(data);
       });
 
@@ -136,18 +135,24 @@ function Map_Main_Player() {
     <div className="full-page">
       <div className="campaign-page">
         <div className="map-container">
-          {/* Top Controls */}
-          <div className="map-top-controls">
-            {/* Back Button */}
-            <button 
-              className="map-back-btn" 
-              onClick={handleBack}
-              title="Go back to session join"
+          {/* Leave Session Button */}
+          <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 1000 }}>
+            <button
+              onClick={() => navigate("/user/Join_Session")}
+              style={{
+                backgroundColor: '#dc3545',
+                color: 'white',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold'
+              }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#c82333'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#dc3545'}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-              Back
+              Leave Session
             </button>
           </div>
 
@@ -161,7 +166,7 @@ function Map_Main_Player() {
               <div className="map-placeholder">
                 <p style={{ color: 'red' }}>{error}</p>
                 <button 
-                  onClick={handleBack}
+                  onClick={() => navigate("/user/Join_Session")}
                   className="back-button"
                   style={{ marginTop: '20px', padding: '10px 20px' }}
                 >

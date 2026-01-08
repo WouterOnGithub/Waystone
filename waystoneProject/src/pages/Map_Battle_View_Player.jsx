@@ -120,94 +120,34 @@ function Map_Battle_View_Player() {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      {/* Navigation Button */}
+      {/* Leave Session Button */}
       <div style={{ 
         position: 'absolute', 
         top: '20px', 
-        left: '20px', 
+        right: '20px', 
         zIndex: 1000 
       }}>
-        <div ref={navMenuRef} style={{ position: 'relative' }}>
-          <button
-            onClick={() => setShowNavMenu(!showNavMenu)}
-            style={{
-              backgroundColor: '#2e3d08',
-              color: 'white',
-              border: 'none',
-              padding: '10px 15px',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px'
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 12h18m-9-9l9 9-9 9"/>
-            </svg>
-            Navigate
-          </button>
-          
-          {/* Dropdown Menu */}
-          {showNavMenu && (
-            <div style={{
-              position: 'fixed',
-              top: '65px',
-              left: '20px',
-              backgroundColor: 'white',
-              border: '1px solid #ccc',
-              borderRadius: '5px',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-              minWidth: '150px',
-              zIndex: 1001
-            }}>
-              <button
-                onClick={() => {
-                  navigate(`/user/Map_Main_Player/${sessionCode}`);
-                  setShowNavMenu(false);
-                }}
-                style={{
-                  width: '100%',
-                  padding: '10px 15px',
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  textAlign: 'left',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  borderBottom: '1px solid #eee'
-                }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#f5f5f5'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-              >
-                Back to Main Map
-              </button>
-              <button
-                onClick={() => {
-                  navigate("/user/Join_Session");
-                  setShowNavMenu(false);
-                }}
-                style={{
-                  width: '100%',
-                  padding: '10px 15px',
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  textAlign: 'left',
-                  cursor: 'pointer',
-                  fontSize: '14px'
-                }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#f5f5f5'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-              >
-                Leave Session
-              </button>
-            </div>
-          )}
-        </div>
+        <button
+          onClick={() => navigate("/user/Join_Session")}
+          style={{
+            backgroundColor: '#dc3545',
+            color: 'white',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 'bold'
+          }}
+          onMouseEnter={(e) => e.target.style.backgroundColor = '#c82333'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = '#dc3545'}
+        >
+          Leave Session
+        </button>
       </div>
       
       {/* Battle Map Display */}
-      <div style={{ paddingLeft: '200px' }}>
+      <div style={{ paddingLeft: '20px' }}>
         {loading ? (
           <div style={{ 
             display: 'flex', 
@@ -229,10 +169,10 @@ function Map_Battle_View_Player() {
           }}>
             <p style={{ color: 'red', fontSize: '18px', marginBottom: '20px' }}>{error}</p>
             <button 
-              onClick={handleBack}
+              onClick={() => navigate("/user/Join_Session")}
               style={{
                 padding: '10px 20px',
-                backgroundColor: '#2e3d08',
+                backgroundColor: '#dc3545',
                 color: 'white',
                 border: 'none',
                 borderRadius: '5px',
@@ -240,7 +180,7 @@ function Map_Battle_View_Player() {
                 fontSize: '14px'
               }}
             >
-              Back to Main Map
+              Leave Session
             </button>
           </div>
         ) : sessionData?.battleMapUserId && sessionData?.battleMapCampaignId && sessionData?.battleMapId ? (

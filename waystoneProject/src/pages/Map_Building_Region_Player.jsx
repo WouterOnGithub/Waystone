@@ -133,98 +133,25 @@ function Map_Building_Region_Player() {
     <div className="full-page">
       <div className="campaign-page">
         <div className="map-container">
-          {/* Top Controls */}
-          <div className="map-top-controls">
-            {/* Back Button */}
-            <button 
-              className="map-back-btn" 
-              onClick={handleBack}
-              title="Go back to main map"
+          {/* Leave Session Button */}
+          <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 1000 }}>
+            <button
+              onClick={() => navigate("/user/Join_Session")}
+              style={{
+                backgroundColor: '#dc3545',
+                color: 'white',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold'
+              }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#c82333'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#dc3545'}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-              Back
+              Leave Session
             </button>
-
-            {/* Navigation Button */}
-            <div style={{ marginLeft: '10px' }} ref={navMenuRef}>
-              <button
-                onClick={() => setShowNavMenu(!showNavMenu)}
-                style={{
-                  backgroundColor: '#2e3d08',
-                  color: 'white',
-                  border: 'none',
-                  padding: '8px 12px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  fontSize: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '5px'
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M3 12h18m-9-9l9 9-9 9"/>
-                </svg>
-                Navigate
-              </button>
-              
-              {/* Dropdown Menu */}
-              {showNavMenu && (
-                <div style={{
-                  position: 'fixed',
-                  top: '65px',
-                  left: '80px',
-                  backgroundColor: 'white',
-                  border: '1px solid #ccc',
-                  borderRadius: '5px',
-                  boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                  minWidth: '150px',
-                  zIndex: 1001
-                }}>
-                  <button
-                    onClick={() => {
-                      navigate(`/user/Map_Main_Player/${sessionCode}`);
-                      setShowNavMenu(false);
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '10px 15px',
-                      border: 'none',
-                      backgroundColor: 'transparent',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      fontSize: '14px',
-                      borderBottom: '1px solid #eee'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f5f5f5'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    Back to Main Map
-                  </button>
-                  <button
-                    onClick={() => {
-                      navigate("/user/Join_Session");
-                      setShowNavMenu(false);
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '10px 15px',
-                      border: 'none',
-                      backgroundColor: 'transparent',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      fontSize: '14px'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f5f5f5'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    Leave Session
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Map Display */}
@@ -237,11 +164,10 @@ function Map_Building_Region_Player() {
               <div className="map-placeholder">
                 <p style={{ color: 'red' }}>{error}</p>
                 <button 
-                  onClick={handleBack}
-                  className="back-button"
-                  style={{ marginTop: '20px', padding: '10px 20px' }}
+                  onClick={() => navigate("/user/Join_Session")}
+                  style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
                 >
-                  Back to Main Map
+                  Leave Session
                 </button>
               </div>
             ) : building?.imageUrl ? (
