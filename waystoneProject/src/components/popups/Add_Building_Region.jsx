@@ -158,7 +158,7 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
 
       <div id="addview-content">
 
-        <form id="input-box-gray" onSubmit={handleSave}>
+        <form id="input-box-white" onSubmit={handleSave}>
             <img
               src={imagePreview || UploadIMG_Logo}
               alt="UploadIMG_Logo"
@@ -197,7 +197,7 @@ function Add_Building_Region({ campaignId, building, userId, baseUrl, locationId
             <button id="button-green" type="submit" disabled={saving}>
               {saving ? "Saving..." : "Save"}
             </button>
-            <button id="button-green" type="button" onClick={onClose}>
+            <button id="button-gray" type="button" onClick={onClose}>
               Back
             </button>
             {message && (

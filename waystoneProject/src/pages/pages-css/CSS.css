@@ -13,29 +13,25 @@
     --text-color3: #2d265a;
     --text-color4: #8a2be2;
 
-    /* Light backgrounds for content areas */
-    --background-colour: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);
-    --background-colour2: linear-gradient(180deg, #fafafe 0%, #e8e5f5 100%);
-    --background-colour3: #e3ddff;
-    --background-colour4: #2d2d5f;
+    --background-gradient: linear-gradient(90deg,linear-gradient(90deg, rgba(106, 90, 205, 0.2) 0%, transparent 100%) 0%, rgb(34, 7, 172) 50%, rgb(13, 0, 130) 100%);
+    --background-gradient4: linear-gradient(90deg,#1a1a2e 0%, #2c2c5e 50%, #1a1a2e 100%);
+    --background-gradient2: radial-gradient(circle, #2c2c5e 50%, #11111f 100%);
+    --background-gradient5: linear-gradient(90deg, rgba(31, 16, 68, 0.6) 10%, rgba(50, 43, 107, 0.3) 100%);
+    --background-gradient3: linear-gradient(90deg,#000000 0%, #131313 50%, #000000 100%);
 
-    /* Dark purple gradients for UI elements */
-    --background-gradient: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
-    --background-gradient2: radial-gradient(circle, #7b68ee 50%, #6a5acd 100%);
-    --background-gradient3: linear-gradient(90deg, #4a4a6e 0%, #2d2d5f 50%, #4a4a6e 100%);
-    --background-gradient4: linear-gradient(135deg, #6a5acd 0%, #7b68ee 100%);
-    --background-gradient5: linear-gradient(90deg, rgba(106, 90, 205, 0.15) 10%, rgba(138, 43, 226, 0.1) 100%);
+    --background-colour: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(210, 200, 213) 100%);
+    --background-colour2: linear-gradient(180deg, rgb(200, 200, 200) 0%, rgb(101, 95, 104) 100%);
+    --background-colour3:#bfbfbf;
+    --background-colour4: #131313;
 
-    /* Project box colours with purple gradients */
-    --projectbox-colour: linear-gradient(90deg, #30276a 0%, #3b2e87 50%, #442f74 100%); 
-    --projectbox-colour2: linear-gradient(90deg, #7b68ee 0%, #9370db 50%, #7b68ee 100%);
-    --projectbox-colour3: linear-gradient(90deg, #4169e1 0%, #6495ed 50%, #4169e1 100%);
-    --projectbox-colour4: linear-gradient(90deg, rgba(200, 200, 220, 1) 0%, rgba(230, 230, 240, 1) 50%, rgba(200, 200, 220, 1) 100%);
+    --projectbox-colour: linear-gradient(90deg,#905600 0%, #a96500 50%, #905600 100%); 
+    --projectbox-colour2: linear-gradient(90deg,#831010 0%, #b91616 50%, #831010 100%);
+    --projectbox-colour3: linear-gradient(90deg,#103283 0%, #1648bc 50%, #103283 100%);
+    --projectbox-colour4: linear-gradient(90deg,rgb(101, 95, 104) 0%, rgb(179, 169, 182) 50%, rgb(101, 95, 104) 100%);
 
-    /* Form/input boxes - light with subtle purple tint */
-    --form-box-colour: #fafafe;
-    --form-box-colour2: radial-gradient(circle, #ffffff 30%, #f5f3ff 100%);
-    --link-colour: #6a5acd;
+    --form-box-colour: #E0E0E0;
+    --form-box-colour2: radial-gradient(circle, #ffffff 30%, #e5e0ed 100%) ;
+    --link-colour: #1648bc;
 
     --border-radius: 10px;
     --border-radius2: 5px;
@@ -220,7 +216,7 @@
 }
 #input-box-white textarea
 {
-    width: 600px;
+    width: 400px;
     height: 200px;
 }
 #input-box-white input, #input-box-white textarea
@@ -229,19 +225,12 @@
     background: #ffffff;
     border: 2px solid rgba(106, 90, 205, 0.3);
     padding: 10px;
-    color: var(--text-color);
-    transition: all 0.3s ease;
-}
-#input-box-white input:focus, #input-box-white textarea:focus
-{
-    outline: none;
-    border-color: #6a5acd;
-    background: #fafafe;
-    box-shadow: 0 0 10px rgba(106, 90, 205, 0.2);
+    margin-bottom: 5px;
+    box-shadow: 8px 8px 10px rgba(210, 200, 213, 0.2);
 }
 
-/* Character sections */
-.character-section
+/* The bars throughout all the pages (example: the characters page, add and view pages */
+.character-section /* The individual type of character sections */
 {
   padding-top: 40px;
   padding-bottom: 20px;

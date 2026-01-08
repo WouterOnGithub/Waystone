@@ -128,7 +128,7 @@ function Add_Item({onClose, campaignId, item})
 
       <div id="addview-content">
 
-        <form id="input-box-gray" onSubmit={handleSave}>
+        <form id="input-box-white" onSubmit={handleSave}>
             <br />
             <label htmlFor="name-item"><b>Name</b></label> <br />
             <input type="text" id="name-item" value={name} onChange={(e) => setName(e.target.value)} /> 
@@ -138,10 +138,11 @@ function Add_Item({onClose, campaignId, item})
                 <label htmlFor="discription-item"><b>Short Discription</b> (max. 80 characters)</label> <br />
                 <textarea name="discription-item" id="discription-item" value={description} onChange={(e) => setDescription(e.target.value)} maxlength="80"></textarea>
             </div>
+
             <br />
 
             {/* Value and Weight */}
-            <div style={{display: 'flex', gap: '20px', marginBottom: '20px'}}>
+            <div id="addview-value-weight">
                 <div style={{flex: 1}}>
                     <label htmlFor="value-item"><b>Value</b></label> <br />
                     <input type="number" id="value-item" value={value} onChange={(e) => setValue(e.target.value)} step="0.01" min="0" placeholder="0.00" />
@@ -151,6 +152,8 @@ function Add_Item({onClose, campaignId, item})
                     <input type="number" id="weight-item" value={weight} onChange={(e) => setWeight(e.target.value)} step="0.1" min="0" placeholder="0.0" />
                 </div>
             </div>
+
+            <br />
 
             {/* A way to add an effect by pressing the ADD icon */}
             <label htmlFor="effects-item"><b>Effects</b></label> 
@@ -211,7 +214,7 @@ function Add_Item({onClose, campaignId, item})
               <button id="button-green" type="submit" disabled={saving}>
                 {saving ? "Saving..." : "Save"}
               </button>
-              <button id="button-green" type="button" onClick={onClose}>Back</button>
+              <button id="button-gray" type="button" onClick={onClose}>Back</button>
               {message && (
                 <>
                   <br />
