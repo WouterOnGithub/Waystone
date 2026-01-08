@@ -17,12 +17,12 @@
     --background-gradient2: radial-gradient(circle, #2c2c5e 50%, #11111f 100%);
     --background-gradient3: linear-gradient(90deg,#1e1e1e 0%, #303030 50%, #1e1e1e 100%);
 
-    --background-colour: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(227, 227, 227) 100%);
-    --background-colour2:#d9d9d9;
+    --background-colour: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(210, 200, 213) 100%);
+    --background-colour2: linear-gradient(180deg, rgb(200, 200, 200) 0%, rgb(81, 74, 84) 100%);
     --background-colour3:#bfbfbf;
     --background-colour4: #303030;
 
-    --projectbox-colour: linear-gradient(90deg,#83107f 0%, #a016bc 50%, #83107f 100%); 
+    --projectbox-colour: linear-gradient(90deg,#905600 0%, #a96500 50%, #905600 100%); 
     --projectbox-colour2: linear-gradient(90deg,#831010 0%, #b91616 50%, #831010 100%);
     --projectbox-colour3: linear-gradient(90deg,#103283 0%, #1648bc 50%, #103283 100%);
     --projectbox-colour4: linear-gradient(90deg,rgba(184, 184, 184, 1) 0%, rgba(217, 217, 217, 1) 50%, rgba(184, 184, 184, 1) 100%);
@@ -74,15 +74,14 @@
     margin-top: 15px;
 }
 
-#content /* Gray section under the green_ bar */
+#content /* Gray section under the bar */
 {
     border-radius: var(--border-radius); 
     background: var(--background-colour2);
-    margin-top: 100px;
+    margin-top: 80px;
     padding: 30px;
-    width: 76vw;
-    max-width: 100vw;
-    margin-left: auto;
+    width: 100vw;
+    margin-left: 80px;
     margin-right: auto;
 }
 #content b
