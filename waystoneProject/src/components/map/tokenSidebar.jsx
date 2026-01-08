@@ -3,7 +3,7 @@ import SidebarToken from "../character/sidebarToken";
 import "./tokenSidebar.css";
 import { useState } from "react";
 import QuickAddEnemyPopup from "../popups/QuickAddEnemyPopup";
-import InitiativePopup from "../popups/InitiativePopup";
+import InitiativePopup from "../turn/InitiativePopup";
 
 export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, campaignId, mapId}) {
   const [showQuickEnemy, setShowQuickEnemy] = useState(false);
