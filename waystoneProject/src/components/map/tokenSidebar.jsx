@@ -4,8 +4,10 @@ import "./tokenSidebar.css";
 import { useState } from "react";
 import QuickAddEnemyPopup from "../popups/QuickAddEnemyPopup";
 
-export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, campaignId}) {
+export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, containers, campaignId}) {
   const [showQuickEnemy, setShowQuickEnemy] = useState(false);
+
+  console.log (containers)
 
   return (
     <div className="token-sidebar">
@@ -47,6 +49,11 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
             onDragStart={onDragStart}
           />
         ))}
+      </div>
+
+      <h3>Containers</h3>
+      <div className="token-list">
+        {containers.map(c => <SidebarToken key={c.id} player={c} onDragStart={onDragStart} />)}
       </div>
 
       <QuickAddEnemyPopup

@@ -78,3 +78,35 @@ export function useEntity(userId, campaignId, entityId) {
 
   return entity? { ...entity, id: entityId, tokenType: "entity" } : null;
 }
+
+export function useContainer(userId, campaignId, containerId) {
+  const [container, setContainer] = useState(null);
+
+  useEffect(() => {
+    if (!userId || !campaignId || !containerId) return;
+
+    const ref = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Containers",
+      containerId
+    );
+
+    const unsub = onSnapshot(ref, (snap) => {
+      if (snap.exists()) {
+        setContainer(snap.data());
+      } else {
+        setContainer(null); // container deleted or doesn't exist
+      }
+    });
+
+    return unsub;
+  }, [userId, campaignId, containerId]);
+
+  return container
+    ? { ...container, id: containerId, tokenType: "container" }
+    : null;
+}
