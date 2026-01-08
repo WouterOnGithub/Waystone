@@ -203,29 +203,6 @@ function Map_Building_Region() {
     setRegionsOpen(false);
   };
 
-  const handleEndSession = () => {
-    const confirmEnd = window.confirm(
-      "Are you sure you want to end this session? This will kick all players out."
-    );
-    if (confirmEnd) {
-      // Delete session when explicitly ending it
-      if (sessionCode) {
-        deleteSession(sessionCode);
-      }
-      endCurrentSession();
-      setSessionCode('');
-      // Stay on the same page, just end the session
-    }
-  };
-
-  const handleStartSession = () => {
-    if (userId && campaignId) {
-      const newCode = startNewSession(userId, campaignId);
-      setSessionCode(newCode);
-      console.log("New session started with code:", newCode);
-    }
-  };
-
   const toggleEventsDropdown = () => {
     setEventsDropdownOpen(!eventsDropdownOpen);
     if (settingsOpen) setSettingsOpen(false);
@@ -235,6 +212,59 @@ function Map_Building_Region() {
   const handleEventSelect = (event) => {
     navigate(`/user/Map_Battle_View_DM/${campaignId}/${event.mapId}`);
     setEventsDropdownOpen(false);
+  };
+
+  const handleEndSession = () => {
+    const confirmEnd = window.confirm(
+      "Are you sure you want to end this session? This will kick all players out."
+    );
+    if (confirmEnd) {
+      if (regionsOpen) setRegionsOpen(false);
+      // Delete session when explicitly ending it
+      if (sessionCode) {
+        deleteSession(sessionCode);
+      }
+      endCurrentSession();
+      setSessionCode('');
+      // Stay on same page, just end session
+    }
+  };
+
+  const handleStartSession = () => {
+    if (userId && campaignId) {
+      const newCode = startNewSession(userId, campaignId);
+      setSessionCode(newCode);
+      
+      // Save session data to Firestore
+      const saveSessionData = async () => {
+        if (campaign && userId && isSessionActive()) {
+          try {
+            const sessionData = {
+              sessionCode: newCode,
+              userId: userId,
+              campaignId: campaignId,
+              campaignName: campaign.name || 'Unnamed Campaign',
+              mainMapUrl: campaign.mainMapUrl || null,
+              isActive: true,
+              createdAt: new Date().toISOString(),
+              lastUpdated: new Date().toISOString(),
+              lastHeartbeat: new Date().toISOString(),
+              // Initialize view state flags
+              battleMapActive: false,
+              locationActive: false,
+              buildingRegionActive: true
+            };
+            
+            await createSession(newCode, sessionData);
+            console.log("Session data saved to Firestore:", sessionData);
+          } catch (error) {
+            console.error("Failed to save session data:", error);
+          }
+        }
+      };
+
+      saveSessionData();
+    }
   };
 
   return (
