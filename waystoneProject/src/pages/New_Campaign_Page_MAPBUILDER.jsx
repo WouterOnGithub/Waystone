@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { updateCampaignInfo, getLocations, getBuildingsRegions, createBuildingRegion, updateBuildingRegion, deleteBuildingRegion, getContainers, getCampaign, updateContainer, deleteContainer } from "../api/userCampaigns";
+import { updateCampaignInfo, getLocations, getBuildingsRegions, createBuildingRegion, updateBuildingRegion, deleteBuildingRegion, getContainers, getCampaign, updateContainer, deleteContainer, getEvents, deleteEvent } from "../api/userCampaigns";
 import { useCampaign } from "../hooks/useCampaign";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
@@ -13,6 +13,7 @@ import Sidebar from "../components/UI/Sidebar";
 import AddLocation from "../components/popups/Add_Location";
 import AddContainer from "../components/popups/Add_Container";
 import AddBuildingRegion from "../components/popups/Add_Building_Region";
+import Add_Event from "../components/popups/Add_Event";
 
 function New_Campaign_Page_MAPBUILDER() 
 {
@@ -31,12 +32,25 @@ function New_Campaign_Page_MAPBUILDER()
   const [showAddLocationPopup, setShowAddLocationPopup] = useState(false);
   const [showAddRegionPopup, setShowAddRegionPopup] = useState(false);
   const [showAddContainerPopup, setShowAddContainerPopup] = useState(false);
+  const [showAddEventPopup, setShowAddEventPopup] = useState(false);
   const [showContainers, setShowContainers] = useState(false);
+  const [showEvents, setShowEvents] = useState(() => {
+    // Load showEvents state from localStorage
+    const saved = localStorage.getItem(`showEvents-${campaignId}`);
+    return saved ? JSON.parse(saved) : false;
+  });
   const [containers, setContainers] = useState([]);
+  const [events, setEvents] = useState(() => {
+    // Load events from localStorage if available
+    const saved = localStorage.getItem(`events-${campaignId}`);
+    return saved ? JSON.parse(saved) : [];
+  });
   const [editingLocation, setEditingLocation] = useState(null);
   const [editingRegion, setEditingRegion] = useState(null);
   const [editingContainer, setEditingContainer] = useState(null);
+  const [editingEvent, setEditingEvent] = useState(null);
   const [selectedLocationId, setSelectedLocationId] = useState(null);
+  const [mapId, setMapId] = useState("main"); // Default map ID for the main map
   const [locations, setLocations] = useState([]);
   const [showLocations, setShowLocations] = useState(false);
   const [buildings, setBuildings] = useState([]);
@@ -330,6 +344,41 @@ function New_Campaign_Page_MAPBUILDER()
     return () => window.removeEventListener("focus", handleFocus);
   }, [userId, campaignId]);
 
+  // Save showEvents state to localStorage
+  useEffect(() => {
+    if (campaignId) {
+      localStorage.setItem(`showEvents-${campaignId}`, JSON.stringify(showEvents));
+    }
+  }, [showEvents, campaignId]);
+
+  // Save events state to localStorage
+  useEffect(() => {
+    if (campaignId) {
+      localStorage.setItem(`events-${campaignId}`, JSON.stringify(events));
+    }
+  }, [events, campaignId]);
+
+  // Load events for this campaign
+  useEffect(() => {
+    const loadEvents = async () => {
+      if (!userId || !campaignId) return;
+      try {
+        console.log("Loading events...");
+        const eventList = await getEvents(userId, campaignId);
+        console.log("Loaded events:", eventList);
+        setEvents(eventList || []);
+      } catch (err) {
+        console.error("Failed to load events:", err);
+      }
+    };
+
+    // Initial load
+    loadEvents();
+    
+    // Only add event listeners if we want to auto-refresh
+    // This might be causing the issue, so let's try without it first
+  }, [userId, campaignId]);
+
   const refreshLocations = async () => {
     if (!userId || !campaignId) return;
     try {
@@ -365,6 +414,19 @@ function New_Campaign_Page_MAPBUILDER()
       setContainers(uniqueContainers);
     } catch (err) {
       console.error("Failed to refresh containers:", err);
+    }
+  };
+
+  const refreshEvents = async () => {
+    if (!userId || !campaignId) return;
+    try {
+      const eventList = await getEvents(userId, campaignId);
+      console.log("Refreshed events:", eventList);
+      setEvents(eventList || []);
+      // Clear localStorage cache and set fresh data
+      localStorage.setItem(`events-${campaignId}`, JSON.stringify(eventList || []));
+    } catch (err) {
+      console.error("Failed to refresh events:", err);
     }
   };
 
@@ -410,6 +472,36 @@ function New_Campaign_Page_MAPBUILDER()
     } catch (err) {
       console.error("Failed to delete container:", err);
       alert("An error occurred while deleting the container. Please try again.");
+    }
+  };
+
+  const handleDeleteEvent = async (event) => {
+    console.log("Attempting to delete event:", event);
+    
+    if (
+      !window.confirm(
+        `Delete Event "${event.name || "Unnamed Event"}?`
+      )
+    )
+      return;
+
+    try {
+      console.log("Calling deleteEvent with:", { userId, campaignId, eventMapId: event.mapId });
+      const ok = await deleteEvent(userId, campaignId, event.mapId);
+      console.log("Delete result:", ok);
+      
+      if (ok) {
+        console.log("Delete successful, reloading events...");
+        const eventList = await getEvents(userId, campaignId);
+        console.log("Reloaded events:", eventList);
+        setEvents(eventList || []);
+      } else {
+        console.error("Delete returned false");
+        alert("Failed to delete event. Please try again.");
+      }
+    } catch (err) {
+      console.error("Failed to delete event:", err);
+      alert("An error occurred while deleting the event. Please try again.");
     }
   };
 
@@ -820,9 +912,96 @@ function New_Campaign_Page_MAPBUILDER()
 
             {/* The add and show event buttons*/}
             <div>
-              <button id="button-green">Add Event</button>
-              <button id="button-green">Show All Event(s)</button>
+              <button
+                id="button-green"
+                onClick={() => {
+                  setEditingEvent(null);
+                  setShowAddEventPopup(true);
+                }}
+                type="button"
+              >
+                Add Event
+              </button>
+              <button
+                id="button-green"
+                onClick={async () => {
+                  const next = !showEvents;
+                  setShowEvents(next);
+                  if (next && userId && campaignId) {
+                    try {
+                      const eventList = await getEvents(userId, campaignId);
+                      console.log("Loaded events:", eventList);
+                      setEvents(eventList || []);
+                    } catch (err) {
+                      console.error("Failed to load events:", err);
+                    }
+                  }
+                }}
+                type="button"
+              >
+                {showEvents ? "Hide All Event(s)" : "Show All Event(s)"}
+              </button>
             </div>
+
+            {/* Display all events */}
+            {showEvents && (
+              <div style={{
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginTop: "10px"
+              }}>
+                {events.map((event) => (
+                  <div
+                    key={event.id}
+                    style={{ 
+                      display: "flex", 
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      maxWidth: "600px",
+                      padding: "15px",
+                      border: "1px solid #ddd",
+                      borderRadius: "8px",
+                      backgroundColor: "#f9f9f9"
+                    }}
+                  >
+                    <div>
+                      <b>{event.name}</b>
+                      <div style={{ fontSize: "12px", color: "#666" }}>
+                        {event.width}x{event.height}
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <button
+                        id="button-green"
+                        type="button"
+                        onClick={() => {
+                          setEditingEvent(event);
+                          setShowAddEventPopup(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        id="button-green"
+                        onClick={() => handleDeleteEvent(event)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        type="button"
+                        id="button-green"
+                        onClick={() => navigate(`/user/Map_Battle_View_DM/${campaignId}/${event.mapId}`)}
+                      >
+                        Enter Event
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* The add and show container buttons*/}
             <div>
@@ -876,7 +1055,7 @@ function New_Campaign_Page_MAPBUILDER()
                       justifyContent: "space-between",
                       alignItems: "center",
                       width: "100%",
-                      maxWidth: "400px",
+                      maxWidth: "600px",
                       padding: "15px",
                       border: "1px solid #ddd",
                       borderRadius: "8px",
@@ -973,6 +1152,21 @@ function New_Campaign_Page_MAPBUILDER()
           campaignId={campaignId}
           container={editingContainer}
           onContainerSaved={refreshContainers}
+        />
+      )}
+
+      {showAddEventPopup && (
+        <Add_Event 
+          onClose={() => {
+            setShowAddEventPopup(false);
+            setEditingEvent(null);
+            refreshEvents(); // Refresh when popup closes
+          }}
+          campaignId={campaignId}
+          userId={userId}
+          event={editingEvent}
+          baseUrl={window.location.origin}
+          onEventSaved={refreshEvents}
         />
       )}
     </div>

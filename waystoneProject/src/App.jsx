@@ -132,6 +132,7 @@ function App()
                 <Route path="/user/Map_Building_Region/:campaignId" element={<Map_Building_Region />} />
                 <Route path="/user/Map_Building_Region/:campaignId/:buildingId" element={<Map_Building_Region />} /> 
                 <Route path="/user/Map_Battle_View_DM" element={<Map_Battle_View_DM />} />
+                <Route path="/user/Map_Battle_View_DM/:campaignId/:eventMapId" element={<Map_Battle_View_DM />} />
 
                 {/* TEST - To be removed later */}
                 <Route path="/battleMapTest" element={<BattleMapTest/>} />

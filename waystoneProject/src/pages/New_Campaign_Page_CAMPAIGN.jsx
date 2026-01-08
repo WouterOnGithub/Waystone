@@ -146,8 +146,7 @@ function New_Campaign_Page_CAMPAIGN()
           title={
             isNewCampaign
               ? "New Campaign" : data?.name ? `${data.name}` : "Campaign"
-          }
-        />
+          } />
 
         <div>
 
