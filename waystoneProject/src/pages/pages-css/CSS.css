@@ -7,30 +7,35 @@
     --body-text: 18px;
     --link-text: 12px;
 
-    --text-color: #11111f;
-    --text-color2: #ffffff;
-    --text-color3: #2c2c5e;
-    --text-color4: #1a1a2e;
+    /* Updated color palette - Light content, dark purple accents */
+    --text-color: #292956;
+    --text-color2: #e8e8f5;
+    --text-color3: #2d265a;
+    --text-color4: #8a2be2;
 
-    --background-gradient: linear-gradient(90deg,linear-gradient(90deg, rgba(106, 90, 205, 0.2) 0%, transparent 100%) 0%, rgb(34, 7, 172) 50%, rgb(13, 0, 130) 100%);
-    --background-gradient4: linear-gradient(90deg,#1a1a2e 0%, #2c2c5e 50%, #1a1a2e 100%);
-    --background-gradient2: radial-gradient(circle, #2c2c5e 50%, #11111f 100%);
-    --background-gradient5: linear-gradient(90deg, rgba(31, 16, 68, 0.6) 10%, rgba(50, 43, 107, 0.3) 100%);
-    --background-gradient3: linear-gradient(90deg,#000000 0%, #131313 50%, #000000 100%);
+    /* Light backgrounds for content areas */
+    --background-colour: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);
+    --background-colour2: linear-gradient(180deg, #fafafe 0%, #e8e5f5 100%);
+    --background-colour3: #e3ddff;
+    --background-colour4: #2d2d5f;
 
-    --background-colour: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(210, 200, 213) 100%);
-    --background-colour2: linear-gradient(180deg, rgb(200, 200, 200) 0%, rgb(101, 95, 104) 100%);
-    --background-colour3:#bfbfbf;
-    --background-colour4: #131313;
+    /* Dark purple gradients for UI elements */
+    --background-gradient: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
+    --background-gradient2: radial-gradient(circle, #7b68ee 50%, #6a5acd 100%);
+    --background-gradient3: linear-gradient(90deg, #4a4a6e 0%, #2d2d5f 50%, #4a4a6e 100%);
+    --background-gradient4: linear-gradient(135deg, #6a5acd 0%, #7b68ee 100%);
+    --background-gradient5: linear-gradient(90deg, rgba(106, 90, 205, 0.15) 10%, rgba(138, 43, 226, 0.1) 100%);
 
-    --projectbox-colour: linear-gradient(90deg,#905600 0%, #a96500 50%, #905600 100%); 
-    --projectbox-colour2: linear-gradient(90deg,#831010 0%, #b91616 50%, #831010 100%);
-    --projectbox-colour3: linear-gradient(90deg,#103283 0%, #1648bc 50%, #103283 100%);
-    --projectbox-colour4: linear-gradient(90deg,rgba(184, 184, 184, 1) 0%, rgba(217, 217, 217, 1) 50%, rgba(184, 184, 184, 1) 100%);
+    /* Project box colours with purple gradients */
+    --projectbox-colour: linear-gradient(90deg, #30276a 0%, #3b2e87 50%, #442f74 100%); 
+    --projectbox-colour2: linear-gradient(90deg, #7b68ee 0%, #9370db 50%, #7b68ee 100%);
+    --projectbox-colour3: linear-gradient(90deg, #4169e1 0%, #6495ed 50%, #4169e1 100%);
+    --projectbox-colour4: linear-gradient(90deg, rgba(200, 200, 220, 1) 0%, rgba(230, 230, 240, 1) 50%, rgba(200, 200, 220, 1) 100%);
 
-    --form-box-colour: #E0E0E0;
-    --form-box-colour2: radial-gradient(circle, #ffffff 30%, #e5e0ed 100%) ;
-    --link-colour: #1648bc;
+    /* Form/input boxes - light with subtle purple tint */
+    --form-box-colour: #fafafe;
+    --form-box-colour2: radial-gradient(circle, #ffffff 30%, #f5f3ff 100%);
+    --link-colour: #6a5acd;
 
     --border-radius: 10px;
     --border-radius2: 5px;
@@ -43,26 +48,26 @@
     margin: 0;
 }
 
-/* Scollbar for EVERY PAGE */
+/* Scrollbar for EVERY PAGE */
 ::-webkit-scrollbar 
 {
   width: 15px;
 }
 ::-webkit-scrollbar-track 
 {
-  background: var(--background-colour);
-  box-shadow: inset 0 0 7px var(--background-colour4); 
+  background: #fafafe;
+  box-shadow: inset 0 0 7px rgba(106, 90, 205, 0.1); 
 }
 ::-webkit-scrollbar-thumb 
 {
     border-radius: var(--border-radius);
-    background: linear-gradient(135deg, var(--text-color4) 0%, var(--text-color3) 100%);
-    box-shadow: inset 0 0 10px var(--text-color4);
+    background: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
+    box-shadow: inset 0 0 10px rgba(138, 43, 226, 0.3);
     height: 20px;
 }
 ::-webkit-scrollbar-thumb:hover 
 {
-    background: var(--text-color4);
+    background: linear-gradient(135deg, #7b68ee 0%, #9370db 100%);
     cursor: grab;
     transition: 0.3s;
 }
@@ -73,9 +78,10 @@
     margin: auto;
     width: 40%;
     margin-top: 15px;
+    filter: drop-shadow(0 4px 8px rgba(106, 90, 205, 0.2));
 }
 
-#content /* Gray section under the bar */
+#content /* Section under the bar */
 {
     border-radius: var(--border-radius); 
     background: var(--background-colour2);
@@ -84,73 +90,83 @@
     width: 95%;
     margin-left: 80px;
     margin-right: auto;
+    border: 1px solid rgba(106, 90, 205, 0.2);
+    box-shadow: 0 4px 20px rgba(106, 90, 205, 0.1);
 }
 #content b
 {
     font-size: var(--head-text);
+    color: #6a5acd;
 }
 #content h1
 { 
   padding-bottom: 5px;
   margin-bottom: 5px;
+  color: #6a5acd;
 }
 
-.full-page /* Maybe removed later */
+.full-page
 {
-    background: white; /* To fix the dark blocks if a user is on darkmode */
+    background: var(--background-colour);
+    min-height: 100vh;
 }
 
-#button-green, #button-gray /* All green_ & gray_ buttons button */
+#button-green, #button-gray /* All buttons - dark purple with light purple text */
 {
     border-radius: var(--border-radius);
-    background: var(--background-gradient4);
+    background: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
     font-weight: bold;
-    border: none;
+    border: 2px solid #8a7fd8;
     padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 15px;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #e8e8f5;
+    cursor: pointer;
 }
-#button-green:hover, #button-gray:hover, #addview-green-bar:hover /* All green_ & gray_ buttons button */ /* Green bars in add & view pages */
+#button-green:hover, #button-gray:hover, #addview-green-bar:hover
 {
-    color: var(--text-color2);
-    transition: 0.5s;
-    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
-    transform: translateY(-2px);
+    color: #ffffff;
+    background: linear-gradient(135deg, #7b68ee 0%, #9370db 100%);
+    border-color: #9370db;
+    box-shadow: 
+        0 6px 20px rgba(106, 90, 205, 0.4),
+        0 0 20px rgba(106, 90, 205, 0.3);
+    transform: translateY(-3px);
 }
 #button-gray
 {
-    background: var(--background-gradient3);
-    color: var(--text-color2);
+    background: linear-gradient(135deg, #4a4a6e 0%, #2d2d5f 100%);
+    border-color: #6a5acd;
 }
 
-#addview-green-bar /* Green bars in add & view pages */
+#addview-green-bar /* Bars in add & view pages */
 {
     border-radius: var(--border-radius3);
-    background: var(--background-gradient);
-    border: none;
+    background: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
+    border: 2px solid #8a7fd8;
     padding: 10px;
     padding-left: 35px;
     padding-right: 25px;
     margin-right: 20px;
     margin-top: 10px;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
 }
-#addview-green-bar b /* Text inside green_ bars in add & view pages */
+#addview-green-bar b
 {
-    color: var(--text-color2);
+    color: #e8e8f5;
     font-weight: bold;
 }
-#addview-green-bar button /* Delete button inside green_ bars in add & view pages */
+#addview-green-bar button
 {
     float: right;
 }
 
-/* Input boxes */
-/* All buttons and buttons disguised as images */
+/* Icon buttons */
 #button-icons
 {
     background: none;
@@ -158,27 +174,31 @@
     padding: 0;
     margin: 0;
     padding-top: 5px;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 #button-icons:hover
 {
     border: none;
-    transition: .3s;
     transform: translateY(-2px);
+    filter: drop-shadow(0 4px 8px rgba(106, 90, 205, 0.4));
 }
 
 #UploadIMG_Logo
 {
     border-radius: var(--border-radius);
     cursor: pointer;
-    height: 250px; /* later replaced by: height: 40%; */
-    width: 250px; /* later replaced by: width: 40%; */
+    height: 250px;
+    width: 250px;
     margin-right: 5000px;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(106, 90, 205, 0.3);
+    background: #ffffff;
 }
 #UploadIMG_Logo:hover
 {
-    box-shadow: 0 8px 20px rgba(107, 70, 193, 0.4);
+    border-color: #6a5acd;
+    box-shadow: 0 8px 20px rgba(106, 90, 205, 0.3);
     transform: translateY(-2px);
 }
 #Required_Logo, #Add_Logo, #Minus_Logo
@@ -192,7 +212,7 @@
     width: 30px; 
 }
 
-/* White input boxes */
+/* Input boxes - light with purple accents */
 #input-box-white input
 {
     width: 300px;
@@ -206,71 +226,78 @@
 #input-box-white input, #input-box-white textarea
 {
     border-radius: var(--border-radius2);
-    background: var(--form-box-colour2);
-    border: none;
+    background: #ffffff;
+    border: 2px solid rgba(106, 90, 205, 0.3);
     padding: 10px;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+#input-box-white input:focus, #input-box-white textarea:focus
+{
+    outline: none;
+    border-color: #6a5acd;
+    background: #fafafe;
+    box-shadow: 0 0 10px rgba(106, 90, 205, 0.2);
 }
 
-/* The bars throughout all the pages (example: the characters page, add and view pages */
-.character-section /* The individual type of character sections */
+/* Character sections */
+.character-section
 {
   padding-top: 40px;
   padding-bottom: 20px;
   padding-right: 40px;
   width: 90%;
-  border-top: 2px solid var(--text-color2);
+  border-top: 2px solid rgba(106, 90, 205, 0.3);
 }
 .character-section.addview
 {
   width: 95%;
 }
 
-.character-row  /* A row of a player, npc or custom enemy */
+.character-row
 {
-  background: var(--background-colour3);
+  background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
   border-radius: var(--border-radius);
-  border-left: 4px solid var(--text-color4);
+  border-left: 4px solid #6a5acd;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: auto;
   padding-left: 20px;
   margin-bottom: 15px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(106, 90, 205, 0.1);
 }
 .character-row.addview
 {
   background: var(--background-colour2);
+  border: 1px solid rgba(106, 90, 205, 0.2);
 }
-.character-row:hover /* A row of a player, npc or custom enemy while hovering */
+.character-row:hover
 {
-  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
-  border-left: 4px solid var(--text-color3);
-  transform: translateX(4px);
-  transition: 0.3s;
+  box-shadow: 0 8px 20px rgba(106, 90, 205, 0.25);
+  border-left: 4px solid #8a2be2;
+  transform: translateX(6px);
+  background: linear-gradient(135deg, #fafafe 0%, #e8e5f5 100%);
 }
-.character-row span /* The base info of a row of a player, npc or custom enemy */
+.character-row span
 {
   color: var(--text-color);
   font-size: 15px;
   font-weight: 600;
 }
 
-.character-section:has(.character-row:first-of-type) /* Empty state styling (What does this mean?) */
+.character-section:has(.character-row:first-of-type)
 {
   min-height: auto;
 }
 
-
-
 /* Image upload area styling */
 .image-upload-area 
 {
-  
-  border: 2px dashed var(--text-color4);
+  border: 2px dashed rgba(106, 90, 205, 0.4);
   border-radius: var(--border-radius);
-  background: var(--form-box-colour2);
+  background: #fafafe;
   text-align: center;
   padding: 10px;
   min-width: 370px;
@@ -279,13 +306,7 @@
 }
 .image-upload-area:hover 
 {
-  border-color: var(--text-color3);
+  border-color: #6a5acd;
+  background: #f5f3ff;
+  box-shadow: 0 4px 12px rgba(106, 90, 205, 0.15);
 }
-
-
-
-/* !!! */
-/* Try and used existing css if possible */
-/* Add more necessary *shared* CSS here */
-/* Seperate CSS into different CSS document that is only need for 1 or 2 pages */
-/* !!! */
