@@ -23,7 +23,6 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
   return (
     
     <div className="battlemap-page" style={{ display: "flex", gap: "10px" }}>
-        
       <BattleMap
         userId={userId}
         campaignId={campaignId}
@@ -32,12 +31,13 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
         setDraggedToken={setDraggedToken}
       />
       <TokenSidebar
-  players={availablePlayers}
-  enemies = {enemies}
-  npcs = {npcs}
-  onDragStart={handleDragStart}  // pass the function, don’t redefine inline
-/>
-
+         players={availablePlayers}
+        enemies = {enemies}
+        npcs = {npcs}
+        onDragStart={handleDragStart}
+        userId={userId}
+        campaignId={campaignId}
+      />
     </div>
   );
 }

@@ -103,7 +103,7 @@ export default function TokenMenu({ userId, campaignId, position,posX, posY , ma
     <div ref={menuRef} className="tokenMenu" style={{ left, top, width: menuWidth }}>
       <h3>{data.name}</h3>
       <p>HP: {data.HpCurrent} / {data.HpMax}</p>
-      <p>AC: {data.ac}</p>
+      <p>AC: {data.armorKlassen}</p>
       <p>Race: {data.tokenType}</p>
 
       <div style={{ display: "flex", gap: "10px", margin: "5px 0" }}>
