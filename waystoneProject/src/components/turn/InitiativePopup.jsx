@@ -19,9 +19,9 @@ function InitiativePopup({userId, campaignId, mapId, onConfirm, onClose }) {
 
         // Combineer in initiativeData
         const combined = [
-            ...p.map((pl) => ({ ...pl, type: "player", initiative: "" })),
-            ...e.map((en) => ({ ...en, type: "enemy", initiative: "" })),
-            ...n.map((npc) => ({ ...npc, type: "npc", initiative: "" })),
+            ...p.map((pl) => ({ ...pl, type: "player", initiative: "" ,dex: pl.dexterity})),
+            ...e.map((en) => ({ ...en, type: "enemy", initiative: "" ,dex: en.dexterity})),
+            ...n.map((npc) => ({ ...npc, type: "npc", initiative: "" ,dex: npc.dexterity})),
         ];
         setInitiativeData(combined);
         setLoading(false);
