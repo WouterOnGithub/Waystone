@@ -6,25 +6,31 @@ import { getEntitiesByType } from "../../api/npcs";
 import { rollDie } from "../../services/diceRolls"
 import "./initiativePopup.css";
 
-function InitiativePopup({userId, campaignId, mapId, onConfirm, onClose }) {
+function InitiativePopup({userId, campaignId, mapId, onConfirm, mapCells , onClose }) {
     const [initiativeData, setInitiativeData] = useState([]);
     const [loading, setLoading] = useState(true);
 
      useEffect(() => {
         async function fetchData() {
-        setLoading(true);
-        const p = await getPlayersByCampaign(userId, campaignId);
-        const e = await getEntitiesByType(userId, campaignId, "enemy");
-        const n = await getEntitiesByType(userId, campaignId, "npc");
+            setLoading(true);
+            const allPlayers = await getPlayersByCampaign(userId, campaignId);
+            const allEnemies = await getEntitiesByType(userId, campaignId, "enemy");
+            const allNpcs = await getEntitiesByType(userId, campaignId, "npc");
 
-        // Combineer in initiativeData
-        const combined = [
-            ...p.map((pl) => ({ ...pl, type: "player", initiative: "" ,dex: pl.dexterity})),
-            ...e.map((en) => ({ ...en, type: "enemy", initiative: "" ,dex: en.dexterity})),
-            ...n.map((npc) => ({ ...npc, type: "npc", initiative: "" ,dex: npc.dexterity})),
-        ];
-        setInitiativeData(combined);
-        setLoading(false);
+            // Alleen de characters die op de map aanwezig zijn
+            const tokenIdsOnMap = new Set(Object.values(mapCells || {}).map(cell => cell.tokenId).filter(Boolean));
+
+            const playersOnMap = allPlayers.filter(p => tokenIdsOnMap.has(p.id));
+            const enemiesOnMap = allEnemies.filter(e => tokenIdsOnMap.has(e.id));
+            const npcsOnMap = allNpcs.filter(n => tokenIdsOnMap.has(n.id));
+
+            const combined = [
+                ...playersOnMap.map(p => ({ ...p, type: "player", initiative: p.initiative || "", dex: p.dexterity })),
+                ...enemiesOnMap.map(e => ({ ...e, type: "enemy", initiative: e.initiative || "", dex: e.dexterity })),
+                ...npcsOnMap.map(n => ({ ...n, type: "npc", initiative: n.initiative || "", dex: n.dexterity })),
+            ];
+            setInitiativeData(combined);
+            setLoading(false);
         }
         fetchData();
     }, [userId, campaignId]);
