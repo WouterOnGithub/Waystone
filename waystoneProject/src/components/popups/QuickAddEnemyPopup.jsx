@@ -26,6 +26,14 @@ export default function QuickAddEnemyPopup({isOpen, onClose, userId, campaignId}
             console.error("userId of campaignId is undefined!", { userId, campaignId });
             return;
         }
+
+        const current = Number(formData.HpCurrent);
+        const max = Number(formData.HpMax);
+
+        if (current > max) {
+            alert("Current HP cannot be higher than Max HP");
+            return;
+        }
         
         let imageUrl ="";
 
@@ -53,18 +61,22 @@ export default function QuickAddEnemyPopup({isOpen, onClose, userId, campaignId}
             armorKlassen: Number(formData.armorKlassen),
             imageUrl,
         };
-        console.log("userId:", userId, "campaignId:", campaignId);
         await addEnemy(userId, campaignId, enemyData);
-        console.log("userId:", userId, "campaignId:", campaignId);
+        try{
+            setFormData({
+                name:"",
+                HpCurrent:"",
+                HpMax:"",
+                armorKlassen:""
+            });
+            setImageFile(null);
+            setImagePreview("/assets/placeholderImage.jpg");
 
-        setFormData({
-            name:"",
-            HpCurrent:"",
-            HpMax:"",
-            armorKlassen:""
-        });
-        setImageFile(null);
-        setImagePreview("/assets/placeholderImage.jpg");
+            onClose();
+        }catch{
+            console.error("error creating enemy", error);
+        }
+        
     };
 
     return (
