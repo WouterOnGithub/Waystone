@@ -14,13 +14,13 @@
     --text-color4: #3d1463;
 
     /* Light backgrounds for content areas */
-    --background-colour: linear-gradient(180deg, #d2c8fe 0%, #c5c1ee 100%);
+    --background-colour: linear-gradient(180deg, #e0deea 0%, #bab7d72e 100%);
     --background-colour2: linear-gradient(180deg, #fafafe 0%, #e8e5f5 100%);
     --background-colour3: #e3ddff;
     --background-colour4: #2d2d5f;
 
     /* Dark purple gradients for UI elements */
-    --background-gradient: linear-gradient(135deg, #462d5f 0%, #2d2d5f 100%);
+    --background-gradient: linear-gradient(135deg, #271687 0%, #31205c 100%);
     --background-gradient2: radial-gradient(circle, #3f2f94 50%, #3625a2 100%);
     --background-gradient3: linear-gradient(90deg, #4a4a6e 0%, #2d2d5f 50%, #4a4a6e 100%);
     --background-gradient4: linear-gradient(90deg, #30276a 0%, #2f246b 50%, #2d2d5f 100%);
