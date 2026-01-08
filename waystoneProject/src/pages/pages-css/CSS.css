@@ -95,13 +95,13 @@
 #content b
 {
     font-size: var(--head-text);
-    color: #6a5acd;
+    color: #615c80;
 }
 #content h1
 { 
   padding-bottom: 5px;
   margin-bottom: 5px;
-  color: #6a5acd;
+  color: #595376;
 }
 
 .full-page
