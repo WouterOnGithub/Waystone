@@ -1,6 +1,7 @@
 .token {
   width: 70px;
   height: 70px;
+  overflow: hidden; /* Prevent scrolling on individual tokens */
 }
 
 .token-image {

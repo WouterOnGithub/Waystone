@@ -959,7 +959,7 @@ function New_Campaign_Page_MAPBUILDER()
                       justifyContent: "space-between",
                       alignItems: "center",
                       width: "100%",
-                      maxWidth: "400px",
+                      maxWidth: "600px",
                       padding: "15px",
                       border: "1px solid #ddd",
                       borderRadius: "8px",
@@ -989,6 +989,13 @@ function New_Campaign_Page_MAPBUILDER()
                         onClick={() => handleDeleteEvent(event)}
                       >
                         Delete
+                      </button>
+                      <button
+                        type="button"
+                        id="button-green"
+                        onClick={() => navigate(`/user/Map_Battle_View_DM/${campaignId}/${event.mapId}`)}
+                      >
+                        Enter Event
                       </button>
                     </div>
                   </div>
@@ -1048,7 +1055,7 @@ function New_Campaign_Page_MAPBUILDER()
                       justifyContent: "space-between",
                       alignItems: "center",
                       width: "100%",
-                      maxWidth: "400px",
+                      maxWidth: "600px",
                       padding: "15px",
                       border: "1px solid #ddd",
                       borderRadius: "8px",
