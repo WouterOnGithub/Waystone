@@ -7,13 +7,13 @@
     --body-text: 18px;
     --link-text: 12px;
 
-    --text-color: #11111f;
+    --text-color: #0a0a16;
     --text-color2: #ffffff;
     --text-color3: #2c2c5e;
     --text-color4: #1a1a2e;
 
     --background-gradient: linear-gradient(90deg,linear-gradient(90deg, rgba(106, 90, 205, 0.2) 0%, transparent 100%) 0%, rgb(34, 7, 172) 50%, rgb(13, 0, 130) 100%);
-    --background-gradient4: linear-gradient(90deg,#1a1a2e 0%, #2c2c5e 50%, #1a1a2e 100%);
+    --background-gradient4: linear-gradient(90deg,#212147 0%, #35357c 50%, #212147 100%);
     --background-gradient2: radial-gradient(circle, #2c2c5e 50%, #11111f 100%);
     --background-gradient3: linear-gradient(90deg,#000000 0%, #131313 50%, #000000 100%);
 
