@@ -24,6 +24,7 @@
 #login-register-title /* Login & register title */
 {
   font-size: var(--login-register-text);
+  padding-bottom: 10px;
   margin-bottom: 35%;    
 }
 
@@ -42,10 +43,14 @@
   transition: 0.5s;
 }
 
-/* The form button (just to center it) */
+/* The form buttons */
 #login-register-button
 {
   padding-top: 10px; /* To stop the top of the button from clipping during the animation */
+}
+#login-register-button #button-green /* The enter button */
+{
+  width: 140px;
 }
 
 /* Background and Waystone_Logo */
