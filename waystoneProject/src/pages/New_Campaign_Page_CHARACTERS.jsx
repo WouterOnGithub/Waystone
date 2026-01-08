@@ -153,7 +153,7 @@
                       </div>
                     </div>
                   ))}
-                  <button id="button-green" onClick={handleAddPlayer}>add Player</button>
+                  <button id="button-green" onClick={handleAddPlayer}>add player</button>
                 </div>
 
               {/* The npc's */}

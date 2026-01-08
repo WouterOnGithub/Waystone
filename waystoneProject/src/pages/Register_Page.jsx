@@ -51,7 +51,7 @@ function Register_Page()
 
         {/* The form */}
         <form onSubmit={handleSubmit}>
-        <div id="input-box-gray">
+        <div id="input-box-white">
           <input type="Username" placeholder="Enter username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}

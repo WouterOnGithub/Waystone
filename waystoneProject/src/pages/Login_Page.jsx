@@ -46,7 +46,7 @@ const handleSession= [
       {/* The form */}
       <form>
 
-      <div id="input-box-gray">
+      <div id="input-box-white">
         <input type="email" placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
