@@ -16,7 +16,7 @@
   font-size: var(--head-text);
   border: none;
   height: auto;
-  opacity: 0.5;
+  opacity: 0.6;
   width: 250px;
   margin-top: 20px;
   margin-bottom: 10px;
@@ -30,7 +30,7 @@
 }
 #campaign-tab:hover /* The gray_ top 3 buttons while hovering */
 {
-  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
   opacity: 1;
   transition: 0.5s;
