@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat } from "../api/userCampaigns";
+import { getCampaign, getBuildingsRegions, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, getEvents } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Building_Region() {
@@ -20,6 +20,8 @@ function Map_Building_Region() {
   const [loading, setLoading] = useState(true);
   const [sessionCode, setSessionCode] = useState('');
   const [isCodeVisible, setIsCodeVisible] = useState(false);
+  const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
+  const [events, setEvents] = useState([]);
 
   // Load campaign data and building/region when component mounts or campaignId/buildingId changes
   useEffect(() => {
@@ -52,6 +54,26 @@ function Map_Building_Region() {
 
     loadData();
   }, [campaignId, buildingId, userId]);
+
+  // Load events for this campaign
+  useEffect(() => {
+    const loadEvents = async () => {
+      if (!campaignId || !userId) {
+        setEvents([]);
+        return;
+      }
+
+      try {
+        const eventsList = await getEvents(userId, campaignId);
+        setEvents(eventsList || []);
+      } catch (error) {
+        console.error("Failed to load events:", error);
+        setEvents([]);
+      }
+    };
+
+    loadEvents();
+  }, [campaignId, userId]);
 
   // Set up session cleanup callback
   useEffect(() => {
@@ -180,6 +202,17 @@ function Map_Building_Region() {
     }
   };
 
+  const toggleEventsDropdown = () => {
+    setEventsDropdownOpen(!eventsDropdownOpen);
+    if (settingsOpen) setSettingsOpen(false);
+    if (regionsOpen) setRegionsOpen(false);
+  };
+
+  const handleEventSelect = (event) => {
+    navigate(`/user/Map_Battle_View_DM/${campaignId}/${event.mapId}`);
+    setEventsDropdownOpen(false);
+  };
+
   return (
     <div className="full-page">
     <div className="campaign-page">
@@ -273,11 +306,32 @@ function Map_Building_Region() {
               </div>
             )}
 
-            {/* Start Battle Button */}
-            <div className="map-locations-dropdown">
-              <button className="start-battle-btn">
+            {/* Start Battle Button with Dropdown */}
+            <div className="map-events-dropdown">
+              <button className="start-battle-btn" onClick={toggleEventsDropdown}>
                 Start Battle
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginLeft: '5px'}}>
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
               </button>
+              
+              {eventsDropdownOpen && (
+                <div className="events-dropdown-menu">
+                  {events.length > 0 ? (
+                    events.map((event) => (
+                      <button
+                        key={event.mapId}
+                        className="event-item"
+                        onClick={() => handleEventSelect(event)}
+                      >
+                        {event.name}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="no-events">No events available</div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Map Display */}

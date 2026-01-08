@@ -107,12 +107,32 @@ function Map_Battle_View_DM() {
                   backgroundColor: 'transparent',
                   textAlign: 'left',
                   cursor: 'pointer',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  borderBottom: '1px solid #eee'
                 }}
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#f5f5f5'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
               >
                 Back to Main Map
+              </button>
+              <button
+                onClick={() => {
+                  navigate(-1);
+                  setShowNavMenu(false);
+                }}
+                style={{
+                  width: '100%',
+                  padding: '10px 15px',
+                  border: 'none',
+                  backgroundColor: 'transparent',
+                  textAlign: 'left',
+                  cursor: 'pointer',
+                  fontSize: '14px'
+                }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#f5f5f5'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+              >
+                Back to Previous Map
               </button>
             </div>
           )}
