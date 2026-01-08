@@ -9,7 +9,6 @@
 #box-text /* A project box */
 {
     margin-top: 5px;
-    margin-left: -10px;
     margin-bottom: 20px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -57,18 +56,17 @@
 }
 #box button /* Archive button */
 {
-    background: var(--background-colour4);
+    background: var(--background-gradient3);
     color: var(--text-color2);
     border-radius: var(--border-radius2);
     border: none;
     padding: 5px;
     margin-top: 10px;
     margin-right: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 #box button:hover /* Archive button */
 {
-    background: var(--background-colour);
-    color: var(--text-color);
-    text-decoration: underline;
-    transition: 0.5s; 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
 }
