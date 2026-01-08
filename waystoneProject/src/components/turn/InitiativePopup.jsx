@@ -44,8 +44,11 @@ function InitiativePopup({userId, campaignId, mapId, onConfirm, onClose }) {
 
             // Bereken initiative + dex
             const finalData = initiativeData.map((char) => ({
-            ...char,
-            initiative: Number(char.initiative || 0) + (char.dex || 0),
+                id: char.id,
+                name: char.name,
+                type: char.type,
+                initiative: Number(char.initiative || 0) + (char.dex || 0),
+                dex: char.dex,
             }));
 
             // Sorteer descending
