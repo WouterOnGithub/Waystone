@@ -11,7 +11,7 @@
 #campaign-tab, #campaign-tab-active /* The top 3 buttons */
 {
   border-radius: var(--border-radius3);
-  background: var(--background-colour3);
+  background: var(--background-gradient2);
   color: var(--text-color2);
   font-size: var(--head-text);
   border: none;
@@ -25,7 +25,7 @@
 }
 #campaign-tab-active /* The active button within the top 3 button */
 {
-  background: var(--background-gradient);
+  background: var(--background-gradient2);
   opacity: 1;
 }
 #campaign-tab:hover /* The gray_ top 3 buttons while hovering */

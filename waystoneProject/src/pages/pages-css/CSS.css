@@ -15,7 +15,7 @@
     --background-gradient: linear-gradient(90deg,linear-gradient(90deg, rgba(106, 90, 205, 0.2) 0%, transparent 100%) 0%, rgb(34, 7, 172) 50%, rgb(13, 0, 130) 100%);
     --background-gradient4: linear-gradient(90deg,#1a1a2e 0%, #2c2c5e 50%, #1a1a2e 100%);
     --background-gradient2: radial-gradient(circle, #2c2c5e 50%, #11111f 100%);
-    --background-gradient3: linear-gradient(90deg,#1e1e1e 0%, #303030 50%, #1e1e1e 100%);
+    --background-gradient3: linear-gradient(90deg,#000000 0%, #131313 50%, #000000 100%);
 
     --background-colour: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(210, 200, 213) 100%);
     --background-colour2: linear-gradient(180deg, rgb(200, 200, 200) 0%, rgb(101, 95, 104) 100%);
@@ -80,7 +80,7 @@
     background: var(--background-colour2);
     margin-top: 80px;
     padding: 30px;
-    width: 100vw;
+    width: 95%;
     margin-left: 80px;
     margin-right: auto;
 }
