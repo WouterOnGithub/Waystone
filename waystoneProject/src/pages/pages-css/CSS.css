@@ -15,13 +15,13 @@
     --background-gradient: linear-gradient(90deg,linear-gradient(90deg, rgba(106, 90, 205, 0.2) 0%, transparent 100%) 0%, rgb(34, 7, 172) 50%, rgb(13, 0, 130) 100%);
     --background-gradient4: linear-gradient(90deg,#212147 0%, #35357c 50%, #212147 100%);
     --background-gradient2: radial-gradient(circle, #2c2c5e 50%, #11111f 100%);
-    --background-gradient5: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 10%, rgba(0, 0, 0, 0.2) 100%);
+    --background-gradient5: linear-gradient(90deg, rgba(31, 16, 68, 0.6) 10%, rgba(50, 43, 107, 0.3) 100%);
     --background-gradient3: linear-gradient(90deg,#000000 0%, #131313 50%, #000000 100%);
 
     --background-colour: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(210, 200, 213) 100%);
     --background-colour2: linear-gradient(180deg, rgb(206, 200, 214) 0%, rgb(101, 95, 104) 100%);
     --background-colour3:#bfbfbf;
-    --background-colour4: #303030;
+    --background-colour4: #131313;
 
     --projectbox-colour: linear-gradient(90deg,#905600 0%, #a96500 50%, #905600 100%); 
     --projectbox-colour2: linear-gradient(90deg,#831010 0%, #b91616 50%, #831010 100%);
@@ -29,7 +29,7 @@
     --projectbox-colour4: linear-gradient(90deg,rgba(184, 184, 184, 1) 0%, rgba(217, 217, 217, 1) 50%, rgba(184, 184, 184, 1) 100%);
 
     --form-box-colour: #E0E0E0;
-    --form-box-colour2: #ffffff;
+    --form-box-colour2: radial-gradient(circle, #ffffff 30%, #e5e0ed 100%) ;
     --link-colour: #1648bc;
 
     --border-radius: 10px;
@@ -89,8 +89,13 @@
 {
     font-size: var(--head-text);
 }
+#content h1
+{ 
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
 
-.full-page
+.full-page /* Maybe removed later */
 {
     background: white; /* To fix the dark blocks if a user is on darkmode */
 }
@@ -222,7 +227,7 @@
   padding-bottom: 20px;
   padding-right: 40px;
   width: 90%;
-  border-top: 2px solid var(--background-colour3);
+  border-top: 2px solid var(--text-color2);
 }
 .character-section.addview
 {
@@ -233,7 +238,7 @@
 {
   background: var(--background-gradient5);
   border-radius: var(--border-radius);
-  border-left: 4px solid var(--text-color3);
+  border-left: 4px solid var(--text-color4);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -250,7 +255,7 @@
 .character-row:hover /* A row of a player, npc or custom enemy while hovering */
 {
   box-shadow: 0 8px 20px rgba(43, 43, 43, 0.1);
-  border-left: 4px solid var(--text-color4);
+  border-left: 4px solid var(--text-color3);
   transform: translateX(4px);
   transition: 0.3s;
 }
@@ -269,28 +274,21 @@
 
 
 /* Image upload area styling */
-.image-upload-area {
-  margin: 15px 0;
-  padding: 10px;
-  border: 2px dashed var(--background-colour3);
+.image-upload-area 
+{
+  
+  border: 2px dashed var(--text-color4);
   border-radius: var(--border-radius);
-  background: var(--form-box-colour);
+  background: var(--form-box-colour2);
   text-align: center;
+  padding: 10px;
+  min-width: 370px;
+  height: min-content;
   transition: all 0.3s ease;
 }
-
-.image-upload-area:hover {
+.image-upload-area:hover 
+{
   border-color: var(--text-color3);
-  background: var(--form-box-colour2);
-}
-
-.image-upload-area img {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.image-upload-area img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(43, 43, 43, 0.2);
 }
 
 
