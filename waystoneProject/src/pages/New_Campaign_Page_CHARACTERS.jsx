@@ -1,18 +1,5 @@
   import React, { useState, useEffect } from "react";
   import { useNavigate, useParams } from "react-router-dom";
-  import "./pages-css/CSS.css";
-  import "./pages-css/Main_Page.css";
-  import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
-  import Footer from "../components/UI/Footer";
-  import Header from "../components/UI/Header";
-  import Sidebar from "../components/UI/Sidebar";
-  import Waystone_Logo from "../assets/PlaceholderImage.jpg";
-  import UploadIMG_Logo from "../assets/PlaceholderImage.jpg";
-  import Required_Logo from "../assets/Required_Logo.webp";
-  import Delete_Logo from "../assets/Delete_Logo.webp";
-  import Add_Logo from "../assets/Add_Logo.webp";
-  import Placeholder from "../assets/PlaceholderImage.jpg";
-
   import { db } from "../firebase/firebase";
   import { doc } from "firebase/firestore";
   import { useAuth } from "../context/AuthContext.jsx";
@@ -20,6 +7,12 @@
   import { getEntitiesByType, deleteEntityAndSubCollections } from "../api/npcs";
   import { useCampaign } from "../hooks/useCampaign";
   import { getCampaign } from "../api/userCampaigns";
+  import "./pages-css/CSS.css";
+  import "./pages-css/Main_Page.css";
+  import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
+  import Footer from "../components/UI/Footer";
+  import Header from "../components/UI/Header";
+  import Sidebar from "../components/UI/Sidebar";
 
   function New_Campaign_Page_CHARACTERS() 
   {
@@ -109,9 +102,9 @@
 
     return (
       <div className="full-page">
-      <div className="page-layout">
+
           <Sidebar />
-        <div className="main-wrapper">
+
           <div id="main">
 
           <Header
@@ -119,7 +112,6 @@
                 isNewCampaign
                   ? "New Campaign" : data?.name ? `${data.name}` : "Campaign"
             } />
-          </div>
 
           <div>
 
@@ -154,10 +146,10 @@
                   <br />
                   {players.map((player, index) => (
                     <div key={index} className="character-row">
-                      <span>{player.name} | lvl {player.level} | Hp  {player.HpCurrent}/{player.HpMax}</span>
+                      <span>{player.name} | lvl {player.level} | HP  {player.HpCurrent} / {player.HpMax}</span>
                       <div>
-                        <button className="edit-button" onClick={() => handleEditPlayer(player.id)}>edit</button>
-                        <button className="delete-button" onClick={() => handleDeletePlayer(player.id)}>delete</button>
+                        <button id="button-gray" onClick={() => handleEditPlayer(player.id)}>edit</button>
+                        <button id="button-gray" onClick={() => handleDeletePlayer(player.id)}>delete</button>
                       </div>
                     </div>
                   ))}
@@ -172,10 +164,10 @@
 
                   /* The npc bar */
                     <div key={npc.id} className="character-row">
-                      <span>{npc.name} | race: {npc.race}</span>
+                      <span>{npc.name} | Race: {npc.race}</span>
                       <div>
-                        <button id="edit-button" onClick={() => handleEditNpc(npc.id)}>edit</button>
-                        <button className="delete-button" onClick={() => handleDeleteNpc(npc.id)}>delete</button>
+                        <button id="button-gray" onClick={() => handleEditNpc(npc.id)}>edit</button>
+                        <button id="button-gray" onClick={() => handleDeleteNpc(npc.id)}>delete</button>
                       </div>
                     </div>
 
@@ -191,8 +183,8 @@
                     <div key={enemy.id} className="character-row">
                       <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
                       <div>
-                        <button className="edit-button" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
-                        <button className="delete-button" onClick={() => handleDeleteEnemy(enemy.id)}>delete</button>
+                        <button id="button-gray" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
+                        <button id="button-gray" onClick={() => handleDeleteEnemy(enemy.id)}>delete</button>
                       </div>
                     </div>
                   ))}
@@ -210,13 +202,13 @@
                 </button>
               </div>
             </div>
-
           </div>
 
-          <Footer />
-          </div>
+        <Footer />
+
         </div>
-        </div>
+
+      </div>
     );
   }
 
