@@ -192,32 +192,23 @@
     width: 30px; 
 }
 
-/* Gray input boxes */
 /* White input boxes */
-#input-box-gray input, #input-box-white input
+#input-box-white input
 {
     width: 300px;
-    height: 35px; 
+    height: 20px; 
 }
-#input-box-gray input, #input-box-gray textarea, #input-box-white input, #input-box-white textarea
-{
-    border-radius: var(--border-radius2);
-    background: var(--form-box-colour);
-    border: none;
-    padding: 10px;
-}
-#input-box-gray textarea, #input-box-white textarea
+#input-box-white textarea
 {
     width: 600px;
     height: 200px;
 }
-#input-box-white input
-{
-    height: 20px;
-}
 #input-box-white input, #input-box-white textarea
 {
+    border-radius: var(--border-radius2);
     background: var(--form-box-colour2);
+    border: none;
+    padding: 10px;
 }
 
 /* The bars throughout all the pages (example: the characters page, add and view pages */
