@@ -34,9 +34,17 @@ function New_Campaign_Page_MAPBUILDER()
   const [showAddContainerPopup, setShowAddContainerPopup] = useState(false);
   const [showAddEventPopup, setShowAddEventPopup] = useState(false);
   const [showContainers, setShowContainers] = useState(false);
-  const [showEvents, setShowEvents] = useState(false);
+  const [showEvents, setShowEvents] = useState(() => {
+    // Load showEvents state from localStorage
+    const saved = localStorage.getItem(`showEvents-${campaignId}`);
+    return saved ? JSON.parse(saved) : false;
+  });
   const [containers, setContainers] = useState([]);
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(() => {
+    // Load events from localStorage if available
+    const saved = localStorage.getItem(`events-${campaignId}`);
+    return saved ? JSON.parse(saved) : [];
+  });
   const [editingLocation, setEditingLocation] = useState(null);
   const [editingRegion, setEditingRegion] = useState(null);
   const [editingContainer, setEditingContainer] = useState(null);
@@ -336,12 +344,27 @@ function New_Campaign_Page_MAPBUILDER()
     return () => window.removeEventListener("focus", handleFocus);
   }, [userId, campaignId]);
 
+  // Save showEvents state to localStorage
+  useEffect(() => {
+    if (campaignId) {
+      localStorage.setItem(`showEvents-${campaignId}`, JSON.stringify(showEvents));
+    }
+  }, [showEvents, campaignId]);
+
+  // Save events state to localStorage
+  useEffect(() => {
+    if (campaignId) {
+      localStorage.setItem(`events-${campaignId}`, JSON.stringify(events));
+    }
+  }, [events, campaignId]);
+
   // Load events for this campaign
   useEffect(() => {
     const loadEvents = async () => {
       if (!userId || !campaignId) return;
       try {
-        const eventList = await getEvents(userId, campaignId, mapId);
+        console.log("Loading events...");
+        const eventList = await getEvents(userId, campaignId);
         console.log("Loaded events:", eventList);
         setEvents(eventList || []);
       } catch (err) {
@@ -349,15 +372,11 @@ function New_Campaign_Page_MAPBUILDER()
       }
     };
 
-    const handleFocus = () => {
-      loadEvents();
-    };
-
     // Initial load
     loadEvents();
     
-    window.addEventListener("focus", handleFocus);
-    return () => window.removeEventListener("focus", handleFocus);
+    // Only add event listeners if we want to auto-refresh
+    // This might be causing the issue, so let's try without it first
   }, [userId, campaignId]);
 
   const refreshLocations = async () => {
@@ -401,9 +420,11 @@ function New_Campaign_Page_MAPBUILDER()
   const refreshEvents = async () => {
     if (!userId || !campaignId) return;
     try {
-      const eventList = await getEvents(userId, campaignId, mapId);
+      const eventList = await getEvents(userId, campaignId);
       console.log("Refreshed events:", eventList);
       setEvents(eventList || []);
+      // Clear localStorage cache and set fresh data
+      localStorage.setItem(`events-${campaignId}`, JSON.stringify(eventList || []));
     } catch (err) {
       console.error("Failed to refresh events:", err);
     }
@@ -465,13 +486,13 @@ function New_Campaign_Page_MAPBUILDER()
       return;
 
     try {
-      console.log("Calling deleteEvent with:", { userId, campaignId, mapId });
-      const ok = await deleteEvent(userId, campaignId, mapId);
+      console.log("Calling deleteEvent with:", { userId, campaignId, eventMapId: event.mapId });
+      const ok = await deleteEvent(userId, campaignId, event.mapId);
       console.log("Delete result:", ok);
       
       if (ok) {
         console.log("Delete successful, reloading events...");
-        const eventList = await getEvents(userId, campaignId, mapId);
+        const eventList = await getEvents(userId, campaignId);
         console.log("Reloaded events:", eventList);
         setEvents(eventList || []);
       } else {
@@ -908,7 +929,7 @@ function New_Campaign_Page_MAPBUILDER()
                   setShowEvents(next);
                   if (next && userId && campaignId) {
                     try {
-                      const eventList = await getEvents(userId, campaignId, mapId);
+                      const eventList = await getEvents(userId, campaignId);
                       console.log("Loaded events:", eventList);
                       setEvents(eventList || []);
                     } catch (err) {
@@ -1137,7 +1158,7 @@ function New_Campaign_Page_MAPBUILDER()
           campaignId={campaignId}
           userId={userId}
           event={editingEvent}
-          mapId={mapId}
+          baseUrl={window.location.origin}
           onEventSaved={refreshEvents}
         />
       )}

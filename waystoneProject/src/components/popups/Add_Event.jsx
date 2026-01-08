@@ -19,7 +19,7 @@ function resolveImageUrl(imageUrl, baseUrl) {
   return `${origin}/${imageUrl}`;
 }
 
-function Add_Event({ campaignId, event, userId, mapId, baseUrl, onEventSaved, onClose }) {
+function Add_Event({ campaignId, event, userId, baseUrl, onEventSaved, onClose }) {
   const fileInputRef = useRef(null);
 
   const [name, setName] = useState(event?.name || "");
@@ -116,14 +116,14 @@ function Add_Event({ campaignId, event, userId, mapId, baseUrl, onEventSaved, on
       };
 
       let saved;
-      if (event?.id) {
-        saved = await updateEvent(userId, campaignId, mapId, payload);
+      if (event?.mapId) {
+        saved = await updateEvent(userId, campaignId, event.mapId, payload);
       } else {
         const dataWithCreated = {
           ...payload,
           createdAt: new Date().toISOString(),
         };
-        saved = await createEvent(userId, campaignId, dataWithCreated, mapId);
+        saved = await createEvent(userId, campaignId, dataWithCreated);
       }
 
       if (!saved) {
