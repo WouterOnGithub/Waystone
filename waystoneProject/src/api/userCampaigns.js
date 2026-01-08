@@ -9,6 +9,8 @@ import {
   setDoc,
   getDoc,
   onSnapshot,
+  query,
+  where,
 } from "firebase/firestore";
 
 
