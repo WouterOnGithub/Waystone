@@ -37,7 +37,7 @@ function View_Item()
             <p id="view-body">Bonus-Effect_name</p> {/* All except 1 later deleted */}
 
             <br />
-                <button id="button-green">Back</button>
+                <button id="button-gray">Back</button>
         
         </form>
 

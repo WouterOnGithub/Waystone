@@ -118,7 +118,7 @@ function Add_Container({onClose, campaignId, container, onContainerSaved})
 
       <div id="addview-content">
 
-        <form id="input-box-gray" onSubmit={handleSave}>
+        <form id="input-box-white" onSubmit={handleSave}>
             <br />
             <label htmlFor="name-buildingregion"><b>Container Name</b></label> <br />
             <input 
@@ -132,11 +132,10 @@ function Add_Container({onClose, campaignId, container, onContainerSaved})
 
             {/* Add items to container */}
             <label htmlFor="container-items"><b>Items in Container</b></label> 
-            <div style={{display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px'}}>
+            <div className="addview-select">
               <select 
                 value={newItem}
                 onChange={(e) => setNewItem(e.target.value)}
-                style={{padding: '5px', borderRadius: '4px', border: '1px solid #ccc'}}
               >
                 <option value="">Select an item...</option>
                 {allItems.map((item) => (
@@ -176,10 +175,12 @@ function Add_Container({onClose, campaignId, container, onContainerSaved})
               </div>
             )}
 
+            <br />
+
               <button id="button-green" type="submit" disabled={loading}>
                 {loading ? "Saving..." : "Save"}
               </button>
-              <button id="button-green" type="button" onClick={onClose}>Back</button>
+              <button id="button-gray" type="button" onClick={onClose}>Back</button>
               {message && (
                 <>
                   <br />

@@ -154,7 +154,7 @@ function Add_Event({ campaignId, event, userId, baseUrl, onEventSaved, onClose }
 
       <div id="addview-content">
 
-        <form id="input-box-gray" onSubmit={handleSave}>
+        <form id="input-box-white" onSubmit={handleSave}>
             <img
               src={imagePreview || UploadIMG_Logo}
               alt="UploadIMG_Logo"
@@ -214,7 +214,7 @@ function Add_Event({ campaignId, event, userId, baseUrl, onEventSaved, onClose }
             <button id="button-green" type="submit" disabled={saving}>
               {saving ? "Saving..." : "Save"}
             </button>
-            <button id="button-green" type="button" onClick={onClose}>
+            <button id="button-gray" type="button" onClick={onClose}>
               Back
             </button>
             {message && (
