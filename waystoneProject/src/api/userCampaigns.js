@@ -853,7 +853,20 @@ export const publishCampaign = async (userId, campaignId) => {
       publishedAt: new Date().toISOString(),
     });
 
-    // Add to FreeCampaigns when published (all published campaigns appear in free campaigns)
+    // Copy all campaign data to FreeCampaigns
+    await copyCampaignToFreeCampaigns(userId, campaignId, campaignData);
+
+    return true;
+  } catch (error) {
+    console.error("Error publishing campaign:", error);
+    return false;
+  }
+};
+
+// Comprehensive function to copy all campaign data to FreeCampaigns
+const copyCampaignToFreeCampaigns = async (userId, campaignId, campaignData) => {
+  try {
+    // 1. Copy main campaign document
     const freeRef = doc(db, "FreeCampaigns", campaignId);
     await setDoc(freeRef, {
       ...campaignData,
@@ -861,11 +874,200 @@ export const publishCampaign = async (userId, campaignId) => {
       isFree: true,
       campaignId,
       ownerId: userId,
+      originalCampaignId: campaignId, // Reference to original
     });
 
+    // 2. Copy all subcollections
+    await copySubCollection(userId, campaignId, "Locations", campaignId);
+    await copySubCollection(userId, campaignId, "Maps", campaignId);
+    await copySubCollection(userId, campaignId, "Entities", campaignId);
+    await copySubCollection(userId, campaignId, "Items", campaignId);
+    await copySubCollection(userId, campaignId, "Containers", campaignId);
+    // Note: Players are NOT copied as per requirements
+
+    console.log(`Successfully copied campaign ${campaignId} to FreeCampaigns`);
+  } catch (error) {
+    console.error("Error copying campaign to FreeCampaigns:", error);
+    throw error;
+  }
+};
+
+// Generic function to copy any subcollection
+const copySubCollection = async (userId, campaignId, subcollectionName, freeCampaignId) => {
+  try {
+    const sourceRef = collection(db, "Users", userId, "Campaigns", campaignId, subcollectionName);
+    const targetRef = collection(db, "FreeCampaigns", freeCampaignId, subcollectionName);
+    
+    const snapshot = await getDocs(sourceRef);
+    const copyPromises = snapshot.docs.map(async (docSnap) => {
+      const data = docSnap.data();
+      const targetDoc = doc(targetRef, docSnap.id);
+      
+      // Special handling for Maps subcollection to preserve mapId
+      if (subcollectionName === "Maps" && data.mapId) {
+        await setDoc(targetDoc, {
+          ...data,
+          mapId: data.mapId // Preserve the mapId field
+        });
+      } else {
+        await setDoc(targetDoc, data);
+      }
+    });
+    
+    await Promise.all(copyPromises);
+    console.log(`Copied ${snapshot.docs.length} documents from ${subcollectionName}`);
+  } catch (error) {
+    console.error(`Error copying subcollection ${subcollectionName}:`, error);
+    throw error;
+  }
+};
+
+// Set up real-time sync between original and free campaign
+export const setupCampaignSync = (userId, campaignId) => {
+  const sourceRefs = [
+    collection(db, "Users", userId, "Campaigns", campaignId, "Locations"),
+    collection(db, "Users", userId, "Campaigns", campaignId, "Maps"),
+    collection(db, "Users", userId, "Campaigns", campaignId, "Entities"),
+    collection(db, "Users", userId, "Campaigns", campaignId, "Items"),
+    collection(db, "Users", userId, "Campaigns", campaignId, "Containers"),
+  ];
+
+  const targetRefs = [
+    collection(db, "FreeCampaigns", campaignId, "Locations"),
+    collection(db, "FreeCampaigns", campaignId, "Maps"),
+    collection(db, "FreeCampaigns", campaignId, "Entities"),
+    collection(db, "FreeCampaigns", campaignId, "Items"),
+    collection(db, "FreeCampaigns", campaignId, "Containers"),
+  ];
+
+  const unsubscribers = [];
+
+  sourceRefs.forEach((sourceRef, index) => {
+    const targetRef = targetRefs[index];
+    
+    const unsubscribe = onSnapshot(sourceRef, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "modified" || change.type === "added") {
+          const docData = change.doc.data();
+          const targetDoc = doc(targetRef, change.doc.id);
+          setDoc(targetDoc, docData);
+        } else if (change.type === "removed") {
+          const targetDoc = doc(targetRef, change.doc.id);
+          deleteDoc(targetDoc);
+        }
+      });
+    });
+
+    unsubscribers.push(unsubscribe);
+  });
+
+  // Return function to unsubscribe all listeners
+  return () => {
+    unsubscribers.forEach(unsubscribe => unsubscribe());
+  };
+};
+
+// Copy free campaign to user's campaigns
+export const copyFreeCampaignToUser = async (userId, freeCampaignId) => {
+  try {
+    // Get the free campaign data
+    const freeRef = doc(db, "FreeCampaigns", freeCampaignId);
+    const freeSnap = await getDoc(freeRef);
+    
+    if (!freeSnap.exists()) {
+      throw new Error("Free campaign not found");
+    }
+    
+    const freeData = freeSnap.data();
+    
+    // Create new campaign in user's collection
+    const userCampaignsRef = collection(db, "Users", userId, "Campaigns");
+    const newCampaignRef = await addDoc(userCampaignsRef, {
+      name: freeData.name,
+      description: freeData.description || "",
+      genre: freeData.genre || "",
+      backstory: freeData.backstory || "",
+      mainMapUrl: freeData.mainMapUrl || null, // Ensure mainMapUrl is copied
+      published: false, // User's copy starts as unpublished
+      isFree: false,
+      ownerId: userId,
+      createdAt: new Date().toISOString(),
+      copiedFromFreeCampaign: freeCampaignId, // Reference to source
+    });
+    
+    const newCampaignId = newCampaignRef.id;
+    
+    // Copy all subcollections from free campaign to user's campaign
+    await copySubCollectionToUserCampaign(freeCampaignId, "Locations", userId, newCampaignId);
+    await copySubCollectionToUserCampaign(freeCampaignId, "Maps", userId, newCampaignId);
+    await copySubCollectionToUserCampaign(freeCampaignId, "Entities", userId, newCampaignId);
+    await copySubCollectionToUserCampaign(freeCampaignId, "Items", userId, newCampaignId);
+    await copySubCollectionToUserCampaign(freeCampaignId, "Containers", userId, newCampaignId);
+    
+    console.log(`Successfully copied free campaign ${freeCampaignId} to user ${userId} as ${newCampaignId}`);
+    return { id: newCampaignId, ...freeData };
+  } catch (error) {
+    console.error("Error copying free campaign to user:", error);
+    throw error;
+  }
+};
+
+// Copy subcollection from free campaign to user's campaign
+const copySubCollectionToUserCampaign = async (freeCampaignId, subcollectionName, userId, newCampaignId) => {
+  try {
+    const sourceRef = collection(db, "FreeCampaigns", freeCampaignId, subcollectionName);
+    const targetRef = collection(db, "Users", userId, "Campaigns", newCampaignId, subcollectionName);
+    
+    const snapshot = await getDocs(sourceRef);
+    const copyPromises = snapshot.docs.map(async (docSnap) => {
+      const data = docSnap.data();
+      const targetDoc = doc(targetRef, docSnap.id);
+      
+      // Special handling for Maps subcollection to preserve mapId
+      if (subcollectionName === "Maps" && data.mapId) {
+        await setDoc(targetDoc, {
+          ...data,
+          mapId: data.mapId // Preserve the mapId field
+        });
+      } else {
+        await setDoc(targetDoc, data);
+      }
+    });
+    
+    await Promise.all(copyPromises);
+    console.log(`Copied ${snapshot.docs.length} documents from ${subcollectionName} to user campaign`);
+  } catch (error) {
+    console.error(`Error copying subcollection ${subcollectionName} to user campaign:`, error);
+    throw error;
+  }
+};
+
+export const deleteCampaign = async (userId, campaignId) => {
+  try {
+    // Delete all subcollections first
+    const subcollections = ["Locations", "Maps", "Entities", "Items", "Containers", "Players"];
+    
+    for (const subcollectionName of subcollections) {
+      const subcollectionRef = collection(db, "Users", userId, "Campaigns", campaignId, subcollectionName);
+      const snapshot = await getDocs(subcollectionRef);
+      
+      const deletePromises = snapshot.docs.map(async (docSnap) => {
+        const docRef = doc(db, "Users", userId, "Campaigns", campaignId, subcollectionName, docSnap.id);
+        await deleteDoc(docRef);
+      });
+      
+      await Promise.all(deletePromises);
+      console.log(`Deleted ${snapshot.docs.length} documents from ${subcollectionName}`);
+    }
+    
+    // Delete the main campaign document
+    const campaignRef = doc(db, "Users", userId, "Campaigns", campaignId);
+    await deleteDoc(campaignRef);
+    
+    console.log(`Successfully deleted campaign ${campaignId} and all its data`);
     return true;
   } catch (error) {
-    console.error("Error publishing campaign:", error);
+    console.error("Error deleting campaign:", error);
     return false;
   }
 };

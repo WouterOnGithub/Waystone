@@ -151,6 +151,24 @@ function My_Campaigns_Page()
     }
   };
 
+  const handleAddToMyCampaigns = async (freeCampaignId) => {
+    if (!freeCampaignId || !user?.uid) return;
+    
+    try {
+      const { copyFreeCampaignToUser } = await import("../api/userCampaigns");
+      await copyFreeCampaignToUser(user.uid, freeCampaignId);
+      // Refresh campaigns list
+      const campaigns = await getAllCampaigns(user.uid);
+      const sorted = [...campaigns].sort(
+        (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
+      );
+      setAllCampaigns(sorted);
+    } catch (err) {
+      console.error("Failed to add campaign to my campaigns:", err);
+      setError("Failed to add campaign to your campaigns");
+    }
+  };
+
   const handlePublishCampaign = async (campaignId, campaignName, isCurrentlyPublished) => {
     if (!campaignId || !user?.uid) return;
 
@@ -215,6 +233,7 @@ function My_Campaigns_Page()
                     onOpenCampaign={handleOpenCampaign}
                     onPublishCampaign={handlePublishCampaign}
                     onArchiveCampaign={handleArchiveCampaign}
+                    onAddToMyCampaigns={handleAddToMyCampaigns}
                   />
                 ))}
               </div>

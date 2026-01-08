@@ -163,6 +163,7 @@ function Main_Page()
                   onOpenCampaign={handleOpenCampaign}
                   onPublishCampaign={handlePublishCampaign}
                   onArchiveCampaign={handleArchiveCampaign}
+                  onAddToMyCampaigns={() => {}} // Empty function since Main Page doesn't have free campaigns
                 />
               ))
             ) : (
