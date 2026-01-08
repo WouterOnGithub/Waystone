@@ -29,10 +29,9 @@
     --projectbox-colour3: linear-gradient(90deg,#103283 0%, #1648bc 50%, #103283 100%);
     --projectbox-colour4: linear-gradient(90deg,rgb(101, 95, 104) 0%, rgb(179, 169, 182) 50%, rgb(101, 95, 104) 100%);
 
-    /* Form/input boxes - light with subtle purple tint */
-    --form-box-colour: #fafafe;
-    --form-box-colour2: radial-gradient(circle, #ffffff 30%, #f5f3ff 100%);
-    --link-colour: #6a5acd;
+    --form-box-colour: #E0E0E0;
+    --form-box-colour2: radial-gradient(circle, #ffffff 30%, #e5e0ed 100%) ;
+    --link-colour: #1648bc;
 
     --border-radius: 10px;
     --border-radius2: 5px;
