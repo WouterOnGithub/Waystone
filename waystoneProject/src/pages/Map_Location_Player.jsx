@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "./pages-css/Campaign_Map.css";
 import { getSession, subscribeToSessionStatus } from "../api/userCampaigns";
 import { useAuth } from "../context/AuthContext";
+import { getLocations } from "../api/userCampaigns";
 
-function Active_Session() {
+function Map_Location_Player() {
   const { sessionCode } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -13,6 +13,26 @@ function Active_Session() {
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showNavMenu, setShowNavMenu] = useState(false);
+  const navMenuRef = useRef(null);
+  const [location, setLocation] = useState(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navMenuRef.current && !navMenuRef.current.contains(event.target)) {
+        setShowNavMenu(false);
+      }
+    };
+    
+    if (showNavMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showNavMenu]);
 
   // Load session data when component mounts
   useEffect(() => {
@@ -23,14 +43,6 @@ function Active_Session() {
         return;
       }
 
-      // Remove authentication check - non-logged-in users can view sessions
-      // Check if user is authenticated
-      // if (!userId) {
-      //   setError("You must be logged in to view a session.");
-      //   setLoading(false);
-      //   return;
-      // }
-
       try {
         const data = await getSession(sessionCode);
         
@@ -38,9 +50,21 @@ function Active_Session() {
           setError("Invalid session code or session has expired");
         } else if (data.isActive === false) {
           setError("This session is no longer active");
+        } else if (!data.locationActive) {
+          setError("The dungeon master hasn't opened a location view yet");
         } else {
-          // Remove ownership check - any user can view any active session
           setSessionData(data);
+          
+          // Load location data if available
+          if (data.locationCampaignId && data.locationId) {
+            try {
+              const locationsList = await getLocations(data.locationUserId, data.locationCampaignId);
+              const foundLocation = locationsList.find(loc => loc.id === data.locationId);
+              setLocation(foundLocation || null);
+            } catch (error) {
+              console.error("Failed to load location:", error);
+            }
+          }
         }
       } catch (error) {
         console.error("Failed to load session:", error);
@@ -51,7 +75,7 @@ function Active_Session() {
     };
 
     loadSession();
-  }, [sessionCode, userId]);
+  }, [sessionCode]);
 
   // Monitor session status in real-time
   useEffect(() => {
@@ -77,6 +101,21 @@ function Active_Session() {
         return;
       }
 
+      // Check what view is currently active and redirect if needed
+      if (data.battleMapActive) {
+        console.log("Battle map is active, redirecting to battle map view");
+        navigate(`/user/Map_Battle_View_Player/${sessionCode}`);
+        return;
+      } else if (data.buildingRegionActive) {
+        console.log("Building region is active, redirecting to building region view");
+        navigate(`/user/Map_Building_Region_Player/${sessionCode}`);
+        return;
+      } else if (!data.locationActive) {
+        console.log("Location is no longer active, redirecting to main map");
+        navigate(`/user/Map_Main_Player/${sessionCode}`);
+        return;
+      }
+
       // Update session data if it changed
       setSessionData(data);
     });
@@ -87,25 +126,31 @@ function Active_Session() {
   }, [sessionCode, navigate]);
 
   const handleBack = () => {
-    navigate("/user/Join_Session");
+    navigate(`/user/Map_Main_Player/${sessionCode}`);
   };
 
   return (
     <div className="full-page">
       <div className="campaign-page">
         <div className="map-container">
-          {/* Top Controls */}
-          <div className="map-top-controls">
-            {/* Back Button */}
-            <button 
-              className="map-back-btn" 
-              onClick={handleBack}
-              title="Go back to session join"
+          {/* Leave Session Button */}
+          <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 1000 }}>
+            <button
+              onClick={() => navigate("/user/Join_Session")}
+              style={{
+                backgroundColor: '#dc3545',
+                color: 'white',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold'
+              }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#c82333'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#dc3545'}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-              Back
+              Leave Session
             </button>
           </div>
 
@@ -113,34 +158,37 @@ function Active_Session() {
           <div className="map-display">
             {loading ? (
               <div className="map-placeholder">
-                <p>Loading session...</p>
+                <p>Loading location...</p>
               </div>
             ) : error ? (
               <div className="map-placeholder">
                 <p style={{ color: 'red' }}>{error}</p>
                 <button 
-                  onClick={handleBack}
-                  className="back-button"
-                  style={{ marginTop: '20px', padding: '10px 20px' }}
+                  onClick={() => navigate("/user/Join_Session")}
+                  style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
                 >
-                  Back to Join Session
+                  Leave Session
                 </button>
               </div>
-            ) : sessionData?.mainMapUrl ? (
+            ) : location?.imageUrl ? (
               <img
-                src={sessionData.mainMapUrl}
-                alt="Campaign Map"
+                src={location.imageUrl}
+                alt={`Location: ${location.name || 'Unnamed Location'}`}
                 className="map-image"
               />
+            ) : sessionData?.locationId ? (
+              <div className="map-placeholder">
+                <p>No image uploaded for this location</p>
+                <small>The dungeon master hasn't uploaded an image for this location yet</small>
+              </div>
             ) : (
               <div className="map-placeholder">
-                <p>No map available for this session</p>
-                <small>The dungeon master hasn't uploaded a map yet</small>
+                <p>Location data not available</p>
               </div>
             )}
 
             {/* Compass */}
-            {!loading && !error && sessionData?.mainMapUrl && (
+            {!loading && !error && (location?.imageUrl || sessionData?.locationId) && (
               <div className="map-compass">
                 <svg width="80" height="80" viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="45" fill="none" stroke="#2e3d08" strokeWidth="2" />
@@ -160,4 +208,4 @@ function Active_Session() {
   );
 }
 
-export default Active_Session;
+export default Map_Location_Player;

@@ -357,25 +357,6 @@ function Add_NPC()
 
               {/* The basic NPC info */}
               <div id="input-box-white" className="character-base-stats-section">
-                <div className="character-base-stat">
-                  <b>NPC Image</b>
-                  <div className="image-upload-area">
-                    <img
-                      src={imagePreview || "/assets/PlaceholderImage.jpg"}
-                      alt="NPC"
-                      className="addview-uploadimg"
-                      onClick={handleUploadClick}
-                      style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover', cursor: 'pointer', border: '2px solid #ccc', borderRadius: '8px' }}
-                    />
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={handleFileChange}
-                      hidden
-                      accept="image/*"
-                    />
-                  </div>
-                </div>
 
                 <div className="character-base-stat">
                   <b>NPC Name</b>
@@ -431,6 +412,10 @@ function Add_NPC()
 
               </div>
 
+              <br />
+
+              <div className="character-base-stats-section">
+
               <div id="campaign-select">
                 <b>Alignment</b><br />
                 <select 
@@ -450,7 +435,27 @@ function Add_NPC()
                 </select>
               </div>
 
-            </div>
+              <div className="character-base-stat">
+                  <b>NPC Image</b>
+                  <div className="image-upload-area">
+                    <img
+                      src={imagePreview || "/assets/PlaceholderImage.jpg"}
+                      alt="NPC"
+                      className="addview-uploadimg"
+                      onClick={handleUploadClick}
+                      style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover', cursor: 'pointer', border: '2px solid #ccc', borderRadius: '8px' }}
+                    />
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      hidden
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
+              </div>
+              </div>
 
             {/* The ability scores */}
             <br />

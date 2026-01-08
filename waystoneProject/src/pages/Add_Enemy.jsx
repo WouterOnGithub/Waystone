@@ -341,25 +341,6 @@ function Add_Enemy()
 
                 {/* The basic enemy info */}
                 <div id="input-box-white" className="character-base-stats-section">
-                <div className="character-base-stat">
-                  <b>Enemy Image</b>
-                  <div className="image-upload-area">
-                    <img
-                      src={imagePreview || "/assets/PlaceholderImage.jpg"}
-                      alt="Enemy"
-                      className="addview-uploadimg"
-                      onClick={handleUploadClick}
-                      style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover', cursor: 'pointer', border: '2px solid #ccc', borderRadius: '8px' }}
-                    />
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={handleFileChange}
-                      hidden
-                      accept="image/*"
-                    />
-                  </div>
-                </div>
 
                 <div className="character-base-stat">
                   <b>Enemy Name</b>
@@ -415,6 +396,10 @@ function Add_Enemy()
                 
               </div>
 
+              <br />
+
+                <div className="character-base-stats-section">
+
                 <div id="campaign-select">
                   <b>Alignment</b><br />
                   <select 
@@ -432,6 +417,28 @@ function Add_Enemy()
                     <option value="Neutral Evil">Neutral Evil</option>
                     <option value="Chaotic Evil">Chaotic Evil</option>
                   </select>
+                </div>
+
+                <div className="character-base-stat">
+                  <b>Enemy Image</b>
+                  <div className="image-upload-area">
+                    <img
+                      src={imagePreview || "/assets/PlaceholderImage.jpg"}
+                      alt="Enemy"
+                      className="addview-uploadimg"
+                      onClick={handleUploadClick}
+                      style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover', cursor: 'pointer', border: '2px solid #ccc', borderRadius: '8px' }}
+                    />
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      hidden
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
+
                 </div>
 
             </div>

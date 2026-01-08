@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat } from "../api/userCampaigns";
+import { getCampaign, getBuildingsRegions, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, getEvents, updateSessionBattleMap } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Building_Region() {
@@ -20,6 +20,8 @@ function Map_Building_Region() {
   const [loading, setLoading] = useState(true);
   const [sessionCode, setSessionCode] = useState('');
   const [isCodeVisible, setIsCodeVisible] = useState(false);
+  const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
+  const [events, setEvents] = useState([]);
 
   // Load campaign data and building/region when component mounts or campaignId/buildingId changes
   useEffect(() => {
@@ -53,6 +55,26 @@ function Map_Building_Region() {
     loadData();
   }, [campaignId, buildingId, userId]);
 
+  // Load events for this campaign
+  useEffect(() => {
+    const loadEvents = async () => {
+      if (!campaignId || !userId) {
+        setEvents([]);
+        return;
+      }
+
+      try {
+        const eventsList = await getEvents(userId, campaignId);
+        setEvents(eventsList || []);
+      } catch (error) {
+        console.error("Failed to load events:", error);
+        setEvents([]);
+      }
+    };
+
+    loadEvents();
+  }, [campaignId, userId]);
+
   // Set up session cleanup callback
   useEffect(() => {
     setSessionCleanupCallback((code) => {
@@ -70,34 +92,6 @@ function Map_Building_Region() {
       setSessionCode(code || '');
     }
   }, [userId, campaignId]);
-
-  // Save session data to Firestore when session is active
-  useEffect(() => {
-    const saveSessionData = async () => {
-      if (sessionCode && campaign && userId && isSessionActive()) {
-        try {
-          const sessionData = {
-            sessionCode: sessionCode,
-            userId: userId,
-            campaignId: campaignId,
-            campaignName: campaign.name || 'Unnamed Campaign',
-            mainMapUrl: campaign.mainMapUrl || null,
-            isActive: true,
-            createdAt: new Date().toISOString(),
-            lastUpdated: new Date().toISOString(),
-            lastHeartbeat: new Date().toISOString()
-          };
-          
-          await createSession(sessionCode, sessionData);
-          console.log("Session data saved to Firestore:", sessionData);
-        } catch (error) {
-          console.error("Failed to save session data:", error);
-        }
-      }
-    };
-
-    saveSessionData();
-  }, [sessionCode, campaign, campaignId, userId]);
 
   // Heartbeat mechanism to keep session alive
   useEffect(() => {
@@ -142,6 +136,58 @@ function Map_Building_Region() {
     };
   }, []);
 
+  // Update session with building region data when component mounts or building changes
+  useEffect(() => {
+    const updateSessionWithBuildingRegion = async () => {
+      if (isSessionActive() && buildingId) {
+        const sessionCode = getExistingSessionCode(userId, campaignId);
+        
+        if (sessionCode) {
+          try {
+            await updateSessionBattleMap(sessionCode, {
+              buildingRegionActive: true,
+              buildingRegionUserId: userId,
+              buildingRegionCampaignId: campaignId,
+              buildingRegionId: buildingId,
+              // Clear other view states
+              battleMapActive: false,
+              locationActive: false
+            });
+          } catch (error) {
+            console.error("Failed to update session with building region data:", error);
+          }
+        }
+      }
+    };
+
+    updateSessionWithBuildingRegion();
+  }, [userId, campaignId, buildingId]);
+
+  // Clean up building region data when component unmounts
+  useEffect(() => {
+    return () => {
+      const cleanupBuildingRegion = async () => {
+        if (isSessionActive() && buildingId) {
+          const sessionCode = getExistingSessionCode(userId, campaignId);
+          if (sessionCode) {
+            try {
+              await updateSessionBattleMap(sessionCode, {
+                buildingRegionActive: false,
+                buildingRegionUserId: null,
+                buildingRegionCampaignId: null,
+                buildingRegionId: null
+              });
+            } catch (error) {
+              console.error("Failed to clear session building region data:", error);
+            }
+          }
+        }
+      };
+
+      cleanupBuildingRegion();
+    };
+  }, [userId, campaignId, buildingId]);
+
   const toggleRegions = () => {
     setRegionsOpen(!regionsOpen);
     if (settingsOpen) setSettingsOpen(false);
@@ -157,18 +203,30 @@ function Map_Building_Region() {
     setRegionsOpen(false);
   };
 
+  const toggleEventsDropdown = () => {
+    setEventsDropdownOpen(!eventsDropdownOpen);
+    if (settingsOpen) setSettingsOpen(false);
+    if (regionsOpen) setRegionsOpen(false);
+  };
+
+  const handleEventSelect = (event) => {
+    navigate(`/user/Map_Battle_View_DM/${campaignId}/${event.mapId}`);
+    setEventsDropdownOpen(false);
+  };
+
   const handleEndSession = () => {
     const confirmEnd = window.confirm(
       "Are you sure you want to end this session? This will kick all players out."
     );
     if (confirmEnd) {
+      if (regionsOpen) setRegionsOpen(false);
       // Delete session when explicitly ending it
       if (sessionCode) {
         deleteSession(sessionCode);
       }
       endCurrentSession();
       setSessionCode('');
-      // Stay on the same page, just end the session
+      // Stay on same page, just end session
     }
   };
 
@@ -176,7 +234,36 @@ function Map_Building_Region() {
     if (userId && campaignId) {
       const newCode = startNewSession(userId, campaignId);
       setSessionCode(newCode);
-      console.log("New session started with code:", newCode);
+      
+      // Save session data to Firestore
+      const saveSessionData = async () => {
+        if (campaign && userId && isSessionActive()) {
+          try {
+            const sessionData = {
+              sessionCode: newCode,
+              userId: userId,
+              campaignId: campaignId,
+              campaignName: campaign.name || 'Unnamed Campaign',
+              mainMapUrl: campaign.mainMapUrl || null,
+              isActive: true,
+              createdAt: new Date().toISOString(),
+              lastUpdated: new Date().toISOString(),
+              lastHeartbeat: new Date().toISOString(),
+              // Initialize view state flags
+              battleMapActive: false,
+              locationActive: false,
+              buildingRegionActive: true
+            };
+            
+            await createSession(newCode, sessionData);
+            console.log("Session data saved to Firestore:", sessionData);
+          } catch (error) {
+            console.error("Failed to save session data:", error);
+          }
+        }
+      };
+
+      saveSessionData();
     }
   };
 
@@ -273,11 +360,32 @@ function Map_Building_Region() {
               </div>
             )}
 
-            {/* Start Battle Button */}
-            <div className="map-locations-dropdown">
-              <button className="start-battle-btn">
+            {/* Start Battle Button with Dropdown */}
+            <div className="map-events-dropdown">
+              <button className="start-battle-btn" onClick={toggleEventsDropdown}>
                 Start Battle
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginLeft: '5px'}}>
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
               </button>
+              
+              {eventsDropdownOpen && (
+                <div className="events-dropdown-menu">
+                  {events.length > 0 ? (
+                    events.map((event) => (
+                      <button
+                        key={event.mapId}
+                        className="event-item"
+                        onClick={() => handleEventSelect(event)}
+                      >
+                        {event.name}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="no-events">No events available</div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Map Display */}

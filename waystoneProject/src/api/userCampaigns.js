@@ -87,10 +87,10 @@ export const getAllCampaigns = async (userId) => {
 export const updateCampaignInfo = async (userId, campaignId, campaignInfo) => {
     try {
         const docRef = doc(db, "Users", userId, "Campaigns", campaignId);
-        await setDoc(docRef, {
+        await updateDoc(docRef, {
             ...campaignInfo,
             lastUpdatedAt: new Date().toISOString()
-        }, { merge: true });
+        });
         const updatedDoc = await getDoc(docRef);
         return updatedDoc.exists() ? { id: updatedDoc.id, ...updatedDoc.data() } : null;
     } catch (error) {
@@ -170,6 +170,7 @@ export const getLocations = async (userId, campaignId) => {
 
 export const deleteLocation = async (userId, campaignId, locationId) => {
   try {
+    // First, get the location data to retrieve the imageUrl
     const docRef = doc(
       db,
       "Users",
@@ -179,10 +180,192 @@ export const deleteLocation = async (userId, campaignId, locationId) => {
       "Locations",
       locationId
     );
+    
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      console.error("Location not found:", locationId);
+      return false;
+    }
+    
+    const locationData = docSnap.data();
+    const imageUrl = locationData?.imageUrl;
+    
+    // Delete the image file from the server if it exists
+    if (imageUrl) {
+      try {
+        const res = await fetch("/api/delete-image", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ imageUrl }),
+        });
+        
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          console.warn("Failed to delete location image:", err.error || "Unknown error");
+        } else {
+          console.log("Successfully deleted location image:", imageUrl);
+        }
+      } catch (imageError) {
+        console.warn("Error deleting location image:", imageError);
+        // Continue with location deletion even if image deletion fails
+      }
+    }
+    
+    // Delete the Firestore document
     await deleteDoc(docRef);
     return true;
   } catch (error) {
     console.error("Error deleting location:", error);
+    return false;
+  }
+};
+
+// EVENT HELPERS
+
+export const createEvent = async (userId, campaignId, eventData) => {
+  try {
+    // Generate a unique mapId for this event
+    const eventMapId = `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Maps",
+      eventMapId
+    );
+    
+    // Add the eventMapId to the event data
+    const dataWithMapId = {
+      ...eventData,
+      mapId: eventMapId,
+      isEvent: true // Flag to identify this as an event Map
+    };
+    
+    await setDoc(docRef, dataWithMapId);
+    const newDoc = await getDoc(docRef);
+    return newDoc.exists() ? { id: newDoc.id, mapId: eventMapId, ...newDoc.data() } : null;
+  } catch (error) {
+    console.error("Error creating event:", error);
+    return null;
+  }
+};
+
+export const updateEvent = async (
+  userId,
+  campaignId,
+  eventMapId,
+  eventData
+) => {
+  try {
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Maps",
+      eventMapId
+    );
+    
+    const dataWithMapId = {
+      ...eventData,
+      mapId: eventMapId,
+      isEvent: true
+    };
+    
+    await setDoc(docRef, dataWithMapId, { merge: true });
+    const updatedDoc = await getDoc(docRef);
+    return updatedDoc.exists()
+      ? { id: updatedDoc.id, mapId: eventMapId, ...updatedDoc.data() }
+      : null;
+  } catch (error) {
+    console.error("Error updating event:", error);
+    return null;
+  }
+};
+
+export const getEvents = async (userId, campaignId) => {
+  try {
+    const mapsCollectionRef = collection(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Maps"
+    );
+    
+    // Query for all maps that are events
+    const q = query(mapsCollectionRef, where("isEvent", "==", true));
+    const querySnapshot = await getDocs(q);
+    
+    const events = [];
+    querySnapshot.forEach((doc) => {
+      events.push({ id: doc.id, mapId: doc.id, ...doc.data() });
+    });
+    
+    return events;
+  } catch (error) {
+    console.error("Error getting events:", error);
+    return [];
+  }
+};
+
+export const deleteEvent = async (userId, campaignId, eventMapId) => {
+  try {
+    // First, get the event data to retrieve the imageUrl
+    const docRef = doc(
+      db,
+      "Users",
+      userId,
+      "Campaigns",
+      campaignId,
+      "Maps",
+      eventMapId
+    );
+    
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      console.error("Event not found:", eventMapId);
+      return false;
+    }
+    
+    const eventData = docSnap.data();
+    const imageUrl = eventData?.imageUrl;
+    
+    // Delete the image file from the server if it exists
+    if (imageUrl) {
+      try {
+        const res = await fetch("/api/delete-image", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ imageUrl }),
+        });
+        
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          console.warn("Failed to delete event image:", err.error || "Unknown error");
+        } else {
+          console.log("Successfully deleted event image:", imageUrl);
+        }
+      } catch (imageError) {
+        console.warn("Error deleting event image:", imageError);
+        // Continue with event deletion even if image deletion fails
+      }
+    }
+    
+    // Delete the Firestore document
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error("Error deleting event:", error);
     return false;
   }
 };
@@ -316,6 +499,32 @@ export const deleteBuildingRegion = async (userId, campaignId, buildingId) => {
       const regionRef = doc(locationDoc.ref, "Regions", buildingId);
       const regionSnap = await getDoc(regionRef);
       if (regionSnap.exists()) {
+        const regionData = regionSnap.data();
+        const imageUrl = regionData?.imageUrl;
+        
+        // Delete the image file from the server if it exists
+        if (imageUrl) {
+          try {
+            const res = await fetch("/api/delete-image", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ imageUrl }),
+            });
+            
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({}));
+              console.warn("Failed to delete building/region image:", err.error || "Unknown error");
+            } else {
+              console.log("Successfully deleted building/region image:", imageUrl);
+            }
+          } catch (imageError) {
+            console.warn("Error deleting building/region image:", imageError);
+            // Continue with building/region deletion even if image deletion fails
+          }
+        }
+        
         await deleteDoc(regionRef);
         return true;
       }
@@ -397,119 +606,6 @@ export const getItems = async (userId, campaignId) => {
   }
 };
 
-// EVENT HELPERS
-
-export const createEvent = async (userId, campaignId, eventData) => {
-  try {
-    // Generate a unique mapId for this event
-    const eventMapId = `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
-    const docRef = doc(
-      db,
-      "Users",
-      userId,
-      "Campaigns",
-      campaignId,
-      "Maps",
-      eventMapId
-    );
-    
-    // Add the eventMapId to the event data
-    const dataWithMapId = {
-      ...eventData,
-      mapId: eventMapId,
-      isEvent: true // Flag to identify this as an event map
-    };
-    
-    await setDoc(docRef, dataWithMapId);
-    const newDoc = await getDoc(docRef);
-    return newDoc.exists() ? { id: newDoc.id, mapId: eventMapId, ...newDoc.data() } : null;
-  } catch (error) {
-    console.error("Error creating event:", error);
-    return null;
-  }
-};
-
-export const updateEvent = async (
-  userId,
-  campaignId,
-  eventMapId,
-  eventData
-) => {
-  try {
-    const docRef = doc(
-      db,
-      "Users",
-      userId,
-      "Campaigns",
-      campaignId,
-      "Maps",
-      eventMapId
-    );
-    
-    const dataWithMapId = {
-      ...eventData,
-      mapId: eventMapId,
-      isEvent: true
-    };
-    
-    await setDoc(docRef, dataWithMapId, { merge: true });
-    const updatedDoc = await getDoc(docRef);
-    return updatedDoc.exists()
-      ? { id: updatedDoc.id, mapId: eventMapId, ...updatedDoc.data() }
-      : null;
-  } catch (error) {
-    console.error("Error updating event:", error);
-    return null;
-  }
-};
-
-export const getEvents = async (userId, campaignId) => {
-  try {
-    const mapsCollectionRef = collection(
-      db,
-      "Users",
-      userId,
-      "Campaigns",
-      campaignId,
-      "Maps"
-    );
-    
-    // Query for all maps that are events
-    const q = query(mapsCollectionRef, where("isEvent", "==", true));
-    const querySnapshot = await getDocs(q);
-    
-    const events = [];
-    querySnapshot.forEach((doc) => {
-      events.push({ id: doc.id, mapId: doc.id, ...doc.data() });
-    });
-    
-    return events;
-  } catch (error) {
-    console.error("Error getting events:", error);
-    return [];
-  }
-};
-
-export const deleteEvent = async (userId, campaignId, eventMapId) => {
-  try {
-    const docRef = doc(
-      db,
-      "Users",
-      userId,
-      "Campaigns",
-      campaignId,
-      "Maps",
-      eventMapId
-    );
-    await deleteDoc(docRef);
-    return true;
-  } catch (error) {
-    console.error("Error deleting event:", error);
-    return false;
-  }
-};
-
 // CONTAINER HELPERS
 
 export const createContainer = async (userId, campaignId, containerData) => {
@@ -522,9 +618,10 @@ export const createContainer = async (userId, campaignId, containerData) => {
       campaignId,
       "Containers"
     );
-    const docRef = await addDoc(collectionRef, containerData);
-    const newDoc = await getDoc(docRef);
-    return newDoc.exists() ? { id: docRef.id, ...newDoc.data() } : null;
+    
+    await setDoc(doc(collectionRef), containerData);
+    const newDoc = await getDoc(doc(collectionRef));
+    return newDoc.exists() ? { id: newDoc.id, ...newDoc.data() } : null;
   } catch (error) {
     console.error("Error creating container:", error);
     return null;
@@ -695,6 +792,19 @@ export const updateSessionHeartbeat = async (sessionCode) => {
     return true;
   } catch (error) {
     console.error("Error updating session heartbeat:", error);
+    return false;
+  }
+};
+
+export const updateSessionBattleMap = async (sessionCode, battleMapData) => {
+  try {
+    console.log("updateSessionBattleMap: Updating session", sessionCode, "with data:", battleMapData);
+    const docRef = doc(db, "Sessions", sessionCode);
+    await setDoc(docRef, battleMapData, { merge: true });
+    console.log("updateSessionBattleMap: Successfully updated session");
+    return true;
+  } catch (error) {
+    console.error("Error updating session battle map:", error);
     return false;
   }
 };
