@@ -8,6 +8,7 @@ import TokenMenu from "../character/tokenMenu";
 import { doc, setDoc} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import "./battleMap.css"
+import TurnPanel from "../turn/TurnPanel";
 
 export default function BattleMap({ userId, campaignId, mapId, draggedToken, setDraggedToken}) {
   const map = useMap(userId, campaignId, mapId);
@@ -62,20 +63,23 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
   };
 
  return (
-  <div
-    className="battlemap-wrapper"
-    style={{
-      width: map.width * cellSize,
-      height: map.height * cellSize,
-    }}
-  >
-    {/* Map background image */}
-    <img
-      src={map.imageUrl}
-      alt="Battle Map"
-      className="battlemap-image"
-      draggable={false}
-    />
+  <>
+      {/* === TURN BAR (Sticky Floating UI) === */}
+      <TurnPanel userId={userId} campaignId={campaignId} mapId={mapId} />
+
+      <div
+        className="battlemap-wrapper"
+        style={{
+          width: map.width * cellSize,
+          height: map.height * cellSize,
+        }}
+      >
+        <img
+          src={map.imageUrl}
+          alt="Battle Map"
+          className="battlemap-image"
+          draggable={false}
+        />
 
     {/* Grid overlay */}
     <div className="grid-container">
@@ -122,6 +126,7 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
       />
     )}
   </div>
+  </>
 );
 
 }

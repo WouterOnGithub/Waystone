@@ -3,9 +3,11 @@ import SidebarToken from "../character/sidebarToken";
 import "./tokenSidebar.css";
 import { useState } from "react";
 import QuickAddEnemyPopup from "../popups/QuickAddEnemyPopup";
+import InitiativePopup from "../turn/InitiativePopup";
 
-export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, campaignId}) {
+export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, campaignId, mapId}) {
   const [showQuickEnemy, setShowQuickEnemy] = useState(false);
+  const [showInitiativePopup, setShowInitiativePopup] = useState(false);
 
   return (
     <div className="token-sidebar">
@@ -48,6 +50,21 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
           />
         ))}
       </div>
+
+      {/* --- Knop voor Initiative Popup --- */}
+      <button style={{ marginTop: "10px", width: "100%" }} onClick={() => setShowInitiativePopup(true)}>
+        Roll for Initiative
+      </button>
+      
+      {/* --- Initiative Popup --- */}
+      {showInitiativePopup && (
+        <InitiativePopup
+          userId={userId}
+          campaignId={campaignId}
+          mapId={mapId}
+          onClose={() => setShowInitiativePopup(false)}
+        />
+      )}
 
       <QuickAddEnemyPopup
         isOpen={showQuickEnemy}

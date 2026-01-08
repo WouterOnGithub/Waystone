@@ -77,7 +77,7 @@ function Game_Settings_SAVEGAME()
 
         <div id="addview-content">
 
-          <form id="input-box-gray" className="game-settings-content" onSubmit={handleSave}>
+          <form id="input-box-white" className="game-settings-content" onSubmit={handleSave}>
             <br /><br />
 
             <label htmlFor="name-savegame"><b>Name</b></label><br />
@@ -127,7 +127,7 @@ function Game_Settings_SAVEGAME()
               {isSaving ? "Saving..." : "Save"}
             </button>
             <button 
-              id="button-green" 
+              id="button-gray" 
               type="button"
               onClick={handleBack}
               disabled={isSaving}
