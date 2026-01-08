@@ -11,7 +11,7 @@
     --text-color: #292956;
     --text-color2: #e8e8f5;
     --text-color3: #2d265a;
-    --text-color4: #8a2be2;
+    --text-color4: #3d1463;
 
     /* Light backgrounds for content areas */
     --background-colour: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);
@@ -20,16 +20,16 @@
     --background-colour4: #2d2d5f;
 
     /* Dark purple gradients for UI elements */
-    --background-gradient: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
-    --background-gradient2: radial-gradient(circle, #7b68ee 50%, #6a5acd 100%);
+    --background-gradient: linear-gradient(135deg, #462d5f 0%, #2d2d5f 100%);
+    --background-gradient2: radial-gradient(circle, #3f2f94 50%, #3625a2 100%);
     --background-gradient3: linear-gradient(90deg, #4a4a6e 0%, #2d2d5f 50%, #4a4a6e 100%);
-    --background-gradient4: linear-gradient(135deg, #6a5acd 0%, #7b68ee 100%);
+    --background-gradient4: linear-gradient(90deg, #30276a 0%, #2f246b 50%, #2d2d5f 100%);
     --background-gradient5: linear-gradient(90deg, rgba(106, 90, 205, 0.15) 10%, rgba(138, 43, 226, 0.1) 100%);
 
     /* Project box colours with purple gradients */
-    --projectbox-colour: linear-gradient(90deg, #30276a 0%, #3b2e87 50%, #442f74 100%); 
-    --projectbox-colour2: linear-gradient(90deg, #7b68ee 0%, #9370db 50%, #7b68ee 100%);
-    --projectbox-colour3: linear-gradient(90deg, #4169e1 0%, #6495ed 50%, #4169e1 100%);
+    --projectbox-colour: linear-gradient(90deg, #30276a 0%, #3b2e87 50%, #2d2d5f 100%); 
+    --projectbox-colour2: linear-gradient(90deg, #30276a 0%, #3b2e87 50%, #2d2d5f 100%);
+    --projectbox-colour3: linear-gradient(90deg, #30276a 0%, #3b2e87 50%, #2d2d5f 100%);
     --projectbox-colour4: linear-gradient(90deg, rgba(200, 200, 220, 1) 0%, rgba(230, 230, 240, 1) 50%, rgba(200, 200, 220, 1) 100%);
 
     /* Form/input boxes - light with subtle purple tint */
@@ -114,7 +114,7 @@
 #button-green, #button-gray /* All buttons - dark purple with light purple text */
 {
     border-radius: var(--border-radius);
-    background: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
+    background: linear-gradient(135deg, #282250 0%, #3b1681 100%);
     font-weight: bold;
     border: 2px solid #8a7fd8;
     padding: 10px;
@@ -130,7 +130,7 @@
 #button-green:hover, #button-gray:hover, #addview-green-bar:hover
 {
     color: #ffffff;
-    background: linear-gradient(135deg, #7b68ee 0%, #9370db 100%);
+    background: linear-gradient(135deg, #332a63 0%, #533d78 100%);
     border-color: #9370db;
     box-shadow: 
         0 6px 20px rgba(106, 90, 205, 0.4),
@@ -139,7 +139,7 @@
 }
 #button-gray
 {
-    background: linear-gradient(135deg, #4a4a6e 0%, #2d2d5f 100%);
+    background: linear-gradient(135deg, #912aff 0%, #382d5f 100%);
     border-color: #6a5acd;
 }
 
