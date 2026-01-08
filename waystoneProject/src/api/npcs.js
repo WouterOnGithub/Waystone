@@ -40,8 +40,41 @@ export const updateEntity =async(userId, campaignId, entityId, updateData)=>{
 }
 
 export const deleteEntityAndSubCollections = async (entityRef) => {
-  const subCollections = await getSubCollections(entityRef);
+  // First, get entity data to retrieve imageUrl
+  const entitySnap = await getDoc(entityRef);
+  if (!entitySnap.exists()) {
+    console.error("Entity not found:", entityRef.path);
+    return false;
+  }
+  
+  const entityData = entitySnap.data();
+  const imageUrl = entityData?.imageUrl;
+  
+  // Delete the image file from the server if it exists
+  if (imageUrl) {
+    try {
+      const res = await fetch("/api/delete-image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imageUrl }),
+      });
+      
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        console.warn("Failed to delete entity image:", err.error || "Unknown error");
+      } else {
+        console.log("Successfully deleted entity image:", imageUrl);
+      }
+    } catch (imageError) {
+      console.warn("Error deleting entity image:", imageError);
+      // Continue with entity deletion even if image deletion fails
+    }
+  }
 
+  // Delete subcollections
+  const subCollections = await getSubCollections(entityRef);
   for (const sub of subCollections) {
     const snap = await getDocs(sub);
     for (const d of snap.docs) {
@@ -49,7 +82,9 @@ export const deleteEntityAndSubCollections = async (entityRef) => {
     }
   }
 
+  // Delete the entity document
   await deleteDoc(entityRef);
+  return true;
 };
 
 // List the known subcollections for entities

@@ -38,8 +38,41 @@ export const updatePlayer = async (userId, campaignId, playerId, playerData) => 
 }
 
 export const deletePlayerAndSubCollections = async (playerRef) => {
-  const subCollections = await getSubCollections(playerRef);
+  // First, get player data to retrieve imageUrl
+  const playerSnap = await getDoc(playerRef);
+  if (!playerSnap.exists()) {
+    console.error("Player not found:", playerRef.path);
+    return false;
+  }
+  
+  const playerData = playerSnap.data();
+  const imageUrl = playerData?.imageUrl;
+  
+  // Delete the image file from the server if it exists
+  if (imageUrl) {
+    try {
+      const res = await fetch("/api/delete-image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imageUrl }),
+      });
+      
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        console.warn("Failed to delete player image:", err.error || "Unknown error");
+      } else {
+        console.log("Successfully deleted player image:", imageUrl);
+      }
+    } catch (imageError) {
+      console.warn("Error deleting player image:", imageError);
+      // Continue with player deletion even if image deletion fails
+    }
+  }
 
+  // Delete subcollections
+  const subCollections = await getSubCollections(playerRef);
   for (const sub of subCollections) {
     const snap = await getDocs(sub);
     for (const d of snap.docs) {
@@ -47,7 +80,9 @@ export const deletePlayerAndSubCollections = async (playerRef) => {
     }
   }
 
-  await deleteDoc(playerRef);  
+  // Delete the player document
+  await deleteDoc(playerRef);
+  return true;
 };
 
 const getSubCollections = async (docRef) => {

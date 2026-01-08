@@ -170,6 +170,7 @@ export const getLocations = async (userId, campaignId) => {
 
 export const deleteLocation = async (userId, campaignId, locationId) => {
   try {
+    // First, get the location data to retrieve the imageUrl
     const docRef = doc(
       db,
       "Users",
@@ -179,6 +180,40 @@ export const deleteLocation = async (userId, campaignId, locationId) => {
       "Locations",
       locationId
     );
+    
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      console.error("Location not found:", locationId);
+      return false;
+    }
+    
+    const locationData = docSnap.data();
+    const imageUrl = locationData?.imageUrl;
+    
+    // Delete the image file from the server if it exists
+    if (imageUrl) {
+      try {
+        const res = await fetch("/api/delete-image", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ imageUrl }),
+        });
+        
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          console.warn("Failed to delete location image:", err.error || "Unknown error");
+        } else {
+          console.log("Successfully deleted location image:", imageUrl);
+        }
+      } catch (imageError) {
+        console.warn("Error deleting location image:", imageError);
+        // Continue with location deletion even if image deletion fails
+      }
+    }
+    
+    // Delete the Firestore document
     await deleteDoc(docRef);
     return true;
   } catch (error) {
@@ -283,6 +318,7 @@ export const getEvents = async (userId, campaignId) => {
 
 export const deleteEvent = async (userId, campaignId, eventMapId) => {
   try {
+    // First, get the event data to retrieve the imageUrl
     const docRef = doc(
       db,
       "Users",
@@ -292,6 +328,40 @@ export const deleteEvent = async (userId, campaignId, eventMapId) => {
       "Maps",
       eventMapId
     );
+    
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      console.error("Event not found:", eventMapId);
+      return false;
+    }
+    
+    const eventData = docSnap.data();
+    const imageUrl = eventData?.imageUrl;
+    
+    // Delete the image file from the server if it exists
+    if (imageUrl) {
+      try {
+        const res = await fetch("/api/delete-image", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ imageUrl }),
+        });
+        
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          console.warn("Failed to delete event image:", err.error || "Unknown error");
+        } else {
+          console.log("Successfully deleted event image:", imageUrl);
+        }
+      } catch (imageError) {
+        console.warn("Error deleting event image:", imageError);
+        // Continue with event deletion even if image deletion fails
+      }
+    }
+    
+    // Delete the Firestore document
     await deleteDoc(docRef);
     return true;
   } catch (error) {
@@ -429,6 +499,32 @@ export const deleteBuildingRegion = async (userId, campaignId, buildingId) => {
       const regionRef = doc(locationDoc.ref, "Regions", buildingId);
       const regionSnap = await getDoc(regionRef);
       if (regionSnap.exists()) {
+        const regionData = regionSnap.data();
+        const imageUrl = regionData?.imageUrl;
+        
+        // Delete the image file from the server if it exists
+        if (imageUrl) {
+          try {
+            const res = await fetch("/api/delete-image", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ imageUrl }),
+            });
+            
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({}));
+              console.warn("Failed to delete building/region image:", err.error || "Unknown error");
+            } else {
+              console.log("Successfully deleted building/region image:", imageUrl);
+            }
+          } catch (imageError) {
+            console.warn("Error deleting building/region image:", imageError);
+            // Continue with building/region deletion even if image deletion fails
+          }
+        }
+        
         await deleteDoc(regionRef);
         return true;
       }
