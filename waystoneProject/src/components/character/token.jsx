@@ -1,13 +1,14 @@
 import React from "react";
-import { usePlayer, useEntity } from "../../hooks/usePlayerMap";
+import { usePlayer, useEntity, useContainer } from "../../hooks/usePlayerMap";
 import "./token.css"
 
 export default function Token({ userId,tokenId, x, y, onDragStart, onClick, campaignId }) {
   //use user.uid inplace of UID
   const player = usePlayer(userId, campaignId, tokenId);
   const entity = useEntity(userId,campaignId,tokenId)
+  const container = useContainer( userId,campaignId, tokenId)
   
-  const data = player || entity;  
+  const data = player || entity || container;  
 
   if (!data) return null;
 

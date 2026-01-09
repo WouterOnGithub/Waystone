@@ -5,6 +5,8 @@
   margin: 0 auto;
   padding: 30px;
   box-sizing: border-box;
+  margin: 0 auto 30px auto; /* centreert horizontaal */
+  max-width: 800px;        /* optioneel, maar sterk aangeraden */
 }
 
 #settings-password
@@ -47,15 +49,15 @@
     margin-right: 20px;
 }
 
-#settings-box
-{
+#settings-box {
     border-radius: 10px;
     background: var(--background-colour);
     padding: 30px;
-    margin-bottom: 30px;
-    max-width: 100%;
+    margin: 0 auto 30px auto; /* centreert horizontaal */
+    max-width: 800px;        /* optioneel, maar sterk aangeraden */
     box-sizing: border-box;
 }
+
 
 #settings-box b
 {

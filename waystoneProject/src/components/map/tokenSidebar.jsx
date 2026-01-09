@@ -5,7 +5,7 @@ import { useState } from "react";
 import QuickAddEnemyPopup from "../popups/QuickAddEnemyPopup";
 import InitiativePopup from "../turn/InitiativePopup";
 
-export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, campaignId, mapId, mapCells}) {
+export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, containers, campaignId, mapId, mapCells}) {
   const [showQuickEnemy, setShowQuickEnemy] = useState(false);
   const [showInitiativePopup, setShowInitiativePopup] = useState(false);
 
@@ -51,6 +51,10 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
         ))}
       </div>
 
+      <h3>Containers</h3>
+      <div className="token-list">
+        {containers.map(c => <SidebarToken key={c.id} player={c} onDragStart={onDragStart} />)}
+      </div>
       {/* --- Knop voor Initiative Popup --- */}
       <button style={{ marginTop: "10px", width: "100%" }} onClick={() => setShowInitiativePopup(true)}>
         Roll for Initiative
