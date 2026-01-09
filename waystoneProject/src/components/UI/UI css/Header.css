@@ -83,12 +83,12 @@
     font-weight: 600;
     text-transform: none;
     letter-spacing: 1.1px;
-    margin: 0;
+    padding: 10px;
     position: relative;
     text-shadow: 
-        0 0 20px rgba(167, 139, 250, 0.5),
-        0 0 40px rgba(106, 90, 205, 0.3),
-        0 2px 4px rgba(0, 0, 0, 0.5);
+        0 0 10px rgba(167, 139, 250, 0.3),
+        0 0 20px rgba(106, 90, 205, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.3);
     animation: title-glow 4s ease-in-out infinite;
 }
 
