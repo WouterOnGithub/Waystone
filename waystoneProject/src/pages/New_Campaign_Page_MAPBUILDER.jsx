@@ -729,7 +729,7 @@ function New_Campaign_Page_MAPBUILDER()
                   <div key={loc.id} className="character-section">
                     <div className="character-row">
                       <div>
-                        <b>{loc.name}</b>
+                        <b style={{ fontSize: '18px' }}>{loc.name}</b>
                       </div>
                       <div>
                         <button
@@ -777,9 +777,9 @@ function New_Campaign_Page_MAPBUILDER()
                         {buildings.filter(building => building.locationId === loc.id).map((building) => (
                           <div key={building.id} className="character-row sub">
                             <div>
-                              <b>{building.name || "Unnamed Region"}</b>
+                              <b style={{ fontSize: '18px' }}>{building.name || "Unnamed Region"}</b>
                             </div>
-                            <div style={{ display: "flex", gap: "6px" }}>
+                            <div>
                               <button
                                 id="button-blue"
                                 type="button"

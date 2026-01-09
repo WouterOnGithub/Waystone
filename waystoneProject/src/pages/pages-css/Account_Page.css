@@ -34,28 +34,31 @@
     width: 860px;
 }
 
-.account-edit-icon /* The account edit icon */
+.account-edit-button /* The account edit button */
 {
     float: right;
     text-align: center;
-    border: 1px var(--background-colour3) solid;
+    border: 2px var(--accent-color) solid;
     border-radius: var(--border-radius);
-    color: var(--text-color3);
-    padding: 5px;
+    color: var(--accent-color);
+    background-color: var(--background-colour);
+    padding: 8px 16px;
     margin: 5px;
-    width: 27px;
-    height: 27px;
-    opacity: 0.6;
-    transition: transform 0.25s ease;
-}
-.account-edit-icon:hover /* The account edit icon while the cursor hovers over it */
-{
-    background-color: var(--form-box-colour);
-    color: var(--text-color3);
-    border: none;
     opacity: 1;
-    transition: 0.3s;
-    transform: rotate(-10deg) scale(1.1);
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.account-edit-button:hover /* The account edit button while the cursor hovers over it */
+{
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    opacity: 1;
+    transition: all 0.3s ease;
+    transform: scale(1.05);
+    text-decoration: none;
 }
 
 .account-campaigns /* The campaigns section of the account (total, last played) */
