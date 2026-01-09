@@ -311,6 +311,19 @@
   box-shadow: 0 2px 6px rgba(45, 31, 92, 0.1);
 }
 
+.character-row.sub
+{
+  width: 60%;
+  margin-left: 50px;
+  margin-top: -40px;
+  margin-bottom: 60px;
+}
+
+.character-row-sub-arrow
+{
+  margin-left: 20px;
+}
+
 .character-row.addview {
   background: var(--light-gray);
   border: 1px solid var(--dark-purple);
