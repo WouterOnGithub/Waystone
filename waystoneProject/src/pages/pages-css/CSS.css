@@ -229,7 +229,7 @@
 
 .character-row  /* A row of a player, npc or custom enemy */
 {
-  background: var(--background-colour3);
+  background: var(--background-gradient5);
   border-radius: var(--border-radius);
   border-left: 4px solid var(--text-color4);
   display: flex;
