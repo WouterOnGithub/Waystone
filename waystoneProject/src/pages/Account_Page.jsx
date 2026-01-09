@@ -121,7 +121,7 @@ function Account_Page()
             <p> <b>Last played:</b> <i>{getLastPlayedCampaign()?.name || "No campaigns yet"}</i> </p>
           </section>
 
-          <section id="account-archived">
+          <section className="campaign-actions" id="account-archived">
             {/* The archive button to see archived campaigns */}
             <Link to="/user/Archived_Campaigns" id="button-green">Archived Campaigns</Link>
           </section>
