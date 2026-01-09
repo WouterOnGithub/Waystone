@@ -4,19 +4,21 @@ import BattleMap from "../components/map/battleMap";
 import BattleMapWithSidebar from "../components/map/battleMapWithSidebar";
 import { updateSessionBattleMap } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, isSessionActive } from "../utils/sessionCode";
+import { useAuth } from "../context/AuthContext";
 import "./pages-css/CSS.css"
 import DiceRoller from "../components/map/diceRoller";
 
 function Map_Battle_View_DM() {
   const { campaignId, eventMapId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [showNavMenu, setShowNavMenu] = useState(false);
   const navMenuRef = useRef(null);
   
-  // If no campaignId or eventMapId provided, use fallback values for backward compatibility
-  const userId = "6v5VMJwiBgQjsAMLc42PBe7Krmd2";
-  const finalCampaignId = campaignId || "gFOfbenj1aCJX46ZuJm8";
-  const finalMapId = eventMapId || "abcdefg";
+  // Get the authenticated user ID or use fallback for backward compatibility
+  const userId = user?.uid;
+  const finalCampaignId = campaignId;
+  const finalMapId = eventMapId;
 
   // Update session with battle map data when component mounts
   useEffect(() => {
