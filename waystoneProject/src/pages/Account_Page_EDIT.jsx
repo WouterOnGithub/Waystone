@@ -141,7 +141,7 @@ function Account_Page_EDIT() {
               />
             </div>
 
-            <div id="input-box-gray">
+            <div id="input-box-white">
               <form onSubmit={handleSave}>
 
                 <br />
