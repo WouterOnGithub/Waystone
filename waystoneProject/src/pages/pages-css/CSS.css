@@ -243,17 +243,17 @@
 
 .character-row
 {
-  background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
+  background: var(--background-gradient5);
   border-radius: var(--border-radius);
-  border-left: 4px solid #6a5acd;
+  border-left: 4px solid var(--text-color4);
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: auto;
   padding-left: 20px;
   margin-bottom: 15px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 6px rgba(106, 90, 205, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 .character-row.addview
 {
