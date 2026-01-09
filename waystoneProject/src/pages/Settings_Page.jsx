@@ -2,7 +2,6 @@
 import React from "react";
 import "./pages-css/CSS.css";
 import "./pages-css/Settings_Page.css";
-import "./pages-css/Main_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";

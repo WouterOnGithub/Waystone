@@ -27,7 +27,7 @@ function Register_Page()
     }
     try {
       await signUp(email, password, username);
-      // Optionally redirect to dashboard OR show success message
+      navigate("/user/Login_Page"); // Redirect to login page after successful registration
     } catch (err) {
       setError(err.message); // Display error if NOT successful register
     }
