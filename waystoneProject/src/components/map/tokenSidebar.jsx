@@ -5,7 +5,7 @@ import { useState } from "react";
 import QuickAddEnemyPopup from "../popups/QuickAddEnemyPopup";
 import InitiativePopup from "../turn/InitiativePopup";
 
-export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, campaignId, mapId}) {
+export default function TokenSidebar({ players, enemies, npcs, onDragStart , userId, campaignId, mapId, mapCells}) {
   const [showQuickEnemy, setShowQuickEnemy] = useState(false);
   const [showInitiativePopup, setShowInitiativePopup] = useState(false);
 
@@ -62,6 +62,7 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
           userId={userId}
           campaignId={campaignId}
           mapId={mapId}
+          mapCells={mapCells}
           onClose={() => setShowInitiativePopup(false)}
         />
       )}
