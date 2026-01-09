@@ -1,11 +1,14 @@
 /* Settings Page Layout */
 .settings-content {
-    max-width: 800px;
-    margin-left: 280px;
-    padding: 25px 40px;
-    box-sizing: border-box;
+    padding: 20px 43px;
     z-index: 1;
     position: relative;
+    max-width: 50vw;
+    margin-left: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 }
 
 #settings-password
@@ -21,41 +24,13 @@
     box-sizing: border-box;
 }
 
-#settings-language-radiobtn input[type="radio"] 
-{
-    accent-color: var(--text-color3);
-    border-radius: var(--border-radius3);
-    appearance: none;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    margin-left: 20px;
-}
-#settings-language-radiobtn input[type="radio"]:checked 
-{
-  background: var(--text-color3);
-  border: 2px var(--text-color4) solid;
-}
-#settings-language-radiobtn input[type="radio"]:hover
-{
-  border-color: var(--text-color3);
-}
-
-#settings-language-radiobtn label 
-{
-    cursor: pointer;
-    margin-left: 10px;
-    margin-right: 20px;
-}
-
 #settings-box {
     border-radius: 10px;
     background: var(--background-colour);
     padding: 30px;
-    margin: 0 auto 30px auto; /* centreert horizontaal */
-    max-width: 800px;        /* optioneel, maar sterk aangeraden */
     box-sizing: border-box;
     outline: 3px solid blue !important;
+    width: 50vw;
 }
 
 
