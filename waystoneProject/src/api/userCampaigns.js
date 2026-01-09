@@ -621,7 +621,7 @@ export const createContainer = async (userId, campaignId, containerData) => {
     
     await setDoc(doc(collectionRef), containerData);
     const newDoc = await getDoc(doc(collectionRef));
-    return newDoc.exists() ? { id: newDoc.id, ...newDoc.data() } : null;
+    return newDoc.exists() ? { id: newDoc.id, ...newDoc.data() ,imageUrl: "/assets/chestContainer.jpg"} : null;
   } catch (error) {
     console.error("Error creating container:", error);
     return null;

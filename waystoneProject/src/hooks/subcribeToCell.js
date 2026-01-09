@@ -49,11 +49,8 @@ export function useMap(userId, campaignId, mapId) {
       mapId
     );
 
-    console.log("Listening to:", mapRef.path);
-
     const unsub = onSnapshot(mapRef, (snapshot) => {
-      console.log("Snapshot exists:", snapshot.exists());
-      console.log("Snapshot data:", snapshot.data());
+
 
       if (snapshot.exists()) {
         setMap(snapshot.data());
