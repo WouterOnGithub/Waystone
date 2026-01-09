@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, updateSessionBattleMap } from "../api/userCampaigns";
+import { getCampaign, getBuildingsRegions, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, updateSessionBattleMap, getEvents } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Location() {
@@ -13,6 +13,8 @@ function Map_Location() {
   
   const [regionsOpen, setRegionsOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
+  const [events, setEvents] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [campaign, setCampaign] = useState(null);
   const [campaignRegions, setCampaignRegions] = useState([]);
@@ -36,6 +38,10 @@ function Map_Location() {
         // Load regions/buildings for this campaign
         const regionsList = await getBuildingsRegions(userId, campaignId);
         setCampaignRegions(regionsList || []);
+        
+        // Load events for this campaign
+        const eventsList = await getEvents(userId, campaignId);
+        setEvents(eventsList || []);
         
         // Load specific location if locationId is provided
         if (locationId) {
@@ -172,16 +178,32 @@ function Map_Location() {
   const toggleRegions = () => {
     setRegionsOpen(!regionsOpen);
     if (settingsOpen) setSettingsOpen(false);
+    if (eventsDropdownOpen) setEventsDropdownOpen(false);
   };
 
   const toggleSettings = () => {
     setSettingsOpen(!settingsOpen);
     if (regionsOpen) setRegionsOpen(false);
+    if (eventsDropdownOpen) setEventsDropdownOpen(false);
+  };
+
+  const toggleEventsDropdown = () => {
+    setEventsDropdownOpen(!eventsDropdownOpen);
+    if (settingsOpen) setSettingsOpen(false);
+    if (regionsOpen) setRegionsOpen(false);
+  };
+
+  const handleEventSelect = (event) => {
+    navigate(`/user/Map_Battle_View_DM/${campaignId}/${event.mapId}`);
+    setEventsDropdownOpen(false);
   };
 
   const selectRegion = (region) => {
     setSelectedRegion(region);
     setRegionsOpen(false);
+    if (region) {
+      navigate(`/user/Map_Building_Region/${campaignId}/${region.id}`);
+    }
   };
 
   const handleEndSession = () => {
@@ -319,15 +341,43 @@ function Map_Location() {
                       <button
                         key={region.id}
                         className="location-button"
-                        onClick={() => navigate(`/user/Map_Building_Region/${campaignId}/${region.id}`)}
+                        onClick={() => selectRegion(region)}
                       >
-                        {region.name || 'Unnamed Region'}
+                        {region.name}
                       </button>
                     ))
                   ) : (
                     <div className="no-locations-message">
                       No regions added to this location yet
                     </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Start Battle Button with Dropdown */}
+            <div className="map-events-dropdown">
+              <button className="start-battle-btn" onClick={toggleEventsDropdown}>
+                Start Battle
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginLeft: '5px'}}>
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              
+              {eventsDropdownOpen && (
+                <div className="events-dropdown-menu">
+                  {events.length > 0 ? (
+                    events.map((event) => (
+                      <button
+                        key={event.mapId}
+                        className="event-item"
+                        onClick={() => handleEventSelect(event)}
+                      >
+                        {event.name}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="no-events">No events available</div>
                   )}
                 </div>
               )}
