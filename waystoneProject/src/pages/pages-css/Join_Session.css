@@ -128,6 +128,7 @@
   justify-content: center;
   gap: 15px;
   flex-wrap: wrap;
+  padding: 5px;
 }
 
 /* Moderne Enter knop met project gradient */
@@ -138,7 +139,7 @@
   border-radius: 12px;
   border: none;
   background: var(--projectbox-colour);
-  color: var(--text-color);
+  color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(176, 87, 4, 0.3);
@@ -161,15 +162,18 @@
 
 .join-session-enter:hover::before {
   left: 100%;
+  color: white;
 }
 
 .join-session-enter:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(176, 87, 4, 0.4);
+  color: white;
 }
 
 .join-session-enter:active {
   transform: translateY(0);
+  color: white;
 }
 
 /* Moderne Terug knop met project thema */
@@ -186,6 +190,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 150px;
   font-family: Garamond, serif, cursive;
+  box-sizing: border-box;
 }
 
 .join-session-back:hover {
