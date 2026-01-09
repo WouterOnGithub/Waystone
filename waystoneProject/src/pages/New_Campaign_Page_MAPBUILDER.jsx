@@ -713,122 +713,147 @@ function New_Campaign_Page_MAPBUILDER()
                 }}
                 disabled={!campaignId || !userId}
               >
-                {showLocations ? "Hide Location(s)" : "Show All Location(s)"} {/* The button */}
+                {showLocations ? "Hide all Location(s)" : "Show All Location(s)"} {/* The button */}
               </button>
             </div>
             
 
-            {showLocations && locations.length > 0 && (
-              <div
-                style={{
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: "8px",
-                }}
-              >
+            {showLocations && (
+              <div style={{
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginTop: "10px"
+              }}>
                 {locations.map((loc) => (
                   <div
                     key={loc.id}
-                    style={{ display: "flex", flexDirection: "column", gap: "4px", width: "100%" }}
+                    style={{ display: "flex", flexDirection: "column", gap: "0px", width: "100%" }}
                   >
-                    <div style={{ display: "flex", gap: "12px", width: "100%" }}>
-                      <button
-                        id="button-green"
-                        type="button"
-                        style={{ width: "160px", height: "50px", fontSize: "16px" }}
-                        onClick={() => {
-                          setEditingLocation(loc);
-                          setShowAddLocationPopup(true);
-                        }}
-                      >
-                        {`Edit ${loc.name || "Location"}`}
-                      </button>
-                      <button
-                        type="button"
-                        id="button-green"
-                        style={{ width: "160px", height: "50px", fontSize: "16px" }}
-                        onClick={async () => {
-                          if (
-                            !window.confirm(
-                              `Delete Location "${loc.name || "Unnamed Location"}?`
-                            )
-                          ) {
-                            return;
-                          }
-                          if (!userId || !campaignId) return;
-                          const ok = await deleteLocation(
-                            userId,
-                            campaignId,
-                            loc.id
-                          );
-                          if (ok) {
-                            const list = await getLocations(userId, campaignId);
-                            setLocations(list || []);
-                          }
-                        }}
-                      >
-                        {`Delete ${loc.name || "Location"}`}
-                      </button>
+                    <div
+                      style={{ 
+                        display: "flex", 
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        width: "100%",
+                        maxWidth: "600px",
+                        padding: "10px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        backgroundColor: "#f9f9f9"
+                      }}
+                    >
+                      <div>
+                        <b style={{ fontSize: "18px" }}>{loc.name}</b>
+                      </div>
+                      <div style={{ display: "flex", gap: "8px" }}>
+                        <button
+                          id="button-green"
+                          type="button"
+                          onClick={() => {
+                            setEditingLocation(loc);
+                            setShowAddLocationPopup(true);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          id="button-green"
+                          onClick={async () => {
+                            if (
+                              !window.confirm(
+                                `Delete Location "${loc.name || "Unnamed Location"}?`
+                              )
+                            ) {
+                              return;
+                            }
+                            if (!userId || !campaignId) return;
+                            const ok = await deleteLocation(
+                              userId,
+                              campaignId,
+                              loc.id
+                            );
+                            if (ok) {
+                              const list = await getLocations(userId, campaignId);
+                              setLocations(list || []);
+                            }
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                     
                     {/* Show regions that belong to this location */}
                     {buildings.filter(building => building.locationId === loc.id).length > 0 && (
-                      <div style={{ marginLeft: "20px", marginTop: "4px" }}>
-                        <div style={{ fontSize: "12px", color: "#666", marginBottom: "4px" }}>
-                          Regions for {loc.name || "this location"}:
-                        </div>
+                      <div style={{ marginLeft: "40px", marginBottom: "20px" }}>
                         {buildings.filter(building => building.locationId === loc.id).map((building) => (
                           <div
                             key={building.id}
-                            style={{ display: "flex", gap: "4px", marginBottom: "4px" }}
+                            style={{ 
+                              display: "flex", 
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              width: "100%",
+                              maxWidth: "560px",
+                              padding: "8px",
+                              border: "1px solid #ddd",
+                              borderRadius: "6px",
+                              backgroundColor: "#f0f0f0",
+                              marginBottom: "6px"
+                            }}
                           >
-                            <button
-                              id="button-green"
-                              type="button"
-                              style={{ width: "120px", height: "45px", fontSize: "14px" }}
-                              onClick={() => {
-                                  setEditingRegion(building);
-                                  setSelectedLocationId(building.locationId || loc.id);
-                                  setShowAddRegionPopup(true);
-                                }}
-                            >
-                              {`Edit ${building.name || "Region"}`}
-                            </button>
-                            <button
-                              type="button"
-                              id="button-green"
-                              style={{ width: "120px", height: "45px", fontSize: "14px" }}
-                              onClick={async () => {
-                                if (
-                                  !window.confirm(
-                                    `Delete Building / Region "${building.name || "Unnamed"}?`
-                                  )
-                                ) {
-                                  return;
-                                }
-                                if (!userId || !campaignId) return;
-                                const ok = await deleteBuildingRegion(
-                                  userId,
-                                  campaignId,
-                                  building.id
-                                );
-                                if (ok) {
-                                  const list = await getBuildingsRegions(
+                            <div>
+                              <b style={{ fontSize: "14px" }}>{building.name || "Unnamed Region"}</b>
+                            </div>
+                            <div style={{ display: "flex", gap: "6px" }}>
+                              <button
+                                id="button-green"
+                                type="button"
+                                onClick={() => {
+                                    setEditingRegion(building);
+                                    setSelectedLocationId(building.locationId || loc.id);
+                                    setShowAddRegionPopup(true);
+                                  }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                type="button"
+                                id="button-green"
+                                onClick={async () => {
+                                  if (
+                                    !window.confirm(
+                                      `Delete Building / Region "${building.name || "Unnamed"}?`
+                                    )
+                                  ) {
+                                    return;
+                                  }
+                                  if (!userId || !campaignId) return;
+                                  const ok = await deleteBuildingRegion(
                                     userId,
-                                    campaignId
+                                    campaignId,
+                                    building.id
                                   );
-                                  setBuildings(list || []);
-                                }
-                              }}
-                            >
-                              {`Delete ${building.name || "Region"}`}
-                            </button>
+                                  if (ok) {
+                                    const list = await getBuildingsRegions(
+                                      userId,
+                                      campaignId
+                                    );
+                                    setBuildings(list || []);
+                                  }
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
                           </div>
                         ))}
                         <button
                           id="button-green"
                           type="button"
-                          style={{ width: "180px", height: "45px", fontSize: "14px", marginTop: "8px" }}
+                          style={{ width: "200px", height: "40px", fontSize: "14px", marginTop: "8px" }}
                           onClick={() => {
                             setEditingRegion(null);
                             setSelectedLocationId(loc.id);
@@ -842,18 +867,20 @@ function New_Campaign_Page_MAPBUILDER()
                     
                     {/* Add region button for locations with no regions */}
                     {buildings.filter(building => building.locationId === loc.id).length === 0 && (
-                      <button
-                        id="button-green"
-                        type="button"
-                        style={{ width: "180px", height: "45px", fontSize: "14px", marginLeft: "20px", marginTop: "8px" }}
-                        onClick={() => {
-                          setEditingRegion(null);
-                          setSelectedLocationId(loc.id);
-                          setShowAddRegionPopup(true);
-                        }}
-                      >
-                        + Add Region to {loc.name || "This Location"}
-                      </button>
+                      <div style={{ marginLeft: "40px", marginBottom: "12px" }}>
+                        <button
+                          id="button-green"
+                          type="button"
+                          style={{ width: "200px", height: "40px", fontSize: "14px" }}
+                          onClick={() => {
+                            setEditingRegion(null);
+                            setSelectedLocationId(loc.id);
+                            setShowAddRegionPopup(true);
+                          }}
+                        >
+                          + Add Region to {loc.name || "This Location"}
+                        </button>
+                      </div>
                     )}
                   </div>
                 ))}
@@ -917,6 +944,8 @@ function New_Campaign_Page_MAPBUILDER()
               </div>
             )}
 
+            <br />
+
             {/* The add and show event buttons*/}
             <div>
               <button
@@ -927,6 +956,7 @@ function New_Campaign_Page_MAPBUILDER()
                 }}
                 type="button"
               >
+              
                 Add Event
               </button>
               <button
@@ -967,15 +997,15 @@ function New_Campaign_Page_MAPBUILDER()
                       alignItems: "center",
                       width: "100%",
                       maxWidth: "600px",
-                      padding: "15px",
+                      padding: "10px",
                       border: "1px solid #ddd",
                       borderRadius: "8px",
                       backgroundColor: "#f9f9f9"
                     }}
                   >
                     <div>
-                      <b>{event.name}</b>
-                      <div style={{ fontSize: "12px", color: "#666" }}>
+                      <b style={{ fontSize: "18px" }}>{event.name}</b>
+                      <div style={{ fontSize: "14px", color: "#666", marginTop: "2px" }}>
                         {event.width}x{event.height}
                       </div>
                     </div>
@@ -1009,6 +1039,8 @@ function New_Campaign_Page_MAPBUILDER()
                 ))}
               </div>
             )}
+
+            <br />
 
             {/* The add and show container buttons*/}
             <div>
@@ -1063,13 +1095,15 @@ function New_Campaign_Page_MAPBUILDER()
                       alignItems: "center",
                       width: "100%",
                       maxWidth: "600px",
-                      padding: "15px",
+                      padding: "10px",
                       border: "1px solid #ddd",
                       borderRadius: "8px",
                       backgroundColor: "#f9f9f9"
                     }}
                   >
-                    <b>{container.name}</b>
+                    <div>
+                      <b style={{ fontSize: "18px" }}>{container.name}</b>
+                    </div>
                     <div style={{ display: "flex", gap: "8px" }}>
                       <button
                         id="button-green"
