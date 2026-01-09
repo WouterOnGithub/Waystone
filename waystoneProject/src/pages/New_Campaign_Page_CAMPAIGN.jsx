@@ -214,7 +214,7 @@ function New_Campaign_Page_CAMPAIGN()
             <div>
               <button id="button-green" onClick={() => setShowAddItemPopup(true)}>Add Item</button>
               <button
-                id="button-green"
+                id="button-blue"
                 onClick={async () => {
                   const next = !showItems;
                   setShowItems(next);
@@ -249,7 +249,7 @@ function New_Campaign_Page_CAMPAIGN()
                         display: "flex", 
                         flexDirection: "column", 
                         gap: "4px", 
-                        width: "100%",
+                        width: "50%",
                         padding: "10px",
                         border: "1px solid #ddd",
                         borderRadius: "8px",
@@ -284,7 +284,7 @@ function New_Campaign_Page_CAMPAIGN()
                         </div>
                         <div style={{ display: "flex", gap: "8px", marginRight: "40px" }}>
                           <button
-                            id="button-green"
+                            id="button-blue"
                             type="button"
                             style={{ 
                               width: "80px", 
@@ -301,7 +301,7 @@ function New_Campaign_Page_CAMPAIGN()
                           </button>
                           <button
                             type="button"
-                            id="button-green"
+                            id="button-gray"
                             style={{ 
                               width: "80px", 
                               height: "40px", 
@@ -337,8 +337,8 @@ function New_Campaign_Page_CAMPAIGN()
 
             {/* The Save and continue, and enter button */}
             <div className="campaign-actions">
-              <button id="button-green" onClick={handleSave} >Save and Continue</button>
-              <button id="button-gray" onClick={() => navigate(`/user/Map_Main/${campaignId}`)}>Enter</button>
+              <button id="button-blue" onClick={handleSave} >Save and Continue</button>
+              <button id="button-green" onClick={() => navigate(`/user/Map_Main/${campaignId}`)}>Enter</button>
             </div>
 
           </div>

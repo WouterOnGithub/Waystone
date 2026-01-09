@@ -641,23 +641,13 @@ function New_Campaign_Page_MAPBUILDER()
           {/* The map builder buttons and uploads */}
           <div id="content">
 
-            {/* The select template dropdown */}
-            <div>
-              <b>Templates</b>
-              <div id="campaign-select">
-                <select>
-                  <option>Select template...</option>
-                  {/* *Where the other templates would appear* */}
-                </select>
-              </div>
-              <br />
-            </div>
 
             {/* Upload Main Map */}
             <div>
 
               <b>Import Main Map</b>
-              
+              <br />
+              <br />
               <div id="campaign-imgage-upload">
                 {/* The image upload */}
                 <input
@@ -707,7 +697,7 @@ function New_Campaign_Page_MAPBUILDER()
                 >Add Location
               </button>
               <button
-                id="button-green"
+                id="button-blue"
                 type="button"
                 onClick={async () => {
                   const next = !showLocations;
@@ -940,7 +930,7 @@ function New_Campaign_Page_MAPBUILDER()
                 Add Event
               </button>
               <button
-                id="button-green"
+                id="button-blue"
                 onClick={async () => {
                   const next = !showEvents;
                   setShowEvents(next);
@@ -1033,7 +1023,7 @@ function New_Campaign_Page_MAPBUILDER()
                 Add Container
               </button>
               <button
-                id="button-green"
+                id="button-blue"
                 onClick={async () => {
                   const next = !showContainers;
                   setShowContainers(next);
@@ -1106,11 +1096,11 @@ function New_Campaign_Page_MAPBUILDER()
 
             <div className="campaign-actions">
               
-              <button id="button-green" onClick={handleSaveMap} disabled={saving}>
+              <button id="button-blue" onClick={handleSaveMap} disabled={saving}>
                 {saving ? "Saving..." : "Save and Continue"}
               </button>
               <button 
-                id="button-gray"
+                id="button-green"
                 onClick={() => navigate(`/user/Map_Main/${campaignId}`)}
                 disabled={!campaignId}
               >
