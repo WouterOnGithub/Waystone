@@ -63,3 +63,61 @@
     margin-right: 10px;
   }
 }
+
+/* Additional responsive improvements for Settings Page */
+@media (max-width: 1200px) {
+  .settings-content {
+    max-width: 60vw;
+    margin-left: 280px;
+  }
+  
+  #settings-box {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings-content {
+    margin-left: 0;
+    max-width: 100%;
+    padding: 10px;
+  }
+  
+  #settings-box {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  #settings-password {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  #settings-passwords {
+    width: 100%;
+    padding: 15px;
+  }
+  
+  #settings-passwords input {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-content {
+    padding: 5px;
+  }
+  
+  #settings-box {
+    padding: 15px;
+  }
+  
+  #settings-passwords {
+    padding: 10px;
+  }
+  
+  #settings-passwords input {
+    width: 100%;
+  }
+}

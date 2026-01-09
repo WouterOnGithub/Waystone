@@ -9,6 +9,11 @@
   --body-text: 18px;
   --link-text: 12px;
 
+  /* Responsive font sizes */
+  --title-text-mobile: 60px;
+  --head-text-mobile: 20px;
+  --body-text-mobile: 16px;
+
   /* Simplified 4-color palette: Dark Purple, Black, Light Gray, White */
   --dark-purple: #2d1f5c;
   --black: #1a1a1a;
@@ -383,6 +388,15 @@
     padding: 20px;
     margin-top: 60px;
   }
+  
+  /* Responsive font adjustments */
+  #content b {
+    font-size: 20px;
+  }
+  
+  #content h1 {
+    font-size: 18px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -394,5 +408,38 @@
     padding: 15px;
     margin-top: 50px;
     border-radius: 15px;
+  }
+  
+  /* Even smaller fonts for mobile */
+  #content b {
+    font-size: 18px;
+  }
+  
+  #content h1 {
+    font-size: 16px;
+  }
+}
+
+/* Global responsive adjustments */
+@media (max-width: 768px) {
+  #Waystone_Logo {
+    width: 60%;
+    margin-top: 10px;
+  }
+  
+  .full-page {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #Waystone_Logo {
+    width: 80%;
+    margin-top: 5px;
+  }
+  
+  /* Scrollbar for mobile */
+  ::-webkit-scrollbar {
+    width: 8px;
   }
 }
