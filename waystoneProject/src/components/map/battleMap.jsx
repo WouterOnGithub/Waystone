@@ -15,6 +15,7 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
   const cellsData = useMapCells(userId, campaignId, mapId);
   const [selectedToken, setSelectedToken] = useState(null);
    const cellSize = 80;
+  
   if (!map) return <div>Loading map...</div>;
 
   const grid = generateGrid(cellsData, map.width, map.height);

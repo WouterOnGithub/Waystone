@@ -832,7 +832,7 @@ function New_Campaign_Page_MAPBUILDER()
                             setShowAddRegionPopup(true);
                           }}
                         >
-                          Add Region &#8680; {loc.name || "This Location"}
+                          Add Region to {loc.name || "This Location"}
                         </button>
                       </div>
                     )}
@@ -850,7 +850,7 @@ function New_Campaign_Page_MAPBUILDER()
                             setShowAddRegionPopup(true);
                           }}
                         >
-                          Add Region &#8680; {loc.name || "This Location"}
+                          Add Region to {loc.name || "This Location"}
                         </button>
                       </div>
                     )}
@@ -1068,7 +1068,7 @@ function New_Campaign_Page_MAPBUILDER()
                 Enter
               </button>
               {saveMessage && (
-                <div id="button-green">{saveMessage}</div>
+                <div id="button-gray">{saveMessage}</div>
               )}
 
             </div>

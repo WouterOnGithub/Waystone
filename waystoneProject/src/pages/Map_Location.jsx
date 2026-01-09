@@ -12,7 +12,6 @@ function Map_Location() {
   const userId = user?.uid || null;
   
   const [regionsOpen, setRegionsOpen] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState(null);
@@ -177,19 +176,11 @@ function Map_Location() {
 
   const toggleRegions = () => {
     setRegionsOpen(!regionsOpen);
-    if (settingsOpen) setSettingsOpen(false);
-    if (eventsDropdownOpen) setEventsDropdownOpen(false);
-  };
-
-  const toggleSettings = () => {
-    setSettingsOpen(!settingsOpen);
-    if (regionsOpen) setRegionsOpen(false);
     if (eventsDropdownOpen) setEventsDropdownOpen(false);
   };
 
   const toggleEventsDropdown = () => {
     setEventsDropdownOpen(!eventsDropdownOpen);
-    if (settingsOpen) setSettingsOpen(false);
     if (regionsOpen) setRegionsOpen(false);
   };
 
@@ -250,14 +241,6 @@ function Map_Location() {
                 Back
               </button>
 
-              {/* Settings Button */}
-              <button className="map-settings-btn" onClick={toggleSettings}>
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M12 1v6m0 6v6m0-6h6m-6 0H6" />
-                  <path d="M19.07 4.93l-4.24 4.24m0 5.66l4.24 4.24m-14.14 0l4.24-4.24m0-5.66L4.93 4.93" />
-                </svg>
-              </button>
             </div>
 
             {/* Session Code Display and Controls */}
@@ -306,21 +289,6 @@ function Map_Location() {
                 )}
               </div>
             </div>
-
-            {/* Settings Menu */}
-            {settingsOpen && (
-              <div className="map-settings-menu">
-                <h3>Settings</h3>
-                <ul>
-                  <li>Edit Map</li>
-                  <li>Add Location</li>
-                  <li>Grid Settings</li>
-                  <li>Upload Background</li>
-                  <li>Reset View</li>
-                  <li onClick={handleEndSession} style={{color: 'red', cursor: 'pointer'}}>End Session</li>
-                </ul>
-              </div>
-            )}
 
             {/* Regions Dropdown */}
             <div className="map-locations-dropdown">

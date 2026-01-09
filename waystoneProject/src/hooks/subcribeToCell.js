@@ -41,7 +41,7 @@ export function useMap(userId, campaignId, mapId) {
 
     const mapRef = doc(
       db,
-      "Users",   // ← we MUST confirm this is correct
+      "Users",
       userId,
       "Campaigns",
       campaignId,
@@ -50,8 +50,6 @@ export function useMap(userId, campaignId, mapId) {
     );
 
     const unsub = onSnapshot(mapRef, (snapshot) => {
-
-
       if (snapshot.exists()) {
         setMap(snapshot.data());
       }
