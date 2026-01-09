@@ -4,6 +4,7 @@ import BattleMap from "../components/map/battleMap";
 import BattleMapWithSidebar from "../components/map/battleMapWithSidebar";
 import { updateSessionBattleMap } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, isSessionActive } from "../utils/sessionCode";
+import "./pages-css/CSS.css"
 
 function Map_Battle_View_DM() {
   const { campaignId, eventMapId } = useParams();
@@ -84,7 +85,7 @@ function Map_Battle_View_DM() {
   }, [showNavMenu]);
   
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100vh', backgroundColor : "#e8e5f5" }}>
       {/* Navigation Button */}
       <div style={{ 
         position: 'absolute', 

@@ -9,8 +9,11 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
   const [showQuickEnemy, setShowQuickEnemy] = useState(false);
   const [showInitiativePopup, setShowInitiativePopup] = useState(false);
 
-  return (
-    <div className="token-sidebar">
+ return (
+  <div className="token-sidebar">
+
+    {/* Players */}
+    <section>
       <h3>Available Players</h3>
       <div className="token-list">
         {players.map((player) => (
@@ -21,14 +24,20 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
           />
         ))}
       </div>
-      
-      <div>
+    </section>
+
+    {/* Enemies */}
+    <section>
+      <div className="sidebar-header-row">
         <h3>Enemies</h3>
-        <button onClick={()=> setShowQuickEnemy(prev => !prev)}>
+        <button
+          className="add-token-btn"
+          onClick={() => setShowQuickEnemy(prev => !prev)}
+        >
           +
         </button>
       </div>
-      
+
       <div className="token-list">
         {enemies.map((enemy) => (
           <SidebarToken
@@ -38,9 +47,11 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
           />
         ))}
       </div>
+    </section>
 
-      
-      <h3>Npcs</h3>
+    {/* NPCs */}
+    <section>
+      <h3>NPCs</h3>
       <div className="token-list">
         {npcs.map((npc) => (
           <SidebarToken
@@ -50,34 +61,46 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
           />
         ))}
       </div>
+    </section>
 
+    {/* Containers */}
+    <section>
       <h3>Containers</h3>
       <div className="token-list">
-        {containers.map(c => <SidebarToken key={c.id} player={c} onDragStart={onDragStart} />)}
+        {containers.map((c) => (
+          <SidebarToken
+            key={c.id}
+            player={c}
+            onDragStart={onDragStart}
+          />
+        ))}
       </div>
-      {/* --- Knop voor Initiative Popup --- */}
-      <button style={{ marginTop: "10px", width: "100%" }} onClick={() => setShowInitiativePopup(true)}>
-        Roll for Initiative
-      </button>
-      
-      {/* --- Initiative Popup --- */}
-      {showInitiativePopup && (
-        <InitiativePopup
-          userId={userId}
-          campaignId={campaignId}
-          mapId={mapId}
-          mapCells={mapCells}
-          onClose={() => setShowInitiativePopup(false)}
-        />
-      )}
+    </section>
 
-      <QuickAddEnemyPopup
-        isOpen={showQuickEnemy}
-        onClose={() => setShowQuickEnemy(false)}
+    {/* Initiative */}
+    <button
+      className="initiative-btn"
+      onClick={() => setShowInitiativePopup(true)}
+    >
+      Roll for Initiative
+    </button>
+
+    {/* Popups */}
+    {showInitiativePopup && (
+      <InitiativePopup
         userId={userId}
         campaignId={campaignId}
+        mapId={mapId}
+        mapCells={mapCells}
+        onClose={() => setShowInitiativePopup(false)}
       />
-      
-    </div>
-  );
-}
+    )}
+
+    <QuickAddEnemyPopup
+      isOpen={showQuickEnemy}
+      onClose={() => setShowQuickEnemy(false)}
+      userId={userId}
+      campaignId={campaignId}
+    />
+  </div>
+);}
