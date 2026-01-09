@@ -65,15 +65,9 @@
 }
 
 #account-archived /* Archived campaigns button */
-{
-    padding-top: 20px;
-}
-
-#account-archived a /* Archived campaigns link styling */
-{
-    text-decoration: none;
-    color: inherit;
-    display: inline-block;
+{   
+    width: 250px;
+    border-top: none;
 }
 
 .account-notes /* The notes */
