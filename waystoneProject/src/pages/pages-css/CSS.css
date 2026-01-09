@@ -113,7 +113,7 @@
 #button-green, #button-gray
 {
     border-radius: var(--border-radius);
-    background: var(--background-gradient4);
+    background: var(--background-gradient2);
     color: var(--text-color2);
     font-weight: bold;
     border: none;
@@ -134,7 +134,7 @@
 }
 #button-gray
 {
-    background: var(--background-gradient3);
+    background: var(--background-gradient4);
     color: var(--text-color2);
 }
 
