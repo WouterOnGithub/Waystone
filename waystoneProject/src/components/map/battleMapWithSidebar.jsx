@@ -5,6 +5,7 @@ import TokenSidebar from "./tokenSidebar";
 import  useMapCells  from "../../hooks/subcribeToCell";
 import { useAvailablePlayers } from "../../hooks/useAvailablePlayers";
 import {useEntitiesByType } from "../../hooks/useEntitiesByType";
+import { useContainers } from "../../hooks/useContainers";
 import Game_Settings from "../popups/Game_Settings";
 
 export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
@@ -13,11 +14,11 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
   const [draggedToken, setDraggedToken] = useState(null);
   const enemies = useEntitiesByType(userId, campaignId, "enemy",cellsData);
   const npcs = useEntitiesByType(userId, campaignId, "npc",cellsData);
+  const containers = useContainers(userId, campaignId, cellsData);
+
   const tokenIdsOnMap = new Set(Object.values(cellsData || {}).map(cell => cell.tokenId).filter(Boolean));
 
   const handleDragStart = (player) => {
-  console.log("Dragging player:", player);
-  console.log("player.id:", player.tokenId);
   setDraggedToken({ tokenId: player.tokenId});
 };
 
@@ -37,6 +38,7 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
         npcs = {npcs}
         onDragStart={handleDragStart}
         userId={userId}
+        containers={containers}
         campaignId={campaignId}
         mapId={mapId}
         mapCells={cellsData}

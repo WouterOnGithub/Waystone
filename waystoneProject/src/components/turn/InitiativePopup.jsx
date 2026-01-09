@@ -73,15 +73,12 @@ function InitiativePopup({userId, campaignId, mapId, onConfirm, mapCells , onClo
             "currentTurnOrder"
             );
 
-            console.log("Saving turn order to Firestore:", finalData);
-
             await setDoc(turnDocRef, {
             turnOrder: finalData,
             currentTurnIndex: 0,
             updatedAt: new Date(),
             });
 
-            console.log("Turn order saved successfully!");
             onClose(); // sluit popup
         } catch (error) {
             console.error("Error saving turn order:", error);

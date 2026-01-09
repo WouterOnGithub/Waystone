@@ -32,15 +32,37 @@ function Add_Container({onClose, campaignId, container, onContainerSaved})
   }, [userId, campaignId]);
 
   const handleAddItem = () => {
-    if (newItem.trim() && selectedItems.length < 10) {
-      setSelectedItems([...selectedItems, newItem.trim()]);
-      setNewItem("");
+    if (!newItem || selectedItems.length >= 10) return;
+
+    const existingIndex = selectedItems.findIndex(
+      i => i.itemId === newItem
+    );
+
+    if (existingIndex !== -1) {
+      const copy = [...selectedItems];
+      copy[existingIndex].quantity += 1;
+      setSelectedItems(copy);
+    } else {
+      setSelectedItems([...selectedItems, { itemId: newItem, quantity: 1 }]);
     }
+
+    setNewItem("");
   };
 
+
   const handleRemoveItem = (index) => {
-    setSelectedItems(selectedItems.filter((_, i) => i !== index));
+    const copy = [...selectedItems];
+
+    if (copy[index].quantity > 1) {
+      copy[index].quantity -= 1;
+    } else {
+      copy.splice(index, 1);
+    }
+
+    setSelectedItems(copy);
   };
+
+
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -63,6 +85,7 @@ function Add_Container({onClose, campaignId, container, onContainerSaved})
       const containerData = {
         name: name.trim(),
         items: selectedItems,
+        type: "container",
         lastUpdatedAt: new Date().toISOString(),
       };
 
@@ -157,11 +180,12 @@ function Add_Container({onClose, campaignId, container, onContainerSaved})
             {/* Display selected items */}
             {selectedItems.length > 0 && (
               <div className="character-section addview">
-                {selectedItems.map((itemId, index) => {
-                  const item = allItems.find(i => i.id === itemId);
+                {selectedItems.map((entry, index) => {
+                  const item = allItems.find(i => i.id === entry.itemId);
+
                   return (
                     <div className="character-row addview" key={index}>
-                      <b>{item?.name || 'Unknown Item'}</b> 
+                      <b>{item?.name || 'Unknown Item'} x{entry.quantity}</b> 
                       <button 
                         type="button" 
                         id="button-gray" 
