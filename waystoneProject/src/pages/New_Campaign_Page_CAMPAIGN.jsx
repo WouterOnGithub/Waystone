@@ -238,20 +238,8 @@ function New_Campaign_Page_CAMPAIGN()
               <div className="character-section">
                 {items.length > 0 ? (
                   items.map((item) => (
-                    <div
-                      key={item.id}
-                      style={{ 
-                        display: "flex", 
-                        flexDirection: "column", 
-                        gap: "4px", 
-                        width: "50%",
-                        padding: "10px",
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
-                        backgroundColor: "#f9f9f9"
-                      }}
-                    >
-                      <div style={{ display: "flex", gap: "12px", width: "100%", alignItems: "center" }}>
+                    <div key={item.id} className="character-row">
+                      <div>
                         <div style={{ flex: 1 }}>
                           <b>{item.name || "Unnamed Item"}</b>
                           {item.description && (
@@ -277,23 +265,14 @@ function New_Campaign_Page_CAMPAIGN()
                             type="button"
                             onClick={() => handleEditItem(item)}
                           >
-                            Edit
+                            edit
                           </button>
                           <button
                             type="button"
                             id="delete-button"
-                            style={{ 
-                              width: "80px", 
-                              height: "40px", 
-                              fontSize: "14px",
-                              padding: "8px 12px",
-                              border: "none",
-                              borderRadius: "4px",
-                              cursor: "pointer"
-                            }}
                             onClick={() => handleDeleteItem(item)}
                           >
-                            Delete
+                            delete
                           </button>
                         </div>
                       </div>

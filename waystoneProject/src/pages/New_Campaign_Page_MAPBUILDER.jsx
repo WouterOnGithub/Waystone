@@ -984,27 +984,14 @@ function New_Campaign_Page_MAPBUILDER()
             {showEvents && (
               <div className="character-section">
                 {events.map((event) => (
-                  <div
-                    key={event.id}
-                    style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      maxWidth: "600px",
-                      padding: "10px",
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
-                      backgroundColor: "#f9f9f9"
-                    }}
-                  >
+                  <div key={event.id} className="character-row">
                     <div>
-                      <b style={{ fontSize: "18px" }}>{event.name}</b>
-                      <div style={{ fontSize: "14px", color: "#666", marginTop: "2px" }}>
+                      <b>{event.name}</b>
+                      <div>
                         {event.width}x{event.height}
                       </div>
                     </div>
-                    <div style={{ display: "flex", gap: "8px" }}>
+                    <div>
                       <button
                         id="button-blue"
                         type="button"
@@ -1077,24 +1064,11 @@ function New_Campaign_Page_MAPBUILDER()
             {showContainers && (
               <div className="character-section">
                 {containers.map((container) => (
-                  <div
-                    key={container.id}
-                    style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      maxWidth: "600px",
-                      padding: "10px",
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
-                      backgroundColor: "#f9f9f9"
-                    }}
-                  >
+                  <div className="character-row">
                     <div>
-                      <b style={{ fontSize: "18px" }}>{container.name}</b>
+                      <b>{container.name}</b>
                     </div>
-                    <div style={{ display: "flex", gap: "8px" }}>
+                    <div>
                       <button
                         id="button-blue"
                         type="button"
