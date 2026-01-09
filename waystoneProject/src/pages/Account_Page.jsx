@@ -104,13 +104,12 @@ function Account_Page()
               <img src={getAvatarUrl()} alt="Account profile" id="account-profile-image" onError={handleAvatarError}/>
             </div>
             <div className="account-details">
-               {/* The profile details (the edit icon) */}
-              {/* aria-label="Edit profile" => For accessibility */}
-              <Link to="/user/Account_Page_EDIT" className="account-edit-icon" aria-label="Edit profile">&#9998;</Link>
-              
+               {/* The profile details (the edit button) */}
+               <Link to="/user/Account_Page_EDIT" className="account-edit-button" aria-label="Edit profile">Edit</Link>
+               
                {/* The profile details (username, description) */}
-              <b>{userData?.username || "User_1"}</b>
-              <p>{userData?.description || "Nothing here yet.."}</p>
+               <b>{userData?.username || "User_1"}</b>
+               <p>{userData?.description || "Nothing here yet.."}</p>
             </div>
           </section>
 
@@ -123,7 +122,7 @@ function Account_Page()
 
           <section className="campaign-actions" id="account-archived">
             {/* The archive button to see archived campaigns */}
-            <Link to="/user/Archived_Campaigns" id="button-green">Archived Campaigns</Link>
+            <Link to="/user/Archived_Campaigns" id="button-gray">Archived Campaigns</Link>
           </section>
 
           {/* The notes section */}

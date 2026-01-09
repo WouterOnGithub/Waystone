@@ -148,8 +148,8 @@
                     <div key={index} className="character-row">
                       <span>{player.name} | lvl {player.level} | HP  {player.HpCurrent} / {player.HpMax}</span>
                       <div>
-                        <button id="button-gray" onClick={() => handleEditPlayer(player.id)}>edit</button>
-                        <button id="button-gray" onClick={() => handleDeletePlayer(player.id)}>delete</button>
+                        <button id="button-blue" onClick={() => handleEditPlayer(player.id)}>edit</button>
+                        <button id="delete-button" onClick={() => handleDeletePlayer(player.id)}>delete</button>
                       </div>
                     </div>
                   ))}
@@ -166,8 +166,8 @@
                     <div key={npc.id} className="character-row">
                       <span>{npc.name} | Race: {npc.race}</span>
                       <div>
-                        <button id="button-gray" onClick={() => handleEditNpc(npc.id)}>edit</button>
-                        <button id="button-gray" onClick={() => handleDeleteNpc(npc.id)}>delete</button>
+                        <button id="button-blue" onClick={() => handleEditNpc(npc.id)}>edit</button>
+                        <button id="delete-button" onClick={() => handleDeleteNpc(npc.id)}>delete</button>
                       </div>
                     </div>
 
@@ -183,8 +183,8 @@
                     <div key={enemy.id} className="character-row">
                       <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
                       <div>
-                        <button id="button-gray" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
-                        <button id="button-gray" onClick={() => handleDeleteEnemy(enemy.id)}>delete</button>
+                        <button id="button-blue" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
+                        <button id="delete-button" onClick={() => handleDeleteEnemy(enemy.id)}>delete</button>
                       </div>
                     </div>
                   ))}
@@ -192,9 +192,9 @@
                 </div>
 
               <div className="campaign-actions">
-                <button id="button-green">Save and Continue</button>
+                <button id="button-blue">Save and Continue</button>
                 <button 
-                  id="button-gray"
+                  id="button-green"
                   onClick={() => navigate(`/user/Map_Main/${campaignId}`)}
                   disabled={!campaignId}
                 >

@@ -71,7 +71,7 @@
 #view-title-box /* The green_ small titles in the view pages (vertical) */
 {
     border-radius: var(--border-radius2);
-    background: var(--background-gradient4);
+    background: #4d3599;
     text-align: center;
     width: 200px;
 }
@@ -79,7 +79,7 @@
 .view-title-box-long /* The green_ small titles in the view pages (the long ones) */
 {
     border-radius: var(--border-radius2);
-    background: var(--background-gradient4);
+    background: #4d3599;
     text-align: center;
     width: 90%;
 }
@@ -120,10 +120,10 @@
 {
     margin-top: 20px;
 }
-.view-stats-main-title-1 { background: var(--projectbox-colour2); } /* HP */
-.view-stats-main-title-2 { background: var(--projectbox-colour3); } /* LVL */
-.view-stats-main-title-3 { background: var(--projectbox-colour); } /* EXP */
-.view-stats-main-title-4 { background: var(--projectbox-colour4); } /* STATUS */
+.view-stats-main-title-1 { background: linear-gradient(90deg,rgba(133, 0, 0, 1) 0%, rgba(185, 22, 22, 1) 50%, rgba(128, 0, 0, 1) 100%); } /* HP */
+.view-stats-main-title-2 { background: linear-gradient(90deg,rgb(0, 106, 133) 0%, rgb(22, 163, 185) 50%, rgb(0, 106, 133) 100%); } /* LVL */
+.view-stats-main-title-3 { background: linear-gradient(90deg,rgb(133, 113, 0) 0%, rgb(185, 171, 22) 50%, rgb(133, 113, 0) 100%); } /* EXP */
+.view-stats-main-title-4 { background: linear-gradient(90deg,rgb(0, 133, 33) 0%, rgb(30, 185, 22) 50%, rgb(0, 133, 33) 100%); } /* STATUS */
 .view-hp  /* the HP */
 {
     color: var(--hp-text-color);
@@ -148,7 +148,7 @@
 #view-paragraph-section /* the whole inventory section */
 { 
     border-radius: var(--border-radius2);
-    background: var(--background-colour2);
+    background: #d8cff9;
     color: var(--text-color2);
     width: 285px; 
     padding-left: 15px;
@@ -247,4 +247,98 @@
 #game-settings-options button:hover /* the buttons of the options itself */
 {
     border: var(--text-color2);
+}
+
+/* Responsive Design for Add/View Pop-ups */
+@media (max-width: 768px) {
+    :root {
+        --addview-text: 45px;
+        --adview-text2: 18px;
+    }
+    
+    #addview-page {
+        padding: 10px;
+    }
+    
+    #addview-box {
+        width: 95%;
+        max-width: 500px;
+        max-height: 95vh;
+    }
+    
+    #addview-title {
+        font-size: var(--addview-text);
+        padding-top: 8px;
+        padding-bottom: 12px;
+    }
+    
+    #addview-content {
+        padding: 15px;
+    }
+    
+    #UploadIMG_Logo {
+        max-width: 300px;
+        height: 200px;
+    }
+    
+    .addview-select select {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    #addview-value-weight {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #addview-value-weight input {
+        width: 100%;
+    }
+    
+    #game-settings-options button {
+        font-size: 16px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --addview-text: 35px;
+        --adview-text2: 16px;
+    }
+    
+    #addview-page {
+        padding: 5px;
+    }
+    
+    #addview-box {
+        width: 98%;
+        max-width: none;
+        max-height: 98vh;
+    }
+    
+    #addview-title {
+        font-size: var(--addview-text);
+        padding-top: 5px;
+        padding-bottom: 8px;
+    }
+    
+    #addview-content {
+        padding: 10px;
+    }
+    
+    #UploadIMG_Logo {
+        max-width: 250px;
+        height: 150px;
+    }
+    
+    #game-settings-options button {
+        font-size: 14px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        padding: 8px 15px;
+    }
 }

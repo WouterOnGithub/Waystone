@@ -4,7 +4,7 @@
 /* Main content area */
 #main {
     margin-left: 280px; /* Match sidebar width */
-    background: linear-gradient(180deg, #0f0f0f 0%, #1a1a2e 100%);
+    background: white;
     min-height: 100vh;
 }
 
@@ -43,31 +43,11 @@
 }
 
 /* Subtle pulse glow at bottom */
-#title::after {
-    content: '';
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 55%;
-    max-width: 640px;
-    height: 2px;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #6a5acd,
-        #8a2be2,
-        #6a5acd,
-        transparent
-    );
-
-    opacity: 0.8;
-    animation: pulse-glow 3s ease-in-out infinite;
-    filter: blur(1.5px);
+.title-content {
+    position: relative;
+    z-index: 1;
+    padding: 25px 40px;
 }
-
 
 .title-content {
     position: relative;

@@ -1,22 +1,117 @@
 .token-sidebar {
-  width: 180px;
-  background: grey;
-  color: #fff;
-  padding: 10px;
+  width: 260px;
+  background: var(--light-gray);
+  border-right: 2px solid rgba(45, 31, 92, 0.2);
+  padding: 15px;
+
   display: flex;
   flex-direction: column;
+  gap: 18px;
+
+  box-shadow: 4px 0 12px rgba(45, 31, 92, 0.1);
+  margin-left: auto;
 }
 
+/* Section wrapper spacing */
+.token-sidebar section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Section headers */
+.token-sidebar h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark-purple);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+
+  padding: 6px 10px;
+  border-radius: var(--border-radius2);
+  background: var(--white);
+  border-left: 4px solid var(--dark-purple);
+
+  box-shadow: 0 2px 6px rgba(45, 31, 92, 0.1);
+}
+
+/* Token list containers */
 .token-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+
+  max-height: 220px;
   overflow-y: auto;
-  max-height: 80vh;
+  padding-right: 6px;
 }
 
-.token-sidebar h3 {
-  margin-bottom: 10px;
-  font-size: 16px;
-  text-align: center;
+/* Scrollbar inherits global style automatically */
+
+/* Sidebar buttons */
+.token-sidebar button {
+  border-radius: var(--border-radius);
+  background: var(--dark-purple);
+  color: var(--white);
+  font-weight: 600;
+  border: none;
+  padding: 8px 10px;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.token-sidebar button:hover {
+  background: var(--black);
+  box-shadow: 0 6px 14px rgba(45, 31, 92, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Small "+" button for enemies */
+.token-sidebar h3 + button {
+  align-self: flex-end;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  margin-top: -34px;
+}
+
+/* Initiative button at bottom */
+.token-sidebar > button:last-of-type {
+  margin-top: auto;
+  background: var(--black);
+}
+
+.token-sidebar > button:last-of-type:hover {
+  background: var(--dark-purple);
+}
+
+
+.sidebar-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Small round + button */
+.add-token-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Initiative button spacing */
+.initiative-btn {
+  margin-top: auto;
+  width: 100%;
 }

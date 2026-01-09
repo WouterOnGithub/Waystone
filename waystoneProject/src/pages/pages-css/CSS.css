@@ -1,264 +1,304 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 
-* /* Defined sets of colours, font sizes, etc. to use for the whole website */
-{
-    --title-text: 120px;
-    --head-text: 25px;
-    --body-text: 18px;
-    --link-text: 12px;
+*
 
-    /* Simplified 4-color palette: Dark Purple, Black, Light Gray, White */
-    --dark-purple: #2d1f5c;
-    --black: #1a1a1a;
-    --light-gray: #e8e5f5;
-    --white: #ffffff;
+/* Defined sets of colours, font sizes, etc. to use for the whole website */
+  {
+  --title-text: 120px;
+  --head-text: 25px;
+  --body-text: 18px;
+  --link-text: 12px;
 
-    /* Text colors using the 4 main colors */
-    --text-color: var(--dark-purple);
-    --text-color2: var(--white);
-    --text-color3: var(--dark-purple);
-    --text-color4: var(--dark-purple);
+  /* Responsive font sizes */
+  --title-text-mobile: 60px;
+  --head-text-mobile: 20px;
+  --body-text-mobile: 16px;
 
-    /* Light backgrounds for content areas - solid colors */
-    --background-colour: var(--white);
-    --background-colour2: var(--light-gray);
-    --background-colour3: var(--light-gray);
-    --background-colour4: var(--dark-purple);
+  /* Simplified 4-color palette: Dark Purple, Black, Light Gray, White */
+  --dark-purple: #2d1f5c;
+  --black: #1a1a1a;
+  --light-gray: #e8e5f5;
+  --white: #ffffff;
 
-    /* Dark purple solid colors for UI elements */
-    --background-gradient: var(--dark-purple);
-    --background-gradient2: var(--dark-purple);
-    --background-gradient3: var(--black);
-    --background-gradient4: var(--dark-purple);
-    --background-gradient5: var(--light-gray);
+  /* Text colors using the 4 main colors */
+  --text-color: var(--dark-purple);
+  --text-color2: var(--white);
+  --text-color3: var(--dark-purple);
+  --text-color4: var(--dark-purple);
 
-    /* Project box colours - solid */
-    --projectbox-colour: var(--dark-purple); 
-    --projectbox-colour2: var(--dark-purple);
-    --projectbox-colour3: var(--dark-purple);
-    --projectbox-colour4: var(--light-gray);
+  /* Light backgrounds for content areas - solid colors */
+  --background-colour: var(--white);
+  --background-colour2: var(--light-gray);
+  --background-colour3: var(--light-gray);
+  --background-colour4: var(--dark-purple);
 
-    --form-box-colour: var(--light-gray);
-    --form-box-colour2: var(--white);
-    --link-colour: var(--dark-purple);
+  /* Dark purple solid colors for UI elements */
+  --background-gradient: var(--dark-purple);
+  --background-gradient2: var(--dark-purple);
+  --background-gradient3: var(--black);
+  --background-gradient4: var(--dark-purple);
+  --background-gradient5: var(--light-gray);
 
-    --border-radius: 10px;
-    --border-radius2: 5px;
-    --border-radius3: 50px;
+  /* Project box colours - solid */
+  --projectbox-colour: var(--dark-purple);
+  --projectbox-colour2: var(--dark-purple);
+  --projectbox-colour3: var(--dark-purple);
+  --projectbox-colour4: var(--light-gray);
 
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    overflow-x: hidden;
-    color: var(--text-color);
-    font-size: var(--body-text);
-    margin: 0;
+  --form-box-colour: var(--light-gray);
+  --form-box-colour2: var(--white);
+  --link-colour: var(--dark-purple);
+
+  --border-radius: 10px;
+  --border-radius2: 5px;
+  --border-radius3: 50px;
+
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  color: var(--text-color);
+  font-size: var(--body-text);
+  margin: 0;
 }
 
 /* Scrollbar for EVERY PAGE */
-::-webkit-scrollbar 
-{
+::-webkit-scrollbar {
   width: 15px;
 }
-::-webkit-scrollbar-track 
-{
+
+::-webkit-scrollbar-track {
   background: var(--white);
-  box-shadow: inset 0 0 7px rgba(45, 31, 92, 0.1); 
-}
-::-webkit-scrollbar-thumb 
-{
-    border-radius: var(--border-radius);
-    background: var(--dark-purple);
-    box-shadow: inset 0 0 10px rgba(26, 26, 26, 0.3);
-    height: 20px;
-}
-::-webkit-scrollbar-thumb:hover 
-{
-    background: var(--black);
-    cursor: grab;
-    transition: 0.3s;
+  box-shadow: inset 0 0 7px rgba(45, 31, 92, 0.1);
 }
 
-#Waystone_Logo /* Waystone_Logo */
-{
-    display: block;
-    margin: auto;
-    width: 40%;
-    margin-top: 15px;
-    filter: drop-shadow(0 4px 8px rgba(45, 31, 92, 0.2));
+::-webkit-scrollbar-thumb {
+  border-radius: var(--border-radius);
+  background: var(--dark-purple);
+  box-shadow: inset 0 0 10px rgba(26, 26, 26, 0.3);
+  height: 20px;
 }
 
-#content /* Section under the bar */
-{
-    border-radius: var(--border-radius); 
-    background: var(--light-gray);
-    margin-top: 80px;
-    padding: 30px;
-    width: 95%;
-    margin-left: 80px;
-    margin-right: auto;
-    border: 1px solid rgba(45, 31, 92, 0.2);
-    box-shadow: 0 4px 20px rgba(45, 31, 92, 0.1);
+::-webkit-scrollbar-thumb:hover {
+  background: var(--black);
+  cursor: grab;
+  transition: 0.3s;
 }
-#content b
-{
-    font-size: var(--head-text);
-    color: var(--dark-purple);
+
+#Waystone_Logo
+
+/* Waystone_Logo */
+  {
+  display: block;
+  margin: auto;
+  width: 40%;
+  margin-top: 15px;
+  filter: drop-shadow(0 4px 8px rgba(45, 31, 92, 0.2));
 }
-#content h1
-{ 
+
+#content
+
+/* Section under the bar */
+  {
+  border-radius: var(--border-radius);
+  background: var(--light-gray);
+  padding: 30px;
+  width: calc(100% - 55px);
+  max-width: calc(100vw - 160px);
+  box-sizing: border-box;
+  border: 1px solid rgba(45, 31, 92, 0.2);
+  box-shadow: 0 4px 20px rgba(45, 31, 92, 0.1);
+  overflow: hidden;
+  margin: 30px;
+}
+
+#content b {
+  font-size: var(--head-text);
+  color: var(--dark-purple);
+}
+
+#content h1 {
   padding-bottom: 5px;
   margin-bottom: 5px;
   color: var(--dark-purple);
 }
 
-.full-page
-{
-    background: var(--white);
-    min-height: 100vh;
+.full-page {
+  background: var(--white);
+  min-height: 100vh;
 }
 
-#button-green, #button-gray
-{
-    border-radius: var(--border-radius);
-    background: var(--dark-purple);
-    color: var(--white);
-    font-weight: bold;
-    border: none;
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-}
-#button-green:hover, #button-gray:hover, #addview-green-bar:hover
-{
-    color: var(--white);
-    background: var(--black);
-    transition: 0.5s;
-    box-shadow: 0 8px 20px rgba(45, 31, 92, 0.1);
-    transform: translateY(-2px);
-}
-#button-gray
-{
-    background: var(--black);
-    color: var(--white);
+#button-green,
+#button-gray,
+#button-blue,
+#delete-button {
+  border-radius: var(--border-radius);
+  background: linear-gradient(90deg,rgb(0, 133, 33) 0%, rgb(30, 185, 22) 50%, rgb(0, 133, 33) 100%);
+  color: var(--white);
+  font-weight: bold;
+  border: none;
+  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
 }
 
-#addview-green-bar /* Bars in add & view pages */
-{
-    border-radius: var(--border-radius3);
-    background: var(--dark-purple);
-    border: none;
-    padding: 10px;
-    padding-left: 35px;
-    padding-right: 25px;
-    margin-right: 20px;
-    margin-top: 10px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
+#button-green:hover,
+#addview-green-bar:hover {
+  color: var(--white);
+  background: rgb(0, 133, 33);
+  transform: translateY(-2px);
 }
-#addview-green-bar b
-{
-    color: var(--white);
-    font-weight: bold;
+
+#button-gray {
+  background: linear-gradient(90deg,rgb(37, 37, 37) 0%, rgb(91, 91, 91) 50%, rgb(37, 37, 37) 100%);
+  color: var(--white);
 }
-#addview-green-bar button
-{
-    float: right;
+
+#button-gray:hover {
+  background: rgb(37, 37, 37);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+#delete-button {
+  background: linear-gradient(90deg,rgba(133, 0, 0, 1) 0%, rgba(185, 22, 22, 1) 50%, rgba(128, 0, 0, 1) 100%);
+  color: var(--white);
+}
+
+#delete-button:hover {
+  background: rgba(133, 0, 0, 1);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+#button-blue {
+  background: linear-gradient(90deg,rgb(0, 7, 133) 0%, rgb(22, 36, 185) 50%, rgb(0, 7, 133) 100%);
+  color: var(--white);
+}
+
+#button-blue:hover {
+  background: rgb(0, 7, 133);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+#addview-green-bar
+
+/* Bars in add & view pages */
+  {
+  border-radius: var(--border-radius3);
+  background: var(--dark-purple);
+  border: none;
+  padding: 10px;
+  padding-left: 35px;
+  padding-right: 25px;
+  margin-right: 20px;
+  margin-top: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+#addview-green-bar b {
+  color: var(--white);
+  font-weight: bold;
+}
+
+#addview-green-bar button {
+  float: right;
 }
 
 /* Icon buttons */
-#button-icons
-{
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    padding-top: 5px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-#button-icons:hover
-{
-    border: none;
-    transform: translateY(-2px);
-    filter: drop-shadow(0 4px 8px rgba(45, 31, 92, 0.4));
+#button-icons {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  padding-top: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-#UploadIMG_Logo
-{
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    height: 250px;
-    width: 250px;
-    margin-right: 5000px;
-    transition: all 0.3s ease;
-    border: 2px solid var(--light-gray);
-    background: var(--white);
-}
-#UploadIMG_Logo:hover
-{
-    border-color: var(--dark-purple);
-    box-shadow: 0 8px 20px rgba(45, 31, 92, 0.3);
-    transform: translateY(-2px);
-}
-#Required_Logo, #Add_Logo, #Minus_Logo
-{
-    height: 20px; 
-    width: 20px;
-}
-#Delete_Logo
-{
-    height: 30px; 
-    width: 30px; 
+#button-icons:hover {
+  border: none;
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 8px rgba(45, 31, 92, 0.4));
 }
 
-#input-box-white input
-{
-    width: 300px;
-    height: 20px; 
+#UploadIMG_Logo {
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  height: 250px;
+  width: 250px;
+  margin-right: 5000px;
+  transition: all 0.3s ease;
+  border: 2px solid var(--light-gray);
+  background: var(--white);
 }
-#input-box-white textarea
-{
-    width: 400px;
-    height: 200px;
+
+#UploadIMG_Logo:hover {
+  border-color: var(--dark-purple);
+  box-shadow: 0 8px 20px rgba(45, 31, 92, 0.3);
+  transform: translateY(-2px);
 }
-#input-box-white input, #input-box-white textarea
-{
-    border-radius: var(--border-radius2);
-    background: var(--white);
-    border: 2px solid var(--light-gray);
-    padding: 10px;
-    margin-bottom: 5px;
-    color: var(--text-color);
-    transition: all 0.3s ease;
+
+#Required_Logo,
+#Add_Logo,
+#Minus_Logo {
+  height: 20px;
+  width: 20px;
 }
-#input-box-white input:focus, #input-box-white textarea:focus
-{
-    outline: none;
-    border-color: var(--dark-purple);
-    background: var(--white);
-    box-shadow: 0 0 10px rgba(45, 31, 92, 0.2);
+
+#Delete_Logo {
+  height: 30px;
+  width: 30px;
+}
+
+#input-box-white input {
+  width: 300px;
+  height: 20px;
+}
+
+#input-box-white textarea {
+  width: 400px;
+  height: 200px;
+}
+
+#input-box-white input,
+#input-box-white textarea {
+  border-radius: var(--border-radius2);
+  background: var(--white);
+  border: 2px solid var(--light-gray);
+  padding: 10px;
+  margin-bottom: 5px;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+#input-box-white input:focus,
+#input-box-white textarea:focus {
+  outline: none;
+  border-color: var(--dark-purple);
+  background: var(--white);
+  box-shadow: 0 0 10px rgba(45, 31, 92, 0.2);
 }
 
 /* The bars throughout all the pages */
-.character-section
-{
+.character-section {
   padding-top: 40px;
   padding-bottom: 20px;
   padding-right: 40px;
   width: 90%;
   border-top: 2px solid var(--light-gray);
 }
-.character-section.addview
-{
+
+.character-section.addview {
   width: 95%;
 }
 
-.character-row
-{
+.character-row {
   background: var(--white);
   border-radius: var(--border-radius);
   border-left: 4px solid var(--dark-purple);
@@ -273,33 +313,44 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 6px rgba(45, 31, 92, 0.1);
 }
-.character-row.addview
+
+.character-row.sub
 {
+  width: 60%;
+  margin-left: 50px;
+  margin-top: -40px;
+  margin-bottom: 60px;
+}
+
+.character-row-sub-arrow
+{
+  margin-left: 20px;
+}
+
+.character-row.addview {
   background: var(--light-gray);
   border: 1px solid var(--dark-purple);
 }
-.character-row:hover
-{
+
+.character-row:hover {
   box-shadow: 0 8px 20px rgba(45, 31, 92, 0.25);
   border-left: 4px solid var(--black);
   transform: translateX(6px);
   background: var(--light-gray);
 }
-.character-row span
-{
+
+.character-row span {
   color: var(--text-color);
   font-size: 15px;
   font-weight: 600;
 }
 
-.character-section:has(.character-row:first-of-type)
-{
+.character-section:has(.character-row:first-of-type) {
   min-height: auto;
 }
 
 /* Image upload area styling */
-.image-upload-area 
-{
+.image-upload-area {
   border: 2px dashed var(--dark-purple);
   border-radius: var(--border-radius);
   background: var(--white);
@@ -309,9 +360,84 @@
   height: min-content;
   transition: all 0.3s ease;
 }
-.image-upload-area:hover 
-{
+
+.image-upload-area:hover {
   border-color: var(--black);
   background: var(--light-gray);
   box-shadow: 0 4px 12px rgba(45, 31, 92, 0.15);
+}
+
+/* Responsive design for #content */
+@media (max-width: 1200px) {
+  #content {
+    width: calc(100% - 120px);
+    margin-left: 60px;
+    margin-right: 60px;
+    max-width: calc(100vw - 120px);
+  }
+}
+
+@media (max-width: 768px) {
+  #content {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: calc(100vw - 40px);
+    padding: 20px;
+    margin-top: 60px;
+  }
+  
+  /* Responsive font adjustments */
+  #content b {
+    font-size: 20px;
+  }
+  
+  #content h1 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  #content {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: calc(100vw - 20px);
+    padding: 15px;
+    margin-top: 50px;
+    border-radius: 15px;
+  }
+  
+  /* Even smaller fonts for mobile */
+  #content b {
+    font-size: 18px;
+  }
+  
+  #content h1 {
+    font-size: 16px;
+  }
+}
+
+/* Global responsive adjustments */
+@media (max-width: 768px) {
+  #Waystone_Logo {
+    width: 60%;
+    margin-top: 10px;
+  }
+  
+  .full-page {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #Waystone_Logo {
+    width: 80%;
+    margin-top: 5px;
+  }
+  
+  /* Scrollbar for mobile */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
 }

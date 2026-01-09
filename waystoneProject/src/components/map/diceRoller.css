@@ -1,0 +1,48 @@
+.dice-roller {
+  width: 120px; /* container width */
+  background-color: var(--white);
+  border: 2px solid var(--dark-purple);
+  border-radius: var(--border-radius);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 10px rgba(45,31,92,0.2);
+  font-size: 14px;
+  box-sizing: border-box; /* include padding in width */
+}
+
+.dice-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dice-controls input,
+.dice-controls select,
+.dice-controls button {
+  width: 100%;
+  padding: 5px;
+  border-radius: var(--border-radius2);
+  border: 1px solid var(--dark-purple);
+  font-size: 14px;
+  cursor: pointer;
+  box-sizing: border-box; /* important! fixes the cut-off issue */
+}
+
+.dice-controls button {
+  background-color: var(--dark-purple);
+  color: var(--white);
+  font-weight: bold;
+  border: none;
+}
+
+.dice-controls button:hover {
+  background-color: var(--black);
+}
+
+.dice-result {
+  text-align: center;
+  font-weight: bold;
+  color: var(--dark-purple);
+}

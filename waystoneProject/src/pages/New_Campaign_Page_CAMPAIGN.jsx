@@ -214,7 +214,7 @@ function New_Campaign_Page_CAMPAIGN()
             <div>
               <button id="button-green" onClick={() => setShowAddItemPopup(true)}>Add Item</button>
               <button
-                id="button-green"
+                id="button-blue"
                 onClick={async () => {
                   const next = !showItems;
                   setShowItems(next);
@@ -235,100 +235,51 @@ function New_Campaign_Page_CAMPAIGN()
 
             {/* Display current items */}
             {showItems && (
-              <div style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                marginTop: "20px"
-              }}>
+              <div className="character-section">
                 {items.length > 0 ? (
                   items.map((item) => (
-                    <div
-                      key={item.id}
-                      style={{ 
-                        display: "flex", 
-                        flexDirection: "column", 
-                        gap: "4px", 
-                        width: "100%",
-                        padding: "10px",
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
-                        backgroundColor: "#f9f9f9"
-                      }}
-                    >
-                      <div style={{ display: "flex", gap: "12px", width: "100%", alignItems: "center" }}>
+                    <div key={item.id} className="character-row">
+                      <div>
                         <div style={{ flex: 1 }}>
                           <b>{item.name || "Unnamed Item"}</b>
                           {item.description && (
-                            <div style={{ fontSize: "14px", color: "#666", marginTop: "2px" }}>
-                              {item.description}
-                            </div>
+                            <div><span>{item.description}</span></div>
                           )}
                           {(item.value !== undefined || item.weight !== undefined) && (
-                            <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>
-                              {item.value !== undefined && `Value: ${item.value}`}
-                              {item.value !== undefined && item.weight !== undefined && " | "}
-                              {item.weight !== undefined && `Weight: ${item.weight}`}
+                            <div>
+                              <span>{item.value !== undefined && `Value: ${item.value}`}</span>
+                              <span>{item.value !== undefined && item.weight !== undefined && " | "}</span>
+                              <span>{item.weight !== undefined && `Weight: ${item.weight}`}</span>
                             </div>
                           )}
                           {item.effects && item.effects.length > 0 && (
-                            <div style={{ fontSize: "12px", color: "#666", marginTop: "2px" }}>
-                              Effects: {item.effects.join(", ")}
-                            </div>
+                            <div><span>Effects: {item.effects.join(", ")}</span></div>
                           )}
                           {item.bonusEffects && item.bonusEffects.length > 0 && (
-                            <div style={{ fontSize: "12px", color: "#666", marginTop: "2px" }}>
-                              Bonus: {item.bonusEffects.join(", ")}
-                            </div>
+                            <div><span>Bonus: {item.bonusEffects.join(", ")}</span></div>
                           )}
                         </div>
-                        <div style={{ display: "flex", gap: "8px", marginRight: "40px" }}>
+                        <div>
                           <button
-                            id="button-green"
+                            id="button-blue"
                             type="button"
-                            style={{ 
-                              width: "80px", 
-                              height: "40px", 
-                              fontSize: "14px",
-                              padding: "8px 12px",
-                              border: "none",
-                              borderRadius: "4px",
-                              cursor: "pointer"
-                            }}
                             onClick={() => handleEditItem(item)}
                           >
-                            Edit
+                            edit
                           </button>
                           <button
                             type="button"
-                            id="button-green"
-                            style={{ 
-                              width: "80px", 
-                              height: "40px", 
-                              fontSize: "14px",
-                              padding: "8px 12px",
-                              border: "none",
-                              borderRadius: "4px",
-                              cursor: "pointer"
-                            }}
+                            id="delete-button"
                             onClick={() => handleDeleteItem(item)}
                           >
-                            Delete
+                            delete
                           </button>
                         </div>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div style={{ 
-                    marginTop: "20px", 
-                    color: "#666", 
-                    fontStyle: "italic",
-                    padding: "20px",
-                    border: "1px dashed #ccc",
-                    borderRadius: "8px",
-                    textAlign: "center"
-                  }}>
+                  <div>
                     No items found. Create your first item!
                   </div>
                 )}
@@ -337,8 +288,8 @@ function New_Campaign_Page_CAMPAIGN()
 
             {/* The Save and continue, and enter button */}
             <div className="campaign-actions">
-              <button id="button-green" onClick={handleSave} >Save and Continue</button>
-              <button id="button-gray" onClick={() => navigate(`/user/Map_Main/${campaignId}`)}>Enter</button>
+              <button id="button-blue" onClick={handleSave} >Save and Continue</button>
+              <button id="button-green" onClick={() => navigate(`/user/Map_Main/${campaignId}`)} disabled={!campaignId}>Enter</button>
             </div>
 
           </div>

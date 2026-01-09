@@ -128,6 +128,7 @@
   justify-content: center;
   gap: 15px;
   flex-wrap: wrap;
+  padding: 5px;
 }
 
 /* Moderne Enter knop met project gradient */
@@ -138,7 +139,7 @@
   border-radius: 12px;
   border: none;
   background: var(--projectbox-colour);
-  color: var(--text-color);
+  color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(176, 87, 4, 0.3);
@@ -161,15 +162,18 @@
 
 .join-session-enter:hover::before {
   left: 100%;
+  color: white;
 }
 
 .join-session-enter:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(176, 87, 4, 0.4);
+  color: white;
 }
 
 .join-session-enter:active {
   transform: translateY(0);
+  color: white;
 }
 
 /* Moderne Terug knop met project thema */
@@ -186,6 +190,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 150px;
   font-family: Garamond, serif, cursive;
+  box-sizing: border-box;
 }
 
 .join-session-back:hover {
@@ -325,6 +330,107 @@
 .join-session-back:focus {
   outline: 2px solid var(--text-color3);
   outline-offset: 2px;
+}
+
+/* Responsive Design for Join Session Page */
+@media (max-width: 768px) {
+  .join-session-container {
+    padding: 10px;
+  }
+  
+  .join-session-box {
+    padding: 40px 30px;
+    width: 95%;
+    max-width: 400px;
+    min-height: 400px;
+  }
+  
+  .join-session-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .join-session-subtitle {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+  
+  .join-session-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+  
+  .join-session-enter,
+  .join-session-back {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+    margin: 8px 0;
+  }
+  
+  .join-session-button-group {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .join-session-help {
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+  
+  .join-session-help p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .join-session-container {
+    padding: 5px;
+  }
+  
+  .join-session-box {
+    padding: 30px 20px;
+    width: 98%;
+    min-height: 350px;
+    border-radius: 15px;
+  }
+  
+  .join-session-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  .join-session-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+  
+  .join-session-input {
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+  
+  .join-session-enter,
+  .join-session-back {
+    padding: 12px 18px;
+    font-size: 15px;
+  }
+  
+  .join-session-help {
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+  
+  .join-session-help p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  
+  .join-session-loading {
+    width: 14px;
+    height: 14px;
+  }
 }
 
 /* Success animation (for future use) */
