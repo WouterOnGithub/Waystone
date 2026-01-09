@@ -1,54 +1,50 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./token.css";
-import { usePlayer,useUpdateHp, useEntity } from "../../hooks/usePlayerMap";
+import { usePlayer, useUpdateHp, useEntity } from "../../hooks/usePlayerMap";
 import { useInventory } from "../../hooks/useInventory";
 import { useItems } from "../../hooks/useItems";
-import { doc, deleteDoc} from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useContainer } from "../../hooks/useContainerMap";
 
-export default function TokenMenu({ userId, campaignId, position,posX, posY , mapId={mapId}, tokenId, onClose }) {
+export default function TokenMenu({ userId, campaignId, position, posX, posY, mapId, tokenId, onClose }) {
   const menuRef = useRef();
   const defaultWidth = 180;
-  const expandedWidth = 400; // breder menu voor inventory
+  const expandedWidth = 400;
   const cellSize = 80;
 
   const playerData = usePlayer(userId, campaignId, tokenId);
   const entityData = useEntity(userId, campaignId, tokenId);
   const containerData = useContainer(userId, campaignId, tokenId);
-  const data = playerData || entityData || containerData ||   { name: "Loading...", tokenType: "unknown" };;
-  if (!data) return null;
 
-  const isDataLoaded = !!data;
-  const isPlayer = data?.tokenType === "player";
-  const isEntity = data?.tokenType === "entity";
+  const data = playerData || entityData || containerData || { name: "Loading...", tokenType: "unknown" };
   const isContainer = data?.tokenType === "container";
 
-
-  const updateHp = useUpdateHp(userId, campaignId, data?.tokenType, data?.id  );
-  
+  const updateHp = useUpdateHp(userId, campaignId, data?.tokenType, data?.id);
   const inventories = useInventory(data.id, campaignId, userId, data.tokenType);
-  
-
   const items = useItems(userId, campaignId);
 
   const [expandedItems, setExpandedItems] = useState({});
   const [showInventory, setShowInventory] = useState(false);
 
+  // Damage / Heal states
   const [showDamageField, setShowDamageField] = useState(false);
   const [damageAmount, setDamageAmount] = useState("");
   const [showHealField, setShowHealField] = useState(false);
   const [healAmount, setHealAmount] = useState("");
-  const [activeField, setActiveField] = useState(null); // "damage" | "heal" | null
-  
-  
+
   let left = position.x + cellSize + 5;
   const top = position.y;
   const menuWidth = showInventory ? expandedWidth : defaultWidth;
   const viewportWidth = window.innerWidth;
   if (left + menuWidth > viewportWidth) left = position.x - menuWidth - 5;
 
+  console.log("TokenMenu data:", data);
+  console.log("Inventories raw:", inventories);
+  console.log("Items collection:", items);
+
+  // Click outside sluit menu
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) onClose();
@@ -57,44 +53,62 @@ export default function TokenMenu({ userId, campaignId, position,posX, posY , ma
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
-  if (!data) return null;
+  // Inventory mapping
+  const handleGetInventory = () => {
+    if (!inventories || inventories.length === 0) return [];
 
-  const toggleItem = (slotKey) => {
-    setExpandedItems(prev => ({ ...prev, [slotKey]: !prev[slotKey] }));
+    return inventories.flatMap(inv => {
+      if (!inv.slots || inv.slots.length === 0) return [];
+
+      return inv.slots
+        .filter(slot => slot.ItemID && slot.Amount > 0)
+        .map(slot => ({
+          ...items[slot.ItemID],
+          ItemID: slot.ItemID,
+          Amount: slot.Amount,
+          slotKey: `${inv.docName}-${slot.id}-${slot.ItemID}`,
+        }));
+    });
   };
 
-  //deal damage
+  const handleGetContainerContents = () => {
+    if (!data.items) return [];
+
+    return data.items.map((slot, index) => ({
+      ...items[slot.itemId],
+      slotKey: `${data.id}-${index}-${slot.itemId}`,
+      ItemID: slot.itemId,
+      Amount: slot.quantity,
+    }));
+  };
+
+  const displayItems = isContainer ? handleGetContainerContents() : handleGetInventory();
+  console.log("Display items (filtered):", displayItems);
+
+  // Damage / Heal handlers
   const handleDamage = () => {
     const dmg = parseInt(damageAmount);
     if (isNaN(dmg) || dmg <= 0) return;
-
-    // Bereken nieuwe HP
     const newHp = Math.max(0, data.HpCurrent - dmg);
-    updateHp(newHp)
-
+    updateHp(newHp);
     setDamageAmount("");
     setShowDamageField(false);
   };
-  //heal
+
   const handleHeal = () => {
     const heal = parseInt(healAmount);
     if (isNaN(heal) || heal <= 0) return;
-
-    // Bereken nieuwe HP
     const newHp = Math.min(data.HpMax, data.HpCurrent + heal);
-    updateHp(newHp)
-
+    updateHp(newHp);
     setHealAmount("");
     setShowHealField(false);
   };
 
-  // Delete handler via x_y doc name
+  // Delete token van board
   const handleDeleteToken = async () => {
     if (!mapId || !position) return;
-
     const docName = `${posX}_${posY}`;
     const cellRef = doc(db, "Users", userId, "Campaigns", campaignId, "Maps", mapId, "Cells", docName);
-
     try {
       await deleteDoc(cellRef);
       onClose();
@@ -103,94 +117,58 @@ export default function TokenMenu({ userId, campaignId, position,posX, posY , ma
     }
   };
 
-  if(isContainer){
-    return createPortal(
-      <div ref={menuRef} className="tokenMenu" style={{ left, top, width: defaultWidth }}>
-        <h3>{data.name}</h3>
-
-        <p>Items: {data.items?.length || 0}</p>
-
-        <button onClick={handleDeleteToken}>remove from board</button>
-        <button onClick={onClose}>close</button>
-      </div>,
-      document.body
-    )
-  }
-
   return createPortal(
     <div ref={menuRef} className="tokenMenu" style={{ left, top, width: menuWidth }}>
       <h3>{data.name}</h3>
-      <p>HP: {data.HpCurrent} / {data.HpMax}</p>
-      <p>AC: {data.armorKlassen}</p>
-      <p>Race: {data.tokenType}</p>
 
-      <div style={{ display: "flex", gap: "10px", margin: "5px 0" }}>
-        <button onClick={() => {setShowDamageField(prev => !prev); setShowHealField(false); }}> Damage </button>
-        <button onClick={() => {setShowHealField(prev => !prev); setShowDamageField(false); }}> Heal </button>
-      </div>
+      {!isContainer && (
+        <>
+          <p>HP: {data.HpCurrent} / {data.HpMax}</p>
+          <p>AC: {data.armorKlassen}</p>
+          <p>Race: {data.tokenType}</p>
 
-      <div style={{ marginTop: "5px", display: "flex", gap: "5px" }}>
-        {showDamageField && (
-          <>
-            <input type="number" placeholder="Amount" value={damageAmount} onChange={e => setDamageAmount(e.target.value)} style={{ width: "60px" }} />
-            <button onClick={handleDamage}>
-              Confirm
-            </button>
-          </>
-        )}
-        {showHealField && (
-          <>
-            <input type="number" placeholder="Amount" value={healAmount} onChange={e => setHealAmount(e.target.value)} style={{ width: "60px" }}/>
-            <button onClick={handleHeal}>
-              Confirm
-            </button>
-          </>
-        )}
-      </div>
+          <div style={{ display: "flex", gap: "10px", margin: "5px 0" }}>
+            <button onClick={() => { setShowDamageField(prev => !prev); setShowHealField(false); }}>Damage</button>
+            <button onClick={() => { setShowHealField(prev => !prev); setShowDamageField(false); }}>Heal</button>
+          </div>
 
-  
-
+          <div style={{ marginTop: "5px", display: "flex", gap: "5px" }}>
+            {showDamageField && (
+              <>
+                <input type="number" placeholder="Amount" value={damageAmount} onChange={e => setDamageAmount(e.target.value)} style={{ width: "60px" }} />
+                <button onClick={handleDamage}>Confirm</button>
+              </>
+            )}
+            {showHealField && (
+              <>
+                <input type="number" placeholder="Amount" value={healAmount} onChange={e => setHealAmount(e.target.value)} style={{ width: "60px" }} />
+                <button onClick={handleHeal}>Confirm</button>
+              </>
+            )}
+          </div>
+        </>
+      )}
 
       <button onClick={() => setShowInventory(prev => !prev)} style={{ margin: "5px 0", padding: "5px 10px" }}>
         {showInventory ? "Sluit Inventory" : "Open Inventory"}
       </button>
 
-      {showInventory && inventories.length > 0 && Object.keys(items).length > 0 && (
+      {showInventory && displayItems.length > 0 && (
         <div className="inventorySection">
-          {inventories.map(inv => (
-            <div key={inv.docName} className="inventoryDoc">
-              <h4>{inv.docName}</h4>
-              {inv.slots.length > 0 ? (
-                <ul className="inventoryList" style={{ listStyle: "none", padding: 0 }}>
-                  {inv.slots.map(slot => {
-                    const item = items[slot.ItemId];
-                    if (!item) return <li key={slot.id}>Onbekend item</li>;
-
-                    const slotKey = `${inv.docName}-${slot.id}-${slot.ItemId}`;
-
-                    return (
-                      <li key={slotKey} className="inventorySlot" style={{ border: "1px solid #ccc", marginBottom: "5px", padding: "5px" }}>
-                        {/* Kaartje */}
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                          <div>
-                            <strong>{item.Name} </strong> | Value: {item.Value} | Weight: {item.Weight} | Effects: {item.Effect}
-                          </div>
-                          <button onClick={() => toggleItem(slotKey)}>
-                            {expandedItems[slotKey] ? "Hide Description" : "Show Description"}
-                          </button>
-                        </div>
-
-                        {expandedItems[slotKey] && (
-                          <div style={{ marginTop: "5px" }}>
-                            {item.Description || "Geen beschrijving"}
-                          </div>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : (
-                <p>Geen items</p>
+          {displayItems.map(slot => (
+            <div key={slot.slotKey} className="inventorySlot" style={{ border: "1px solid #ccc", marginBottom: "5px", padding: "5px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <strong>{slot.name}</strong> x{slot.Amount} | Value: {slot.value} | Weight: {slot.weight}
+                </div>
+                <button onClick={() => setExpandedItems(prev => ({ ...prev, [slot.slotKey]: !prev[slot.slotKey] }))}>
+                  {expandedItems[slot.slotKey] ? "Hide Description" : "Show Description"}
+                </button>
+              </div>
+              {expandedItems[slot.slotKey] && (
+                <div style={{ marginTop: "5px" }}>
+                  {slot.description || "Geen beschrijving"}
+                </div>
               )}
             </div>
           ))}
@@ -198,6 +176,7 @@ export default function TokenMenu({ userId, campaignId, position,posX, posY , ma
       )}
 
       <button onClick={handleDeleteToken}>remove from board</button>
+      <button onClick={onClose}>close</button>
     </div>,
     document.body
   );
