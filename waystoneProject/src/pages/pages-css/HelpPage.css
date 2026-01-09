@@ -49,8 +49,8 @@
 .help-search /* The search bar in the 'How can we help you ?' section */
 {
   border-radius: var(--border-radius);
-  background-color: white;
-  border: none;
+  background: var(--white);
+  border: 2px solid var(--light-gray);
   flex: 1;
   padding-left: 20px;
   padding-right: 10px;

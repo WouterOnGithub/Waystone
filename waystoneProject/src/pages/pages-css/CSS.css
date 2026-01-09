@@ -137,7 +137,7 @@
     color: var(--white);
     background: var(--black);
     transition: 0.5s;
-    box-shadow: 0 8px 20px rgba(45, 31, 92, 0.4);
+    box-shadow: 0 8px 20px rgba(45, 31, 92, 0.1);
     transform: translateY(-2px);
 }
 #button-gray
