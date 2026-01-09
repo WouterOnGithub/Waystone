@@ -618,15 +618,18 @@ export const createContainer = async (userId, campaignId, containerData) => {
       campaignId,
       "Containers"
     );
-    
-    await setDoc(doc(collectionRef), containerData);
-    const newDoc = await getDoc(doc(collectionRef));
-    return newDoc.exists() ? { id: newDoc.id, ...newDoc.data() ,imageUrl: "/assets/chestContainer.jpg"} : null;
+
+    const docRef = doc(collectionRef);
+    await setDoc(docRef, containerData); 
+    const newDoc = await getDoc(docRef); 
+    return newDoc.exists() 
+      ? { id: newDoc.id, ...newDoc.data(), imageUrl: "/assets/chestContainer.jpg" } : null;
   } catch (error) {
     console.error("Error creating container:", error);
     return null;
   }
 };
+
 
 export const deleteItem = async (userId, campaignId, itemId) => {
   try {
