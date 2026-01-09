@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getAllCampaigns, updateCampaignInfo } from "../api/userCampaigns";
+import { getAllCampaigns, updateCampaignInfo, deleteCampaign } from "../api/userCampaigns";
 import "./pages-css/CSS.css";
 import "./pages-css/My_Campaigns_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
+import CampaignBox from "../components/CampaignBox";
 
 // Static dummy data for free campaigns (kept as-is)
 const freeCampaignSection = {
@@ -83,7 +84,27 @@ function My_Campaigns_Page()
     navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`);
   };
 
-  const handleUnarchiveCampaign = async (campaignId) => {
+  const handleDeleteCampaign = async (campaignId, campaignName) => {
+    if (!campaignId || !user?.uid) return;
+    
+    const confirmed = window.confirm(`Are you sure you want to permanently delete "${campaignName}"? This action cannot be undone.`);
+    if (!confirmed) return;
+    
+    try {
+      await deleteCampaign(user.uid, campaignId);
+      // Refresh campaigns list
+      const campaigns = await getAllCampaigns(user.uid);
+      const sorted = [...campaigns].sort(
+        (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
+      );
+      setAllCampaigns(sorted);
+    } catch (err) {
+      console.error("Failed to delete campaign:", err);
+      setError("Failed to delete campaign");
+    }
+  };
+
+  const handleUnarchiveCampaign = async (campaignId, campaignName) => {
     if (!campaignId || !user?.uid) return;
     
     try {
@@ -123,27 +144,17 @@ function My_Campaigns_Page()
               {/* The area that holds the campaign boxes */}
               <div id="box-section">
                 {section.items.map((item, idx) => (
-                  /* A campaigns box */
-                  <div id="box-text" 
-                       key={item.id ? item.id : `${section.title}-${idx}`}
-                  >
-                    
-                    {/* The campaigns project name */}
-                    <p>{item.name}&#10240;</p>
-                    
-                    {/* The bottom part of the box (the white) which contains the archive button */}
-                    <div id="box">
-                      <button
-                          onClick={(e) => {
-                          e.stopPropagation();
-                          handleUnarchiveCampaign(item.id);
-                          }}
-                      >
-                        Unarchive
-                      </button>
-                    </div>
-
-                  </div>
+                  <CampaignBox
+                    key={item.id ? item.id : `${section.title}-${idx}`}
+                    item={item}
+                    idx={idx}
+                    sectionTitle={section.title}
+                    onOpenCampaign={handleOpenCampaign}
+                    onPublishCampaign={() => {}} // No publish for archived
+                    onArchiveCampaign={handleDeleteCampaign}
+                    onUnarchiveCampaign={handleUnarchiveCampaign}
+                    onAddToMyCampaigns={() => {}} // No add for archived
+                  />
                 ))}
               </div>
 

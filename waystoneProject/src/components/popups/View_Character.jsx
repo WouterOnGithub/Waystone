@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../pages/pages-css/CSS.css";
 import "../../pages/pages-css/Add_View.css";
-import Required_Logo from "../../assets/Required_Logo.webp"; {/* Als here as the Info_Logo */}
+import Required_Logo from "../../assets/Required_Logo.png"; {/* Als here as the Info_Logo */}
 import Minus_Logo from "../../assets/Minus_Logo.png";
 import Add_Logo from "../../assets/Add_Logo.webp";
 
@@ -419,7 +419,7 @@ function View_Character()
 
             <div id="addview-linebreak"></div>
             
-            <button id="button-green">Back</button>
+            <button id="button-gray">Back</button>
             <br /><br />
 
         </form>

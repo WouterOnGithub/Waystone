@@ -15,6 +15,7 @@ import "./pages-css/My_Campaigns_Page.css";
 import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
+import CampaignBox from "../components/CampaignBox";
 
 // Helper to normalise Firestore / ISO dates
 const getCampaignSortDate = (campaign) => {
@@ -100,6 +101,7 @@ function My_Campaigns_Page()
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030", "#303030", "#303030"][idx % 5],
         published: c.published === true,
+        mainMapUrl: c.mainMapUrl || null,
       })),
     },
     {
@@ -108,18 +110,22 @@ function My_Campaigns_Page()
         id: c.id,
         name: c.name || "Unnamed campaign",
         color: ["#303030", "#303030", "#303030"][idx % 3],
-      published: c.published === true,
+        published: c.published === true,
+        mainMapUrl: c.mainMapUrl || null,
       })),
     },
     {
-  title: "Free Campaigns",
-  items: freeCampaigns.map((c, idx) => ({
-    id: c.campaignId || c.id,
-    name: c.name || "Unnamed campaign",
-    color: ["#447DC9", "#E7D665"][idx % 2],
-    published: true,
-  })),
-}
+      title: "Free Campaigns",
+      items: freeCampaigns.map((c, idx) => ({
+        id: c.campaignId || c.id,
+        name: c.name || "Unnamed campaign",
+        color: ["#447DC9", "#E7D665"][idx % 2],
+        published: true,
+        mainMapUrl: c.mainMapUrl || null,
+        ownerId: c.ownerId || null,
+        originalCampaignId: c.originalCampaignId || null,
+      })),
+    },
   ];
 
   const handleOpenCampaign = (campaignId) => {
@@ -144,6 +150,24 @@ function My_Campaigns_Page()
     } catch (err) {
       console.error("Failed to archive campaign:", err);
       setError("Failed to archive campaign");
+    }
+  };
+
+  const handleAddToMyCampaigns = async (freeCampaignId) => {
+    if (!freeCampaignId || !user?.uid) return;
+    
+    try {
+      const { copyFreeCampaignToUser } = await import("../api/userCampaigns");
+      await copyFreeCampaignToUser(user.uid, freeCampaignId);
+      // Refresh campaigns list
+      const campaigns = await getAllCampaigns(user.uid);
+      const sorted = [...campaigns].sort(
+        (a, b) => getCampaignSortDate(b) - getCampaignSortDate(a)
+      );
+      setAllCampaigns(sorted);
+    } catch (err) {
+      console.error("Failed to add campaign to my campaigns:", err);
+      setError("Failed to add campaign to your campaigns");
     }
   };
 
@@ -203,50 +227,16 @@ function My_Campaigns_Page()
               {/* The area that holds the campaign boxes */}
               <div id="box-section">
                 {section.items.map((item, idx) => (
-                  /* A campaigns box */
-                  <div id="box-text" 
-                       key={item.id ? item.id : `${section.title}-${idx}`}
-                       onClick={() => handleOpenCampaign(item.id)}
-                       style={item.id ? { cursor: "pointer" } : undefined}
-                  >
-                    
-                    {/* The campaigns project name */}
-                    <p>{item.name}&#10240;</p>
-                    
-                    {/* The bottom part of the box (the white) which contains the buttons */}
-                    <div id="box">
-                      {section.title === "All Campaigns" ? (
-                        <>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handlePublishCampaign(item.id, item.name, item.published);
-                            }}
-                          >
-                            {item.published ? "Unpublish" : "Publish"}
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleArchiveCampaign(item.id, item.name);
-                            }}
-                          >
-                            Archive
-                          </button>
-                        </>
-                      ) : (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleArchiveCampaign(item.id, item.name);
-                          }}
-                        >
-                          Archive
-                        </button>
-                      )}
-                    </div>
-
-                  </div>
+                  <CampaignBox
+                    key={item.id ? item.id : `${section.title}-${idx}`}
+                    item={item}
+                    idx={idx}
+                    sectionTitle={section.title}
+                    onOpenCampaign={handleOpenCampaign}
+                    onPublishCampaign={handlePublishCampaign}
+                    onArchiveCampaign={handleArchiveCampaign}
+                    onAddToMyCampaigns={handleAddToMyCampaigns}
+                  />
                 ))}
               </div>
 

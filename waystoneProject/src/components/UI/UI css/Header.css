@@ -78,7 +78,7 @@
 /* Title text */
 #title p {
     color: #e8e8f5;
-    font-size: calc(var(--title-text) * 0.8);
+    font-size: calc(var(--title-text) * 0.45);
     font-family: 'Outfit', 'Inter', sans-serif;
     font-weight: 600;
     text-transform: none;

@@ -44,7 +44,7 @@ const handleSession= [
         <h1 id="login-register-title">Login</h1>
 
       {/* The form */}
-      <form>
+      <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
 
       <div id="input-box-white">
         <input type="email" placeholder="Enter email"
@@ -69,7 +69,7 @@ const handleSession= [
 
         <br /><br />
         <div id="login-register-button">
-          <button id="button-green" type="button" onClick={handleLogin}>Enter</button>
+          <button id="button-green" type="submit">Enter</button>
           <button id="button-gray" type="button" onClick={goToSession}>Join Session</button>
         </div>
         {/* An error message in case an error occures */}
