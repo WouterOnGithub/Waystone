@@ -63,6 +63,7 @@ function Add_Container({onClose, campaignId, container, onContainerSaved})
       const containerData = {
         name: name.trim(),
         items: selectedItems,
+        type: "container",
         lastUpdatedAt: new Date().toISOString(),
       };
 
