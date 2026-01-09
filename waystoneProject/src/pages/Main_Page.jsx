@@ -9,7 +9,6 @@ import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import CampaignBox from "../components/CampaignBox";
 import Placeholder from "../assets/PlaceholderImage.jpg";
-import HomeBanner from "../assets/home.banner.png";
 
 // Helper to normalise Firestore / ISO dates
 const getCampaignSortDate = (campaign) => {
