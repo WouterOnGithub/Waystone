@@ -1,11 +1,14 @@
 /* Settings Page Layout */
 .settings-content {
-    max-width: 800px;
-    margin-left: 280px;
-    padding: 25px 40px;
-    box-sizing: border-box;
+    padding: 20px 43px;
     z-index: 1;
     position: relative;
+    max-width: 50vw;
+    margin-left: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 }
 
 #settings-password
@@ -25,8 +28,6 @@
     border-radius: 10px;
     background: var(--background-colour);
     padding: 30px;
-    margin: 0 auto 30px auto; /* centreert horizontaal */
-    max-width: 800px;        /* optioneel, maar sterk aangeraden */
     box-sizing: border-box;
     outline: 1px solid rgb(138, 78, 240) !important;
 }
@@ -59,5 +60,63 @@
   
   #settings-language-radiobtn label {
     margin-right: 10px;
+  }
+}
+
+/* Additional responsive improvements for Settings Page */
+@media (max-width: 1200px) {
+  .settings-content {
+    max-width: 60vw;
+    margin-left: 280px;
+  }
+  
+  #settings-box {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings-content {
+    margin-left: 0;
+    max-width: 100%;
+    padding: 10px;
+  }
+  
+  #settings-box {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  #settings-password {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  #settings-passwords {
+    width: 100%;
+    padding: 15px;
+  }
+  
+  #settings-passwords input {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-content {
+    padding: 5px;
+  }
+  
+  #settings-box {
+    padding: 15px;
+  }
+  
+  #settings-passwords {
+    padding: 10px;
+  }
+  
+  #settings-passwords input {
+    width: 100%;
   }
 }

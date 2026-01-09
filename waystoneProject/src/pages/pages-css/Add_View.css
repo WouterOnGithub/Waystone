@@ -248,3 +248,97 @@
 {
     border: var(--text-color2);
 }
+
+/* Responsive Design for Add/View Pop-ups */
+@media (max-width: 768px) {
+    :root {
+        --addview-text: 45px;
+        --adview-text2: 18px;
+    }
+    
+    #addview-page {
+        padding: 10px;
+    }
+    
+    #addview-box {
+        width: 95%;
+        max-width: 500px;
+        max-height: 95vh;
+    }
+    
+    #addview-title {
+        font-size: var(--addview-text);
+        padding-top: 8px;
+        padding-bottom: 12px;
+    }
+    
+    #addview-content {
+        padding: 15px;
+    }
+    
+    #UploadIMG_Logo {
+        max-width: 300px;
+        height: 200px;
+    }
+    
+    .addview-select select {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    #addview-value-weight {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #addview-value-weight input {
+        width: 100%;
+    }
+    
+    #game-settings-options button {
+        font-size: 16px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --addview-text: 35px;
+        --adview-text2: 16px;
+    }
+    
+    #addview-page {
+        padding: 5px;
+    }
+    
+    #addview-box {
+        width: 98%;
+        max-width: none;
+        max-height: 98vh;
+    }
+    
+    #addview-title {
+        font-size: var(--addview-text);
+        padding-top: 5px;
+        padding-bottom: 8px;
+    }
+    
+    #addview-content {
+        padding: 10px;
+    }
+    
+    #UploadIMG_Logo {
+        max-width: 250px;
+        height: 150px;
+    }
+    
+    #game-settings-options button {
+        font-size: 14px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        padding: 8px 15px;
+    }
+}
