@@ -34,11 +34,15 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   const [showHealField, setShowHealField] = useState(false);
   const [healAmount, setHealAmount] = useState("");
 
-  let left = position.x + cellSize + 5;
-  const top = position.y;
+  // Calculate position relative to viewport
+  const menuElement = document.querySelector('.battlemap-wrapper');
+  const mapRect = menuElement ? menuElement.getBoundingClientRect() : { left: 0, top: 0 };
+  
+  let left = mapRect.left + position.x + cellSize + 5;
+  const top = mapRect.top + position.y;
   const menuWidth = showInventory ? expandedWidth : defaultWidth;
   const viewportWidth = window.innerWidth;
-  if (left + menuWidth > viewportWidth) left = position.x - menuWidth - 5;
+  if (left + menuWidth > viewportWidth) left = mapRect.left + position.x - menuWidth - 5;
 
   console.log("TokenMenu data:", data);
   console.log("Inventories raw:", inventories);
