@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./pages-css/CSS.css";
 import "./pages-css/Login_Register_Page.css";
 import Waystone_Logo from "../assets/Waystone_Logo.png";
-import Waystone_Background from "../assets/PlaceholderImage.jpg";
+import Waystone_Background from "../assets/background.jpg";
 
 function Register_Page() 
 {
