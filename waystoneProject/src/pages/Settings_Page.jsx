@@ -19,7 +19,7 @@ function Settings_Page()
         {/* The settings section */}
         <div id="content" className="settings-content">
           <div id="settings-box">
-            <form id="input-box-gray">
+            <form id="input-box-white">
               <b>Change Password</b>
               <br />
               <div id="settings-password">
@@ -35,39 +35,6 @@ function Settings_Page()
                   <br />
                   <input type="password" id="password-confirm" />
                 </div>
-                
-              </div>
-
-              <br />
-              <b>Language</b>
-              <br />
-              {/* Needs a way to make the selected btn based on the language display throughout the site */}
-              <div id="settings-language-radiobtn">
-                <input
-                  type="radio"
-                  id="english"
-                  name="language-settings"
-                  value="English"
-                />
-                <label htmlFor="english">English</label>
-
-                <br />
-                <input
-                  type="radio"
-                  id="nederlands"
-                  name="language-settings"
-                  value="Nederlands"
-                />
-                <label htmlFor="nederlands">Nederlands</label>
-
-                <br />
-                <input
-                  type="radio"
-                  id="unknown"
-                  name="language-settings"
-                  value="Unknown"
-                />
-                <label htmlFor="unknown">Unknown</label>
               </div>
 
               <br />
