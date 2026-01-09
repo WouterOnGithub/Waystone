@@ -7,6 +7,7 @@ import { useItems } from "../../hooks/useItems";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useContainer } from "../../hooks/useContainerMap";
+import Add_Container from "../popups/Add_Container"; // je Add_Container popup import
 
 export default function TokenMenu({ userId, campaignId, position, posX, posY, mapId, tokenId, onClose }) {
   const menuRef = useRef();
@@ -27,6 +28,7 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
 
   const [expandedItems, setExpandedItems] = useState({});
   const [showInventory, setShowInventory] = useState(false);
+  const [showAddContainer, setShowAddContainer] = useState(false); // popup state
 
   // Damage / Heal states
   const [showDamageField, setShowDamageField] = useState(false);
@@ -117,6 +119,12 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
     }
   };
 
+  // Callback voor refresh na container toevoegen
+  const handleContainerSaved = () => {
+    setShowAddContainer(false);
+    // evt. force refresh containerData of inventories ophalen
+  };
+
   return createPortal(
     <div ref={menuRef} className="tokenMenu" style={{ left, top, width: menuWidth }}>
       <h3>{data.name}</h3>
@@ -152,6 +160,26 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
       <button onClick={() => setShowInventory(prev => !prev)} style={{ margin: "5px 0", padding: "5px 10px" }}>
         {showInventory ? "Sluit Inventory" : "Open Inventory"}
       </button>
+
+      {isContainer && showInventory && (
+        <>
+          <button
+            onClick={() => setShowAddContainer(true)}
+            style={{ margin: "5px 0", padding: "5px 10px" }}
+          >
+            Add Items
+          </button>
+
+          {showAddContainer && (
+            <Add_Container
+              onClose={() => setShowAddContainer(false)}
+              campaignId={campaignId}
+              container={data} // bestaande container
+              onContainerSaved={handleContainerSaved}
+            />
+          )}
+        </>
+      )}
 
       {showInventory && displayItems.length > 0 && (
         <div className="inventorySection">
