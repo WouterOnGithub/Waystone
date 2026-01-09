@@ -348,11 +348,99 @@
     padding: 20px;
   }
   
-  .tutorial-grid {
-    grid-template-columns: 1fr;
+  .tutorial-card {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
   }
   
-  .help-content-wrapper {
-    gap: 15px;
+  .faq-item {
+    margin-bottom: 15px;
+  }
+  
+  .help-article {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .help-page {
+    padding: 5px;
+  }
+  
+  .help-intro {
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    margin-bottom: 40px;
+  }
+  
+  .help-intro h2 {
+    font-size: 1.5rem;
+  }
+  
+  .help-intro p {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+  
+  .search-box {
+    gap: 10px;
+  }
+  
+  .help-search {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .help-search-button {
+    width: 100%;
+    max-width: 120px;
+  }
+  
+  .category-button {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  
+  .help-articles,
+  .faq-section,
+  .tutorials-section {
+    padding: 15px;
+  }
+  
+  .tutorial-card {
+    width: 100%;
+    margin: 8px 0;
+  }
+  
+  .tutorial-thumbnail {
+    height: 120px;
+  }
+  
+  .tutorial-card h3 {
+    font-size: 16px;
+  }
+  
+  .tutorial-card p {
+    font-size: 12px;
+  }
+  
+  .faq-question {
+    font-size: 14px;
+    padding: 12px;
+  }
+  
+  .faq-answer {
+    font-size: 13px;
+    padding: 12px;
+  }
+  
+  .help-article h3 {
+    font-size: 16px;
+  }
+  
+  .help-article p {
+    font-size: 14px;
   }
 }

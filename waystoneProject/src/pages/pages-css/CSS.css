@@ -9,6 +9,11 @@
   --body-text: 18px;
   --link-text: 12px;
 
+  /* Responsive font sizes */
+  --title-text-mobile: 60px;
+  --head-text-mobile: 20px;
+  --body-text-mobile: 16px;
+
   /* Simplified 4-color palette: Dark Purple, Black, Light Gray, White */
   --dark-purple: #2d1f5c;
   --black: #1a1a1a;
@@ -95,13 +100,14 @@
   {
   border-radius: var(--border-radius);
   background: var(--light-gray);
-  margin-top: 80px;
   padding: 30px;
-  width: 95%;
-  margin-left: 80px;
-  margin-right: auto;
+  width: calc(100% - 55px);
+  max-width: calc(100vw - 160px);
+  box-sizing: border-box;
   border: 1px solid rgba(45, 31, 92, 0.2);
   box-shadow: 0 4px 20px rgba(45, 31, 92, 0.1);
+  overflow: hidden;
+  margin: 30px;
 }
 
 #content b {
@@ -361,4 +367,79 @@
   border-color: var(--black);
   background: var(--light-gray);
   box-shadow: 0 4px 12px rgba(45, 31, 92, 0.15);
+}
+
+/* Responsive design for #content */
+@media (max-width: 1200px) {
+  #content {
+    width: calc(100% - 120px);
+    margin-left: 60px;
+    margin-right: 60px;
+    max-width: calc(100vw - 120px);
+  }
+}
+
+@media (max-width: 768px) {
+  #content {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: calc(100vw - 40px);
+    padding: 20px;
+    margin-top: 60px;
+  }
+  
+  /* Responsive font adjustments */
+  #content b {
+    font-size: 20px;
+  }
+  
+  #content h1 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  #content {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: calc(100vw - 20px);
+    padding: 15px;
+    margin-top: 50px;
+    border-radius: 15px;
+  }
+  
+  /* Even smaller fonts for mobile */
+  #content b {
+    font-size: 18px;
+  }
+  
+  #content h1 {
+    font-size: 16px;
+  }
+}
+
+/* Global responsive adjustments */
+@media (max-width: 768px) {
+  #Waystone_Logo {
+    width: 60%;
+    margin-top: 10px;
+  }
+  
+  .full-page {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #Waystone_Logo {
+    width: 80%;
+    margin-top: 5px;
+  }
+  
+  /* Scrollbar for mobile */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
 }
