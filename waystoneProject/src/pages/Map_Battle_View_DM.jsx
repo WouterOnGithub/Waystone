@@ -7,6 +7,7 @@ import { getSharedSessionCode, getExistingSessionCode, isSessionActive } from ".
 import { useAuth } from "../context/AuthContext";
 import "./pages-css/CSS.css"
 import DiceRoller from "../components/map/diceRoller";
+import TurnPanel from "../components/turn/TurnPanel";
 
 function Map_Battle_View_DM() {
   const { campaignId, eventMapId } = useParams();
@@ -89,13 +90,17 @@ function Map_Battle_View_DM() {
   
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh', backgroundColor : "#f7f6fb" }}>
-      {/* Navigation Button */}
+      {/* Top Left Controls Container */}
       <div style={{ 
         position: 'absolute', 
         top: '20px', 
         left: '20px', 
-        zIndex: 1000 
+        zIndex: 1000,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px'
       }}>
+        {/* Navigation Button */}
         <div ref={navMenuRef} style={{ position: 'relative' }}>
           <button
             onClick={() => setShowNavMenu(!showNavMenu)}
@@ -118,10 +123,6 @@ function Map_Battle_View_DM() {
             Navigate
           </button>
 
-           <div style={{ marginTop: '10px' }}>
-      <DiceRoller />
-    </div>
-          
           {/* Dropdown Menu */}
           {showNavMenu && (
             <div style={{
@@ -197,10 +198,18 @@ function Map_Battle_View_DM() {
             </div>
           )}
         </div>
+        
+        {/* Dice Roller */}
+        <DiceRoller />
+        
+        {/* Turn Panel */}
+        <div className="turn-panel-vertical">
+          <TurnPanel userId={userId} campaignId={finalCampaignId} mapId={finalMapId} />
+        </div>
       </div>
       
-      {/* Battle Map Component with left margin to avoid overlap */}
-      <div style={{ paddingLeft: '200px' }}>
+      {/* Battle Map Component - Centered */}
+      <div style={{ paddingLeft: '25vw', marginTop: '5vh' }}>
         <BattleMapWithSidebar userId={userId} campaignId={finalCampaignId} mapId={finalMapId} />
       </div>
     </div>

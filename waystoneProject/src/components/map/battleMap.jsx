@@ -8,7 +8,6 @@ import TokenMenu from "../character/tokenMenu";
 import { doc, setDoc} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import "./battleMap.css"
-import TurnPanel from "../turn/TurnPanel";
 
 export default function BattleMap({ userId, campaignId, mapId, draggedToken, setDraggedToken}) {
   const map = useMap(userId, campaignId, mapId);
@@ -65,9 +64,6 @@ export default function BattleMap({ userId, campaignId, mapId, draggedToken, set
 
  return (
   <>
-      {/* === TURN BAR (Sticky Floating UI) === */}
-      <TurnPanel userId={userId} campaignId={campaignId} mapId={mapId} />
-
       <div
         className="battlemap-wrapper"
         style={{
