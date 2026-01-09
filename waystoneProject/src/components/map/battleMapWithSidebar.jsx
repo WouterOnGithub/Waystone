@@ -16,8 +16,6 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
   const tokenIdsOnMap = new Set(Object.values(cellsData || {}).map(cell => cell.tokenId).filter(Boolean));
 
   const handleDragStart = (player) => {
-  console.log("Dragging player:", player);
-  console.log("player.id:", player.tokenId);
   setDraggedToken({ tokenId: player.tokenId});
 };
 
