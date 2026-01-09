@@ -218,15 +218,9 @@ function Main_Page()
             <div id="news-box">
               <img src={Placeholder} alt="NewsImages" id="news-box-img" />
               <div id="news-box-text">
-                <b>News_Title</b>
+                <b>Huisregels Update</b>
                 <p>
-                  This is a very long description that explains whatever the
-                  news is about, this will be repeated. This is a very long
-                  description that explains whatever the news is about, this
-                  will be repeated. This is a very long description that
-                  explains whatever the news is about, this will be repeated.
-                  This is a very long description that explains whatever the
-                  news is about, this will be repeated.
+                  Na feedback van spelers zijn enkele huisregels aangepast. Korte rust duurt nu 15 minuten in plaats van 1 uur, en bepaalde rituelen zijn herschreven om roleplay te bevorderen. Bekijk de volledige wijzigingen op de Rules-pagina voordat je volgende sessie begint.
                 </p>
               </div>
             </div>
@@ -234,15 +228,17 @@ function Main_Page()
             <div id="news-box">
               <img src={Placeholder} alt="NewsImages" id="news-box-img" />
               <div id="news-box-text">
-                <b>News_Title</b>
+                <b>Free campaign: Big John's Big Adventure</b>
                 <p>
-                  This is a very long description that explains whatever the
-                  news is about, this will be repeated. This is a very long
-                  description that explains whatever the news is about, this
-                  will be repeated. This is a very long description that
-                  explains whatever the news is about, this will be repeated.
-                  This is a very long description that explains whatever the
-                  news is about, this will be repeated.
+                  Big John the knight rode out at dawn,
+                  His armor tight, his confidence drawn.
+                  He bragged of his reach and the heft of his sword,
+                  Said size really mattered when facing a lord.
+
+                Through castles and caverns he proudly would roam,
+                Pulling that long blade out far from its home.
+                He’d polish it daily, swore balance was key,
+                And said, “It handles better the harder it is”
                 </p>
               </div>
             </div>
