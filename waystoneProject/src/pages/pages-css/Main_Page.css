@@ -34,35 +34,6 @@
     width: 45rem;
 }
 
-/* Events Banner */
-.events-banner {
-    background: var(--dark-purple);
-    color: var(--white);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 4px 12px rgba(45, 31, 92, 0.3);
-}
-
-.events-icon {
-    font-size: 48px;
-    flex-shrink: 0;
-}
-
-.events-content h3 {
-    margin: 0 0 8px 0;
-    font-size: 24px;
-    color: var(--white);
-}
-
-.events-content p {
-    margin: 0;
-    opacity: 0.9;
-}
-
 /* Info Grid - Getting Started */
 .info-grid {
     display: grid;

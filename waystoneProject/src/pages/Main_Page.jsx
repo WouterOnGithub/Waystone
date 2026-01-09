@@ -9,6 +9,7 @@ import Header from "../components/UI/Header";
 import Footer from "../components/UI/Footer";
 import CampaignBox from "../components/CampaignBox";
 import Placeholder from "../assets/PlaceholderImage.jpg";
+import HomeBanner from "../assets/home.banner.png";
 
 // Helper to normalise Firestore / ISO dates
 const getCampaignSortDate = (campaign) => {
@@ -149,15 +150,6 @@ function Main_Page()
 
         <div id="content">
           
-          {/* Events Section */}
-          <div className="events-banner">
-            <div className="events-icon">❄️</div>
-            <div className="events-content">
-              <h3>Winter Event</h3>
-              <p>Join our special winter campaign event! New quests and rewards available.</p>
-            </div>
-          </div>
-
           <b>Recent Campaigns</b>
 
           <div id="box-section">
