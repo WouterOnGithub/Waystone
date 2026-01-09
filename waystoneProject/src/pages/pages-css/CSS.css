@@ -122,7 +122,8 @@
 
 #button-green,
 #button-gray,
-#button-blue {
+#button-blue,
+#delete-button {
   border-radius: var(--border-radius);
   background: #1e7e34;
   color: var(--white);
@@ -153,6 +154,17 @@
 
 #button-gray:hover {
   background: #333;
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+#delete-button {
+  background: #dc3545;
+  color: var(--white);
+}
+
+#delete-button:hover {
+  background: #c82333;
   color: var(--white);
   transform: translateY(-2px);
 }

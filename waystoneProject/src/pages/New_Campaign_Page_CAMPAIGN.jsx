@@ -301,7 +301,7 @@ function New_Campaign_Page_CAMPAIGN()
                           </button>
                           <button
                             type="button"
-                            id="button-gray"
+                            id="delete-button"
                             style={{ 
                               width: "80px", 
                               height: "40px", 

@@ -748,7 +748,7 @@ function New_Campaign_Page_MAPBUILDER()
                       </div>
                       <div style={{ display: "flex", gap: "8px" }}>
                         <button
-                          id="button-green"
+                          id="button-blue"
                           type="button"
                           onClick={() => {
                             setEditingLocation(loc);
@@ -759,7 +759,7 @@ function New_Campaign_Page_MAPBUILDER()
                         </button>
                         <button
                           type="button"
-                          id="button-green"
+                          id="delete-button"
                           onClick={async () => {
                             if (
                               !window.confirm(
@@ -809,7 +809,7 @@ function New_Campaign_Page_MAPBUILDER()
                             </div>
                             <div style={{ display: "flex", gap: "6px" }}>
                               <button
-                                id="button-green"
+                                id="button-blue"
                                 type="button"
                                 onClick={() => {
                                     setEditingRegion(building);
@@ -821,7 +821,7 @@ function New_Campaign_Page_MAPBUILDER()
                               </button>
                               <button
                                 type="button"
-                                id="button-green"
+                                id="delete-button"
                                 onClick={async () => {
                                   if (
                                     !window.confirm(
@@ -913,7 +913,7 @@ function New_Campaign_Page_MAPBUILDER()
                     </button>
                     <button
                       type="button"
-                      id="button-green"
+                      id="delete-button"
                       onClick={async () => {
                         if (
                           !window.confirm(
@@ -1011,7 +1011,7 @@ function New_Campaign_Page_MAPBUILDER()
                     </div>
                     <div style={{ display: "flex", gap: "8px" }}>
                       <button
-                        id="button-green"
+                        id="button-blue"
                         type="button"
                         onClick={() => {
                           setEditingEvent(event);
@@ -1022,7 +1022,7 @@ function New_Campaign_Page_MAPBUILDER()
                       </button>
                       <button
                         type="button"
-                        id="button-green"
+                        id="delete-button"
                         onClick={() => handleDeleteEvent(event)}
                       >
                         Delete
@@ -1106,7 +1106,7 @@ function New_Campaign_Page_MAPBUILDER()
                     </div>
                     <div style={{ display: "flex", gap: "8px" }}>
                       <button
-                        id="button-green"
+                        id="button-blue"
                         type="button"
                         onClick={() => {
                           setEditingContainer(container);
@@ -1117,7 +1117,7 @@ function New_Campaign_Page_MAPBUILDER()
                       </button>
                       <button
                         type="button"
-                        id="button-green"
+                        id="delete-button"
                         onClick={() => handleDeleteContainer(container)}
                       >
                         Delete

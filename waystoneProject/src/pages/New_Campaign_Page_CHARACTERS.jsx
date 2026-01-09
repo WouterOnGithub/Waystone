@@ -149,7 +149,7 @@
                       <span>{player.name} | lvl {player.level} | HP  {player.HpCurrent} / {player.HpMax}</span>
                       <div>
                         <button id="button-blue" onClick={() => handleEditPlayer(player.id)}>edit</button>
-                        <button id="button-gray" onClick={() => handleDeletePlayer(player.id)}>delete</button>
+                        <button id="delete-button" onClick={() => handleDeletePlayer(player.id)}>delete</button>
                       </div>
                     </div>
                   ))}
@@ -167,7 +167,7 @@
                       <span>{npc.name} | Race: {npc.race}</span>
                       <div>
                         <button id="button-blue" onClick={() => handleEditNpc(npc.id)}>edit</button>
-                        <button id="button-gray" onClick={() => handleDeleteNpc(npc.id)}>delete</button>
+                        <button id="delete-button" onClick={() => handleDeleteNpc(npc.id)}>delete</button>
                       </div>
                     </div>
 
@@ -184,7 +184,7 @@
                       <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
                       <div>
                         <button id="button-blue" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
-                        <button id="button-gray" onClick={() => handleDeleteEnemy(enemy.id)}>delete</button>
+                        <button id="delete-button" onClick={() => handleDeleteEnemy(enemy.id)}>delete</button>
                       </div>
                     </div>
                   ))}
