@@ -6,6 +6,7 @@ import { useInventory } from "../../hooks/useInventory";
 import { useItems } from "../../hooks/useItems";
 import { doc, deleteDoc} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
+import { useContainer } from "../../hooks/useContainerMap";
 
 export default function TokenMenu({ userId, campaignId, position,posX, posY , mapId={mapId}, tokenId, onClose }) {
   const menuRef = useRef();
@@ -15,12 +16,15 @@ export default function TokenMenu({ userId, campaignId, position,posX, posY , ma
 
   const playerData = usePlayer(userId, campaignId, tokenId);
   const entityData = useEntity(userId, campaignId, tokenId);
-  const data = playerData || entityData || { HpCurrent: 0, HpMax: 0, ac: 0, tokenType: "player", name: "Loading..." };;
+  const containerData = useContainer(userId, campaignId, tokenId);
+  const data = playerData || entityData || containerData ||   { name: "Loading...", tokenType: "unknown" };;
   if (!data) return null;
 
   const isDataLoaded = !!data;
   const isPlayer = data?.tokenType === "player";
   const isEntity = data?.tokenType === "entity";
+  const isContainer = data?.tokenType === "container";
+
 
   const updateHp = useUpdateHp(userId, campaignId, data?.tokenType, data?.id  );
   
@@ -98,6 +102,20 @@ export default function TokenMenu({ userId, campaignId, position,posX, posY , ma
       console.error("Error deleting cell:", err);
     }
   };
+
+  if(isContainer){
+    return createPortal(
+      <div ref={menuRef} className="tokenMenu" style={{ left, top, width: defaultWidth }}>
+        <h3>{data.name}</h3>
+
+        <p>Items: {data.items?.length || 0}</p>
+
+        <button onClick={handleDeleteToken}>remove from board</button>
+        <button onClick={onClose}>close</button>
+      </div>,
+      document.body
+    )
+  }
 
   return createPortal(
     <div ref={menuRef} className="tokenMenu" style={{ left, top, width: menuWidth }}>
