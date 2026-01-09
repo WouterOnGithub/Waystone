@@ -131,7 +131,7 @@
 #button-blue,
 #delete-button {
   border-radius: var(--border-radius);
-  background: #1e7e34;
+  background: linear-gradient(90deg,rgb(0, 133, 33) 0%, rgb(30, 185, 22) 50%, rgb(0, 133, 33) 100%);
   color: var(--white);
   font-weight: bold;
   border: none;
@@ -148,43 +148,41 @@
 #button-green:hover,
 #addview-green-bar:hover {
   color: var(--white);
-  background: #155724;
-  transition: 0.5s;
+  background: rgb(0, 133, 33);
   transform: translateY(-2px);
 }
 
 #button-gray {
-  background: rgb(109, 109, 109);
+  background: linear-gradient(90deg,rgb(37, 37, 37) 0%, rgb(91, 91, 91) 50%, rgb(37, 37, 37) 100%);
   color: var(--white);
 }
 
 #button-gray:hover {
-  background: #333;
+  background: rgb(37, 37, 37);
   color: var(--white);
   transform: translateY(-2px);
 }
 
 #delete-button {
-  background: #dc3545;
+  background: linear-gradient(90deg,rgba(133, 0, 0, 1) 0%, rgba(185, 22, 22, 1) 50%, rgba(128, 0, 0, 1) 100%);
   color: var(--white);
 }
 
 #delete-button:hover {
-  background: #c82333;
+  background: rgba(133, 0, 0, 1);
   color: var(--white);
   transform: translateY(-2px);
 }
 
 #button-blue {
-  background: #060766;
+  background: linear-gradient(90deg,rgb(0, 7, 133) 0%, rgb(22, 36, 185) 50%, rgb(0, 7, 133) 100%);
   color: var(--white);
 }
 
 #button-blue:hover {
-  background: #171aa5;
+  background: rgb(0, 7, 133);
   color: var(--white);
   transform: translateY(-2px);
-  transition: 0.5s;
 }
 
 #addview-green-bar
