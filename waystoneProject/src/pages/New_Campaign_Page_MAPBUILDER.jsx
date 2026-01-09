@@ -726,27 +726,12 @@ function New_Campaign_Page_MAPBUILDER()
                 marginTop: "10px"
               }}>
                 {locations.map((loc) => (
-                  <div
-                    key={loc.id}
-                    style={{ display: "flex", flexDirection: "column", gap: "0px", width: "100%" }}
-                  >
-                    <div
-                      style={{ 
-                        display: "flex", 
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        width: "100%",
-                        maxWidth: "600px",
-                        padding: "10px",
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
-                        backgroundColor: "#f9f9f9"
-                      }}
-                    >
+                  <div key={loc.id} className="character-section">
+                    <div className="character-row">
                       <div>
-                        <b style={{ fontSize: "18px" }}>{loc.name}</b>
+                        <b>{loc.name}</b>
                       </div>
-                      <div style={{ display: "flex", gap: "8px" }}>
+                      <div>
                         <button
                           id="button-blue"
                           type="button"
@@ -787,25 +772,12 @@ function New_Campaign_Page_MAPBUILDER()
                     
                     {/* Show regions that belong to this location */}
                     {buildings.filter(building => building.locationId === loc.id).length > 0 && (
-                      <div style={{ marginLeft: "40px", marginBottom: "20px" }}>
+                      <div className="character-section">
+                        <b className="character-row-sub-arrow">&#8627;</b>
                         {buildings.filter(building => building.locationId === loc.id).map((building) => (
-                          <div
-                            key={building.id}
-                            style={{ 
-                              display: "flex", 
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              width: "100%",
-                              maxWidth: "560px",
-                              padding: "8px",
-                              border: "1px solid #ddd",
-                              borderRadius: "6px",
-                              backgroundColor: "#f0f0f0",
-                              marginBottom: "6px"
-                            }}
-                          >
+                          <div key={building.id} className="character-row sub">
                             <div>
-                              <b style={{ fontSize: "14px" }}>{building.name || "Unnamed Region"}</b>
+                              <b>{building.name || "Unnamed Region"}</b>
                             </div>
                             <div style={{ display: "flex", gap: "6px" }}>
                               <button
@@ -860,14 +832,14 @@ function New_Campaign_Page_MAPBUILDER()
                             setShowAddRegionPopup(true);
                           }}
                         >
-                          + Add Region to {loc.name || "This Location"}
+                          Add Region &#8680; {loc.name || "This Location"}
                         </button>
                       </div>
                     )}
                     
                     {/* Add region button for locations with no regions */}
                     {buildings.filter(building => building.locationId === loc.id).length === 0 && (
-                      <div style={{ marginLeft: "40px", marginBottom: "12px" }}>
+                      <div>
                         <button
                           id="button-green"
                           type="button"
@@ -878,7 +850,7 @@ function New_Campaign_Page_MAPBUILDER()
                             setShowAddRegionPopup(true);
                           }}
                         >
-                          + Add Region to {loc.name || "This Location"}
+                          Add Region &#8680; {loc.name || "This Location"}
                         </button>
                       </div>
                     )}
@@ -888,18 +860,9 @@ function New_Campaign_Page_MAPBUILDER()
             )}
 
             {showBuildings && buildings.length > 0 && (
-              <div
-                style={{
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: "8px",
-                }}
-              >
+              <div>
                 {buildings.map((bld) => (
-                  <div
-                    key={bld.id}
-                    style={{ display: "flex", gap: "8px", width: "100%" }}
-                  >
+                  <div key={bld.id}>
                     <button
                       id="button-green"
                       type="button"
