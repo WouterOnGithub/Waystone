@@ -962,50 +962,30 @@ function New_Campaign_Page_MAPBUILDER()
 
             {/* Display all events */}
             {showEvents && (
-              <div style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                marginTop: "10px"
-              }}>
+              <div className="character-section">
                 {events.map((event) => (
-                  <div
-                    key={event.id}
-                    style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      maxWidth: "600px",
-                      padding: "15px",
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
-                      backgroundColor: "#f9f9f9"
-                    }}
-                  >
+                  <div key={event.id} className="character-row">
                     <div>
                       <b>{event.name}</b>
-                      <div style={{ fontSize: "12px", color: "#666" }}>
-                        {event.width}x{event.height}
-                      </div>
+                      <div><span>{event.width}x{event.height}</span></div>
                     </div>
-                    <div style={{ display: "flex", gap: "8px" }}>
+                    <div>
                       <button
-                        id="button-green"
+                        id="button-gray"
                         type="button"
                         onClick={() => {
                           setEditingEvent(event);
                           setShowAddEventPopup(true);
                         }}
                       >
-                        Edit
+                        edit
                       </button>
                       <button
                         type="button"
-                        id="button-green"
+                        id="button-gray"
                         onClick={() => handleDeleteEvent(event)}
                       >
-                        Delete
+                        delete
                       </button>
                       <button
                         type="button"
@@ -1058,45 +1038,28 @@ function New_Campaign_Page_MAPBUILDER()
 
             {/* Display all containers */}
             {showContainers && (
-              <div style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                marginTop: "10px"
-              }}>
+              <div className="character-section">
                 {containers.map((container) => (
                   <div
-                    key={container.id}
-                    style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      maxWidth: "600px",
-                      padding: "15px",
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
-                      backgroundColor: "#f9f9f9"
-                    }}
-                  >
+                    key={container.id} className="character-row">
                     <b>{container.name}</b>
-                    <div style={{ display: "flex", gap: "8px" }}>
+                    <div>
                       <button
-                        id="button-green"
+                        id="button-gray"
                         type="button"
                         onClick={() => {
                           setEditingContainer(container);
                           setShowAddContainerPopup(true);
                         }}
                       >
-                        Edit
+                        edit
                       </button>
                       <button
                         type="button"
-                        id="button-green"
+                        id="button-gray"
                         onClick={() => handleDeleteContainer(container)}
                       >
-                        Delete
+                        delete
                       </button>
                     </div>
                   </div>
