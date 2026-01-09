@@ -148,6 +148,16 @@ function Main_Page()
       <Header title="Welcome" />
 
         <div id="content">
+          
+          {/* Events Section */}
+          <div className="events-banner">
+            <div className="events-icon">❄️</div>
+            <div className="events-content">
+              <h3>Winter Event</h3>
+              <p>Join our special winter campaign event! New quests and rewards available.</p>
+            </div>
+          </div>
+
           <b>Recent Campaigns</b>
 
           <div id="box-section">
@@ -169,6 +179,45 @@ function Main_Page()
             ) : (
               <p>No recent campaigns found</p>
             )}
+          </div>
+
+          {/* Getting Started Section */}
+          <br />
+          <b>Getting Started</b>
+          
+          <div className="info-grid">
+            <div className="info-card">
+              <div className="info-icon">🌍</div>
+              <h4>Worldbuilding</h4>
+              <p>Create rich, immersive worlds with detailed lore, factions, and history for your players to explore.</p>
+            </div>
+            
+            <div className="info-card">
+              <div className="info-icon">🗺️</div>
+              <h4>Maps</h4>
+              <p>Design interactive maps with locations, regions, and points of interest to guide your campaign.</p>
+            </div>
+            
+            <div className="info-card">
+              <div className="info-icon">👥</div>
+              <h4>Characters</h4>
+              <p>Manage player characters, NPCs, and enemies with detailed stats, backgrounds, and relationships.</p>
+            </div>
+          </div>
+
+          {/* How to Play Link */}
+          <div className="help-link-box">
+            <div className="help-icon">❓</div>
+            <div className="help-content">
+              <h4>How to Play?</h4>
+              <p>New to D&D or Waystone? Check out our comprehensive guide!</p>
+              <button 
+                id="button-green" 
+                onClick={() => navigate('/user/HelpPage')}
+              >
+                Go to Help Page
+              </button>
+            </div>
           </div>
 
           <br />
@@ -207,6 +256,45 @@ function Main_Page()
               </div>
             </div>
           </div>
+
+          {/* Community and Resources */}
+          <br />
+          <b>Community & Resources</b>
+
+          <div className="community-resources-grid">
+            <div className="community-card">
+              <div className="community-icon">💬</div>
+              <h4>Join Our Community</h4>
+              <p>Connect with fellow DMs and players on Discord!</p>
+              <a 
+                href="https://discord.gg/EFETw5Mv" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <button id="button-green">Join Discord</button>
+              </a>
+            </div>
+
+            <div className="community-card">
+              <div className="community-icon">🎲</div>
+              <h4>D&D Fun Facts</h4>
+              <p>Did you know? The first edition of D&D was published in 1974 by Gary Gygax and Dave Arneson. The game has since become the most popular tabletop RPG in the world!</p>
+            </div>
+
+            <div className="community-card">
+              <div className="community-icon">🎬</div>
+              <h4>Get Inspired</h4>
+              <p>Watch this amazing D&D campaign highlight for inspiration!</p>
+              <a 
+                href="https://youtu.be/nJ-ehbVQYxI?si=nG6pQ60DXOxSAfcR" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <button id="button-green">Watch Video</button>
+              </a>
+            </div>
+          </div>
+
         </div>
 
         <Footer />
