@@ -982,12 +982,7 @@ function New_Campaign_Page_MAPBUILDER()
 
             {/* Display all events */}
             {showEvents && (
-              <div style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                marginTop: "10px"
-              }}>
+              <div className="character-section">
                 {events.map((event) => (
                   <div
                     key={event.id}
@@ -1018,14 +1013,14 @@ function New_Campaign_Page_MAPBUILDER()
                           setShowAddEventPopup(true);
                         }}
                       >
-                        Edit
+                        edit
                       </button>
                       <button
                         type="button"
                         id="delete-button"
                         onClick={() => handleDeleteEvent(event)}
                       >
-                        Delete
+                        delete
                       </button>
                       <button
                         type="button"
@@ -1080,12 +1075,7 @@ function New_Campaign_Page_MAPBUILDER()
 
             {/* Display all containers */}
             {showContainers && (
-              <div style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                marginTop: "10px"
-              }}>
+              <div className="character-section">
                 {containers.map((container) => (
                   <div
                     key={container.id}
@@ -1113,14 +1103,14 @@ function New_Campaign_Page_MAPBUILDER()
                           setShowAddContainerPopup(true);
                         }}
                       >
-                        Edit
+                        edit
                       </button>
                       <button
                         type="button"
                         id="delete-button"
                         onClick={() => handleDeleteContainer(container)}
                       >
-                        Delete
+                        delete
                       </button>
                     </div>
                   </div>
