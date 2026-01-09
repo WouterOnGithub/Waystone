@@ -9,8 +9,6 @@ export default function TokenSidebar({ players, enemies, npcs, onDragStart , use
   const [showQuickEnemy, setShowQuickEnemy] = useState(false);
   const [showInitiativePopup, setShowInitiativePopup] = useState(false);
 
-  console.log (containers)
-
   return (
     <div className="token-sidebar">
       <h3>Available Players</h3>
