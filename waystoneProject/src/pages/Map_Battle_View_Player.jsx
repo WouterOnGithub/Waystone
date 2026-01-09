@@ -119,7 +119,7 @@ function Map_Battle_View_Player() {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100vh', backgroundColor: "#f7f6fb" }}>
       {/* Leave Session Button */}
       <div style={{ 
         position: 'absolute', 
@@ -145,6 +145,10 @@ function Map_Battle_View_Player() {
           Leave Session
         </button>
       </div>
+      
+      <div style={{ marginTop: '10px' }}>
+            <DiceRoller />
+          </div>
       
       {/* Battle Map Display */}
       <div style={{ paddingLeft: '20px' }}>

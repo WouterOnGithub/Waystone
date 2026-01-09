@@ -5,6 +5,7 @@ import BattleMapWithSidebar from "../components/map/battleMapWithSidebar";
 import { updateSessionBattleMap } from "../api/userCampaigns";
 import { getSharedSessionCode, getExistingSessionCode, isSessionActive } from "../utils/sessionCode";
 import "./pages-css/CSS.css"
+import DiceRoller from "../components/map/diceRoller";
 
 function Map_Battle_View_DM() {
   const { campaignId, eventMapId } = useParams();
@@ -85,7 +86,7 @@ function Map_Battle_View_DM() {
   }, [showNavMenu]);
   
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh', backgroundColor : "#e8e5f5" }}>
+    <div style={{ position: 'relative', width: '100%', height: '100vh', backgroundColor : "#f7f6fb" }}>
       {/* Navigation Button */}
       <div style={{ 
         position: 'absolute', 
@@ -114,6 +115,10 @@ function Map_Battle_View_DM() {
             </svg>
             Navigate
           </button>
+
+           <div style={{ marginTop: '10px' }}>
+      <DiceRoller />
+    </div>
           
           {/* Dropdown Menu */}
           {showNavMenu && (
