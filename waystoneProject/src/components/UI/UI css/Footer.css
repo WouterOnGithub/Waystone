@@ -51,6 +51,7 @@
   align-items: flex-start;
   padding: 50px 40px 30px 40px;
   position: relative;
+  overflow: hidden;
   z-index: 1;
   gap: 40px;
 }
@@ -63,7 +64,7 @@
 /* Company Info Section */
 .footer-info {
   background: linear-gradient(135deg, rgba(106, 90, 205, 0.1) 0%, rgba(138, 43, 226, 0.05) 100%);
-  border-radius: 16px;
+  border-radius: var(--border-radius);
   border: 1px solid rgba(106, 90, 205, 0.3);
   padding: 30px;
   position: relative;
@@ -94,15 +95,15 @@
 }
 
 .footer-header {
-  font-size: 28px;
-  font-family: 'Outfit', 'Inter', sans-serif;
-  font-weight: 700;
-  color: #c4b5fd;
+  font-size: var(--head-text);
+  font-weight: 600;
+  color: var(--light-gray);
   margin: 0 0 15px 0;
   letter-spacing: 1px;
   text-transform: uppercase;
   position: relative;
   display: inline-block;
+  overflow: hidden;
 }
 
 .footer-header::after {
@@ -132,25 +133,24 @@
   margin-top: 30px;
   position: relative;
   z-index: 1;
-  color:  #c4b5fd;
 }
 
 .social-link {
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-block;
+  padding: 15px;
+  overflow: hidden;
 }
 
 .social-link svg {
-  color: #c4b5fd;
   transition: all 0.3s ease;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 2px 4px rgba(10, 0, 21, 0.1));
 }
 
 .social-link:hover svg {
-  color: #a78bfa;
-  transform: translateY(-6px) scale(1.1);
-  filter: drop-shadow(0 8px 16px rgba(106, 90, 205, 0.4));
+  transform: translateY(-4px) scale(1.1);
+  filter: drop-shadow(0 8px 16px rgba(106, 90, 205, 0.1));
 }
 
 .social-link::before {
@@ -290,12 +290,13 @@
   background: linear-gradient(135deg, #6a5acd 0%, #8a2be2 100%);
   border-radius: 20px;
   padding: 10px 20px;
-  font-size: 14px;
+  margin: 25px;
+  font-size: var(--link-text);
   font-weight: 600;
   letter-spacing: 0.5px;
   box-shadow: 
-    0 4px 12px rgba(106, 90, 205, 0.3),
-    0 0 20px rgba(138, 43, 226, 0.2);
+    0 4px 12px rgba(106, 90, 205, 0.1),
+    0 0 20px rgba(138, 43, 226, 0.1);
   display: inline-flex;
   align-items: center;
   animation: badge-glow 3s ease-in-out infinite;
