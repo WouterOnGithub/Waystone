@@ -7,7 +7,9 @@ import { useItems } from "../../hooks/useItems";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useContainer } from "../../hooks/useContainerMap";
-import Add_Container from "../popups/Add_Container"; // je Add_Container popup import
+import Add_Container from "../popups/Add_Container"; 
+import Add_Player_Inventory from "../popups/Add_Player_Inventory";
+
 
 export default function TokenMenu({ userId, campaignId, position, posX, posY, mapId, tokenId, onClose }) {
   const menuRef = useRef();
@@ -39,6 +41,9 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   // Calculate position relative to viewport
   const menuElement = document.querySelector('.battlemap-wrapper');
   const mapRect = menuElement ? menuElement.getBoundingClientRect() : { left: 0, top: 0 };
+
+  //player inventory state
+  const [showAddPlayerInventory, setShowAddPlayerInventory] = useState(false);
   
   let left = mapRect.left + position.x + cellSize + 5;
   const top = mapRect.top + position.y;
@@ -63,19 +68,20 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   const handleGetInventory = () => {
     if (!inventories || inventories.length === 0) return [];
 
-    return inventories.flatMap(inv => {
-      if (!inv.slots || inv.slots.length === 0) return [];
+    // alle slots uit alle inventory docs flattenen
+    const allSlots = inventories.flatMap(doc => doc.slots);
 
-      return inv.slots
-        .filter(slot => slot.ItemID && slot.Amount > 0)
-        .map(slot => ({
-          ...items[slot.ItemID],
-          ItemID: slot.ItemID,
-          Amount: slot.Amount,
-          slotKey: `${inv.docName}-${slot.id}-${slot.ItemID}`,
-        }));
-    });
+    return allSlots
+      .filter(slot => slot.ItemID && slot.ItemID !== "" && slot.Amount > 0)
+      .map(slot => ({
+        ...items[slot.ItemID],  // haalt de item details uit useItems
+        ItemID: slot.ItemID,
+        Amount: slot.Amount,
+        slotKey: slot.id + "-" + slot.ItemID, // uniek key
+      }));
   };
+
+
 
   const handleGetContainerContents = () => {
     if (!data.items) return [];
@@ -165,6 +171,16 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
         {showInventory ? "Sluit Inventory" : "Open Inventory"}
       </button>
 
+      {!isContainer && showInventory && (
+        <button
+          onClick={() => setShowAddPlayerInventory(true)}
+          style={{ margin: "5px 0", padding: "5px 10px" }}
+        >
+          Add Item
+        </button>
+      )}
+
+
       {isContainer && showInventory && (
         <>
           <button
@@ -205,6 +221,19 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
             </div>
           ))}
         </div>
+      )}
+
+      {showAddPlayerInventory && (
+        <Add_Player_Inventory
+          onClose={() => setShowAddPlayerInventory(false)}
+          userId={userId}
+          campaignId={campaignId}
+          playerId={data.id}
+          onInventoryUpdated={() => {
+            setShowAddPlayerInventory(false);
+            // eventueel inventories refreshen hier
+          }}
+        />
       )}
 
       <button id="delete-button" onClick={handleDeleteToken}>remove from board</button>
