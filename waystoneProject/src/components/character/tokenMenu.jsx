@@ -51,10 +51,6 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   const viewportWidth = window.innerWidth;
   if (left + menuWidth > viewportWidth) left = mapRect.left + position.x - menuWidth - 5;
 
-  console.log("TokenMenu data:", data);
-  console.log("Inventories raw:", inventories);
-  console.log("Items collection:", items);
-
   // Click outside sluit menu
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -95,7 +91,6 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   };
 
   const displayItems = isContainer ? handleGetContainerContents() : handleGetInventory();
-  console.log("Display items (filtered):", displayItems);
 
   // Damage / Heal handlers
   const handleDamage = () => {
