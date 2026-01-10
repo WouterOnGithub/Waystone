@@ -2,7 +2,7 @@
 
 A comprehensive web-based platform for creating, managing, and playing Dungeons & Dragons campaigns online. Waystone provides Dungeon Masters and players with all the tools needed for immersive tabletop roleplaying experiences.
 
-## 🎯 Features
+## Features
 
 ### For Dungeon Masters
 - **Campaign Creation & Management**: Design detailed campaigns with custom settings, rules, and storylines
@@ -82,7 +82,7 @@ waystoneProject/
 └── index.html            # HTML template
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js (v18 or higher)
@@ -123,7 +123,7 @@ waystoneProject/
 - `npm run preview` - Preview production build locally
 - `npm run lint` - Run ESLint for code quality checks
 
-## 🎮 Usage Guide
+## Usage Guide
 
 ### For Dungeon Masters
 
@@ -137,11 +137,9 @@ waystoneProject/
 ### For Players
 
 1. **Join Campaign**: Enter the session code provided by your DM
-2. **Create Character**: Build your D&D character with abilities and equipment
-3. **Explore Maps**: Navigate through the game world using interactive maps
-4. **Participate in Sessions**: Join live gameplay sessions with real-time updates
+2. **Participate in Sessions**: Join live gameplay sessions with real-time updates
 
-## 🔧 Configuration
+## Configuration
 
 ### Firebase Setup
 
@@ -163,25 +161,7 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
 ```
 
-## 🤝 Contributing
-
-We welcome contributions to improve Waystone! Here's how you can help:
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Commit your changes**: `git commit -m 'Add amazing feature'`
-4. **Push to the branch**: `git push origin feature/amazing-feature`
-5. **Open a Pull Request**
-
-### Development Guidelines
-
-- Follow existing code style and patterns
-- Use ESLint to maintain code quality
-- Test new features thoroughly
-- Update documentation for any API changes
-- Ensure responsive design for mobile compatibility
-
-## 📚 API Documentation
+## API Documentation
 
 ### Campaign Management
 - `getAllCampaigns(userId)` - Retrieve user's campaigns
@@ -199,7 +179,7 @@ We welcome contributions to improve Waystone! Here's how you can help:
 - `joinSession(sessionCode, userId)` - Player joins campaign session
 - `updateSessionState(sessionId, state)` - Real-time session updates
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -219,43 +199,3 @@ We welcome contributions to improve Waystone! Here's how you can help:
    - Optimize Firestore queries with proper indexing
    - Implement pagination for large datasets
    - Use React.memo for component optimization
-
-### Getting Help
-
-- Check the in-app Help page for detailed guides
-- Review the FAQ section for common questions
-- Report bugs via GitHub Issues
-- Join our community discussions
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- React team for the excellent framework
-- Firebase for the backend services
-- D&D community for inspiration and feedback
-- All contributors who help improve Waystone
-
-## 🌟 Roadmap
-
-### Upcoming Features
-- [ ] Voice chat integration for live sessions
-- [ ] Advanced dice rolling mechanics
-- [ ] Campaign templates and starter modules
-- [ ] Mobile app companion
-- [ ] Integration with popular D&D tools (D&D Beyond, Roll20)
-- [ ] Automated combat tracking and initiative system
-- [ ] Rich text editor for campaign descriptions
-- [ ] Image gallery for campaign assets
-
-### Version History
-- **v1.0.0** - Initial release with core campaign management
-- **v1.1.0** - Added battle maps and real-time sessions
-- **v1.2.0** - Enhanced character creation and management
-- **v2.0.0** - Planned major update with advanced features
-
----
-
-**Built with ❤️ for the D&D community**
