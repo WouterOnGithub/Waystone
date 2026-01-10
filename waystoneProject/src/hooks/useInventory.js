@@ -28,7 +28,6 @@ export function useInventory(ownerId, campaignId, userId, tokenType) {
         const invData = snapshot.docs.map((docSnap) => {
           const data = docSnap.data();
 
-          // 🔥 JUISTE STRUCTUUR
           const slotsArray = Object.entries(data)
             .filter(([key]) => key.startsWith("Slot"))
             .map(([key, value]) => ({
