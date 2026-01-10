@@ -58,41 +58,43 @@ export function usePlayerInventory(userId, campaignId, playerId) {
 
   // Add item
   const addItem = (itemId) => {
-    setInventory(prev => {
-      const copy = [...prev];
-      // eerst kijken of item al bestaat in een slot
-      const index = copy.findIndex(s => s.ItemID === itemId);
-      if (index !== -1) {
-        copy[index].Amount += 1;
+  setInventory(prev => {
+    const copy = prev.map(s => ({ ...s })); // maak een diepe kopie van slots
+    const index = copy.findIndex(s => s.ItemID === itemId);
+
+    if (index !== -1) {
+      // Item bestaat al, verhoog veilig met 1
+      copy[index] = { ...copy[index], Amount: copy[index].Amount + 1 };
+    } else {
+      const emptyIndex = copy.findIndex(s => !s.ItemID || s.Amount === 0);
+      if (emptyIndex !== -1) {
+        copy[emptyIndex] = { ...copy[emptyIndex], ItemID: itemId, Amount: 1 };
       } else {
-        // eerste lege slot zoeken
-        const emptyIndex = copy.findIndex(s => !s.ItemID || s.Amount === 0);
-        if (emptyIndex !== -1) {
-          copy[emptyIndex] = { ...copy[emptyIndex], ItemID: itemId, Amount: 1 };
-        } else {
-          // fallback: push naar het einde
-          copy.push({ slotKey: `Slot${copy.length + 1}`, ItemID: itemId, Amount: 1 });
-        }
+        copy.push({ slotKey: `Slot${copy.length + 1}`, ItemID: itemId, Amount: 1 });
       }
-      return copy;
-    });
+    }
+
+    return copy;
+  });
   };
+
 
   // Remove item
   const removeItem = (slotKey) => {
-    setInventory(prev => {
-      const copy = [...prev];
-      const index = copy.findIndex(s => s.slotKey === slotKey);
-      if (index !== -1) {
-        if (copy[index].Amount > 1) {
-          copy[index].Amount -= 1;
-        } else {
-          copy[index] = { ...copy[index], ItemID: "", Amount: 0 };
-        }
+  setInventory(prev => {
+    const copy = prev.map(s => ({ ...s })); // maak een diepe kopie van alle slots
+    const index = copy.findIndex(s => s.slotKey === slotKey);
+    if (index !== -1) {
+      if (copy[index].Amount > 1) {
+        copy[index] = { ...copy[index], Amount: copy[index].Amount - 1 }; // nieuwe kopie met verlaagde Amount
+      } else {
+        copy[index] = { ...copy[index], ItemID: "", Amount: 0 }; // leeg slot
       }
-      return copy;
-    });
+    }
+    return copy;
+  });
   };
+
 
   return { inventory, loading, saveInventory, addItem, removeItem, setInventory };
 }
