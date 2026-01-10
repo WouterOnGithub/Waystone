@@ -24,14 +24,16 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
 
   return (
     
-    <div className="battlemap-page" style={{ display: "flex", gap: "10px" }}>
-      <BattleMap
-        userId={userId}
-        campaignId={campaignId}
-        mapId={mapId}
-        draggedToken={draggedToken}
-        setDraggedToken={setDraggedToken}
-      />
+    <div className="battlemap-page" style={{ display: "flex", justifyContent: "center", gap: "10px", width: "100%" }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <BattleMap
+          userId={userId}
+          campaignId={campaignId}
+          mapId={mapId}
+          draggedToken={draggedToken}
+          setDraggedToken={setDraggedToken}
+        />
+      </div>
       <TokenSidebar
          players={availablePlayers}
         enemies = {enemies}

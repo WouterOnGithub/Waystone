@@ -46,3 +46,12 @@
   margin: 2px 0;
   font-size: 0.875rem;
 }
+
+#delete-button,
+#button-green,
+#button-blue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

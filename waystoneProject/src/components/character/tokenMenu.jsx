@@ -36,11 +36,15 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   const [showHealField, setShowHealField] = useState(false);
   const [healAmount, setHealAmount] = useState("");
 
-  let left = position.x + cellSize + 5;
-  const top = position.y;
+  // Calculate position relative to viewport
+  const menuElement = document.querySelector('.battlemap-wrapper');
+  const mapRect = menuElement ? menuElement.getBoundingClientRect() : { left: 0, top: 0 };
+  
+  let left = mapRect.left + position.x + cellSize + 5;
+  const top = mapRect.top + position.y;
   const menuWidth = showInventory ? expandedWidth : defaultWidth;
   const viewportWidth = window.innerWidth;
-  if (left + menuWidth > viewportWidth) left = position.x - menuWidth - 5;
+  if (left + menuWidth > viewportWidth) left = mapRect.left + position.x - menuWidth - 5;
 
   console.log("TokenMenu data:", data);
   console.log("Inventories raw:", inventories);
@@ -135,29 +139,29 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
           <p>AC: {data.armorKlassen}</p>
           <p>Race: {data.tokenType}</p>
 
-          <div style={{ display: "flex", gap: "10px", margin: "5px 0" }}>
-            <button onClick={() => { setShowDamageField(prev => !prev); setShowHealField(false); }}>Damage</button>
-            <button onClick={() => { setShowHealField(prev => !prev); setShowDamageField(false); }}>Heal</button>
+          <div style={{ display: "flex" }}>
+            <button id="delete-button" onClick={() => { setShowDamageField(prev => !prev); setShowHealField(false); }}>Damage</button>
+            <button id="button-green" onClick={() => { setShowHealField(prev => !prev); setShowDamageField(false); }}>Heal</button>
           </div>
 
           <div style={{ marginTop: "5px", display: "flex", gap: "5px" }}>
             {showDamageField && (
               <>
                 <input type="number" placeholder="Amount" value={damageAmount} onChange={e => setDamageAmount(e.target.value)} style={{ width: "60px" }} />
-                <button onClick={handleDamage}>Confirm</button>
+                <button id="button-green" onClick={handleDamage}>Confirm</button>
               </>
             )}
             {showHealField && (
               <>
                 <input type="number" placeholder="Amount" value={healAmount} onChange={e => setHealAmount(e.target.value)} style={{ width: "60px" }} />
-                <button onClick={handleHeal}>Confirm</button>
+                <button id="button-green" onClick={handleHeal}>Confirm</button>
               </>
             )}
           </div>
         </>
       )}
 
-      <button onClick={() => setShowInventory(prev => !prev)} style={{ margin: "5px 0", padding: "5px 10px" }}>
+      <button id="button-blue" onClick={() => setShowInventory(prev => !prev)} style={{ margin: "5px 0", padding: "5px 10px" }}>
         {showInventory ? "Sluit Inventory" : "Open Inventory"}
       </button>
 
@@ -203,8 +207,8 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
         </div>
       )}
 
-      <button onClick={handleDeleteToken}>remove from board</button>
-      <button onClick={onClose}>close</button>
+      <button id="delete-button" onClick={handleDeleteToken}>remove from board</button>
+      <button id="button-blue" onClick={onClose}>close</button>
     </div>,
     document.body
   );
