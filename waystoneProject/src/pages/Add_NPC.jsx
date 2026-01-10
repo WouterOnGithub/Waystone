@@ -79,11 +79,11 @@ function Add_NPC()
     // Features
     classFeatures: [
       { name: "Feature", bonus: "+3", description: "" },
-      { name: "Feature", bonus: "+2", description: "Long description" }
+      { name: "Feature", bonus: "+2", description: "" }
     ],
     backgroundFeatures: [
       { name: "Feature", bonus: "+2", description: "" },
-      { name: "Feature", bonus: "+2", description: "Long description" }
+      { name: "Feature", bonus: "+2", description: "" }
     ],
     racialTraits: "Darkvision, Ability Boost, Attack Bonus",
     racialSpeed: "+4",
@@ -604,15 +604,19 @@ function Add_NPC()
                 <div key={index} className="character-row">
                   <span>{feature.name}: {feature.bonus}</span>
                   <div>
-                    <button id="button-gray">{feature.description + " "}ⓘ</button>
-                    <button id="button-gray">delete</button>
+                    <button id="button-blue">{feature.description + " "}ⓘ</button>
+                    <button id="delete-button" onClick={() => {
+                        const updatedFeatures = [...characterData.classFeatures];
+                        updatedFeatures.splice(index, 1);
+                        setCharacterData({...characterData, classFeatures: updatedFeatures});
+                      }}>delete</button>
                   </div>
 
                 </div>
 
               ))}
 
-            <button id="button-gray" onClick={() => addFeature('classFeatures')}>add feature</button>
+            <button id="button-blue" onClick={() => addFeature('classFeatures')}>add feature</button>
           </div>
 
             {/* The background features */}
@@ -625,15 +629,19 @@ function Add_NPC()
                   <div key={index} className="character-row">
                     <span>{feature.name}: {feature.bonus}</span>
                     <div>
-                      <button id="button-gray">{feature.description + " "}ⓘ</button>
-                      <button id="button-gray">delete</button>
+                      <button id="button-blue">{feature.description + " "}ⓘ</button>
+                      <button id="delete-button" onClick={() => {
+                        const updatedFeatures = [...characterData.backgroundFeatures];
+                        updatedFeatures.splice(index, 1);
+                        setCharacterData({...characterData, backgroundFeatures: updatedFeatures});
+                      }}>delete</button>
                     </div>
-
+                    
                   </div>
 
                 ))}
                 
-              <button id="button-gray" onClick={() => addFeature('backgroundFeatures')}>add feature</button>
+              <button id="button-blue" onClick={() => addFeature('backgroundFeatures')}>add feature</button>
             </div>
 
             {/* The racial traits */}
@@ -662,12 +670,16 @@ function Add_NPC()
 
                   <div key={index} className="character-row">
                     <span>{spell.name}: {spell.level} lvl {spell.concentration ? '[ Concentration ]' : ''}</span>
-                    <button id="button-gray">delete</button>
+                    <button id="delete-button" onClick={() => {
+                      const updatedSpells = [...characterData.knownSpells];
+                      updatedSpells.splice(index, 1);
+                      setCharacterData({...characterData, knownSpells: updatedSpells});
+                    }}>delete</button>
                   </div>
 
                 ))}
                 
-              <button id="button-gray" onClick={addSpell}>Add Spell +</button>
+              <button id="button-green" onClick={addSpell}>Add Spell +</button>
             </div>
 
             {/* The personality & story */}
@@ -721,12 +733,16 @@ function Add_NPC()
 
                   <div key={index} className="character-row">
                     <span>{trait.name}: {trait.bonus}</span>
-                    <button id="button-gray">delete</button>
+                    <button id="delete-button" onClick={() => {
+                      const updatedTraits = [...characterData.personalTraits];
+                      updatedTraits.splice(index, 1);
+                      setCharacterData({...characterData, personalTraits: updatedTraits});
+                    }}>delete</button>
                   </div>
 
                 ))}
               </div>
-              <button id="button-gray" onClick={addTrait}>add trait</button>
+              <button id="button-green" onClick={addTrait}>add trait</button>
             </div>
 
             <div className="campaign-actions">
@@ -735,7 +751,7 @@ function Add_NPC()
               </button>
               <button id="button-gray" onClick={handleCancel}>Cancel</button>
               {npcId && (
-                  <button id="button-gray" onClick={handleDeleteNPC}>Delete</button>
+                  <button id="delete-button" onClick={handleDeleteNPC}>Delete</button>
                 )}
               {message && (
                 <>

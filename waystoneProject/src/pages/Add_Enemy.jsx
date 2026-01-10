@@ -78,11 +78,11 @@ function Add_Enemy()
     // Features
     classFeatures: [
       { name: "Feature", bonus: "+3", description: "" },
-      { name: "Feature", bonus: "+2", description: "Long description" }
+      { name: "Feature", bonus: "+2", description: "" }
     ],
     backgroundFeatures: [
       { name: "Feature", bonus: "+2", description: "" },
-      { name: "Feature", bonus: "+2", description: "Long description" }
+      { name: "Feature", bonus: "+2", description: "" }
     ],
     racialTraits: "",
     racialSpeed: "+4",
@@ -589,15 +589,19 @@ function Add_Enemy()
                 <div key={index} className="character-row">
                   <span>{feature.name}: {feature.bonus}</span>
                   <div>
-                      <button id="button-gray">{feature.description + " "}ⓘ</button>
-                      <button id="button-gray">delete</button>
+                      <button id="button-blue">{feature.description + " "}ⓘ</button>
+                      <button id="delete-button" onClick={() => {
+                        const updatedFeatures = [...characterData.classFeatures];
+                        updatedFeatures.splice(index, 1);
+                        setCharacterData({...characterData, classFeatures: updatedFeatures});
+                      }}>delete</button>
                     </div>
                 
                 </div>
 
               ))}
                 
-            <button id="button-gray" onClick={() => addFeature('classFeatures')}>add feature</button>
+            <button id="button-blue" onClick={() => addFeature('classFeatures')}>add feature</button>
           </div>
 
             {/* The background features */}
@@ -610,15 +614,19 @@ function Add_Enemy()
                 <div key={index} className="character-row">
                   <span>{feature.name}: {feature.bonus}</span>
                   <div>
-                    <button id="button-gray">{feature.description + " "}ⓘ</button>
-                    <button id="button-gray">delete</button>
+                    <button id="button-blue">{feature.description + " "}ⓘ</button>
+                    <button id="delete-button" onClick={() => {
+                        const updatedFeatures = [...characterData.backgroundFeatures];
+                        updatedFeatures.splice(index, 1);
+                        setCharacterData({...characterData, backgroundFeatures: updatedFeatures});
+                      }}>delete</button>
                   </div>
 
                 </div>
 
               ))}
 
-              <button id="button-gray" onClick={() => addFeature('backgroundFeatures')}>add feature</button>
+              <button id="button-blue" onClick={() => addFeature('backgroundFeatures')}>add feature</button>
             </div>
 
             {/* The racial traits */}
@@ -647,12 +655,16 @@ function Add_Enemy()
                 
                 <div key={index} className="character-row">
                   <span>{spell.name}: {spell.level} Level {spell.concentration ? '[ Concentration ]' : ''}</span>
-                  <button id="button-gray">delete</button>
+                  <button id="delete-button" onClick={() => {
+                    const updatedSpells = [...characterData.knownSpells];
+                    updatedSpells.splice(index, 1);
+                    setCharacterData({...characterData, knownSpells: updatedSpells});
+                  }}>delete</button>
                 </div>
 
               ))}
 
-            <button id="button-gray" onClick={addSpell}>add spell +</button>
+            <button id="button-blue" onClick={addSpell}>add spell +</button>
           </div>
 
           {/* The personality & story */}
@@ -706,21 +718,25 @@ function Add_Enemy()
                  
                  <div key={index} className="character-row">
                   <span>{trait.name}: {trait.bonus}</span>
-                  <button id="button-gray">delete</button>
+                  <button id="delete-button" onClick={() => {
+                    const updatedTraits = [...characterData.personalTraits];
+                    updatedTraits.splice(index, 1);
+                    setCharacterData({...characterData, personalTraits: updatedTraits});
+                  }}>delete</button>
                 </div>
 
               ))}
             </div>
-            <button id="button-gray" onClick={addTrait}>add trait</button>
+            <button id="button-blue" onClick={addTrait}>add trait</button>
           </div>
 
           <div className="campaign-actions">
-            <button id="button-green" onClick={handleSaveCharacter} disabled={saving}>
+            <button id="button-blue" onClick={handleSaveCharacter} disabled={saving}>
               {saving ? "Saving..." : "Save"}
             </button>
             <button id="button-gray" onClick={() => navigate(`/user/New_Campaign_Page_CHARACTERS/${campaignId}`)}>Cancel</button>
            {enemyId && (
-                  <button id="button-gray" onClick={handleDeleteEnemy}>Delete</button>
+                  <button id="delete-button" onClick={handleDeleteEnemy}>Delete</button>
                 )}
            {message && (
                 <>

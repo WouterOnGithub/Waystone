@@ -163,11 +163,11 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
       )}
 
       <button id="button-blue" onClick={() => setShowInventory(prev => !prev)} style={{ margin: "5px 0", padding: "5px 10px" }}>
-        {showInventory ? "Sluit Inventory" : "Open Inventory"}
+        {showInventory ? "Close Inventory" : "Open Inventory"}
       </button>
 
       {!isContainer && showInventory && (
-        <button
+        <button id="button-green"
           onClick={() => setShowAddPlayerInventory(true)}
           style={{ margin: "5px 0", padding: "5px 10px" }}
         >
@@ -178,7 +178,7 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
 
       {isContainer && showInventory && (
         <>
-          <button
+          <button id="button-green"
             onClick={() => setShowAddContainer(true)}
             style={{ margin: "5px 0", padding: "5px 10px" }}
           >
@@ -204,7 +204,7 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
                 <div>
                   <strong>{slot.name}</strong> x{slot.Amount} | Value: {slot.value} | Weight: {slot.weight}
                 </div>
-                <button onClick={() => setExpandedItems(prev => ({ ...prev, [slot.slotKey]: !prev[slot.slotKey] }))}>
+                <button id="button-blue" onClick={() => setExpandedItems(prev => ({ ...prev, [slot.slotKey]: !prev[slot.slotKey] }))} style={{ margin: "5px 0", padding: "5px 10px", minWidth: "120px", width: "120px" }}>
                   {expandedItems[slot.slotKey] ? "Hide Description" : "Show Description"}
                 </button>
               </div>

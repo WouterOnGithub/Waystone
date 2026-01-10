@@ -83,11 +83,11 @@ function Add_Character()
       // Features
       classFeatures: [
         { name: "Feature", bonus: "+3", description: "" },
-        { name: "Feature", bonus: "+2", description: "Long description" }
+        { name: "Feature", bonus: "+2", description: "" }
       ],
       backgroundFeatures: [
         { name: "Feature", bonus: "+2", description: "" },
-        { name: "Feature", bonus: "+2", description: "Long description" }
+        { name: "Feature", bonus: "+2", description: "" }
       ],
       racialTraits: "Darkvision, Ability Boost, Attack Bonus",
       
@@ -337,12 +337,12 @@ function Add_Character()
           <div id="campaign-tabs">
 
             {/* The campaign button */}
-            <button id="campaign-tab">
+            <button id="campaign-tab" onClick={() => navigate(`/user/New_Campaign_Page_CAMPAIGN/${campaignId}`)}>
               Campaign
             </button>
 
             {/* The map builder button */}
-            <button id="campaign-tab">
+            <button id="campaign-tab" onClick={() => navigate(`/user/Map_Main/${campaignId}`)}>
               Map Builder
             </button>
 
@@ -541,16 +541,16 @@ function Add_Character()
                 <div className="character-base-stat">
                   <b>Current HP</b>
                   <input type="number" 
-                         value={characterData.currentHP}
-                         onChange={(e) => handleInputChange('currentHP', e.target.value)}
+                         value={characterData.HpCurrent}
+                         onChange={(e) => handleInputChange('HpCurrent', e.target.value)}
                   />
                 </div>
 
                 <div className="character-base-stat">
                   <b>Max HP</b>
                   <input type="number" 
-                         value={characterData.maxHP}
-                         onChange={(e) => handleInputChange('maxHP', e.target.value)}
+                         value={characterData.HpMax}
+                         onChange={(e) => handleInputChange('HpMax', e.target.value)}
                   />
                 </div>
               </div>
@@ -613,15 +613,19 @@ function Add_Character()
                   <div key={index} className="character-row">
                     <span>{feature.name}: {feature.bonus}</span>
                     <div>
-                      <button id="button-gray">{feature.description + " "}ⓘ</button>
-                      <button id="button-gray">delete</button>
+                      <button id="button-blue">{feature.description + " "}ⓘ</button>
+                      <button id="delete-button" onClick={() => {
+                        const updatedFeatures = [...characterData.classFeatures];
+                        updatedFeatures.splice(index, 1);
+                        setCharacterData({...characterData, classFeatures: updatedFeatures});
+                      }}>delete</button>
                     </div>
                     
                   </div>
 
                 ))}
 
-              <button id="button-gray" onClick={() => addFeature('classFeatures')}>add feature</button>
+              <button id="button-green" onClick={() => addFeature('classFeatures')}>add feature</button>
             </div>
 
             {/* The background features */}
@@ -634,15 +638,19 @@ function Add_Character()
                   <div key={index} className="character-row">
                     <span>{feature.name}: {feature.bonus}</span>
                     <div>
-                      <button id="button-gray">{feature.description + " "}ⓘ</button>
-                      <button id="button-gray">delete</button>
+                      <button id="button-blue">{feature.description + " "}ⓘ</button>
+                      <button id="delete-button" onClick={() => {
+                        const updatedFeatures = [...characterData.backgroundFeatures];
+                        updatedFeatures.splice(index, 1);
+                        setCharacterData({...characterData, backgroundFeatures: updatedFeatures});
+                      }}>delete</button>
                     </div>
                     
                   </div>
 
                 ))}
 
-              <button id="button-gray" onClick={() => addFeature('backgroundFeatures')}>add feature</button>
+              <button id="button-green" onClick={() => addFeature('backgroundFeatures')}>add feature</button>
             </div>
 
             {/* The racial traits */}
@@ -671,12 +679,16 @@ function Add_Character()
 
                   <div key={index} className="character-row">
                     <span>{spell.name}: {spell.level} lvl {spell.concentration ? '[ Concentration ]' : ''}</span>
-                    <button id="button-gray">delete</button>
+                    <button id="delete-button" onClick={() => {
+                      const updatedSpells = [...characterData.knownSpells];
+                      updatedSpells.splice(index, 1);
+                      setCharacterData({...characterData, knownSpells: updatedSpells});
+                    }}>delete</button>
                   </div>
 
                 ))}
 
-              <button id="button-gray" onClick={addSpell}>add spell</button>
+              <button id="button-green" onClick={addSpell}>add spell</button>
             </div>
 
             {/* The personality & story */}
@@ -730,12 +742,16 @@ function Add_Character()
 
                   <div key={index} className="character-row">
                     <span>{trait.name}: {trait.bonus}</span>
-                    <button id="button-gray">delete</button>
+                    <button id="delete-button" onClick={() => {
+                      const updatedTraits = [...characterData.personalTraits];
+                      updatedTraits.splice(index, 1);
+                      setCharacterData({...characterData, personalTraits: updatedTraits});
+                    }}>delete</button>
                   </div>
 
                 ))}
               </div>
-              <button id="button-gray" onClick={addTrait}>add trait</button>
+              <button id="button-green" onClick={addTrait}>add trait</button>
             </div>
 
             <div className="campaign-actions">
@@ -743,7 +759,7 @@ function Add_Character()
                 {saving ? "Saving..." : "Save"}
               </button>
               <button id="button-gray" onClick={handleCancel}>Cancel</button>
-              <button id="button-gray" onClick={handleDeletePlayer}>Delete</button>
+              <button id="delete-button" onClick={handleDeletePlayer}>Delete</button>
               {message && (
                 <>
                   <br />
