@@ -1,4 +1,4 @@
-import { doc, deleteDoc, setDoc, runTransaction } from "firebase/firestore";
+import { doc, runTransaction } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 export const moveToken = async (

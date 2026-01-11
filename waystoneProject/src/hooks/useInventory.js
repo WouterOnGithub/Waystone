@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
-import { collection, getDocs , onSnapshot} from "firebase/firestore";
+import { collection, onSnapshot} from "firebase/firestore";
 
 
 export function useInventory(ownerId, campaignId, userId, tokenType) {

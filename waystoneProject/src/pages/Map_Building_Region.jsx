@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { useAuth } from "../context/AuthContext";
-import { getCampaign, getBuildingsRegions, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, getEvents, updateSessionBattleMap } from "../api/userCampaigns";
-import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
+import { getCampaign, getBuildingsRegions, createSession, deleteSession, updateSessionHeartbeat, getEvents, updateSessionBattleMap } from "../api/userCampaigns";
+import { getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Building_Region() {
   const { campaignId, buildingId } = useParams();

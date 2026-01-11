@@ -24,7 +24,6 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   const tokenTypeLower = data.tokenType?.toLowerCase() || "";
   const isContainer = tokenTypeLower === "container";
   const isPlayer = tokenTypeLower === "player";
-  const isNpc = !isContainer && !isPlayer;
 
   const updateHp = useUpdateHp(userId, campaignId, data?.tokenType, data?.id);
   const inventories = useInventory(data.id, campaignId, userId, data.tokenType);

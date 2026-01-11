@@ -16,8 +16,6 @@ export default function BattleMapWithSidebar({ userId, campaignId, mapId }) {
   const npcs = useEntitiesByType(userId, campaignId, "npc",cellsData);
   const containers = useContainers(userId, campaignId, cellsData);
 
-  const tokenIdsOnMap = new Set(Object.values(cellsData || {}).map(cell => cell.tokenId).filter(Boolean));
-
   const handleDragStart = (player) => {
   setDraggedToken({ tokenId: player.tokenId});
 };

@@ -9,15 +9,6 @@ import Footer from "../components/UI/Footer";
 import Sidebar from "../components/UI/Sidebar";
 import CampaignBox from "../components/CampaignBox";
 
-// Static dummy data for free campaigns (kept as-is)
-const freeCampaignSection = {
-  title: "Free Campaigns",
-  items: [
-    { name: "Project__Name", color: "#E7D665" },
-    { name: "Project__Name", color: "#447DC9" },
-  ],
-};
-
 // Helper to normalise Firestore / ISO dates
 const getCampaignSortDate = (campaign) => {
   const value = campaign.lastUpdatedAt || campaign.createdAt || null;
@@ -104,7 +95,7 @@ function My_Campaigns_Page()
     }
   };
 
-  const handleUnarchiveCampaign = async (campaignId, campaignName) => {
+  const handleUnarchiveCampaign = async (campaignId) => {
     if (!campaignId || !user?.uid) return;
     
     try {

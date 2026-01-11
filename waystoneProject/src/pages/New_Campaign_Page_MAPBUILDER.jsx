@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { createRoot } from "react-dom/client";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { updateCampaignInfo, getLocations, getBuildingsRegions, createBuildingRegion, updateBuildingRegion, deleteBuildingRegion, getContainers, getCampaign, updateContainer, deleteContainer, getEvents, deleteEvent } from "../api/userCampaigns";
+import { useUserId } from "../hooks/useUserId";
+import { updateCampaignInfo, getLocations, getBuildingsRegions, deleteBuildingRegion, getContainers, getCampaign, deleteContainer, getEvents, deleteEvent, deleteLocation } from "../api/userCampaigns";
 import { useCampaign } from "../hooks/useCampaign";
 import "./pages-css/CSS.css";
 import "./pages-css/Main_Page.css";
@@ -19,11 +18,10 @@ function New_Campaign_Page_MAPBUILDER()
 {
   const { campaignId } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const userId = user?.uid || null;
+  const userId = useUserId();
   
   const isNewCampaign = !campaignId;
-  const { data, loading, error } = useCampaign(
+  const { data } = useCampaign(
     userId,
     campaignId
   );
@@ -50,7 +48,6 @@ function New_Campaign_Page_MAPBUILDER()
   const [editingContainer, setEditingContainer] = useState(null);
   const [editingEvent, setEditingEvent] = useState(null);
   const [selectedLocationId, setSelectedLocationId] = useState(null);
-  const [mapId, setMapId] = useState("main"); // Default map ID for the main map
   const [locations, setLocations] = useState([]);
   const [showLocations, setShowLocations] = useState(false);
   const [buildings, setBuildings] = useState([]);
@@ -155,75 +152,6 @@ function New_Campaign_Page_MAPBUILDER()
       }
     };
   }, [previewUrl]);
-
-  const openPopup = (Component, title, componentProps = {}) => {
-    // Generate unique window name to avoid conflicts
-    const windowName = `${title.replace(/\s+/g, '_')}_${Date.now()}`;
-    const popup = window.open("", windowName, "width=900,height=1000,scrollbars=yes,resizable=yes");
-    if (!popup) {
-        console.error("Popup blocked or failed to open");
-        alert("Please allow popups for this site to open the form");
-        return;
-    }
-    console.log("Popup opened successfully:", windowName);
-
-    // Copy styles from the main document
-    const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'));
-    let styleContent = '';
-    styles.forEach((node) => {
-      if (node.tagName === 'STYLE') {
-        styleContent += node.textContent;
-      } else if (node.tagName === 'LINK' && node.href) {
-        styleContent += `@import url('${node.href}');\n`;
-      }
-    });
-
-    // Write the HTML structure directly with embedded styles
-    popup.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>${title}</title>
-          <meta charset="utf-8">
-          <style>
-            /* CSS reset for popup only */
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            html, body { width: 100%; height: 100%; overflow: auto; }
-            body { font-family: Arial, sans-serif; }
-            
-            /* Main application styles */
-            ${styleContent}
-          </style>
-        </head>
-        <body>
-          <div id="popup-root" style="width: 100%; height: 100%;"></div>
-        </body>
-      </html>
-    `);
-    popup.document.close();
-
-    // Wait a moment for the document to be ready
-    setTimeout(() => {
-      try {
-        const container = popup.document.getElementById("popup-root");
-        if (container) {
-          console.log("Container found, rendering React component");
-          const root = createRoot(container);
-          root.render(
-            <Component
-              {...componentProps}
-              baseUrl={window.location.origin}
-            />
-          );
-          console.log("React component rendered successfully");
-        } else {
-          console.error("Container not found in popup");
-        }
-      } catch (error) {
-        console.error("Error rendering React component in popup:", error);
-      }
-    }, 100);
-  };
 
   const resizeImage = (file, maxWidth, maxHeight) => {
     return new Promise((resolve) => {

@@ -1,16 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import BattleMap from "../components/map/battleMap";
 import { getSession, subscribeToSessionStatus } from "../api/userCampaigns";
-import { useAuth } from "../context/AuthContext";
 import DiceRoller from "../components/map/diceRoller";
 import TurnPanel from "../components/turn/TurnPanel";
 
 function Map_Battle_View_Player() {
   const { sessionCode } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const userId = user?.uid || null;
   
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(true);

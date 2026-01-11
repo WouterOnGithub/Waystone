@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 /* IMPORTS OF ALL THE PAGES OF THE WEBSITE */

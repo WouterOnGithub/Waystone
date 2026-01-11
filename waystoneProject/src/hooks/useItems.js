@@ -8,11 +8,9 @@ import { collection, getDocs } from "firebase/firestore";
  */
 export function useItems(userId, campaignId ) {
   const [items, setItems] = useState({});
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchItems = async () => {
-      setLoading(true);
       try {
         const itemsColRef = collection(db, "Users", userId, "Campaigns", campaignId, "Items");
         const snapshot = await getDocs(itemsColRef);
@@ -26,13 +24,11 @@ export function useItems(userId, campaignId ) {
       } catch (error) {
         console.error("Fout bij ophalen items:", error);
         setItems({});
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchItems();
-  }, []);
+  }, [userId, campaignId]);
 
-  return items; // je kan ook { items, loading } teruggeven als je een loader wilt
+  return items;
 }

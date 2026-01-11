@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { getPlayersByCampaign } from "../../api/players";
 import { getEntitiesByType } from "../../api/npcs";
 import { rollDie } from "../../services/diceRolls"
 import "./initiativePopup.css";
 
-function InitiativePopup({userId, campaignId, mapId, onConfirm, mapCells , onClose }) {
+function InitiativePopup({userId, campaignId, mapId, mapCells , onClose }) {
     const [initiativeData, setInitiativeData] = useState([]);
     const [loading, setLoading] = useState(true);
 

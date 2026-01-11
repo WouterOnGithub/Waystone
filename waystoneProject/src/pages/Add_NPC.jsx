@@ -1,9 +1,8 @@
 import React, { useState , useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { addNPC, getEntityById, updateEntity,deleteEntityAndSubCollections } from "../api/npcs";
-import { db } from "../firebase/firebase";
+import { db, doc } from "../firebase/firebase";
 import { useAuth } from "../context/AuthContext";
-import { setDoc } from "firebase/firestore";
 import { handleImageUpload, resolveImageUrl } from "../utils/imageUpload.js";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
@@ -107,7 +106,7 @@ function Add_NPC()
           setCharacterData(prev => ({...prev, ...existingNPC}));
           setImagePreview(resolveImageUrl(existingNPC?.imageUrl || null));
         }catch(err){
-          console.log('Error fetching npc')
+          console.log('Error fetching npc:', err);
         } 
       };
       fetchNPC();

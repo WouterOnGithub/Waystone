@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
 import { getSession, subscribeToSessionStatus } from "../api/userCampaigns";
-import { useAuth } from "../context/AuthContext";
 
 function Map_Main_Player() {
   const { sessionCode } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const userId = user?.uid || null;
   
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -126,10 +123,6 @@ function Map_Main_Player() {
       clearTimeout(timer);
     };
   }, [sessionCode, navigate]);
-
-  const handleBack = () => {
-    navigate("/user/Join_Session");
-  };
 
   return (
     <div className="full-page">

@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getSession, subscribeToSessionStatus } from "../api/userCampaigns";
-import { useAuth } from "../context/AuthContext";
 import { getLocations } from "../api/userCampaigns";
 
 function Map_Location_Player() {
   const { sessionCode } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const userId = user?.uid || null;
   
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -124,10 +121,6 @@ function Map_Location_Player() {
       unsubscribe();
     };
   }, [sessionCode, navigate]);
-
-  const handleBack = () => {
-    navigate(`/user/Map_Main_Player/${sessionCode}`);
-  };
 
   return (
     <div className="full-page">

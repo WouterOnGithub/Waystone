@@ -13,22 +13,6 @@ import {
   where,
 } from "firebase/firestore";
 
-
-
-async function parseJson(res, fallbackMessage) {
-    console.log("parseJson called, response status:", res.status); // debug
-
-    if (!res.ok) {
-        const text = await res.text();
-       console.error("API response not ok:", text);
-        throw new Error(text || fallbackMessage);
-    } 
-
-    const json = await res.json();
-    console.log("API response json:", json); // debug: show returned data
-    return json;
-}
-
 //create new campaign (campaign subtab)
 export const createCampaign = async (userId, campaignData) => {
   if (!campaignData.name) {

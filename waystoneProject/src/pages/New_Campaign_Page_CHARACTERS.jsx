@@ -1,18 +1,17 @@
   import React, { useState, useEffect } from "react";
-  import { useNavigate, useParams } from "react-router-dom";
-  import { db } from "../firebase/firebase";
-  import { doc } from "firebase/firestore";
-  import { useAuth } from "../context/AuthContext.jsx";
-  import { getPlayersByCampaign, deletePlayerAndSubCollections } from "../api/players";
-  import { getEntitiesByType, deleteEntityAndSubCollections } from "../api/npcs";
-  import { useCampaign } from "../hooks/useCampaign";
-  import { getCampaign } from "../api/userCampaigns";
-  import "./pages-css/CSS.css";
-  import "./pages-css/Main_Page.css";
-  import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
-  import Footer from "../components/UI/Footer";
-  import Header from "../components/UI/Header";
-  import Sidebar from "../components/UI/Sidebar";
+import { useNavigate, useParams } from "react-router-dom";
+import { db } from "../firebase/firebase";
+import { doc } from "firebase/firestore";
+import { useAuth } from "../context/AuthContext.jsx";
+import { getPlayersByCampaign, deletePlayerAndSubCollections } from "../api/players";
+import { getEntitiesByType, deleteEntityAndSubCollections } from "../api/npcs";
+import { useCampaign } from "../hooks/useCampaign";
+import "./pages-css/CSS.css";
+import "./pages-css/Main_Page.css";
+import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
+import Footer from "../components/UI/Footer";
+import Header from "../components/UI/Header";
+import Sidebar from "../components/UI/Sidebar";
 
   function New_Campaign_Page_CHARACTERS() 
   {
@@ -22,7 +21,7 @@
     const userId = user ? user.uid : null;
     
     const isNewCampaign = !campaignId;
-    const { data, loading, error, setData } = useCampaign(
+    const { data } = useCampaign(
       isNewCampaign? null : userId, 
       isNewCampaign? null : campaignId
     );

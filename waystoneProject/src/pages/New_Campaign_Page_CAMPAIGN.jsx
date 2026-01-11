@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createCampaign, updateCampaignInfo, getItems, deleteItem } from "../api/userCampaigns";
 import { useCampaign } from "../hooks/useCampaign";
-import { useAuth } from "../context/AuthContext";
+import { useUserId } from "../hooks/useUserId";
 import "./pages-css/CSS.css";
 import "./pages-css/New_Campaign_Page_CAMPAIGN.css";
 import Footer from "../components/UI/Footer";
@@ -15,17 +15,10 @@ function New_Campaign_Page_CAMPAIGN()
   const {campaignId} = useParams()
   const navigate = useNavigate();
 
-  const New_Campaign_Page_CAMPAIGN= () => {
-    const isCreateMode = !campaignId;
-    const isEditMode = Boolean(campaignId);
-  };
-  
-
-  const {user} = useAuth();
-  const userId = user ? user.uid : null;
+  const userId = useUserId();
   
   const isNewCampaign = !campaignId;
-  const { data, loading, error, setData } = useCampaign(
+  const { data } = useCampaign(
     isNewCampaign? null : userId, 
     isNewCampaign? null : campaignId
   );
@@ -39,7 +32,6 @@ function New_Campaign_Page_CAMPAIGN()
   const [items, setItems] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
   const formData = isNewCampaign ? draft : data;
-  const setFormData = isNewCampaign ? setDraft : setData;
 
   // Load items for this campaign
   useEffect(() => {
@@ -182,7 +174,7 @@ function New_Campaign_Page_CAMPAIGN()
               <label htmlFor="campaign-name"><b>Campaign Name</b></label><br />
               <input id="campaign-name" placeholder="Enter text here..."
                      value={formData?.name || ""}
-                     onChange={(e) => setFormData({...formData, name: e.target.value})}
+                     onChange={(e) => setDraft({...draft, name: e.target.value})}
               />
             </div>
 
@@ -193,7 +185,7 @@ function New_Campaign_Page_CAMPAIGN()
               <label htmlFor="campaign-genre"><b>Genre / Style</b></label><br />
               <input id="campaign-genre" placeholder="Enter text here..."
                      value={formData?.genre || ""}
-                     onChange={(e) => setFormData({...formData, genre: e.target.value})}
+                     onChange={(e) => setDraft({...draft, genre: e.target.value})}
               />
             </div>
 
@@ -204,7 +196,7 @@ function New_Campaign_Page_CAMPAIGN()
               <label htmlFor="campaign-story"><b>Backstory</b></label><br />
               <textarea id="campaign-story" placeholder={`Enter text here...`}
                         value={formData?.backstory || ""}
-                        onChange={(e) => setFormData({...formData, backstory: e.target.value})}
+                        onChange={(e) => setDraft({...draft, backstory: e.target.value})}
               />
             </div>
 

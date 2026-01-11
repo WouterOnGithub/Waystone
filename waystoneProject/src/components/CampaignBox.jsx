@@ -3,37 +3,18 @@ import { useAuth } from "../context/AuthContext";
 
 const CampaignBox = ({ 
   item, 
-  idx, 
   sectionTitle, 
   onOpenCampaign, 
   onPublishCampaign, 
   onArchiveCampaign,
-  onAddToMyCampaigns,
   onUnarchiveCampaign
 }) => {
   const { user } = useAuth();
   const isFreeCampaign = sectionTitle === "Free Campaigns";
   const isArchivedCampaign = sectionTitle === "Archived Campaigns";
   
-  // Check if this is the user's own campaign that was published to free campaigns
-  const isOwnPublishedCampaign = isFreeCampaign && user?.uid && item.ownerId === user.uid;
-  
   // Check if this is someone else's free campaign
   const isOtherFreeCampaign = isFreeCampaign && user?.uid && item.ownerId !== user.uid;
-  
-  const handleAddToMyCampaigns = async () => {
-    if (!item.id || !user?.uid) return;
-    
-    try {
-      const { copyFreeCampaignToUser } = await import("../api/userCampaigns");
-      await copyFreeCampaignToUser(user.uid, item.id);
-      // Refresh the campaigns list
-      window.location.reload();
-    } catch (error) {
-      console.error("Error adding campaign to my campaigns:", error);
-      alert("Failed to add campaign to your campaigns");
-    }
-  };
   
   return (
     <div className="campaign-box-container">
@@ -66,10 +47,7 @@ const CampaignBox = ({
         {isFreeCampaign ? (
           // Free campaigns logic - hide user's own campaigns
           isOtherFreeCampaign ? (
-            <button
-              onClick={handleAddToMyCampaigns}
-              className="campaign-button add-button"
-            >
+            <button className="campaign-button disabled-button" disabled>
               Add to my campaigns
             </button>
           ) : (
@@ -83,7 +61,7 @@ const CampaignBox = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                onUnarchiveCampaign(item.id, item.name);
+                onUnarchiveCampaign(item.id);
               }}
               className="campaign-button unarchive-button"
             >

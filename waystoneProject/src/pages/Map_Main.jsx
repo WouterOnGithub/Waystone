@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./pages-css/Campaign_Map.css";
-import { useAuth } from "../context/AuthContext";
-import { getCampaign, getLocations, createSession, updateSessionStatus, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, getEvents } from "../api/userCampaigns";
-import { getSharedSessionCode, getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
+import { useUserId } from "../hooks/useUserId";
+import { getCampaign, getLocations, createSession, deleteSession, cleanupInactiveSessions, updateSessionHeartbeat, getEvents, updateSessionBattleMap } from "../api/userCampaigns";
+import { getExistingSessionCode, releaseMapPage, setSessionCleanupCallback, startNewSession, endCurrentSession, isSessionActive } from "../utils/sessionCode";
 
 function Map_Main() {
   const { campaignId } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const userId = user?.uid || null;
+  const userId = useUserId();
   
   const [locationsOpen, setLocationsOpen] = useState(false);
   const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
   const [events, setEvents] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState(null);
   const [campaign, setCampaign] = useState(null);
   const [campaignLocations, setCampaignLocations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -238,15 +236,10 @@ function Map_Main() {
   };
 
   const selectLocation = (location) => {
-    setSelectedLocation(location);
     setLocationsOpen(false);
     if (location) {
       navigate(`/user/Map_Location/${campaignId}/${location.id}`);
     }
-  };
-
-  const handleSaveGame = () => {
-    navigate(`/user/Game_Settings_SAVEGAME/${campaignId}`);
   };
 
   const handleEndSession = () => {
@@ -269,15 +262,6 @@ function Map_Main() {
       const newCode = startNewSession(userId, campaignId);
       setSessionCode(newCode);
       console.log("New session started with code:", newCode);
-    }
-  };
-
-  const handleReturnToMenu = () => {
-    const confirmReturn = window.confirm(
-      "Return to main menu? Any unsaved progress will be lost."
-    );
-    if (confirmReturn) {
-      navigate("Main_Page.jsx");
     }
   };
 

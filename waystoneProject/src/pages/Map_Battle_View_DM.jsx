@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import BattleMap from "../components/map/battleMap";
 import BattleMapWithSidebar from "../components/map/battleMapWithSidebar";
 import { updateSessionBattleMap } from "../api/userCampaigns";
-import { getSharedSessionCode, getExistingSessionCode, isSessionActive } from "../utils/sessionCode";
+import { getExistingSessionCode, isSessionActive } from "../utils/sessionCode";
 import { useAuth } from "../context/AuthContext";
 import "./pages-css/CSS.css"
 import DiceRoller from "../components/map/diceRoller";
