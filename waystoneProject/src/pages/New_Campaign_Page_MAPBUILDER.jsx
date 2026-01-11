@@ -326,7 +326,6 @@ function New_Campaign_Page_MAPBUILDER()
         const uniqueContainers = containerList ? Array.from(
           new Map(containerList.map(container => [container.id, container])).values()
         ) : [];
-        console.log("Loaded unique containers:", uniqueContainers);
         setContainers(uniqueContainers);
       } catch (err) {
         console.error("Failed to load containers:", err);
@@ -363,9 +362,7 @@ function New_Campaign_Page_MAPBUILDER()
     const loadEvents = async () => {
       if (!userId || !campaignId) return;
       try {
-        console.log("Loading events...");
         const eventList = await getEvents(userId, campaignId);
-        console.log("Loaded events:", eventList);
         setEvents(eventList || []);
       } catch (err) {
         console.error("Failed to load events:", err);
@@ -458,7 +455,6 @@ function New_Campaign_Page_MAPBUILDER()
       if (ok) {
         console.log("Delete successful, reloading containers...");
         const containerList = await getContainers(userId, campaignId);
-        console.log("Reloaded containers:", containerList);
         // Deduplicate containers by ID to prevent duplicates
         const uniqueContainers = containerList ? Array.from(
           new Map(containerList.map(container => [container.id, container])).values()
@@ -493,7 +489,6 @@ function New_Campaign_Page_MAPBUILDER()
       if (ok) {
         console.log("Delete successful, reloading events...");
         const eventList = await getEvents(userId, campaignId);
-        console.log("Reloaded events:", eventList);
         setEvents(eventList || []);
       } else {
         console.error("Delete returned false");
@@ -930,7 +925,6 @@ function New_Campaign_Page_MAPBUILDER()
                   if (next && userId && campaignId) {
                     try {
                       const eventList = await getEvents(userId, campaignId);
-                      console.log("Loaded events:", eventList);
                       setEvents(eventList || []);
                     } catch (err) {
                       console.error("Failed to load events:", err);
