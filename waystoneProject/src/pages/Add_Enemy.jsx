@@ -519,16 +519,16 @@ function Add_Enemy()
                 <div className="character-base-stat">
                   <b>Current HP</b>
                   <input type="number" 
-                         value={characterData.currentHP}
-                         onChange={(e) => handleInputChange('currentHP', e.target.value)}
+                         value={characterData.HpCurrent}
+                         onChange={(e) => handleInputChange('HpCurrent', e.target.value)}
                   />
                 </div>
 
                 <div className="character-base-stat">
                   <b>Max HP</b>
                   <input type="number" 
-                         value={characterData.maxHP}
-                         onChange={(e) => handleInputChange('maxHP', e.target.value)}
+                         value={characterData.HpMax}
+                         onChange={(e) => handleInputChange('HpMax', e.target.value)}
                   />
                 </div>
 
