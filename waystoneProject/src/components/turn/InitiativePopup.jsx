@@ -158,7 +158,7 @@ function InitiativePopup({userId, campaignId, mapId, onConfirm, mapCells , onClo
                 <button onClick={() => handleRollInitiative(char.id)}>Roll</button>
                 </div>
             ))}
-        <button onClick={handleConfirm}>Confirm & Save</button>
+        <button className="confirm-button" onClick={handleConfirm}>Confirm & Save</button>
         <button onClick={onClose}>Cancel</button>
         </div>
     </div>

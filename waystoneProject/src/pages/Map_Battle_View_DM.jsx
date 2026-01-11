@@ -105,7 +105,7 @@ function Map_Battle_View_DM() {
           <button
             onClick={() => setShowNavMenu(!showNavMenu)}
             style={{
-              backgroundColor: '#2e3d08',
+              backgroundColor: '#2d1f5c',
               color: 'white',
               border: 'none',
               padding: '10px 15px',
@@ -117,9 +117,7 @@ function Map_Battle_View_DM() {
               gap: '5px'
             }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 12h18m-9-9l9 9-9 9"/>
-            </svg>
+            
             Navigate
           </button>
 
@@ -201,8 +199,15 @@ function Map_Battle_View_DM() {
         
         {/* Dice Roller */}
         <DiceRoller />
-        
-        {/* Turn Panel */}
+      </div>
+      
+      {/* Bottom Left Turn Panel */}
+      <div style={{
+        position: 'absolute',
+        bottom: '20px',
+        left: '20px',
+        zIndex: 1000
+      }}>
         <div className="turn-panel-vertical">
           <TurnPanel userId={userId} campaignId={finalCampaignId} mapId={finalMapId} />
         </div>

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { addEnemy } from "../../api/npcs";
+import "./QuickAddEnemyPopup.css";
 
 export default function QuickAddEnemyPopup({isOpen, onClose, userId, campaignId}) {
     const [imageFile, setImageFile] = useState(null)

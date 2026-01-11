@@ -19,3 +19,28 @@
   max-width: 90vw;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
+
+.initiative-popup input {
+  background-color: white;
+}
+
+.initiative-popup button {
+  width: 90px !important;
+  height: 30px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  margin: 5px !important;
+  background-color: #2d1f5c !important;
+  color: white !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+
+.initiative-popup .confirm-button {
+  width: 130px !important;
+  height: 30px !important;
+}
