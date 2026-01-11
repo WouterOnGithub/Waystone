@@ -76,21 +76,15 @@ function Add_Enemy()
     },
     
     // Features
-    classFeatures: [
-      { name: "Feature", bonus: "+3", description: "" },
-      { name: "Feature", bonus: "+2", description: "" }
+    classFeatures: [  
     ],
     backgroundFeatures: [
-      { name: "Feature", bonus: "+2", description: "" },
-      { name: "Feature", bonus: "+2", description: "" }
     ],
     racialTraits: "",
     racialSpeed: "+4",
     
     // Spells
     knownSpells: [
-      { name: "Spell", level: "1st", concentration: true },
-      { name: "Spell", level: "2nd", concentration: true }
     ],
     
     // Personality & Story
@@ -101,11 +95,6 @@ function Add_Enemy()
     
     // Personal Traits
     personalTraits: [
-      { name: "Trait", bonus: "+1" },
-      { name: "Trait", bonus: "+2" },
-      { name: "Trait", bonus: "+4" },
-      { name: "Trait", bonus: "+4" },
-      { name: "Item", bonus: "+3" }
     ]
   });
 

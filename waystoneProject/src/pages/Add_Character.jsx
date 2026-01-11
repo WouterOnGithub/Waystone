@@ -82,20 +82,14 @@ function Add_Character()
       
       // Features
       classFeatures: [
-        { name: "Feature", bonus: "+3", description: "" },
-        { name: "Feature", bonus: "+2", description: "" }
       ],
       backgroundFeatures: [
-        { name: "Feature", bonus: "+2", description: "" },
-        { name: "Feature", bonus: "+2", description: "" }
       ],
       racialTraits: "Darkvision, Ability Boost, Attack Bonus",
       
       
       // Spells
       knownSpells: [
-        { name: "Spell", level: "1st", concentration: true },
-        { name: "Spell", level: "2nd", concentration: true }
       ],
       
       // Personality & Story
@@ -106,11 +100,6 @@ function Add_Character()
       
       // Personal Traits
       personalTraits: [
-        { name: "Trait", bonus: "+1" },
-        { name: "Trait", bonus: "+2" },
-        { name: "Trait", bonus: "+4" },
-        { name: "Trait", bonus: "+4" },
-        { name: "Item", bonus: "+3" }
       ]
     });
 
