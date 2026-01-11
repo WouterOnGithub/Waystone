@@ -87,6 +87,7 @@ function Add_Container({onClose, campaignId, container, onContainerSaved})
         items: selectedItems,
         type: "container",
         lastUpdatedAt: new Date().toISOString(),
+        imageUrl: "/assets/chestContainer.jpg",
       };
 
       console.log("Container data to save:", containerData);
