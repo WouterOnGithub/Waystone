@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc , getDoc} from "firebase/firestore";
 
 export function usePlayerInventory(userId, campaignId, playerId) {
   const [inventory, setInventory] = useState([]);
