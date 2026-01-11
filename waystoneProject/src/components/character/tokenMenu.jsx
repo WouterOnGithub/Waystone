@@ -148,13 +148,13 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
           <div style={{ marginTop: "5px", display: "flex", gap: "5px" }}>
             {showDamageField && (
               <>
-                <input type="number" placeholder="Amount" value={damageAmount} onChange={e => setDamageAmount(e.target.value)} style={{ width: "60px" }} />
+                <input type="number" placeholder="Amount" value={damageAmount} onChange={e => setDamageAmount(e.target.value)} style={{ width: "60px", backgroundColor: "#ffffff", color: "#000000", border: "1px solid #cccccc" }} />
                 <button id="button-green" onClick={handleDamage}>Confirm</button>
               </>
             )}
             {showHealField && (
               <>
-                <input type="number" placeholder="Amount" value={healAmount} onChange={e => setHealAmount(e.target.value)} style={{ width: "60px" }} />
+                <input type="number" placeholder="Amount" value={healAmount} onChange={e => setHealAmount(e.target.value)} style={{ width: "60px", backgroundColor: "#ffffff", color: "#000000", border: "1px solid #cccccc" }} />
                 <button id="button-green" onClick={handleHeal}>Confirm</button>
               </>
             )}
