@@ -72,6 +72,18 @@
       navigate(`/user/${campaignId}/Add_Enemy/${enemyId}`);
     }
 
+    const handleDeletePlayer = async (playerId) => {
+      if (!window.confirm("Are you sure you want to delete this Player?")) return;
+
+      try {
+        const playerRef = doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId);
+        await deletePlayerAndSubCollections(playerRef);
+        setPlayers(players.filter(player => player.id !== playerId));
+      } catch (error) {
+        console.error("Error deleting Player:", error);
+      }
+    };
+
     const handleDeleteNpc = async (npcId) => {
       if (!window.confirm("Are you sure you want to delete this NPC?")) return;
 
