@@ -80,7 +80,7 @@ function Add_Player_Inventory({ onClose, userId, campaignId, playerId }) {
                       <b>{item?.name || "Unknown Item"} x{slot.Amount}</b>
                       <button
                         type="button"
-                        id="button-gray"
+                        id="delete-button"
                         onClick={() => removeItem(slot.slotKey)}
                       >
                         remove
