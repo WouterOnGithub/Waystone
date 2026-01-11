@@ -10,7 +10,6 @@ import { useContainer } from "../../hooks/useContainerMap";
 import Add_Container from "../popups/Add_Container"; 
 import Add_Player_Inventory from "../popups/Add_Player_Inventory";
 
-
 export default function TokenMenu({ userId, campaignId, position, posX, posY, mapId, tokenId, onClose }) {
   const menuRef = useRef();
   const defaultWidth = 180;
@@ -22,7 +21,10 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   const containerData = useContainer(userId, campaignId, tokenId);
 
   const data = playerData || entityData || containerData || { name: "Loading...", tokenType: "unknown" };
-  const isContainer = data?.tokenType === "container";
+  const tokenTypeLower = data.tokenType?.toLowerCase() || "";
+  const isContainer = tokenTypeLower === "container";
+  const isPlayer = tokenTypeLower === "player";
+  const isNpc = !isContainer && !isPlayer;
 
   const updateHp = useUpdateHp(userId, campaignId, data?.tokenType, data?.id);
   const inventories = useInventory(data.id, campaignId, userId, data.tokenType);
@@ -30,7 +32,7 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
 
   const [expandedItems, setExpandedItems] = useState({});
   const [showInventory, setShowInventory] = useState(false);
-  const [showAddContainer, setShowAddContainer] = useState(false); // popup state
+  const [showAddContainer, setShowAddContainer] = useState(false);
 
   // Damage / Heal states
   const [showDamageField, setShowDamageField] = useState(false);
@@ -63,25 +65,20 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   // Inventory mapping
   const handleGetInventory = () => {
     if (!inventories || inventories.length === 0) return [];
-
-    // alle slots uit alle inventory docs flattenen
     const allSlots = inventories.flatMap(doc => doc.slots);
 
     return allSlots
       .filter(slot => slot.ItemID && slot.ItemID !== "" && slot.Amount > 0)
       .map(slot => ({
-        ...items[slot.ItemID],  // haalt de item details uit useItems
+        ...items[slot.ItemID],
         ItemID: slot.ItemID,
         Amount: slot.Amount,
-        slotKey: slot.id + "-" + slot.ItemID, // uniek key
+        slotKey: slot.id + "-" + slot.ItemID,
       }));
   };
 
-
-
   const handleGetContainerContents = () => {
     if (!data.items) return [];
-
     return data.items.map((slot, index) => ({
       ...items[slot.itemId],
       slotKey: `${data.id}-${index}-${slot.itemId}`,
@@ -127,13 +124,16 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
   // Callback voor refresh na container toevoegen
   const handleContainerSaved = () => {
     setShowAddContainer(false);
-    // evt. force refresh containerData of inventories ophalen
   };
+
+  // alleen players en containers mogen inventory zien
+  const canShowInventoryButton = isPlayer || isContainer;
 
   return createPortal(
     <div ref={menuRef} className="tokenMenu" style={{ left, top, width: menuWidth }}>
       <h3>{data.name}</h3>
 
+      {/* Damage / Heal voor alle niet-containers */}
       {!isContainer && (
         <>
           <p>HP: {data.HpCurrent} / {data.HpMax}</p>
@@ -162,12 +162,21 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
         </>
       )}
 
-      <button id="button-blue" onClick={() => setShowInventory(prev => !prev)} style={{ margin: "5px 0", padding: "5px 10px" }}>
-        {showInventory ? "Close Inventory" : "Open Inventory"}
-      </button>
+      {/* Open Inventory knop alleen voor players en containers */}
+      {canShowInventoryButton && (
+        <button
+          id="button-blue"
+          onClick={() => setShowInventory(prev => !prev)}
+          style={{ margin: "5px 0", padding: "5px 10px" }}
+        >
+          {showInventory ? "Close Inventory" : "Open Inventory"}
+        </button>
+      )}
 
-      {!isContainer && showInventory && (
-        <button id="button-green"
+      {/* Add-knoppen */}
+      {isPlayer && showInventory && (
+        <button
+          id="button-green"
           onClick={() => setShowAddPlayerInventory(true)}
           style={{ margin: "5px 0", padding: "5px 10px" }}
         >
@@ -175,10 +184,10 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
         </button>
       )}
 
-
       {isContainer && showInventory && (
         <>
-          <button id="button-green"
+          <button
+            id="button-green"
             onClick={() => setShowAddContainer(true)}
             style={{ margin: "5px 0", padding: "5px 10px" }}
           >
@@ -189,7 +198,7 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
             <Add_Container
               onClose={() => setShowAddContainer(false)}
               campaignId={campaignId}
-              container={data} // bestaande container
+              container={data}
               onContainerSaved={handleContainerSaved}
             />
           )}
@@ -224,10 +233,7 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
           userId={userId}
           campaignId={campaignId}
           playerId={data.id}
-          onInventoryUpdated={() => {
-            setShowAddPlayerInventory(false);
-            // eventueel inventories refreshen hier
-          }}
+          onInventoryUpdated={() => setShowAddPlayerInventory(false)}
         />
       )}
 
