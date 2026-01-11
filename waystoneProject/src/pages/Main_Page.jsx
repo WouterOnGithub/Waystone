@@ -27,12 +27,10 @@ const getCampaignSortDate = (campaign) => {
 
 function Main_Page() 
 {
-  console.log("Main_Page loaded");
   const { user } = useAuth();
   const navigate = useNavigate();
   const [recentCampaigns, setRecentCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log("Context user:", user.uid);
 
   useEffect(() => {
     const loadRecentCampaigns = async () => {
