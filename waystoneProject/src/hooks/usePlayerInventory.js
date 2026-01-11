@@ -20,11 +20,14 @@ export function usePlayerInventory(userId, campaignId, playerId) {
         return;
       }
       const data = snap.data();
-      const slotsArray = Object.entries(data).map(([slotKey, slotValue]) => ({
-        slotKey,
-        ItemID: slotValue.ItemID || "",
-        Amount: slotValue.Amount || 0,
-      }));
+      const slotsArray = Object.entries(data)
+        .filter(([key]) => key.startsWith("Slot"))   // 👈 important
+        .map(([slotKey, slotValue]) => ({
+          slotKey,
+          ItemID: slotValue.ItemID || "",
+          Amount: slotValue.Amount || 0,
+        }));
+
       setInventory(slotsArray);
       setLoading(false);
     });
@@ -36,9 +39,17 @@ export function usePlayerInventory(userId, campaignId, playerId) {
   const saveInventory = async (newInventory) => {
     if (!userId || !campaignId || !playerId) return false;
     setLoading(true);
+
     try {
       const inventoryRef = doc(db, "Users", userId, "Campaigns", campaignId, "Players", playerId, "Inventory", "default");
-      const inventoryData = {};
+
+      const snap = await getDoc(inventoryRef);
+      const oldData = snap.exists() ? snap.data() : {};
+
+      const inventoryData = {
+        capacity: oldData.capacity ?? 20,  // 👈 keep capacity intact
+      };
+
       newInventory.forEach((slot) => {
         inventoryData[slot.slotKey] = {
           ItemID: slot.ItemID,
@@ -46,7 +57,8 @@ export function usePlayerInventory(userId, campaignId, playerId) {
           lastUpdated: new Date(),
         };
       });
-      await updateDoc(inventoryRef, inventoryData);
+
+      await setDoc(inventoryRef, inventoryData);
       return true;
     } catch (err) {
       console.error("Error saving inventory:", err);
