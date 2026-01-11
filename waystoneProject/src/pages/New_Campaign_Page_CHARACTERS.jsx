@@ -164,7 +164,7 @@
 
                   /* The npc bar */
                     <div key={npc.id} className="character-row">
-                      <span>{npc.name} | Race: {npc.race}</span>
+                      <span>{npc.name} | Race: {npc.race} | HP {npc.HpCurrent} / {npc.HpMax}</span>
                       <div>
                         <button id="button-blue" onClick={() => handleEditNpc(npc.id)}>edit</button>
                         <button id="delete-button" onClick={() => handleDeleteNpc(npc.id)}>delete</button>
@@ -181,7 +181,7 @@
                   <br />
                   {enemies.map((enemy) => (
                     <div key={enemy.id} className="character-row">
-                      <span>{enemy.name} | CR {enemy.cr} | HP {enemy.hp}</span>
+                      <span>{enemy.name} | CR {enemy.cr} | HP {enemy.HpCurrent} / {enemy.HpMax}</span>
                       <div>
                         <button id="button-blue" onClick={() => handleEditEnemy(enemy.id)}>edit</button>
                         <button id="delete-button" onClick={() => handleDeleteEnemy(enemy.id)}>delete</button>
