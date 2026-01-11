@@ -342,7 +342,7 @@ function Add_Character()
             </button>
 
             {/* The map builder button */}
-            <button id="campaign-tab" onClick={() => navigate(`/user/Map_Main/${campaignId}`)}>
+            <button id="campaign-tab" onClick={() => navigate(`/user/New_Campaign_Page_MAPBUILDER/${campaignId}`)}>
               Map Builder
             </button>
 
