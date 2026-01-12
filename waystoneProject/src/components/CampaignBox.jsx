@@ -7,7 +7,8 @@ const CampaignBox = ({
   onOpenCampaign, 
   onPublishCampaign, 
   onArchiveCampaign,
-  onUnarchiveCampaign
+  onUnarchiveCampaign,
+  onAddToMyCampaigns
 }) => {
   const { user } = useAuth();
   const isFreeCampaign = sectionTitle === "Free Campaigns";
@@ -47,7 +48,13 @@ const CampaignBox = ({
         {isFreeCampaign ? (
           // Free campaigns logic - hide user's own campaigns
           isOtherFreeCampaign ? (
-            <button className="campaign-button disabled-button" disabled>
+            <button 
+              className="campaign-button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToMyCampaigns(item.id);
+              }}
+            >
               Add to my campaigns
             </button>
           ) : (
