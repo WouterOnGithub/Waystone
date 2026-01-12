@@ -136,7 +136,7 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
       {!isContainer && (
         <>
           <p>HP: {data.HpCurrent} / {data.HpMax}</p>
-          <p>AC: {data.armorKlassen}</p>
+          <p>AC: {data.armorClass}</p>
           <p>Race: {data.tokenType}</p>
 
           <div style={{ display: "flex" }}>
