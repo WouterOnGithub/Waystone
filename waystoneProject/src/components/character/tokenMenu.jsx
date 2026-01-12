@@ -137,7 +137,7 @@ export default function TokenMenu({ userId, campaignId, position, posX, posY, ma
         <>
           <p>HP: {data.HpCurrent} / {data.HpMax}</p>
           <p>AC: {data.armorClass}</p>
-          <p>Race: {data.tokenType}</p>
+          <p>TokenType: {data.tokenType}</p>
 
           <div style={{ display: "flex" }}>
             <button id="delete-button" onClick={() => { setShowDamageField(prev => !prev); setShowHealField(false); }}>Damage</button>
